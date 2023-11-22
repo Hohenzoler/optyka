@@ -1,2 +1,2 @@
 # optyka
-yoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+##rura
