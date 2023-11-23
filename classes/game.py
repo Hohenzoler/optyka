@@ -30,7 +30,6 @@ class Game():
         self.screen.fill((0,0,0))
     def loop(self, objects):
         while self.run:
-            self.events()
             self.background()
             self.render()
             for object in objects:  #drawing objects from the objects list that have .draw() function
@@ -40,3 +39,4 @@ class Game():
                         object.checkifclicked(self.mousepos) #if self.mousepos is a tuple it checks if a button has been clicked
             self.update()
             self.mousepos = None #resets self.mouspos
+            self.events()
