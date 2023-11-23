@@ -26,20 +26,15 @@ class Game():
     def render(self):
         for object in self.objects:
             object.render()
+            if type(object) == gui.GUI:  # checks if the class of the object is a gui.GUI
+                if type(self.mousepos) == tuple:
+                    object.checkifclicked(self.mousepos)  # if self.mousepos is a tuple it checks if a button has been clicked
     def background(self):
         self.screen.fill((0,0,0))
-    def loop(self, objects):
+    def loop(self):
         while self.run:
             self.background()
             self.render()
-            for object in objects:  #drawing objects from the objects list that have .draw() function
-                object.draw(self.screen)
-                if type(object)== gui.GUI: #checks if the class of the object is a gui.GUI
-                    if type(self.mousepos) == tuple:
-                        object.checkifclicked(self.mousepos) #if self.mousepos is a tuple it checks if a button has been clicked
-                    if object.objects1:
-                        objects.insert(-1, object.objects1[0]) #adds elements that are placed to the objects list, this approch circomvents importing errors
-                        object.objects1 = []
             self.update()
             self.mousepos = None #resets self.mouspos
             self.events()

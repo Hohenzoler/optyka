@@ -2,25 +2,27 @@ import pygame
 from classes import flashlight
 
 class GUI:
-    def __init__(self, width, height):
+    def __init__(self, game, width, height):
+        self.game = game
         self.width = width
         self.height = height//10
         self.rect = pygame.Rect(0, height - self.height, self.width, self.height)
         self.Frect = pygame.Rect(10, height - self.height + 10, self.height-20, self.height-20) #rect for the button to create a flashlight
         self.Fclicked = 0 #a bullion that tells whether the flashlight button has been clicked or not
         self.objects1 = []
+        self.game.objects.append(self)
 
-    def draw(self, screen):
+    def render(self):
         mousepos = pygame.mouse.get_pos()
-        f = flashlight.Flashlight(mousepos[0], mousepos[1]) #flashlight
+        f = flashlight.Flashlight(self.game, mousepos[0], mousepos[1]) #flashlight
         if self.Fclicked == 1:
-            f.drawoutline(screen) #displaying a semi-transparent outline of the flashlight
+            f.drawoutline() #displaying a semi-transparent outline of the flashlight
         if self.Fclicked == 2:
-            self.objects1.append(f) #appending the flashlight to an internal list so it can later be transfered to the objects list to be drawn
+            self.game.objects.append(f)
             self.Fclicked = 0
 
-        pygame.draw.rect(screen, "grey", self.rect)
-        pygame.draw.rect(screen, 'red', self.Frect)
+        pygame.draw.rect(self.game.screen, "grey", self.rect)
+        pygame.draw.rect(self.game.screen, 'red', self.Frect)
 
     def checkifclicked(self, mousepos):
         if self.Frect.collidepoint(mousepos) and self.Fclicked == 0:

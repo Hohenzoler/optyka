@@ -1,6 +1,7 @@
 import pygame
 class Flashlight:  #creating a flash light class
-    def __init__(self, x, y):
+    def __init__(self, game, x, y):
+        self.game = game
         self.width = 200
         self.heigh = 100
         self.x = x-self.width//2 #adjusted so that when someone creates a flashlight it places in the correct spot
@@ -9,10 +10,9 @@ class Flashlight:  #creating a flash light class
         self.transparent_surface = pygame.Surface((200, 100), pygame.SRCALPHA)
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
 
-    def draw(self, screen): # basic drawing functions
-        pygame.draw.rect(screen, "grey", self.rect)
+    def render(self): # basic drawing functions
+        pygame.draw.rect(self.game.screen, "grey", self.rect)
 
-
-    def drawoutline(self, screen):
-        screen.blit(self.transparent_surface, (self.x, self.y)) #draws a transparent outline of the flashlight at the mouse pos
+    def drawoutline(self):
+        self.game.screen.blit(self.transparent_surface, (self.x, self.y)) #draws a transparent outline of the flashlight at the mouse pos
 
