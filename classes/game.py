@@ -1,4 +1,5 @@
 import pygame
+from gui import gui
 class Game():
     def __init__(self,width,height):
         self.width=width
@@ -10,11 +11,15 @@ class Game():
         self.run=True
         self.fps=60
         self.tick=int((1/self.fps)*1000)
-    def controls(self):
+        self.mousepos = None #Mouse position which will be updated every time the mouse is left clicked
+    def events(self):
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 pygame.quit()
                 self.run=False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                self.mousepos = (event.pos) #when the left button is clicked the position is saved to self.mousepos
+
     def update(self):
         pygame.display.update()
         pygame.time.wait(self.tick)
@@ -25,9 +30,13 @@ class Game():
         self.screen.fill((0,0,0))
     def loop(self, objects):
         while self.run:
-            self.controls()
+            self.events()
             self.background()
             self.render()
             for object in objects:  #drawing objects from the objects list that have .draw() function
                 object.draw(self.screen)
+                if type(object)== gui.GUI: #checks if the class of the object is a gui.GUI
+                    if type(self.mousepos) == tuple:
+                        object.checkifclicked(self.mousepos) #if self.mousepos is a tuple it checks if a button has been clicked
             self.update()
+            self.mousepos = None #resets self.mouspos
