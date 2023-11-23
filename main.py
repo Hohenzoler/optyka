@@ -1,15 +1,11 @@
 from classes import game
 from classes import light
-from classes import flashlight
 from gui import gui
 
 width = 1000
 height = 1000
 
 objects = [] # creating an objects list that will be drawn to the screen
-
-# Flashlight = flashlight.Flashlight(10, 10)
-# objects.append(Flashlight)
 
 GUI = gui.GUI(width, height)
 objects.append(GUI)

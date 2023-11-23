@@ -37,6 +37,9 @@ class Game():
                 if type(object)== gui.GUI: #checks if the class of the object is a gui.GUI
                     if type(self.mousepos) == tuple:
                         object.checkifclicked(self.mousepos) #if self.mousepos is a tuple it checks if a button has been clicked
+                    if object.objects1:
+                        objects.insert(-1, object.objects1[0]) #adds elements that are placed to the objects list, this approch circomvents importing errors
+                        object.objects1 = []
             self.update()
             self.mousepos = None #resets self.mouspos
             self.events()
