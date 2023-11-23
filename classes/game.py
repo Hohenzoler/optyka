@@ -1,5 +1,4 @@
 import pygame
-
 class Game():
     def __init__(self,width,height):
         self.width=width
@@ -24,9 +23,11 @@ class Game():
             object.render()
     def background(self):
         self.screen.fill((0,0,0))
-    def loop(self):
+    def loop(self, objects):
         while self.run:
             self.controls()
             self.background()
             self.render()
+            for object in objects:  #drawing objects from the objects list that have .draw() function
+                object.draw(self.screen)
             self.update()
