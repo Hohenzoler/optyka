@@ -7,7 +7,7 @@ class Light:
         self.points = points
         self.game = game
         self.color = color
-        self.game.objects.append(self)
+        self.game.objects.insert(-1, self)
 
     def render(self):
         for p in range(0, len(self.points) - 1):
