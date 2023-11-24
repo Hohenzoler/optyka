@@ -10,7 +10,7 @@ class Game:
         self.objects = []
         # initializing pygame
         pygame.init()
-        self.screen = pygame.display.set_mode((self.width, self.height))
+        self.screen = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
         self.run = True
         self.fps = 60
         self.tick = int((1 / self.fps) * 1000)
