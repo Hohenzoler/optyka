@@ -11,8 +11,6 @@ class GameObject:
         self.y = y - self.height // 2
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-    def render(self):
-        pass
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y):
