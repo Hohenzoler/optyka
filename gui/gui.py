@@ -18,7 +18,8 @@ class GUI:
         if self.Fclicked == 1:
             f.drawoutline() #displaying a semi-transparent outline of the flashlight
         if self.Fclicked == 2:
-            self.game.objects.append(f)
+            self.game.objects.insert(-2, f)
+            print(self.game.objects)
             self.Fclicked = 0
 
         pygame.draw.rect(self.game.screen, "grey", self.rect)
