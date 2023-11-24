@@ -3,10 +3,10 @@ from classes import light
 
 class GameObject:
 
-    def __init__(self, game, x, y, heigh, width):
+    def __init__(self, game, x, y, height, width):
         self.game = game
         self.width = width
-        self.height = heigh
+        self.height = height
         self.x = x - self.width // 2  # adjusted so that when someone creates a flashlight it places in the correct spot
         self.y = y - self.height // 2
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
