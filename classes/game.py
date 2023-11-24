@@ -1,5 +1,6 @@
 import pygame
 from gui import gui
+from classes import flashlight
 
 
 class Game:
@@ -30,10 +31,11 @@ class Game:
     def render(self):
         for object in self.objects:
             object.render()
-            if type(object) == gui.GUI:  # checks if the class of the object is a gui.GUI
-                if type(self.mousepos) == tuple:
-                    object.checkifclicked(
-                        self.mousepos)  # if self.mousepos is a tuple it checks if a button has been clicked
+            if type(self.mousepos) == tuple:
+                if type(object) == gui.GUI:  # checks if the class of the object is a gui.GUI
+                    object.checkifclicked(self.mousepos)  # if self.mousepos is a tuple it checks if a button has been clicked
+                elif type(object) == flashlight.Flashlight:
+                    object.checkifclicked(self.mousepos)
 
     def background(self):
         self.screen.fill((0, 0, 0))
