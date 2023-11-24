@@ -1,4 +1,4 @@
-#!/home/artur/PycharmProjects/optyka/venv/bin/python
+#!/home/artur/PycharmProjects/pythonProject1/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
