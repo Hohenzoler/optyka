@@ -6,10 +6,10 @@ class GameObject:
     def __init__(self, game, x, y, heigh, width):
         self.game = game
         self.width = width
-        self.heigh = heigh
+        self.height = heigh
         self.x = x - self.width // 2  # adjusted so that when someone creates a flashlight it places in the correct spot
-        self.y = y - self.heigh // 2
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.heigh)
+        self.y = y - self.height // 2
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
 
 class Flashlight(GameObject):  # Inheriting from GameObject
@@ -25,14 +25,14 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         if not self.selectedtrue:
             pygame.draw.rect(self.game.screen, "grey", self.rect)
             if self.on:
-                self.light = light.Light(self.game, ([self.x + self.width, self.y + self.heigh // 2], [self.game.width, self.y + self.heigh // 2]),(255, 255, 255))
+                self.light = light.Light(self.game, ([self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]), (255, 255, 255))
             elif not self.on:
                 self.light = None
 
         else:
             self.x = mousepos[0] - self.width//2
-            self.y = mousepos[1] - self.heigh//2
-            self.rect = pygame.Rect(self.x, self.y, self.width, self.heigh)
+            self.y = mousepos[1] - self.height // 2
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
             self.game.screen.blit(self.transparent_surface, (self.x, self.y))
 
     def drawoutline(self):
