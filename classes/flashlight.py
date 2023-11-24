@@ -4,7 +4,7 @@ from classes import light
 
 class GameObject:
 
-    def __init__(self, game, x, y, height, width, angle, color):
+    def __init__(self, game, x, y, height, width, angle, color, islighting):
         self.game = game
         self.width = width
         self.height = height
@@ -17,9 +17,17 @@ class GameObject:
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
         self.on = True
         self.selectedtrue = False
+        self.islighting = bool(islighting) # it is boolean, true, false or maybe
 
     def render(self):
         pygame.draw.rect(self.game.screen, self.color, self.rect)
+        if self.islighting:
+            if self.on:
+                self.light = light.Light(self.game, (
+                    [self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]),
+                                         "white")
+            elif not self.on:
+                self.light = None
 
     def move(self, mousepos):
         self.x = mousepos[0] - self.width // 2
@@ -48,18 +56,11 @@ class GameObject:
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y):
-        super().__init__(game, x, y, 100, 200, 0, "blue")  # Call the constructor of the parent class
+        super().__init__(game, x, y, 100, 200, 0, "blue", True)  # Call the constructor of the parent class
 
     def render(self):  # basic drawing functions
         mousepos = pygame.mouse.get_pos()
         if not self.selectedtrue:
             super().render()  # Call the render method of the parent class to draw the rectangle
-            if self.on:
-                self.light = light.Light(self.game, (
-                    [self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]),
-                                         "white")
-            elif not self.on:
-                self.light = None
-
         else:
             self.move(mousepos)
