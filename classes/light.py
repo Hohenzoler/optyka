@@ -1,7 +1,7 @@
 import pygame
 
 
-class Light():
+class Light:
     def __init__(self, game, points, color):
         # points is a list that represents endpoints of next lines building a stream of light
         self.points = points
