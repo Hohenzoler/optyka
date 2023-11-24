@@ -8,8 +8,7 @@ class GUI:
         self.width = width
         self.height = height // 10
         self.rect = pygame.Rect(0, height - self.height, self.width, self.height)
-        self.Frect = pygame.Rect(10, height - self.height + 10, self.height - 20,
-                                 self.height - 20)  # rect for the button to create a flashlight
+        self.Frect = pygame.Rect(10, height - self.height + 10, self.height - 20, self.height - 20)  # rect for the button to create a flashlight
         self.Fclicked = 0  # a bullion that tells whether the flashlight button has been clicked or not
         self.objects1 = []
         self.game.objects.append(self)
@@ -23,7 +22,7 @@ class GUI:
             self.game.objects.insert(-2, f)
             self.Fclicked = 0
 
-        pygame.draw.rect(self.game.screen, "grey", self.rect)
+        pygame.draw.rect(self.game.screen, (100, 100, 100), self.rect)
         pygame.draw.rect(self.game.screen, 'red', self.Frect)
 
     def checkifclicked(self, mousepos):
