@@ -1,15 +1,20 @@
 import pygame
 from classes import light
 
+class GameObject:
 
-class Flashlight:  # creating a flash light class
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, heigh, width):
         self.game = game
-        self.width = 200
-        self.heigh = 100
+        self.width = width
+        self.heigh = heigh
         self.x = x - self.width // 2  # adjusted so that when someone creates a flashlight it places in the correct spot
         self.y = y - self.heigh // 2
         self.rect = pygame.Rect(self.x, self.y, self.width, self.heigh)
+
+
+class Flashlight(GameObject):  # Inheriting from GameObject
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y, 100, 200)  # Call the constructor of the parent class
         self.transparent_surface = pygame.Surface((200, 100), pygame.SRCALPHA)
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
         self.on = True
