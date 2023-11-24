@@ -31,7 +31,7 @@ class Flashlight:  # creating a flash light class
             self.game.screen.blit(self.transparent_surface, (self.x, self.y))
 
     def drawoutline(self):
-        self.game.screen.blit(self.transparent_surface, (self.x, self.y))  # draws a transparent outline of the flashlight at the mouse pos
+        self.game.screen.blit(self.transparent_surface, (self.x, self.y))  # draws a transparent outline of the flashlight at the mouse pos.
 
     def checkifclicked(self, mousepos):
         if self.rect.collidepoint(mousepos):
