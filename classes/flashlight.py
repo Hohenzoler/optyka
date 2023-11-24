@@ -1,6 +1,7 @@
 import pygame
 from classes import light
 
+
 class GameObject:
 
     def __init__(self, game, x, y, height, width, angle, color):
@@ -14,6 +15,8 @@ class GameObject:
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.transparent_surface = pygame.Surface((200, 100), pygame.SRCALPHA)
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
+        self.on = True
+        self.selectedtrue = False
 
     def render(self):
         pygame.draw.rect(self.game.screen, self.color, self.rect)
@@ -24,27 +27,9 @@ class GameObject:
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.game.screen.blit(self.transparent_surface, (self.x, self.y))
 
-class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, x, y):
-        super().__init__(game, x, y, 100, 200, 0, "blue")  # Call the constructor of the parent class
-        self.on = True
-        self.selectedtrue = False
-
-    def render(self):  # basic drawing functions
-        mousepos = pygame.mouse.get_pos()
-        if not self.selectedtrue:
-            super().render()  # Call the render method of the parent class to draw the rectangle
-            if self.on:
-                self.light = light.Light(self.game, (
-                [self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]), "white")
-            elif not self.on:
-                self.light = None
-
-        else:
-            self.move(mousepos)
-
     def drawoutline(self):
-        self.game.screen.blit(self.transparent_surface, (self.x, self.y))  # draws a transparent outline of the flashlight at the mouse pos
+        self.game.screen.blit(self.transparent_surface,
+                              (self.x, self.y))  # draws a transparent outline of the flashlight at the mouse pos
 
     def checkifclicked(self, mousepos):
         if self.rect.collidepoint(mousepos):
@@ -54,9 +39,27 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                 self.on = 1
 
     def selected(self, mousepos):
-        if self.rect.collidepoint(mousepos) and self.selectedtrue == False:
+        if self.rect.collidepoint(mousepos) and self.selectedtrue is False:
             self.selectedtrue = True
 
-        elif self.rect.collidepoint(mousepos) and self.selectedtrue == True:
+        elif self.rect.collidepoint(mousepos) and self.selectedtrue is True:
             self.selectedtrue = False
 
+
+class Flashlight(GameObject):  # Inheriting from GameObject
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y, 100, 200, 0, "blue")  # Call the constructor of the parent class
+
+    def render(self):  # basic drawing functions
+        mousepos = pygame.mouse.get_pos()
+        if not self.selectedtrue:
+            super().render()  # Call the render method of the parent class to draw the rectangle
+            if self.on:
+                self.light = light.Light(self.game, (
+                    [self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]),
+                                         "white")
+            elif not self.on:
+                self.light = None
+
+        else:
+            self.move(mousepos)
