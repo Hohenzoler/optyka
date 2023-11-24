@@ -3,39 +3,45 @@ from classes import light
 
 class GameObject:
 
-    def __init__(self, game, x, y, height, width):
+    def __init__(self, game, x, y, height, width, angle, color):
         self.game = game
         self.width = width
         self.height = height
         self.x = x - self.width // 2  # adjusted so that when someone creates a flashlight it places in the correct spot
         self.y = y - self.height // 2
+        self.angle = angle
+        self.color = color
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.transparent_surface = pygame.Surface((200, 100), pygame.SRCALPHA)
+        self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
 
     def render(self):
-        pass
+        pygame.draw.rect(self.game.screen, self.color, self.rect)
+
+    def move(self, mousepos):
+        self.x = mousepos[0] - self.width // 2
+        self.y = mousepos[1] - self.height // 2
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.game.screen.blit(self.transparent_surface, (self.x, self.y))
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y):
-        super().__init__(game, x, y, 100, 200)  # Call the constructor of the parent class
-        self.transparent_surface = pygame.Surface((200, 100), pygame.SRCALPHA)
-        self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
+        super().__init__(game, x, y, 100, 200, 0, "blue")  # Call the constructor of the parent class
         self.on = True
         self.selectedtrue = False
 
     def render(self):  # basic drawing functions
         mousepos = pygame.mouse.get_pos()
         if not self.selectedtrue:
-            pygame.draw.rect(self.game.screen, "grey", self.rect)
+            super().render()  # Call the render method of the parent class to draw the rectangle
             if self.on:
-                self.light = light.Light(self.game, ([self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]), (255, 255, 255))
+                self.light = light.Light(self.game, (
+                [self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]), "white")
             elif not self.on:
                 self.light = None
 
         else:
-            self.x = mousepos[0] - self.width//2
-            self.y = mousepos[1] - self.height // 2
-            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-            self.game.screen.blit(self.transparent_surface, (self.x, self.y))
+            self.move(mousepos)
 
     def drawoutline(self):
         self.game.screen.blit(self.transparent_surface, (self.x, self.y))  # draws a transparent outline of the flashlight at the mouse pos
