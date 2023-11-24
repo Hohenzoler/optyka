@@ -1,5 +1,4 @@
 from classes import game
-from classes import light
 from gui import gui
 
 width = 1000
