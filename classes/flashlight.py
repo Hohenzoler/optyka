@@ -20,16 +20,20 @@ class GameObject:
         self.islighting = bool(islighting) # it is boolean, true, false or maybe
 
     def render(self):
-        pygame.draw.rect(self.game.screen, self.color, self.rect)
-        if self.islighting:
-            if self.on:
-                self.light = light.Light(self.game, (
-                    [self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]),
-                                         "white")
-            elif not self.on:
-                self.light = None
+        if not self.selectedtrue:
+            pygame.draw.rect(self.game.screen, self.color, self.rect)
+            if self.islighting: #checks atridbute isLighting
+                if self.on: #checks atribute on, which probably checks is object is clicked
+                    self.light = light.Light(self.game, (
+                        [self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]),
+                                             "white")
+                elif not self.on:
+                    self.light = None
+        else:
+            self.move()
 
-    def move(self):
+
+    def move(self): #code for movimg object with mouse
         self.mousepos = pygame.mouse.get_pos()
         self.x = self.mousepos[0] - self.width // 2
         self.y = self.mousepos[1] - self.height // 2
@@ -40,14 +44,14 @@ class GameObject:
         self.game.screen.blit(self.transparent_surface,
                               (self.x, self.y))  # draws a transparent outline of the flashlight at the mouse pos
 
-    def checkifclicked(self, mousepos):
+    def checkifclicked(self, mousepos): #checks if object is clicked
         if self.rect.collidepoint(mousepos):
             if self.on == 1:
                 self.on = 0
             else:
                 self.on = 1
 
-    def selected(self, mousepos):
+    def selected(self, mousepos): #checks if object is selected
         if self.rect.collidepoint(mousepos) and self.selectedtrue is False:
             self.selectedtrue = True
 
@@ -59,8 +63,3 @@ class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y):
         super().__init__(game, x, y, 100, 200, 0, "blue", True)  # Call the constructor of the parent class
 
-    def render(self):  # basic drawing functions
-        if not self.selectedtrue:
-            super().render()  # Call the render method of the parent class to draw the rectangle
-        else:
-            self.move()
