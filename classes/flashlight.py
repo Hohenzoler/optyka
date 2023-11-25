@@ -13,6 +13,8 @@ class GameObject:
         self.angle = angle
         self.color = color
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        self.surface.fill(self.color)
         self.transparent_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
         self.on = True
@@ -21,17 +23,19 @@ class GameObject:
 
     def render(self):
         if not self.selectedtrue:
-            pygame.draw.rect(self.game.screen, self.color, self.rect)
-            if self.islighting: #checks atridbute isLighting
-                if self.on: #checks atribute on, which probably checks is object is clicked
-                    self.light = light.Light(self.game, (
-                        [self.x + self.width, self.y + self.height // 2], [self.game.width, self.y + self.height // 2]),
-                                             "white")
+            rotated_surface = pygame.transform.rotate(self.surface, self.angle)
+            rotated_rect = rotated_surface.get_rect(center=self.rect.center)
+            self.game.screen.blit(rotated_surface, rotated_rect.topleft)
+
+            if self.islighting:
+                if self.on:
+                    light_start = (self.x + self.width, self.y + self.height // 2)
+                    light_end = (self.game.width, self.y + self.height // 2)
+                    self.light = light.Light(self.game, (light_start, light_end), "white")
                 elif not self.on:
                     self.light = None
         else:
             self.move()
-
 
     def move(self): #code for movimg object with mouse
         self.mousepos = pygame.mouse.get_pos()
@@ -62,5 +66,5 @@ class GameObject:
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y):
-        super().__init__(game, x, y, 100, 200, 20, "blue", True)  # Call the constructor of the parent class
+        super().__init__(game, x, y, 100, 200, 20, "red", True)  # Call the constructor of the parent class
 
