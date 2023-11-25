@@ -29,9 +29,10 @@ class GameObject:
             elif not self.on:
                 self.light = None
 
-    def move(self, mousepos):
-        self.x = mousepos[0] - self.width // 2
-        self.y = mousepos[1] - self.height // 2
+    def move(self):
+        self.mousepos = pygame.mouse.get_pos()
+        self.x = self.mousepos[0] - self.width // 2
+        self.y = self.mousepos[1] - self.height // 2
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.game.screen.blit(self.transparent_surface, (self.x, self.y))
 
@@ -59,8 +60,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         super().__init__(game, x, y, 100, 200, 0, "blue", True)  # Call the constructor of the parent class
 
     def render(self):  # basic drawing functions
-        mousepos = pygame.mouse.get_pos()
         if not self.selectedtrue:
             super().render()  # Call the render method of the parent class to draw the rectangle
         else:
-            self.move(mousepos)
+            self.move()
