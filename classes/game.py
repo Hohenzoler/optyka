@@ -12,7 +12,7 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
         self.run = True
-        self.fps = 60
+        self.fps = 120
         self.tick = int((1 / self.fps) * 1000)
         self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
         self.rightclickedmousepos = None  # right click mouse positon
@@ -37,8 +37,7 @@ class Game:
             object.render()
             if type(self.mousepos) is tuple:
                 if type(object) is gui.GUI:  # checks if the class of the object is a gui.GUI
-                    object.checkifclicked(
-                        self.mousepos)  # if self.mousepos is a tuple it checks if a button has been clicked
+                    object.checkifclicked(self.mousepos)  # if self.mousepos is a tuple it checks if a button has been clicked
                 elif type(object) is gameobjects.Flashlight:
                     object.checkifclicked(self.mousepos)
             if type(self.rightclickedmousepos) is tuple:
