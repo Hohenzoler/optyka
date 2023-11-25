@@ -1,5 +1,5 @@
 import pygame
-from classes import light
+from classes import light, sounds
 
 
 class GameObject:
@@ -62,9 +62,11 @@ class GameObject:
     def selected(self, mousepos):  # checks if object is selected
         if self.rect.collidepoint(mousepos) and self.selectedtrue is False:
             self.selectedtrue = True
+            sounds.selected_sound()
 
         elif self.rect.collidepoint(mousepos) and self.selectedtrue is True:
             self.selectedtrue = False
+            sounds.placed_sound()
 
 
 class Flashlight(GameObject):  # Inheriting from GameObject

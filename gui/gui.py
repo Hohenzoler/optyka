@@ -1,6 +1,5 @@
 import pygame
-from classes import gameobjects
-
+from classes import gameobjects, sounds
 
 class GUI:
     def __init__(self, game, width, height):
@@ -22,6 +21,7 @@ class GUI:
         if self.Fclicked == 2:
             self.game.objects.insert(-2, f)
             self.Fclicked = 0
+            sounds.placed_sound()
 
         pygame.draw.rect(self.game.screen, (100, 100, 100), self.rect)
         pygame.draw.rect(self.game.screen, 'red', self.Frect)
@@ -29,6 +29,7 @@ class GUI:
     def checkifclicked(self, mousepos):
         if self.Frect.collidepoint(mousepos) and self.Fclicked == 0:
             self.Fclicked = 1
+            sounds.selected_sound()
         elif self.Frect.collidepoint(mousepos) and self.Fclicked == 1:
             self.Fclicked = 0
         elif self.Frect.collidepoint(mousepos) is False and self.Fclicked == 1:
