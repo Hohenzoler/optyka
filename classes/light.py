@@ -16,5 +16,8 @@ class Light:
 
 
     def render(self):
-        for p in range(0, len(self.points) - 1):
-            pygame.draw.line(self.game.screen, self.color, self.points[p], self.points[p + 1], self.width)
+        try:
+            for p in range(0, len(self.points) - 1):
+                pygame.draw.line(self.game.screen, self.color, self.points[p], self.points[p + 1], self.width)
+        except AttributeError:
+            pass
