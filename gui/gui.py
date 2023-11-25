@@ -7,9 +7,9 @@ class GUI:
         self.width = width
         self.height = height // 10
         self.rect = pygame.Rect(0, height - self.height, self.width, self.height)
-        self.Frect = pygame.Rect(10, height - self.height + 10, self.height - 20, self.height - 20)  # rect for the
-        # button to create a flashlight
-        self.Fclicked = 0  # a bullion that tells whether the flashlight button has been clicked or not
+        self.Frect = pygame.Rect(10, height - self.height + 10, self.height - 20, self.height - 20)
+        self.Fclicked = 0
+        self.layer = 2  # Assign a higher layer value to GUI to ensure it's rendered on top
         self.objects1 = []
         self.game.objects.append(self)
 

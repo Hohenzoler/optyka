@@ -32,13 +32,19 @@ class Game:
         pygame.time.wait(self.tick)
 
     def render(self):
-        for object in self.objects:
-            object.render()
+        # Sort objects based on their layer attribute (assuming you have a layer attribute)
+        sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
+
+        for object in sorted_objects:
             if type(self.mousepos) is tuple:
-                if type(object) is gui.GUI:  # checks if the class of the object is a gui.GUI
-                    object.checkifclicked(self.mousepos)  # if self.mousepos is a tuple it checks if a button has been clicked
+                if type(object) is gui.GUI:
+                    object.checkifclicked(self.mousepos)
                 elif type(object) is gameobjects.Flashlight:
                     object.checkifclicked(self.mousepos)
+
+        for object in sorted_objects:
+            object.render()
+
             if type(self.rightclickedmousepos) is tuple:
                 if type(object) is gameobjects.Flashlight:
                     object.selected(self.rightclickedmousepos)

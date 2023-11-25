@@ -9,7 +9,9 @@ class Light:
         self.color = color
         self.angle = angle
         self.width = width
+        self.layer = 0  # Assign a layer value to control rendering order
         self.game.objects.insert(-1, self)
+
 
 
 
