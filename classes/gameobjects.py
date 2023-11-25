@@ -1,5 +1,8 @@
+import random
+
 import pygame
 from classes import light, sounds
+import math
 
 
 class GameObject:
@@ -22,20 +25,28 @@ class GameObject:
         self.islighting = bool(islighting)  # it is boolean, true, false or maybe
         self.mousepos = None
         self.light = None
+        self.width = 8
 
     def render(self):
         if not self.selectedtrue:
             rotated_surface = pygame.transform.rotate(self.surface, self.angle)
             rotated_rect = rotated_surface.get_rect(center=self.rect.center)
-            self.game.screen.blit(rotated_surface, rotated_rect.topleft)
+
 
             if self.islighting:
                 if self.on:
-                    light_start = (self.x + self.width, self.y + self.height // 2)
-                    light_end = (self.game.width, self.y + self.height // 2)
-                    self.light = light.Light(self.game, (light_start, light_end), "white")
+                    light_start_x = (self.x + self.width // 2)
+
+                    light_start_y = (self.y + self.height // 2)
+                    # light_end_x = (2 * self.game.width)
+                    light_end_x = light_start_x + math.cos(math.radians(self.angle)) * 1000
+                    # light_end_y = (self.y + self.height // 2)
+                    light_end_y = light_start_y - math.sin(math.radians(self.angle)) * 1000
+                    self.light = light.Light(self.game, ((light_start_x, light_start_y), (light_end_x, light_end_y)), "white", self.angle, self.width)
                 elif not self.on:
                     self.light = None
+            light.Light.render(self.light)
+            self.game.screen.blit(rotated_surface, rotated_rect.topleft)
         else:
             self.move()
 
@@ -71,4 +82,5 @@ class GameObject:
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y):
-        super().__init__(game, x, y, 100, 200, 20, "red", True)  # Call the constructor of the parent class
+        super().__init__(game, x, y, 100, 200, random.randint(1, 365), "red", True)  # Call the constructor of the parent class
+

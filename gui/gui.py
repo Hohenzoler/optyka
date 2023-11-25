@@ -16,6 +16,7 @@ class GUI:
     def render(self):
         mousepos = pygame.mouse.get_pos()
         f = gameobjects.Flashlight(self.game, mousepos[0], mousepos[1])  # flashlight
+
         if self.Fclicked == 1:
             f.drawoutline()  # displaying a semi-transparent outline of the flashlight
         if self.Fclicked == 2:

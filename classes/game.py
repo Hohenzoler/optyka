@@ -32,7 +32,6 @@ class Game:
         pygame.time.wait(self.tick)
 
     def render(self):
-        self.screen.fill((0, 0, 0))
         for object in self.objects:
             object.render()
             if type(self.mousepos) is tuple:
@@ -55,3 +54,4 @@ class Game:
             self.mousepos = None  # resets self.mouspos
             self.rightclickedmousepos = None
             self.events()
+
