@@ -41,8 +41,9 @@ class GameObject:
         self.game.screen.blit(self.transparent_surface, (self.x, self.y))
 
     def drawoutline(self):
-        self.game.screen.blit(self.transparent_surface,
-                              (self.x, self.y))  # draws a transparent outline of the flashlight at the mouse pos
+        rotated_surface = pygame.transform.rotate(self.transparent_surface, self.angle)
+        rotated_rect = rotated_surface.get_rect(center=self.rect.center)
+        self.game.screen.blit(rotated_surface, rotated_rect.topleft) # draws a transparent outline of the flashlight at the mouse pos
 
     def checkifclicked(self, mousepos): #checks if object is clicked
         if self.rect.collidepoint(mousepos):
@@ -61,5 +62,5 @@ class GameObject:
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y):
-        super().__init__(game, x, y, 100, 200, 0, "blue", True)  # Call the constructor of the parent class
+        super().__init__(game, x, y, 100, 200, 20, "blue", True)  # Call the constructor of the parent class
 
