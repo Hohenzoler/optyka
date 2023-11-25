@@ -1,6 +1,6 @@
 import pygame
 from gui import gui
-from classes import flashlight
+from classes import gameobjects
 
 
 class Game:
@@ -15,7 +15,7 @@ class Game:
         self.fps = 60
         self.tick = int((1 / self.fps) * 1000)
         self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
-        self.rightclickedmousepos = None #right click mouse positon
+        self.rightclickedmousepos = None  # right click mouse positon
 
     def events(self):
         for event in pygame.event.get():
@@ -32,16 +32,17 @@ class Game:
         pygame.time.wait(self.tick)
 
     def render(self):
-        self.screen.fill((0,0,0))
+        self.screen.fill((0, 0, 0))
         for object in self.objects:
             object.render()
-            if type(self.mousepos) == tuple:
-                if type(object) == gui.GUI:  # checks if the class of the object is a gui.GUI
-                    object.checkifclicked(self.mousepos)  # if self.mousepos is a tuple it checks if a button has been clicked
-                elif type(object) == flashlight.Flashlight:
+            if type(self.mousepos) is tuple:
+                if type(object) is gui.GUI:  # checks if the class of the object is a gui.GUI
+                    object.checkifclicked(
+                        self.mousepos)  # if self.mousepos is a tuple it checks if a button has been clicked
+                elif type(object) is gameobjects.Flashlight:
                     object.checkifclicked(self.mousepos)
-            if type(self.rightclickedmousepos) == tuple:
-                if type(object) == flashlight.Flashlight:
+            if type(self.rightclickedmousepos) is tuple:
+                if type(object) is gameobjects.Flashlight:
                     object.selected(self.rightclickedmousepos)
 
     def background(self):
