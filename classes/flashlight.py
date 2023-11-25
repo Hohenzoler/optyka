@@ -13,7 +13,7 @@ class GameObject:
         self.angle = angle
         self.color = color
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.transparent_surface = pygame.Surface((200, 100), pygame.SRCALPHA)
+        self.transparent_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
         self.on = True
         self.selectedtrue = False
