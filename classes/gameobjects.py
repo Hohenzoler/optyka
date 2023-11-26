@@ -18,8 +18,6 @@ class GameObject:
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.surface.fill(self.color)
-        self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
-        self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
         self.transparent_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
         self.on = True
@@ -32,13 +30,15 @@ class GameObject:
 
     def render(self):
         if not self.selectedtrue:
-            self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
-            self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
+            # Rotate the surface around its center
+            rotated_surface = pygame.transform.rotate(self.surface, self.angle)
+            rotated_rect = rotated_surface.get_rect(center=self.rect.center)
+
 
             if self.islighting:
                 if self.on:
                     # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                    rotated_center_x, rotated_center_y = self.rotated_rect.center
+                    rotated_center_x, rotated_center_y = rotated_rect.center
 
                     light_start_x = rotated_center_x
                     light_start_y = rotated_center_y
@@ -55,7 +55,7 @@ class GameObject:
             light.Light.render(self.light)
 
             # Blit the rotated surface at the rotated_rect's topleft
-            self.game.screen.blit(self.rotated_surface, self.rotated_rect.topleft)
+            self.game.screen.blit(rotated_surface, rotated_rect.topleft)
         else:
             self.move()
 
