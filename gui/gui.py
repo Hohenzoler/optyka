@@ -16,14 +16,15 @@ class GUI:
 
     def render(self):
         mousepos = pygame.mouse.get_pos()
-         # flashlight
 
+        # flashlight
         if self.Fclicked == 1:
             if self.game.r:
-                self.f.adjust(mousepos[0],mousepos[1],1)
+                self.f.adjust(mousepos[0], mousepos[1], 1)
             else:
                 self.f.adjust(mousepos[0], mousepos[1], 0)
             self.f.drawoutline()  # displaying a semi-transparent outline of the flashlight
+
         if self.Fclicked == 2:
             if self.game.r:
                 self.f.adjust(mousepos[0], mousepos[1], 1)
@@ -31,11 +32,17 @@ class GUI:
                 self.f.adjust(mousepos[0], mousepos[1], 0)
             self.game.objects.insert(-2, self.f)
             self.Fclicked = 0
-            self.f=None
+            self.f = None
             sounds.placed_sound()
 
+        # Check if the red button is clicked and change its color temporarily
+        button_color = (255, 0, 0)  # Red color
+        if self.Fclicked == 1:
+            button_color = (150, 0, 0)  # Darken the color when clicked
+
         pygame.draw.rect(self.game.screen, (100, 100, 100), self.rect)
-        pygame.draw.rect(self.game.screen, 'red', self.Frect)
+        pygame.draw.rect(self.game.screen, button_color, self.Frect)
+
 
 
     def checkifclicked(self, mousepos):
