@@ -25,7 +25,7 @@ class GameObject:
         self.islighting = bool(islighting)  # it is boolean, true, false or maybe
         self.mousepos = None
         self.light = None
-        self.width = 8
+        self.light_width = 8
         self.layer = 1
 
     def render(self):
@@ -33,6 +33,7 @@ class GameObject:
             # Rotate the surface around its center
             rotated_surface = pygame.transform.rotate(self.surface, self.angle)
             rotated_rect = rotated_surface.get_rect(center=self.rect.center)
+
 
             if self.islighting:
                 if self.on:
@@ -46,7 +47,7 @@ class GameObject:
                     light_end_y = light_start_y - math.sin(math.radians(self.angle)) * 1000
 
                     self.light = light.Light(self.game, ((light_start_x, light_start_y), (light_end_x, light_end_y)),
-                                             "white", self.angle, self.width)
+                                             "white", self.angle, self.light_width)
                 elif not self.on:
                     self.light = None
 

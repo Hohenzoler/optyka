@@ -2,13 +2,13 @@ import pygame
 
 
 class Light:
-    def __init__(self, game, points, color, angle, width):
+    def __init__(self, game, points, color, angle, light_width):
         # points is a list that represents endpoints of next lines building a stream of light
         self.points = points
         self.game = game
         self.color = color
         self.angle = angle
-        self.width = width
+        self.light_width = light_width
         self.layer = 0  # Assign a layer value to control rendering order
         self.game.objects.insert(-1, self)
 
@@ -18,6 +18,6 @@ class Light:
     def render(self):
         try:
             for p in range(0, len(self.points) - 1):
-                pygame.draw.line(self.game.screen, self.color, self.points[p], self.points[p + 1], self.width)
+                pygame.draw.line(self.game.screen, self.color, self.points[p], self.points[p + 1], self.light_width)
         except AttributeError: #if line doesnt have evailible points
             pass
