@@ -12,24 +12,36 @@ class GUI:
         self.layer = 2  # Assign a higher layer value to GUI to ensure it's rendered on top
         self.objects1 = []
         self.game.objects.append(self)
+        self.f=None
 
     def render(self):
         mousepos = pygame.mouse.get_pos()
-        f = gameobjects.Flashlight(self.game, mousepos[0], mousepos[1])  # flashlight
+         # flashlight
 
         if self.Fclicked == 1:
-            f.drawoutline()  # displaying a semi-transparent outline of the flashlight
+            if self.game.r:
+                self.f.adjust(mousepos[0],mousepos[1],1)
+            else:
+                self.f.adjust(mousepos[0], mousepos[1], 0)
+            self.f.drawoutline()  # displaying a semi-transparent outline of the flashlight
         if self.Fclicked == 2:
-            self.game.objects.insert(-2, f)
+            if self.game.r:
+                self.f.adjust(mousepos[0], mousepos[1], 1)
+            else:
+                self.f.adjust(mousepos[0], mousepos[1], 0)
+            self.game.objects.insert(-2, self.f)
             self.Fclicked = 0
+            self.f=None
             sounds.placed_sound()
 
         pygame.draw.rect(self.game.screen, (100, 100, 100), self.rect)
         pygame.draw.rect(self.game.screen, 'red', self.Frect)
 
+
     def checkifclicked(self, mousepos):
         if self.Frect.collidepoint(mousepos) and self.Fclicked == 0:
             self.Fclicked = 1
+            self.f = gameobjects.Flashlight(self.game, mousepos[0], mousepos[1])
             sounds.selected_sound()
         elif self.Frect.collidepoint(mousepos) and self.Fclicked == 1:
             self.Fclicked = 0

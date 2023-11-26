@@ -31,22 +31,22 @@ class GameObject:
     def render(self):
         if not self.selectedtrue:
             # Rotate the surface around its center
-            rotated_surface = pygame.transform.rotate(self.surface, self.angle)
-            rotated_rect = rotated_surface.get_rect(center=self.rect.center)
+            self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
+            self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
 
 
             if self.islighting:
                 if self.on:
                     # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                    rotated_center_x, rotated_center_y = rotated_rect.center
+                    self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
 
-                    light_start_x = rotated_center_x
-                    light_start_y = rotated_center_y
+                    self.light_start_x = self.rotated_center_x
+                    self.light_start_y = self.rotated_center_y
 
-                    light_end_x = light_start_x + math.cos(math.radians(self.angle)) * 1000
-                    light_end_y = light_start_y - math.sin(math.radians(self.angle)) * 1000
+                    self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
+                    self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
 
-                    self.light = light.Light(self.game, ((light_start_x, light_start_y), (light_end_x, light_end_y)),
+                    self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
                                              "white", self.angle, self.light_width)
                 elif not self.on:
                     self.light = None
@@ -55,9 +55,23 @@ class GameObject:
             light.Light.render(self.light)
 
             # Blit the rotated surface at the rotated_rect's topleft
-            self.game.screen.blit(rotated_surface, rotated_rect.topleft)
+            self.game.screen.blit(self.rotated_surface, self.rotated_rect.topleft)
         else:
             self.move()
+    def adjust(self,x,y,d_angle):
+        self.angle+=d_angle
+        self.x=x-self.width//2
+        self.y=y-self.height//2
+        self.rect=pygame.Rect(self.x,self.y,self.width,self.height)
+        self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
+        self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
+        self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
+
+        self.light_start_x = self.rotated_center_x
+        self.light_start_y = self.rotated_center_y
+
+        self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
+        self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
 
     def move(self):  # code for movimg object with mouse
         self.mousepos = pygame.mouse.get_pos()
@@ -91,5 +105,5 @@ class GameObject:
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y):
-        super().__init__(game, x, y, 100, 200, random.randint(1, 355), "red", True)  # Call the constructor of the parent class
+        super().__init__(game, x, y, 100, 200, 0, "red", True)  # Call the constructor of the parent class
 
