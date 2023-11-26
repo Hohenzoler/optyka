@@ -27,6 +27,7 @@ class GameObject:
         self.light = None
         self.light_width = 8
         self.layer = 1
+        self.placed=False
 
     def render(self):
         if not self.selectedtrue:
@@ -36,18 +37,21 @@ class GameObject:
 
 
             if self.islighting:
-                if self.on:
-                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                    self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
+                if self.placed==False:
+                    if self.on:
 
-                    self.light_start_x = self.rotated_center_x
-                    self.light_start_y = self.rotated_center_y
+                        # Calculate the starting point of the light from the center of the rotated rectangle/surface
+                        self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
 
-                    self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
-                    self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
+                        self.light_start_x = self.rotated_center_x
+                        self.light_start_y = self.rotated_center_y
 
-                    self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
+                        self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
+                        self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
+
+                        self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
                                              "white", self.angle, self.light_width)
+                        self.placed=True
                 elif not self.on:
                     self.light = None
 
