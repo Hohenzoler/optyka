@@ -71,6 +71,7 @@ class GameObject:
         self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
         self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
 
+    def light_adjust(self):
         self.light_start_x = self.rotated_center_x
         self.light_start_y = self.rotated_center_y
 

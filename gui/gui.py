@@ -30,6 +30,7 @@ class GUI:
                 self.f.adjust(mousepos[0], mousepos[1], 1)
             else:
                 self.f.adjust(mousepos[0], mousepos[1], 0)
+            self.f.light_adjust()
             self.game.objects.insert(-2, self.f)
             self.Fclicked = 0
             self.f = None
