@@ -21,8 +21,6 @@ class GameObject:
         self.on = True
         self.selectedtrue = False
         self.mousepos = None
-        self.light = None
-        self.light_width = 8
         self.layer = 1
         self.placed = False
 
@@ -31,9 +29,6 @@ class GameObject:
             # Rotate the surface around its center
             self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
             self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
-
-            # Render the light before blitting the rotated surface
-            light.Light.render(self.light)
 
             # Blit the rotated surface at the rotated_rect's topleft
             self.game.screen.blit(self.rotated_surface, self.rotated_rect.topleft)
@@ -48,13 +43,6 @@ class GameObject:
         self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
         self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
         self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
-
-    def light_adjust(self):
-        self.light_start_x = self.rotated_center_x
-        self.light_start_y = self.rotated_center_y
-
-        self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
-        self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
 
     def move(self):  # code for movimg object with mouse
         self.mousepos = pygame.mouse.get_pos()
@@ -90,6 +78,8 @@ class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y, islighting=True):
         super().__init__(game, x, y, 100, 200, 0, "red")  # Call the constructor of the parent class
         self.islighting = bool(islighting)  # it is boolean, true, false or maybe
+        self.light = None
+        self.light_width = 8
 
     def render(self):
         super().render()
@@ -110,5 +100,18 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                         (self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
                                              "white", self.angle, self.light_width)
                     self.placed = True
+
+                    # Render the light before blitting the rotated surface
+                    light.Light.render(self.light)
             elif not self.on:
                 self.light = None
+
+
+
+    def light_adjust(self):
+        self.light_start_x = self.rotated_center_x
+        self.light_start_y = self.rotated_center_y
+
+        self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
+        self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
+
