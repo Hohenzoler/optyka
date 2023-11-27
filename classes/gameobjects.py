@@ -1,5 +1,3 @@
-import random
-
 import pygame
 from classes import light, sounds
 import math
@@ -7,7 +5,7 @@ import math
 
 class GameObject:
 
-    def __init__(self, game, x, y, height, width, angle, color, islighting):
+    def __init__(self, game, x, y, height, width, angle, color):
         self.game = game
         self.width = width
         self.height = height
@@ -22,38 +20,17 @@ class GameObject:
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
         self.on = True
         self.selectedtrue = False
-        self.islighting = bool(islighting)  # it is boolean, true, false or maybe
         self.mousepos = None
         self.light = None
         self.light_width = 8
         self.layer = 1
-        self.placed=False
+        self.placed = False
 
     def render(self):
         if not self.selectedtrue:
             # Rotate the surface around its center
             self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
             self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
-
-
-            if self.islighting:
-                if self.placed==False:
-                    if self.on:
-
-                        # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                        self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
-
-                        self.light_start_x = self.rotated_center_x
-                        self.light_start_y = self.rotated_center_y
-
-                        self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
-                        self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
-
-                        self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
-                                             "white", self.angle, self.light_width)
-                        self.placed=True
-                elif not self.on:
-                    self.light = None
 
             # Render the light before blitting the rotated surface
             light.Light.render(self.light)
@@ -62,11 +39,12 @@ class GameObject:
             self.game.screen.blit(self.rotated_surface, self.rotated_rect.topleft)
         else:
             self.move()
-    def adjust(self,x,y,d_angle):
-        self.angle+=d_angle
-        self.x=x-self.width//2
-        self.y=y-self.height//2
-        self.rect=pygame.Rect(self.x,self.y,self.width,self.height)
+
+    def adjust(self, x, y, d_angle):
+        self.angle += d_angle
+        self.x = x - self.width // 2
+        self.y = y - self.height // 2
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
         self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
         self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
@@ -109,6 +87,28 @@ class GameObject:
 
 
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, x, y):
-        super().__init__(game, x, y, 100, 200, 0, "red", True)  # Call the constructor of the parent class
+    def __init__(self, game, x, y, islighting=True):
+        super().__init__(game, x, y, 100, 200, 0, "red")  # Call the constructor of the parent class
+        self.islighting = bool(islighting)  # it is boolean, true, false or maybe
 
+    def render(self):
+        super().render()
+
+        if self.islighting:
+            if self.placed == False:
+                if self.on:
+                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
+                    self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
+
+                    self.light_start_x = self.rotated_center_x
+                    self.light_start_y = self.rotated_center_y
+
+                    self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
+                    self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
+
+                    self.light = light.Light(self.game, (
+                        (self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
+                                             "white", self.angle, self.light_width)
+                    self.placed = True
+            elif not self.on:
+                self.light = None
