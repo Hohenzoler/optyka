@@ -12,12 +12,9 @@ class Light:
         self.layer = 0  # Assign a layer value to control rendering order
         self.game.objects.insert(-1, self)
 
-
-
-
     def render(self):
         try:
             for p in range(0, len(self.points) - 1):
                 pygame.draw.line(self.game.screen, self.color, self.points[p], self.points[p + 1], self.light_width)
-        except AttributeError: #if line doesnt have evailible points
+        except AttributeError:  # if line doesnt have evailible points
             pass

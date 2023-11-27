@@ -1,6 +1,7 @@
 import pygame
 from classes import gameobjects, sounds
 
+
 class GUI:
     def __init__(self, game, width, height):
         self.game = game
@@ -12,7 +13,7 @@ class GUI:
         self.layer = 2  # Assign a higher layer value to GUI to ensure it's rendered on top
         self.objects1 = []
         self.game.objects.append(self)
-        self.f=None
+        self.f = None
 
     def render(self):
         mousepos = pygame.mouse.get_pos()
@@ -43,8 +44,6 @@ class GUI:
 
         pygame.draw.rect(self.game.screen, (100, 100, 100), self.rect)
         pygame.draw.rect(self.game.screen, button_color, self.Frect)
-
-
 
     def checkifclicked(self, mousepos):
         if self.Frect.collidepoint(mousepos) and self.Fclicked == 0:

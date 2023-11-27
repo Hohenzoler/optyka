@@ -85,16 +85,12 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         super().render()
 
         if self.islighting:
-            if self.placed == False:
+            if not self.placed:
                 if self.on:
                     # Calculate the starting point of the light from the center of the rotated rectangle/surface
                     self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
 
-                    self.light_start_x = self.rotated_center_x
-                    self.light_start_y = self.rotated_center_y
-
-                    self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
-                    self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
+                    self.light_adjust()
 
                     self.light = light.Light(self.game, (
                         (self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
@@ -106,12 +102,9 @@ class Flashlight(GameObject):  # Inheriting from GameObject
             elif not self.on:
                 self.light = None
 
-
-
     def light_adjust(self):
         self.light_start_x = self.rotated_center_x
         self.light_start_y = self.rotated_center_y
 
         self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
         self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
-
