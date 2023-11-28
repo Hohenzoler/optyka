@@ -5,7 +5,7 @@ import math
 
 class GameObject:
 
-    def __init__(self, game, x, y, height, width, angle, color):
+    def __init__(self, game, x, y, height, width, angle, color, image_path):
         self.game = game
         self.width = width
         self.height = height
@@ -14,8 +14,6 @@ class GameObject:
         self.angle = angle
         self.color = color
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        self.surface.fill(self.color)
         self.transparent_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
         self.on = True
@@ -23,6 +21,11 @@ class GameObject:
         self.mousepos = None
         self.layer = 1
         self.placed = False
+        self.image_path = image_path
+        self.image = pygame.image.load(image_path)
+        self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        self.surface.blit(self.image, (0, 0))
+
 
     def render(self):
         if not self.selectedtrue:
@@ -76,7 +79,7 @@ class GameObject:
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, x, y, islighting=True):
-        super().__init__(game, x, y, 100, 200, 0, "red")  # Call the constructor of the parent class
+        super().__init__(game, x, y, 100, 200, 0, "red", "images/torch.png")  # Call the constructor of the parent class
         self.islighting = bool(islighting)  # it is boolean, true, false or maybe
         self.light = None
         self.light_width = 8
