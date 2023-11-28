@@ -14,8 +14,6 @@ class GameObject:
         self.angle = angle
         self.color = color
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.transparent_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        self.transparent_surface.fill((255, 255, 255, 50))  # last number is the alpha value (transparency)
         self.on = True
         self.selectedtrue = False
         self.mousepos = None
@@ -25,7 +23,9 @@ class GameObject:
         self.image = pygame.image.load(image_path)
         self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.surface.blit(self.image, (0, 0))
-
+        self.transparent_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        self.transparent_surface.blit(self.image, (0, 0))
+        self.transparent_surface.set_alpha(100)
 
     def render(self):
         if not self.selectedtrue:
