@@ -14,30 +14,26 @@ class GUI:
         self.layer = 2
         self.objects1 = []
         self.game.objects.append(self)
-        self.f = None
+
 
     def render(self):
         mousepos = list(pygame.mouse.get_pos())
         mousepos[0] -= 100 #centering the mouse
         mousepos[1] -= 50
 
+        self.f = Flashlight(self.game, [(mousepos[0], mousepos[1]),
+                                        (mousepos[0] + 200, mousepos[1]),
+                                        (mousepos[0] + 200, mousepos[1] + 100),
+                                        (mousepos[0], mousepos[1] + 100)])
+
         def adjust_flashlight():
-            self.f.adjust([(mousepos[0], mousepos[1]),
-                           (mousepos[0] + 200, mousepos[1]),
-                           (mousepos[0] + 200, mousepos[1] + 100),
-                           (mousepos[0], mousepos[1] + 100)])
+            self.f.adjust(self.f.points)
 
         if self.Fclicked == 1:
             if self.game.r:
-                self.f.adjust([(mousepos[0], mousepos[1]/2),
-                               (mousepos[0] + 200, mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1] + 100),
-                               (mousepos[0], mousepos[1] + 100)])
+                adjust_flashlight()
             else:
-                self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1] + 100),
-                               (mousepos[0], mousepos[1] + 100)])
+                adjust_flashlight()
             self.f.drawoutline()
 
         if self.Fclicked == 2:
@@ -63,10 +59,6 @@ class GUI:
     def checkifclicked(self, mousepos):
         if self.Frect.collidepoint(mousepos) and self.Fclicked == 0:
             self.Fclicked = 1
-            self.f = Flashlight(self.game, [(mousepos[0], mousepos[1]),
-                                            (mousepos[0] + 200, mousepos[1]),
-                                            (mousepos[0] + 200, mousepos[1] + 100),
-                                            (mousepos[0], mousepos[1] + 100)])
             sounds.selected_sound()
         elif self.Frect.collidepoint(mousepos) and self.Fclicked == 1:
             self.Fclicked = 0
