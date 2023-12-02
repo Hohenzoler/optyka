@@ -70,7 +70,9 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                     self.light_adjust(center_x, center_y)
 
-                    self.light = light.Light(self.game, self.points, "white", self.angle, self.light_width)
+                    self.light = light.Light(self.game, [(center_x, center_y),
+                                                         (self.light_end_x, self.light_end_y)], "white", self.angle,
+                                             self.light_width)
                     self.placed = True
 
                     # Render the light before blitting the rotated surface
@@ -79,10 +81,23 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                 self.light = None
 
     def light_adjust(self, center_x, center_y):
-        self.light_start_x = center_x
-        self.light_start_y = center_y
+        # Calculate the direction vector from the center to one of the points
+        direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
 
-        angle = math.degrees(math.atan2(self.points[0][1] - center_y, self.points[0][0] - center_x))
-        self.light_end_x = center_x + math.cos(math.radians(angle)) * 1000
-        self.light_end_y = center_y + math.sin(math.radians(angle)) * 1000
+        # Calculate the length of the direction vector
+        length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
+
+        # Check if the length is not zero before normalizing
+        if length != 0:
+            # Normalize the direction vector
+            normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
+
+            # Calculate the end point of the light
+            self.light_end_x = center_x + normalized_direction[0] * 1000
+            self.light_end_y = center_y + normalized_direction[1] * 1000
+
+            # Calculate the angle between the normalized direction and the x-axis
+            self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
+
+
 
