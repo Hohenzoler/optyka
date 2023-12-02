@@ -3,7 +3,7 @@ from classes import light, sounds
 import math
 
 class GameObject:
-    def __init__(self, game, points, color):
+    def __init__(self, game, points, color, angle):
         self.game = game
         self.points = points
         self.color = color
@@ -12,6 +12,7 @@ class GameObject:
         self.mousepos = None
         self.layer = 1
         self.placed = False
+        self.angle = angle
 
     def render(self):
         if not self.selectedtrue:
@@ -82,12 +83,13 @@ class GameObject:
             sounds.placed_sound()
 
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, points, islighting=True):
-        super().__init__(game, points, (255, 0, 0))  # Call the constructor of the parent class
+    def __init__(self, game, points, color, angle, islighting=True):
+        super().__init__(game, points, color, angle)  # Call the constructor of the parent class
         self.islighting = bool(islighting)  # it is boolean, true, false or maybe
         self.light = None
         self.light_width = 8
-        self.angle = 100 # Add the angle attribute and initialize it
+        self.color = color
+        self.angle = angle
 
     def render(self):
         super().render()
