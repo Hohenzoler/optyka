@@ -17,7 +17,9 @@ class GUI:
         self.f = None
 
     def render(self):
-        mousepos = pygame.mouse.get_pos()
+        mousepos = list(pygame.mouse.get_pos())
+        mousepos[0] -= 100 #centering the mouse
+        mousepos[1] -= 50
 
         def adjust_flashlight():
             self.f.adjust([(mousepos[0], mousepos[1]),
@@ -27,9 +29,15 @@ class GUI:
 
         if self.Fclicked == 1:
             if self.game.r:
-                adjust_flashlight()
+                self.f.adjust([(mousepos[0], mousepos[1]/2),
+                               (mousepos[0] + 200, mousepos[1]),
+                               (mousepos[0] + 200, mousepos[1] + 100),
+                               (mousepos[0], mousepos[1] + 100)])
             else:
-                adjust_flashlight()
+                self.f.adjust([(mousepos[0], mousepos[1]),
+                               (mousepos[0] + 200, mousepos[1]),
+                               (mousepos[0] + 200, mousepos[1] + 100),
+                               (mousepos[0], mousepos[1] + 100)])
             self.f.drawoutline()
 
         if self.Fclicked == 2:
