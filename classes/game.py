@@ -20,9 +20,6 @@ class Game:
         self.rightclickedmousepos = None
         self.r = False
 
-        # Add GUI instance to the objects list
-        self.objects.append(GUI(self, self.width, self.height))
-
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
