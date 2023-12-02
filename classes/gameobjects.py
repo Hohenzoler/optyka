@@ -2,87 +2,61 @@ import pygame
 from classes import light, sounds
 import math
 
-
 class GameObject:
-
-    def __init__(self, game, x, y, height, width, angle, color, image_path):
+    def __init__(self, game, points, color):
         self.game = game
-        self.width = width
-        self.height = height
-        self.x = x - self.width // 2  # adjusted so that when someone creates a flashlight it places in the correct spot
-        self.y = y - self.height // 2
-        self.angle = angle
+        self.points = points
         self.color = color
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.on = True
         self.selectedtrue = False
         self.mousepos = None
         self.layer = 1
         self.placed = False
-        self.image_path = image_path
-        self.image = pygame.image.load(image_path)
-        self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        self.surface.blit(self.image, (0, 0))
-        self.transparent_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        self.transparent_surface.blit(self.image, (0, 0))
-        self.transparent_surface.set_alpha(100)
 
     def render(self):
         if not self.selectedtrue:
-            # Rotate the surface around its center
-            self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
-            self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
-
-            # Blit the rotated surface at the rotated_rect's topleft
-            self.game.screen.blit(self.rotated_surface, self.rotated_rect.topleft)
+            pygame.draw.lines(self.game.screen, self.color, True, self.points, 2)
         else:
             self.move()
 
-    def adjust(self, x, y, d_angle):
-        self.angle += d_angle
-        self.x = x - self.width // 2
-        self.y = y - self.height // 2
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
-        self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
-        self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
+    def adjust(self, points):
+        self.points = points
 
-    def move(self):  # code for movimg object with mouse
+    def move(self):
         self.mousepos = pygame.mouse.get_pos()
-        self.x = self.mousepos[0] - self.width // 2
-        self.y = self.mousepos[1] - self.height // 2
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.game.screen.blit(self.transparent_surface, (self.x, self.y))
+        self.adjust([(x + self.mousepos[0], y + self.mousepos[1]) for x, y in self.points])
 
     def drawoutline(self):
-        rotated_surface = pygame.transform.rotate(self.transparent_surface, self.angle)
-        rotated_rect = rotated_surface.get_rect(center=self.rect.center)
-        self.game.screen.blit(rotated_surface,
-                              rotated_rect.topleft)  # draws a transparent outline of the flashlight at the mouse pos
+        pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
 
-    def checkifclicked(self, mousepos):  # checks if object is clicked
-        if self.rect.collidepoint(mousepos):
+    def checkifclicked(self, mousepos):
+        mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+        pygame.draw.polygon(mask_surface, (255, 255, 255, 0), self.points)
+
+        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
             if self.on == 1:
                 self.on = 0
             else:
                 self.on = 1
 
-    def selected(self, mousepos):  # checks if object is selected
-        if self.rect.collidepoint(mousepos) and self.selectedtrue is False:
+    def selected(self, mousepos):
+        mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+        pygame.draw.polygon(mask_surface, (255, 255, 255, 0), self.points)
+
+        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
             self.selectedtrue = True
             sounds.selected_sound()
-
-        elif self.rect.collidepoint(mousepos) and self.selectedtrue is True:
+        elif mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and self.selectedtrue:
             self.selectedtrue = False
             sounds.placed_sound()
 
-
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, x, y, islighting=True):
-        super().__init__(game, x, y, 100, 200, 0, "red", "images/torch.png")  # Call the constructor of the parent class
+    def __init__(self, game, points, islighting=True):
+        super().__init__(game, points, (255, 255, 255))  # Call the constructor of the parent class
         self.islighting = bool(islighting)  # it is boolean, true, false or maybe
         self.light = None
         self.light_width = 8
+        self.angle = 100 # Add the angle attribute and initialize it
 
     def render(self):
         super().render()
@@ -91,13 +65,12 @@ class Flashlight(GameObject):  # Inheriting from GameObject
             if not self.placed:
                 if self.on:
                     # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                    self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
+                    center_x = sum(x for x, _ in self.points) / len(self.points)
+                    center_y = sum(y for _, y in self.points) / len(self.points)
 
-                    self.light_adjust()
+                    self.light_adjust(center_x, center_y)
 
-                    self.light = light.Light(self.game, (
-                        (self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
-                                             "white", self.angle, self.light_width)
+                    self.light = light.Light(self.game, self.points, "white", self.angle, self.light_width)
                     self.placed = True
 
                     # Render the light before blitting the rotated surface
@@ -105,9 +78,11 @@ class Flashlight(GameObject):  # Inheriting from GameObject
             elif not self.on:
                 self.light = None
 
-    def light_adjust(self):
-        self.light_start_x = self.rotated_center_x
-        self.light_start_y = self.rotated_center_y
+    def light_adjust(self, center_x, center_y):
+        self.light_start_x = center_x
+        self.light_start_y = center_y
 
-        self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
-        self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
+        angle = math.degrees(math.atan2(self.points[0][1] - center_y, self.points[0][0] - center_x))
+        self.light_end_x = center_x + math.cos(math.radians(angle)) * 1000
+        self.light_end_y = center_y + math.sin(math.radians(angle)) * 1000
+

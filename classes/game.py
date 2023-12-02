@@ -1,22 +1,27 @@
 import pygame
+
+from classes.gameobjects import Flashlight, GameObject
 from gui import gui
 from classes import gameobjects
+from gui.gui import GUI
 
 
 class Game:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.objects = []
-        # initializing pygame
+        self.objects = []  # Ensure that this list contains instances of GUI and other game objects
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
         self.run = True
         self.fps = 120
         self.tick = int((1 / self.fps) * 1000)
-        self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
-        self.rightclickedmousepos = None  # right click mouse positon
+        self.mousepos = None
+        self.rightclickedmousepos = None
         self.r = False
+
+        # Add GUI instance to the objects list
+        self.objects.append(GUI(self, self.width, self.height))
 
     def events(self):
         for event in pygame.event.get():
@@ -24,7 +29,7 @@ class Game:
                 pygame.quit()
                 self.run = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
+                self.mousepos = event.pos
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 self.rightclickedmousepos = event.pos
             elif event.type == pygame.KEYDOWN:
@@ -39,22 +44,22 @@ class Game:
         pygame.time.wait(self.tick)
 
     def render(self):
-        # Sort objects based on their layer attribute (assuming you have a layer attribute)
         sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
 
-        for object in sorted_objects:
+        for obj in sorted_objects:
             if type(self.mousepos) is tuple:
-                if type(object) is gui.GUI:
-                    object.checkifclicked(self.mousepos)
-                elif type(object) is gameobjects.Flashlight:
-                    object.checkifclicked(self.mousepos)
+                if type(obj) is GUI:
+                    obj.checkifclicked(self.mousepos)
+                elif type(obj) is Flashlight:
+                    obj.checkifclicked(self.mousepos)
 
-        for object in sorted_objects:
-            object.render()
+        for obj in sorted_objects:
+            obj.render()
 
             if type(self.rightclickedmousepos) is tuple:
-                if type(object) is gameobjects.Flashlight:
-                    object.selected(self.rightclickedmousepos)
+                if type(obj) is Flashlight:
+                    obj.selected(self.rightclickedmousepos)
+
 
     def background(self):
         self.screen.fill((0, 0, 0))
@@ -64,6 +69,6 @@ class Game:
             self.background()
             self.render()
             self.update()
-            self.mousepos = None  # resets self.mouspos
+            self.mousepos = None
             self.rightclickedmousepos = None
             self.events()
