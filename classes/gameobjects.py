@@ -19,7 +19,7 @@ class GameObject:
             rotated_points = self.rotate_points(self.points, self.angle)
 
             # Draw the rotated lines
-            pygame.draw.lines(self.game.screen, self.color, True, rotated_points, 2)
+            pygame.draw.polygon(self.game.screen, self.color, rotated_points)
         else:
             self.move()
 
@@ -83,7 +83,7 @@ class GameObject:
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, points, islighting=True):
-        super().__init__(game, points, (255, 255, 255))  # Call the constructor of the parent class
+        super().__init__(game, points, (255, 0, 0))  # Call the constructor of the parent class
         self.islighting = bool(islighting)  # it is boolean, true, false or maybe
         self.light = None
         self.light_width = 8
