@@ -19,30 +19,25 @@ class GUI:
     def render(self):
         mousepos = pygame.mouse.get_pos()
 
+        def adjust_flashlight(self):
+            self.f.adjust([(mousepos[0], mousepos[1]),
+                           (mousepos[0] + 200, mousepos[1]),
+                           (mousepos[0] + 200, mousepos[1] + 100),
+                           (mousepos[0], mousepos[1] + 100)])
+
         if self.Fclicked == 1:
             if self.game.r:
-                self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1] + 100),
-                               (mousepos[0], mousepos[1] + 100)])
+                adjust_flashlight(self)
             else:
-                self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1] + 100),
-                               (mousepos[0], mousepos[1] + 100)])
+                adjust_flashlight(self)
             self.f.drawoutline()
 
         if self.Fclicked == 2:
             if self.game.r:
-                self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1] + 100),
-                               (mousepos[0], mousepos[1] + 100)])
+                adjust_flashlight(self)
             else:
-                self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1]),
-                               (mousepos[0] + 200, mousepos[1] + 100),
-                               (mousepos[0], mousepos[1] + 100)])
+                adjust_flashlight(self)
+
             self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
             self.game.objects.insert(-2, self.f)
             self.Fclicked = 0
