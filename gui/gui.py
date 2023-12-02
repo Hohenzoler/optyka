@@ -1,5 +1,5 @@
 import pygame
-from classes import gameobjects, sounds
+from classes import sounds
 from classes.gameobjects import Flashlight
 
 
@@ -19,7 +19,7 @@ class GUI:
     def render(self):
         mousepos = pygame.mouse.get_pos()
 
-        def adjust_flashlight(self):
+        def adjust_flashlight():
             self.f.adjust([(mousepos[0], mousepos[1]),
                            (mousepos[0] + 200, mousepos[1]),
                            (mousepos[0] + 200, mousepos[1] + 100),
@@ -27,16 +27,16 @@ class GUI:
 
         if self.Fclicked == 1:
             if self.game.r:
-                adjust_flashlight(self)
+                adjust_flashlight()
             else:
-                adjust_flashlight(self)
+                adjust_flashlight()
             self.f.drawoutline()
 
         if self.Fclicked == 2:
             if self.game.r:
-                adjust_flashlight(self)
+                adjust_flashlight()
             else:
-                adjust_flashlight(self)
+                adjust_flashlight()
 
             self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
             self.game.objects.insert(-2, self.f)
@@ -64,4 +64,3 @@ class GUI:
             self.Fclicked = 0
         elif not self.Frect.collidepoint(mousepos) and self.Fclicked == 1:
             self.Fclicked = 2
-
