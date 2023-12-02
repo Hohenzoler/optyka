@@ -22,27 +22,27 @@ class GUI:
         if self.Fclicked == 1:
             if self.game.r:
                 self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 100, mousepos[1]),
-                               (mousepos[0] + 100, mousepos[1] + 200),
-                               (mousepos[0], mousepos[1] + 200)])
+                               (mousepos[0] + 200, mousepos[1]),
+                               (mousepos[0] + 200, mousepos[1] + 100),
+                               (mousepos[0], mousepos[1] + 100)])
             else:
                 self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 100, mousepos[1]),
-                               (mousepos[0] + 100, mousepos[1] + 200),
-                               (mousepos[0], mousepos[1] + 200)])
+                               (mousepos[0] + 200, mousepos[1]),
+                               (mousepos[0] + 200, mousepos[1] + 100),
+                               (mousepos[0], mousepos[1] + 100)])
             self.f.drawoutline()
 
         if self.Fclicked == 2:
             if self.game.r:
                 self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 100, mousepos[1]),
-                               (mousepos[0] + 100, mousepos[1] + 200),
-                               (mousepos[0], mousepos[1] + 200)])
+                               (mousepos[0] + 200, mousepos[1]),
+                               (mousepos[0] + 200, mousepos[1] + 100),
+                               (mousepos[0], mousepos[1] + 100)])
             else:
                 self.f.adjust([(mousepos[0], mousepos[1]),
-                               (mousepos[0] + 100, mousepos[1]),
-                               (mousepos[0] + 100, mousepos[1] + 200),
-                               (mousepos[0], mousepos[1] + 200)])
+                               (mousepos[0] + 200, mousepos[1]),
+                               (mousepos[0] + 200, mousepos[1] + 100),
+                               (mousepos[0], mousepos[1] + 100)])
             self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
             self.game.objects.insert(-2, self.f)
             self.Fclicked = 0
@@ -61,9 +61,9 @@ class GUI:
         if self.Frect.collidepoint(mousepos) and self.Fclicked == 0:
             self.Fclicked = 1
             self.f = Flashlight(self.game, [(mousepos[0], mousepos[1]),
-                                            (mousepos[0] + 100, mousepos[1]),
-                                            (mousepos[0] + 100, mousepos[1] + 200),
-                                            (mousepos[0], mousepos[1] + 200)])
+                                            (mousepos[0] + 200, mousepos[1]),
+                                            (mousepos[0] + 200, mousepos[1] + 100),
+                                            (mousepos[0], mousepos[1] + 100)])
             sounds.selected_sound()
         elif self.Frect.collidepoint(mousepos) and self.Fclicked == 1:
             self.Fclicked = 0

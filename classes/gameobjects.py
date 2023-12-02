@@ -15,9 +15,40 @@ class GameObject:
 
     def render(self):
         if not self.selectedtrue:
-            pygame.draw.lines(self.game.screen, self.color, True, self.points, 2)
+            # Rotate the points of the object
+            rotated_points = self.rotate_points(self.points, self.angle)
+
+            # Draw the rotated lines
+            pygame.draw.lines(self.game.screen, self.color, True, rotated_points, 2)
         else:
             self.move()
+
+    def rotate_points(self, points, angle):
+        # Calculate the center of the object
+        center_x = sum(x for x, _ in points) / len(points)
+        center_y = sum(y for _, y in points) / len(points)
+
+        # Create a new list to store the rotated points
+        rotated_points = []
+
+        # Rotate each point around the center
+        for x, y in points:
+            # Translate the point to the origin
+            translated_x = x - center_x
+            translated_y = y - center_y
+
+            # Rotate the translated point
+            rotated_x = translated_x * math.cos(math.radians(angle)) - translated_y * math.sin(math.radians(angle))
+            rotated_y = translated_x * math.sin(math.radians(angle)) + translated_y * math.cos(math.radians(angle))
+
+            # Translate the rotated point back to the original position
+            final_x = rotated_x + center_x
+            final_y = rotated_y + center_y
+
+            # Add the rotated point to the list
+            rotated_points.append((final_x, final_y))
+
+        return rotated_points
 
     def adjust(self, points):
         self.points = points
