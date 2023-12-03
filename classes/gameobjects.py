@@ -63,7 +63,7 @@ class GameObject:
 
     def checkifclicked(self, mousepos):
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-        pygame.draw.polygon(mask_surface, (255, 255, 255, 0), self.points)
+        pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
 
         if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
             if self.on == 1:
@@ -73,7 +73,7 @@ class GameObject:
 
     def selected(self, mousepos):
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-        pygame.draw.polygon(mask_surface, (255, 255, 255, 0), self.points)
+        pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
 
         if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
             self.selectedtrue = True
