@@ -26,7 +26,7 @@ class GUI:
         self.f = Flashlight(self.game, [(mousepos[0], mousepos[1]),
                                         (mousepos[0] + 200, mousepos[1]),
                                         (mousepos[0] + 200, mousepos[1] + 100),
-                                        (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100)
+                                        (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100, image_path="images/torch.png")
 
         def adjust_flashlight():
             self.f.adjust(self.f.points)

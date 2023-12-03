@@ -2,10 +2,11 @@
 import pygame
 from classes import light, sounds
 import math
+from pygame.transform import rotate
 
 class GameObject:
     # Base class for game objects
-    def __init__(self, game, points, color, angle):
+    def __init__(self, game, points, color, angle, image_path=None):
         # Initialize common attributes
         self.game = game
         self.points = points
@@ -16,6 +17,8 @@ class GameObject:
         self.layer = 1
         self.placed = False
         self.angle = angle
+        self.image_path = image_path
+        self.image = pygame.image.load(image_path) if image_path else None
 
     def render(self):
         # Render the game object
@@ -23,8 +26,18 @@ class GameObject:
             # Rotate the points of the object
             rotated_points = self.rotate_points(self.points, self.angle)
 
-            # Draw the rotated lines
-            pygame.draw.polygon(self.game.screen, self.color, rotated_points)
+            # Render the image if available
+            if self.image:
+                center_x = sum(x for x, _ in rotated_points) / len(rotated_points)
+                center_y = sum(y for _, y in rotated_points) / len(rotated_points)
+                rotated_image = rotate(self.image, -self.angle)
+                image_rect = rotated_image.get_rect(center=(center_x, center_y))
+
+                # Blit the rotated image without transparency
+                self.game.screen.blit(rotated_image, image_rect.topleft)
+            else:
+                # Draw the rotated lines without transparency
+                pygame.draw.polygon(self.game.screen, self.color, rotated_points)
         else:
             self.move()
 
@@ -93,13 +106,15 @@ class GameObject:
 
 class Flashlight(GameObject):
     # Subclass for flashlight objects
-    def __init__(self, game, points, color, angle, islighting=True):
-        super().__init__(game, points, color, angle)
+    def __init__(self, game, points, color, angle, islighting=True, image_path=None):
+        super().__init__(game, points, color, angle, image_path)
         self.islighting = bool(islighting)
         self.light = None
         self.light_width = 8
         self.color = color
         self.angle = angle
+        self.image_path = image_path
+        self.image = pygame.image.load(image_path) if image_path else None
 
     def render(self):
         # Render the flashlight object
