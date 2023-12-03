@@ -1,10 +1,12 @@
+# gui.py
 import pygame
 from classes import sounds
 from classes.gameobjects import Flashlight
 
-
 class GUI:
+    # Graphical User Interface class
     def __init__(self, game, width, height):
+        # Initialize the GUI
         self.game = game
         self.width = width
         self.height = height // 10
@@ -15,10 +17,10 @@ class GUI:
         self.objects1 = []
         self.game.objects.append(self)
 
-
     def render(self):
+        # Render GUI elements
         mousepos = list(pygame.mouse.get_pos())
-        mousepos[0] -= 100 #centering the mouse
+        mousepos[0] -= 100  # Centering the mouse
         mousepos[1] -= 50
 
         self.f = Flashlight(self.game, [(mousepos[0], mousepos[1]),
@@ -57,6 +59,7 @@ class GUI:
         pygame.draw.rect(self.game.screen, button_color, self.Frect)
 
     def checkifclicked(self, mousepos):
+        # Check if GUI elements are clicked
         if self.Frect.collidepoint(mousepos) and self.Fclicked == 0:
             self.Fclicked = 1
             sounds.selected_sound()

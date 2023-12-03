@@ -1,9 +1,12 @@
+# gameobjects.py
 import pygame
 from classes import light, sounds
 import math
 
 class GameObject:
+    # Base class for game objects
     def __init__(self, game, points, color, angle):
+        # Initialize common attributes
         self.game = game
         self.points = points
         self.color = color
@@ -15,6 +18,7 @@ class GameObject:
         self.angle = angle
 
     def render(self):
+        # Render the game object
         if not self.selectedtrue:
             # Rotate the points of the object
             rotated_points = self.rotate_points(self.points, self.angle)
@@ -25,7 +29,7 @@ class GameObject:
             self.move()
 
     def rotate_points(self, points, angle):
-        # Calculate the center of the object
+        # Rotate points around the center of the object
         center_x = sum(x for x, _ in points) / len(points)
         center_y = sum(y for _, y in points) / len(points)
 
@@ -52,16 +56,20 @@ class GameObject:
         return rotated_points
 
     def adjust(self, points):
+        # Adjust the points of the object
         self.points = points
 
     def move(self):
+        # Move the object based on mouse position
         self.mousepos = pygame.mouse.get_pos()
         self.adjust([(x + self.mousepos[0], y + self.mousepos[1]) for x, y in self.points])
 
     def drawoutline(self):
+        # Draw an outline around the object
         pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
 
     def checkifclicked(self, mousepos):
+        # Check if the object is clicked
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
         pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
 
@@ -72,6 +80,7 @@ class GameObject:
                 self.on = 1
 
     def selected(self, mousepos):
+        # Check if the object is selected
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
         pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
 
@@ -82,16 +91,18 @@ class GameObject:
             self.selectedtrue = False
             sounds.placed_sound()
 
-class Flashlight(GameObject):  # Inheriting from GameObject
+class Flashlight(GameObject):
+    # Subclass for flashlight objects
     def __init__(self, game, points, color, angle, islighting=True):
-        super().__init__(game, points, color, angle)  # Call the constructor of the parent class
-        self.islighting = bool(islighting)  # it is boolean, true, false or maybe
+        super().__init__(game, points, color, angle)
+        self.islighting = bool(islighting)
         self.light = None
         self.light_width = 8
         self.color = color
         self.angle = angle
 
     def render(self):
+        # Render the flashlight object
         super().render()
 
         if self.islighting:
@@ -114,7 +125,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                 self.light = None
 
     def light_adjust(self, center_x, center_y):
-        # Calculate the direction vector from the center to one of the points
+        # Adjust the flashlight light position and direction
         direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
 
         # Calculate the length of the direction vector
@@ -131,6 +142,3 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
             # Calculate the angle between the normalized direction and the x-axis
             self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
-
-
-
