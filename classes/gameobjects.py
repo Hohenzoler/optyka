@@ -19,6 +19,7 @@ class GameObject:
         self.angle = angle
         self.image_path = image_path
         self.image = pygame.image.load(image_path) if image_path else None
+        self.width, self.height = pygame.display.get_surface().get_size()
 
     def render(self):
         # Render the game object
@@ -72,10 +73,18 @@ class GameObject:
         # Adjust the points of the object
         self.points = points
 
-    def move(self):
-        # Move the object based on mouse position
+    def move(self):  # code for moving object with mouse
         self.mousepos = pygame.mouse.get_pos()
-        self.adjust([(x + self.mousepos[0], y + self.mousepos[1]) for x, y in self.points])
+        self.x = self.mousepos[0] - self.width // 2
+        self.y = self.mousepos[1] - self.height // 2
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        # Assuming self.transparent_surface is a surface with transparency
+        # Blit the rotated image with transparency
+        rotated_image = rotate(self.image, -self.angle)
+        image_rect = rotated_image.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
+        self.game.screen.blit(rotated_image, image_rect.topleft)
+
 
     def drawoutline(self):
         # Draw an outline around the object
