@@ -1,9 +1,12 @@
 from classes import game
 from gui import gui_main as gui
 import pygame
+import settingsSetup
 
-width = 1000
-height = 700
+settings = settingsSetup.start()
+
+width = int(settings[0])
+height = int(settings[1])
 programIcon = pygame.image.load('images/torch.png')
 
 pygame.display.set_icon(programIcon)
