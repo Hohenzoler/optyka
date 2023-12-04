@@ -1,3 +1,2 @@
 # optyka
 
-a
