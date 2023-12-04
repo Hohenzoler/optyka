@@ -19,7 +19,6 @@ class GameObject:
         self.angle = angle
         self.image_path = image_path
         self.image = pygame.image.load(image_path) if image_path else None
-        self.width, self.height = pygame.display.get_surface().get_size()
 
     def render(self):
         # Render the game object
@@ -73,18 +72,28 @@ class GameObject:
         # Adjust the points of the object
         self.points = points
 
-    def move(self):  # code for moving object with mouse
+    def move(self):
+        # code for moving object with mouse
         self.mousepos = pygame.mouse.get_pos()
-        self.x = self.mousepos[0] - self.width // 2
-        self.y = self.mousepos[1] - self.height // 2
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        # Calculate the average position of the object's vertices
+        center_x = sum(x for x, _ in self.points) / len(self.points)
+        center_y = sum(y for _, y in self.points) / len(self.points)
+
+        # Update the position based on the mouse cursor
+        self.x = self.mousepos[0] - center_x
+        self.y = self.mousepos[1] - center_y
 
         # Assuming self.transparent_surface is a surface with transparency
         # Blit the rotated image with transparency
-        rotated_image = rotate(self.image, -self.angle)
-        image_rect = rotated_image.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
-        self.game.screen.blit(rotated_image, image_rect.topleft)
-
+        if self.image:
+            rotated_image = rotate(self.image, -self.angle)
+            image_rect = rotated_image.get_rect(center=(self.x + center_x, self.y + center_y))
+            self.game.screen.blit(rotated_image, image_rect.topleft)
+        else:
+            # Draw the rotated lines without transparency
+            rotated_points = self.rotate_points(self.points, self.angle)
+            pygame.draw.polygon(self.game.screen, self.color, [(x + self.x, y + self.y) for x, y in rotated_points])
 
     def drawoutline(self):
         # Draw an outline around the object
@@ -145,6 +154,7 @@ class Flashlight(GameObject):
 
                     # Render the light before blitting the rotated surface
                     light.Light.render(self.light)
+
             elif not self.on:
                 self.light = None
 
