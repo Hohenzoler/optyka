@@ -93,20 +93,17 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         super().render()
 
         if self.islighting:
-            if not self.placed:
-                if self.on:
-                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                    self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
+            if self.on:
+                # Calculate the starting point of the light from the center of the rotated rectangle/surface
+                self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
 
-                    self.light_adjust()
+                self.light_adjust()
 
-                    self.light = light.Light(self.game, (
-                        (self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),
-                                             "white", self.angle, self.light_width)
-                    self.placed = True
+                self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
 
-                    # Render the light before blitting the rotated surface
-                    light.Light.render(self.light)
+                # Render the light before blitting the rotated surface
+                light.Light.render(self.light)
+                self.game.objects.remove(self.light)
             elif not self.on:
                 self.light = None
 
