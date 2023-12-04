@@ -29,7 +29,7 @@ class GUI:
                                         (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100, image_path="images/torch.png")
 
         def adjust_flashlight():
-            self.f.adjust(self.f.points)
+            self.f.adjust(mousepos[0], mousepos[1], 0)
 
         if self.Fclicked == 1:
             if self.game.r:
@@ -58,12 +58,18 @@ class GUI:
         pygame.draw.rect(self.game.screen, (100, 100, 100), self.rect)
         pygame.draw.rect(self.game.screen, button_color, self.Frect)
 
-    def checkifclicked(self, mousepos):
-        # Check if GUI elements are clicked
-        if self.Frect.collidepoint(mousepos) and self.Fclicked == 0:
-            self.Fclicked = 1
-            sounds.selected_sound()
-        elif self.Frect.collidepoint(mousepos) and self.Fclicked == 1:
-            self.Fclicked = 0
-        elif not self.Frect.collidepoint(mousepos) and self.Fclicked == 1:
+    def checkifclicked(self, pos):
+        if self.rect.collidepoint(pos[0], pos[1]):
+            mousepos = pygame.mouse.get_pos()
+            if self.Fclicked == 0:
+                self.Fclicked = 1
+                self.f = Flashlight(self.game, [(mousepos[0], mousepos[1]),
+                                    (mousepos[0] + 200, mousepos[1]),
+                                    (mousepos[0] + 200, mousepos[1] + 100),
+                                    (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100, image_path="images/torch.png")
+                sounds.selected_sound()
+            elif self.rect.collidepoint(mousepos) and self.Fclicked == 1:
+                self.Fclicked = 0
+                sounds.selected_sound()
+        elif self.rect.collidepoint(pos) is False and self.Fclicked == 1:
             self.Fclicked = 2
