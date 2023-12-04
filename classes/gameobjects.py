@@ -36,7 +36,12 @@ class GameObject:
             # Blit the rotated surface at the rotated_rect's topleft
             self.game.screen.blit(self.rotated_surface, self.rotated_rect.topleft)
         else:
-            self.move()
+            mousepos = pygame.mouse.get_pos()
+            if self.game.r:
+                self.adjust(mousepos[0], mousepos[1], 1)
+            else:
+                self.adjust(mousepos[0], mousepos[1], 0)
+            self.drawoutline()
 
     def adjust(self, x, y, d_angle):
         self.angle += d_angle

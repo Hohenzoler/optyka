@@ -58,7 +58,8 @@ class Button:
             mousepos = pygame.mouse.get_pos()
             if self.clicked == 0:
                 self.clicked = 1
-                self.f = gameobjects.Flashlight(self.game, mousepos[0], mousepos[1])
+                if self.number == 0:
+                    self.f = gameobjects.Flashlight(self.game, mousepos[0], mousepos[1])
                 sounds.selected_sound()
             elif self.rect.collidepoint(mousepos) and self.clicked == 1:
                 self.clicked = 0
