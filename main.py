@@ -1,5 +1,5 @@
 from classes import game
-from gui import gui
+from gui import gui_main as gui
 import pygame
 
 width = 1000

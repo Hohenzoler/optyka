@@ -1,5 +1,5 @@
 import pygame
-from gui import gui
+from gui import gui_main as gui
 from classes import gameobjects
 
 
