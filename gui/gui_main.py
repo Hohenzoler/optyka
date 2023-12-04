@@ -12,7 +12,7 @@ class GUI:
         self.game.objects.append(self)
         self.f = None
 
-        self.buttons = [button.Button(self.game, x, self.height) for x in range(2)] #creates buttons
+        self.buttons = [button.Button(self.game, x, self.height) for x in range(3)] #creates buttons
 
 
     def render(self):

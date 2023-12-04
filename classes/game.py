@@ -12,7 +12,7 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
         self.run = True
-        self.fps = 120
+        self.fps = 165
         self.tick = int((1 / self.fps) * 1000)
         self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
         self.rightclickedmousepos = None  # right click mouse positon
