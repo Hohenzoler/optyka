@@ -90,7 +90,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.light_width = 8
 
     def render(self):
-        super().render()
+
 
         if self.islighting:
             if self.on:
@@ -106,6 +106,8 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                 self.game.objects.remove(self.light)
             elif not self.on:
                 self.light = None
+
+            super().render()
 
     def light_adjust(self):
         self.light_start_x = self.rotated_center_x
