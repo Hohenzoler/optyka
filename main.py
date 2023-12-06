@@ -2,12 +2,16 @@ from classes import game
 from gui import gui_main as gui
 import pygame
 import settingsSetup
-import startscreen
+from gui import startscreen as ss
 
 settings = settingsSetup.start()
 
 width = int(settings[0])
 height = int(settings[1])
+
+startscreen = ss.StartScreen(width, height)
+
+
 position = settings[2]
 programIcon = pygame.image.load('images/torch.png')
 
