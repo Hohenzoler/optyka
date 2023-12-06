@@ -2,6 +2,7 @@ from classes import game
 from gui import gui_main as gui
 import pygame
 import settingsSetup
+import startscreen
 
 settings = settingsSetup.start()
 
