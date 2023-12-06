@@ -2,12 +2,24 @@ import pygame
 from classes import gameobjects, sounds
 
 class Button:
-    def __init__(self, game, number, y):
+    def __init__(self, game, number, width, y, position):
         self.game = game
         self.number = number
         self.screenheight = self.game.height
         self.y = y
-        self.rect = pygame.Rect(60*self.number + 10, self.screenheight - self.y + 10, self.y - 20, self.y - 20)
+        self.guiwith = width
+
+        self.position = position
+
+        if self.position == 'buttom':
+            self.rect = pygame.Rect(60 * self.number + 10, self.screenheight - self.y + 10, self.y - 20, self.y - 20)
+        elif self.position == 'left':
+            self.rect = pygame.Rect(20, 60 * self.number + 10, self.y - 10, self.y - 20)
+        elif self.position == 'right':
+            self.rect = pygame.Rect(self.guiwith - self.y, 60 * self.number + 10, self.y - 20, self.y - 20)
+        elif self.position == 'top':
+            self.rect = pygame.Rect(60 * self.number + 10, 10, self.y - 10, self.y - 20)
+
 
         if self.number == 0:
             self.color = (255, 0, 0)

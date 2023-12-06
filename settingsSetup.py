@@ -13,7 +13,9 @@ def start():
         with open("settings.txt", 'a') as f:
             f.write('WIDTH=1000\n')
             f.write('HEIGHT=700\n')
+            f.write('POSITION=buttom\n')
             f.close()
         settings.append(1000)
         settings.append(700)
+        settings.append('buttom')
     return settings
