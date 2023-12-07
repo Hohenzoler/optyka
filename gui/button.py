@@ -81,3 +81,47 @@ class Button:
 
 
 
+class ButtonForStartScreen:
+    def __init__(self, number, StartScreen):
+        self.number = number
+        self.startscreen = StartScreen
+        self.startscreen.objects.append(self)
+        self.font = pygame.font.Font('freesansbold.ttf',  20)
+
+        self.width = self.startscreen.width // 3
+        self.height = self.startscreen.height // 10
+
+
+        #adjust y based on the number
+        gap = 15
+        self.y = (self.startscreen.height // 2) - self.height // 2 + (self.height + gap) * number
+
+        self.x = (self.startscreen.width // 2) - self.width // 2
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        if self.number == 0:
+            self.text = self.font.render('Start', True, 'black')
+
+        elif self.number == 1:
+            self.text = self.font.render('Settings', True, 'black')
+
+        else:
+            self.text = self.font.render('@', True, 'black')
+
+        self.textRect = self.text.get_rect()
+        self.textRect.center = (self.rect[0] + (self.rect[2] // 2), self.rect[1] + (self.rect[3] // 2))
+
+    def checkcollision(self, pos):
+        if self.rect.collidepoint(pos[0], pos[1]):
+            if self.number == 0:
+                self.startscreen.run = False
+            elif self.number == 1:
+                print('1')
+            else:
+                raise NotImplementedError('button function not yet added')
+
+
+    def render(self):
+        pygame.draw.rect(self.startscreen.screen, (255,255,255), self.rect)
+        self.startscreen.screen.blit(self.text, self.textRect)
+
