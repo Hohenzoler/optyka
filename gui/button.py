@@ -33,26 +33,37 @@ class Button:
         self.clicked = 0 #0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
 
     def render(self):
-        mousepos = pygame.mouse.get_pos()
-        # flashlight
-        if self.number == 0:
-            if self.clicked == 1:
-                if self.game.r:
-                    self.f.adjust(mousepos[0], mousepos[1], 1)
-                else:
-                    self.f.adjust(mousepos[0], mousepos[1], 0)
-                self.f.drawoutline()  # displaying a semi-transparent outline of the flashlight
+        # Render GUI elements
+        mousepos = list(pygame.mouse.get_pos())
+        mousepos[0] -= 100  # Centering the mouse
+        mousepos[1] -= 50
 
-            if self.clicked == 2:
-                if self.game.r:
-                    self.f.adjust(mousepos[0], mousepos[1], 1)
-                else:
-                    self.f.adjust(mousepos[0], mousepos[1], 0)
-                self.f.light_adjust()
-                self.game.objects.insert(-2, self.f)
-                self.clicked = 0
-                self.f = None
-                sounds.placed_sound()
+        self.f = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]),
+                                        (mousepos[0] + 200, mousepos[1]),
+                                        (mousepos[0] + 200, mousepos[1] + 100),
+                                        (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100, image_path="images/torch.png")
+
+        def adjust_flashlight():
+            self.f.adjust(self.f.points)
+
+        if self.clicked == 1:
+            if self.game.r:
+                adjust_flashlight()
+            else:
+                adjust_flashlight()
+            self.f.drawoutline()
+
+        if self.clicked == 2:
+            if self.game.r:
+                adjust_flashlight()
+            else:
+                adjust_flashlight()
+
+            self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
+            self.game.objects.insert(-2, self.f)
+            self.clicked = 0
+            self.f = None
+            sounds.placed_sound()
 
         elif self.number == 1:
             if self.clicked == 1:
@@ -71,7 +82,19 @@ class Button:
             if self.clicked == 0:
                 self.clicked = 1
                 if self.number == 0:
-                    self.f = gameobjects.Flashlight(self.game, mousepos[0], mousepos[1])
+                    self.f = gameobjects.Flashlight(
+                        self.game,
+                        [
+                            (mousepos[0], mousepos[1]),
+                            (mousepos[0] + 200, mousepos[1]),
+                            (mousepos[0] + 200, mousepos[1] + 100),
+                            (mousepos[0], mousepos[1] + 100)
+                        ],
+                        (255, 0, 0),
+                        100,
+                        image_path="images/torch.png"
+                    )
+
                 sounds.selected_sound()
             elif self.rect.collidepoint(mousepos) and self.clicked == 1:
                 self.clicked = 0

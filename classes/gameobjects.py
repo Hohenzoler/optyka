@@ -1,117 +1,156 @@
 import pygame
 from classes import light, sounds
 import math
-
+from pygame.transform import rotate
 
 class GameObject:
 
-    def __init__(self, game, x, y, height, width, angle, color, image_path):
+    def __init__(self, game, points, color, angle, image_path=None):
         self.game = game
-        self.width = width
-        self.height = height
-        self.x = x - self.width // 2  # adjusted so that when someone creates a flashlight it places in the correct spot
-        self.y = y - self.height // 2
+        self.points = points
         self.angle = angle
         self.color = color
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.on = True
         self.selectedtrue = False
         self.mousepos = None
         self.layer = 1
         self.placed = False
         self.image_path = image_path
-        self.image = pygame.image.load(image_path)
-        self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        self.surface.blit(self.image, (0, 0))
-        self.transparent_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        self.transparent_surface.blit(self.image, (0, 0))
-        self.transparent_surface.set_alpha(100)
+        self.image = pygame.image.load(image_path) if image_path else None
 
     def render(self):
+        # Render the game object
         if not self.selectedtrue:
-            # Rotate the surface around its center
-            self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
-            self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
+            # Rotate the points of the object
+            rotated_points = self.rotate_points(self.points, self.angle)
 
-            # Blit the rotated surface at the rotated_rect's topleft
-            self.game.screen.blit(self.rotated_surface, self.rotated_rect.topleft)
-        else:
-            mousepos = pygame.mouse.get_pos()
-            if self.game.r:
-                self.adjust(mousepos[0], mousepos[1], 1)
+            # Render the image if available
+            if self.image:
+                center_x = sum(x for x, _ in rotated_points) / len(rotated_points)
+                center_y = sum(y for _, y in rotated_points) / len(rotated_points)
+                rotated_image = rotate(self.image, -self.angle)
+                image_rect = rotated_image.get_rect(center=(center_x, center_y))
+
+                # Blit the rotated image without transparency
+                self.game.screen.blit(rotated_image, image_rect.topleft)
             else:
-                self.adjust(mousepos[0], mousepos[1], 0)
-            self.drawoutline()
+                # Draw the rotated lines without transparency
+                pygame.draw.polygon(self.game.screen, self.color, rotated_points)
+        else:
+            self.move()
 
-    def adjust(self, x, y, d_angle):
-        self.angle += d_angle
-        self.x = x - self.width // 2
-        self.y = y - self.height // 2
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.rotated_surface = pygame.transform.rotate(self.surface, self.angle)
-        self.rotated_rect = self.rotated_surface.get_rect(center=self.rect.center)
-        self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
+    def rotate_points(self, points, angle):
+        # Rotate points around the center of the object
+        center_x = sum(x for x, _ in points) / len(points)
+        center_y = sum(y for _, y in points) / len(points)
 
-    def move(self):  # code for movimg object with mouse
+        # Create a new list to store the rotated points
+        rotated_points = []
+
+        # Rotate each point around the center
+        for x, y in points:
+            # Translate the point to the origin
+            translated_x = x - center_x
+            translated_y = y - center_y
+
+            # Rotate the translated point
+            rotated_x = translated_x * math.cos(math.radians(angle)) - translated_y * math.sin(math.radians(angle))
+            rotated_y = translated_x * math.sin(math.radians(angle)) + translated_y * math.cos(math.radians(angle))
+
+            # Translate the rotated point back to the original position
+            final_x = rotated_x + center_x
+            final_y = rotated_y + center_y
+
+            # Add the rotated point to the list
+            rotated_points.append((final_x, final_y))
+
+        return rotated_points
+
+    def adjust(self, points):
+        # Adjust the points of the object
+        self.points = points
+
+    def move(self):
+        # Move the object based on mouse position
         self.mousepos = pygame.mouse.get_pos()
-        self.x = self.mousepos[0] - self.width // 2
-        self.y = self.mousepos[1] - self.height // 2
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.game.screen.blit(self.transparent_surface, (self.x, self.y))
-
+        self.adjust([(x + self.mousepos[0], y + self.mousepos[1]) for x, y in self.points])
     def drawoutline(self):
-        rotated_surface = pygame.transform.rotate(self.transparent_surface, self.angle)
-        rotated_rect = rotated_surface.get_rect(center=self.rect.center)
-        self.game.screen.blit(rotated_surface,
-                              rotated_rect.topleft)  # draws a transparent outline of the flashlight at the mouse pos
+        # Draw an outline around the object
+        pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
 
-    def checkifclicked(self, mousepos):  # checks if object is clicked
-        if self.rect.collidepoint(mousepos):
+    def checkifclicked(self, mousepos):
+        # Check if the object is clicked
+        mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+        pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
+
+        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
             if self.on == 1:
                 self.on = 0
             else:
                 self.on = 1
 
-    def selected(self, mousepos):  # checks if object is selected
-        if self.rect.collidepoint(mousepos) and self.selectedtrue is False:
+    def selected(self, mousepos):
+        # Check if the object is selected
+        mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+        pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
+
+        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
             self.selectedtrue = True
             sounds.selected_sound()
-
-        elif self.rect.collidepoint(mousepos) and self.selectedtrue is True:
+        elif mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and self.selectedtrue:
             self.selectedtrue = False
             sounds.placed_sound()
 
-
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, x, y, islighting=True):
-        super().__init__(game, x, y, 100, 200, 0, "red", "images/torch.png")  # Call the constructor of the parent class
-        self.islighting = bool(islighting)  # it is boolean, true, false or maybe
+    def __init__(self, game, points, color, angle, islighting=True, image_path=None):
+        super().__init__(game, points, color, angle, image_path)
+        self.islighting = bool(islighting)
         self.light = None
         self.light_width = 8
+        self.color = color
+        self.angle = angle
+        self.image_path = image_path
+        self.image = pygame.image.load(image_path) if image_path else None
+
 
     def render(self):
-
+        # Render the flashlight object
+        super().render()
 
         if self.islighting:
-            if self.on:
-                # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                self.rotated_center_x, self.rotated_center_y = self.rotated_rect.center
+            if not self.placed:
+                if self.on:
+                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
+                    center_x = sum(x for x, _ in self.points) / len(self.points)
+                    center_y = sum(y for _, y in self.points) / len(self.points)
 
-                self.light_adjust()
+                    self.light_adjust(center_x, center_y)
 
-                self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
+                    self.light = light.Light(self.game, [(center_x, center_y),
+                                                         (self.light_end_x, self.light_end_y)], "white", self.angle,
+                                             self.light_width)
+                    self.placed = True
 
-                # Render the light before blitting the rotated surface
-                light.Light.render(self.light)
-                self.game.objects.remove(self.light)
+                    # Render the light before blitting the rotated surface
+                    light.Light.render(self.light)
             elif not self.on:
                 self.light = None
 
-            super().render()
+    def light_adjust(self, center_x, center_y):
+        # Adjust the flashlight light position and direction
+        direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
 
-    def light_adjust(self):
-        self.light_start_x = self.rotated_center_x
-        self.light_start_y = self.rotated_center_y
+        # Calculate the length of the direction vector
+        length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
 
-        self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
-        self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
+        # Check if the length is not zero before normalizing
+        if length != 0:
+            # Normalize the direction vector
+            normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
+
+            # Calculate the end point of the light
+            self.light_end_x = center_x + normalized_direction[0] * 1000
+            self.light_end_y = center_y + normalized_direction[1] * 1000
+
+            # Calculate the angle between the normalized direction and the x-axis
+            self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
