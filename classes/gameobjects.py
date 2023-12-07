@@ -108,7 +108,7 @@ class Flashlight(Mirror):  # Inheriting from GameObject
                                              "white", self.angle, self.light_width)
                 self.light.trace_path()
                 self.placed = True
-                self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
+                # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
 
                 # Render the light before blitting the rotated surface
                 light.Light.render(self.light)
