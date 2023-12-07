@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from classes import light, sounds
 import math
@@ -80,9 +82,11 @@ class GameObject:
         elif self.rect.collidepoint(mousepos) and self.selectedtrue is True:
             self.selectedtrue = False
             sounds.placed_sound()
+class Mirror(GameObject):
+    def __init__(self, game, x, y, height, width, angle, color, image_path):
+        super().__init__( game, x, y, height, width, angle, color, image_path)  # Call the constructor of the parent class
 
-
-class Flashlight(GameObject):  # Inheriting from GameObject
+class Flashlight(Mirror):  # Inheriting from GameObject
     def __init__(self, game, x, y, islighting=True):
         super().__init__(game, x, y, 100, 200, 0, "red", "images/torch.png")  # Call the constructor of the parent class
         self.islighting = bool(islighting)  # it is boolean, true, false or maybe
@@ -90,7 +94,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.light_width = 8
 
     def render(self):
-
+        super().render()
 
         if self.islighting:
             if self.on:
@@ -99,6 +103,11 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                 self.light_adjust()
 
+                self.light = light.Light(self.game,
+                                             [[self.light_start_x, self.light_start_y]],
+                                             "white", self.angle, self.light_width)
+                self.light.trace_path()
+                self.placed = True
                 self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
 
                 # Render the light before blitting the rotated surface
@@ -115,3 +124,6 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
         self.light_end_x = self.light_start_x + math.cos(math.radians(self.angle)) * 1000
         self.light_end_y = self.light_start_y - math.sin(math.radians(self.angle)) * 1000
+
+
+
