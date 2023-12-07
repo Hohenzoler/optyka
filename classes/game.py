@@ -1,5 +1,5 @@
 import pygame
-from gui import gui
+from gui import gui_main as gui
 from classes import gameobjects
 
 
@@ -10,9 +10,9 @@ class Game:
         self.objects = []
         # initializing pygame
         pygame.init()
-        self.screen = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((self.width, self.height))
         self.run = True
-        self.fps = 120
+        self.fps = 165
         self.tick = int((1 / self.fps) * 1000)
         self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
         self.rightclickedmousepos = None  # right click mouse positon
