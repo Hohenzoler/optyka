@@ -18,7 +18,7 @@ class Button:
         elif self.position == 'right':
             self.rect = pygame.Rect(self.guiwith - self.y, 60 * self.number + 10, self.y - 20, self.y - 20)
         elif self.position == 'top':
-            self.rect = pygame.Rect(60 * self.number + 10, 10, self.y - 10, self.y - 20)
+            self.rect = pygame.Rect(60 * self.number + 10, 10, self.y - 20, self.y - 20)
 
 
         if self.number == 0:

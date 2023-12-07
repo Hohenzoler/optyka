@@ -2,14 +2,23 @@ import pygame
 
 pygame.init()
 class Button:
-    def __init__(self, number, StartScreen, rect):
-        self.rect = rect
+    def __init__(self, number, StartScreen):
         self.number = number
         self.startscreen = StartScreen
         self.startscreen.objects.append(self)
         self.font = pygame.font.Font('freesansbold.ttf',  20)
 
+
         if self.number == 0:
+            self.width = self.startscreen.width//3
+            self.height = self.startscreen.height//10
+
+            self.x = (self.startscreen.width//2) - self.width//2
+            self.y = (self.startscreen.height // 2) - self.height // 2
+
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+
             self.text = self.font.render('Start', True, 'black')
             self.textRect = self.text.get_rect()
             self.textRect.center = (self.rect[0] + (self.rect[2] // 2), self.rect[1] + (self.rect[3] // 2))
@@ -20,8 +29,9 @@ class Button:
 
     def render(self):
         pygame.draw.rect(self.startscreen.screen, (255,255,255), self.rect)
-        self.startscreen.screen.blit(self.text, self.textRect)
+        # Main game loop
 
+        self.startscreen.screen.blit(self.text, self.textRect)
 
 
 class StartScreen:
@@ -34,12 +44,12 @@ class StartScreen:
         self.font = pygame.font.Font('freesansbold.ttf', self.width//20)
         self.maintext = self.font.render('Optyka', True, 'white')
         self.maintextRect = self.maintext.get_rect()
-        self.maintextRect.center = (width//2, height//2)
+        self.maintextRect.center = (width//2, (height//2) - 200)
 
 
         pygame.display.set_caption('Optyka')
 
-        playbutton = Button(0, self, pygame.Rect(100, 100, 200, 200))
+        playbutton = Button(0, self)
 
         self.mainloop()
 
