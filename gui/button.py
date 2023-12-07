@@ -116,7 +116,7 @@ class ButtonForStartScreen:
             if self.number == 0:
                 self.startscreen.run = False
             elif self.number == 1:
-                print('1')
+                self.startscreen.mode = 'settings'
             else:
                 raise NotImplementedError('button function not yet added')
 
