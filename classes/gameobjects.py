@@ -6,20 +6,21 @@ from pygame.transform import rotate
 class GameObject:
 
     def __init__(self, game, points, color, angle, image_path=None):
+        # Initialize common attributes
         self.game = game
         self.points = points
-        self.angle = angle
         self.color = color
         self.on = True
         self.selectedtrue = False
         self.mousepos = None
         self.layer = 1
         self.placed = False
+        self.angle = angle
         self.image_path = image_path
         self.image = pygame.image.load(image_path) if image_path else None
 
+
     def render(self):
-        # Render the game object
         if not self.selectedtrue:
             # Rotate the points of the object
             rotated_points = self.rotate_points(self.points, self.angle)
@@ -37,7 +38,12 @@ class GameObject:
                 # Draw the rotated lines without transparency
                 pygame.draw.polygon(self.game.screen, self.color, rotated_points)
         else:
-            self.move()
+            mousepos = pygame.mouse.get_pos()
+            if self.game.r:
+                self.adjust(mousepos[0], mousepos[1], 1)
+            else:
+                self.adjust(mousepos[0], mousepos[1], 0)
+            self.drawoutline()
 
     def rotate_points(self, points, angle):
         # Rotate points around the center of the object
@@ -66,14 +72,50 @@ class GameObject:
 
         return rotated_points
 
-    def adjust(self, points):
-        # Adjust the points of the object
-        self.points = points
+    def adjust(self, x, y, d_angle):
+        # Adjust the object's position and angle
+        self.angle += d_angle
+        self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
+        self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
+
+        # Update the points based on the new position and angle
+        self.points = self.rotate_points(self.points, d_angle)
+
+        # Assuming self.transparent_surface is a surface with transparency
+        # Blit the rotated image with transparency
+        if self.image:
+            rotated_image = pygame.transform.rotate(self.image, -self.angle)
+            image_rect = rotated_image.get_rect(center=(self.x + sum(pt[0] for pt in self.points) / len(self.points),
+                                                        self.y + sum(pt[1] for pt in self.points) / len(self.points)))
+            self.game.screen.blit(rotated_image, image_rect.topleft)
+        else:
+            # Draw the rotated lines without transparency
+            rotated_points = self.rotate_points(self.points, self.angle)
+            pygame.draw.polygon(self.game.screen, self.color, [(x + self.x, y + self.y) for x, y in rotated_points])
 
     def move(self):
-        # Move the object based on mouse position
+        # code for moving object with mouse
         self.mousepos = pygame.mouse.get_pos()
-        self.adjust([(x + self.mousepos[0], y + self.mousepos[1]) for x, y in self.points])
+
+        # Calculate the average position of the object's vertices
+        center_x = sum(x for x, _ in self.points) / len(self.points)
+        center_y = sum(y for _, y in self.points) / len(self.points)
+
+        # Update the position based on the mouse cursor
+        self.x = self.mousepos[0] - center_x
+        self.y = self.mousepos[1] - center_y
+
+        # Assuming self.transparent_surface is a surface with transparency
+        # Blit the rotated image with transparency
+        if self.image:
+            rotated_image = rotate(self.image, -self.angle)
+            image_rect = rotated_image.get_rect(center=(self.x + center_x, self.y + center_y))
+            self.game.screen.blit(rotated_image, image_rect.topleft)
+        else:
+            # Draw the rotated lines without transparency
+            rotated_points = self.rotate_points(self.points, self.angle)
+            pygame.draw.polygon(self.game.screen, self.color, [(x + self.x, y + self.y) for x, y in rotated_points])
+
     def drawoutline(self):
         # Draw an outline around the object
         pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
@@ -101,6 +143,7 @@ class GameObject:
             self.selectedtrue = False
             sounds.placed_sound()
 
+
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, points, color, angle, islighting=True, image_path=None):
         super().__init__(game, points, color, angle, image_path)
@@ -111,7 +154,6 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.angle = angle
         self.image_path = image_path
         self.image = pygame.image.load(image_path) if image_path else None
-
 
     def render(self):
         # Render the flashlight object
@@ -133,6 +175,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                     # Render the light before blitting the rotated surface
                     light.Light.render(self.light)
+
             elif not self.on:
                 self.light = None
 

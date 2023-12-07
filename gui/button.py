@@ -44,7 +44,8 @@ class Button:
                                         (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100, image_path="images/torch.png")
 
         def adjust_flashlight():
-            self.f.adjust(self.f.points)
+            self.f.adjust(mousepos[0], mousepos[1], 0)
+
 
         if self.clicked == 1:
             if self.game.r:
@@ -70,8 +71,6 @@ class Button:
                 print('Hello Terraria User')
             if self.clicked == 2:
                 self.clicked = 0
-
-
 
 
         pygame.draw.rect(self.game.screen, self.color, self.rect)
