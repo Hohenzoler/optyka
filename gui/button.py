@@ -41,7 +41,7 @@ class Button:
         self.f = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]),
                                         (mousepos[0] + 200, mousepos[1]),
                                         (mousepos[0] + 200, mousepos[1] + 100),
-                                        (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100, image_path="images/torch.png")
+                                        (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 180, image_path="images/torch.png")
         self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
                                                 (mousepos[0] + 200, mousepos[1]),
                                                 (mousepos[0] + 50, mousepos[1] + 100),
@@ -101,7 +101,7 @@ class Button:
                             (mousepos[0], mousepos[1] + 100)
                         ],
                         (255, 0, 0),
-                        100,
+                        0,
                         image_path="images/torch.png"
                     )
                 elif self.number == 1:
