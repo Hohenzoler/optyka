@@ -18,7 +18,16 @@ class GameObject:
         self.angle = angle
         self.image_path = image_path
         self.image = pygame.image.load(image_path) if image_path else None
+        self.rect = pygame.Rect(0, 0, 0, 0)
+        self.update_rect()
 
+    def update_rect(self):
+        # Update the rect based on the points
+        min_x = min(pt[0] for pt in self.points)
+        min_y = min(pt[1] for pt in self.points)
+        max_x = max(pt[0] for pt in self.points)
+        max_y = max(pt[1] for pt in self.points)
+        self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
 
     def render(self):
         if not self.selectedtrue:
@@ -143,6 +152,10 @@ class GameObject:
             self.selectedtrue = False
             sounds.placed_sound()
 
+class Mirror(GameObject):
+    def __init__(self, game, points, color, angle, islighting=True, image_path=None):
+        super().__init__(game, points, color, angle, image_path)
+
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, points, color, angle, islighting=True, image_path=None):
@@ -156,30 +169,34 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.image = pygame.image.load(image_path) if image_path else None
 
     def render(self):
-        # Render the flashlight object
         super().render()
 
         if self.islighting:
-            if not self.placed:
-                if self.on:
-                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                    center_x = sum(x for x, _ in self.points) / len(self.points)
-                    center_y = sum(y for _, y in self.points) / len(self.points)
+            if self.on:
+                # Calculate the starting point of the light from the center of the rotated rectangle/surface
+                center_x = sum(x for x, _ in self.points) / len(self.points)
+                center_y = sum(y for _, y in self.points) / len(self.points)
 
-                    self.light_adjust(center_x, center_y)
+                self.light_adjust(center_x, center_y)
 
-                    self.light = light.Light(self.game, [(center_x, center_y),
-                                                         (self.light_end_x, self.light_end_y)], "white", self.angle,
-                                             self.light_width)
-                    self.placed = True
+                self.light = light.Light(self.game,
+                                         [[self.light_start_x, self.light_start_y]],
+                                         "white", -1*self.angle, self.light_width)
+                self.light.trace_path()
+                self.placed = True
+                # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
 
-                    # Render the light before blitting the rotated surface
-                    light.Light.render(self.light)
-
+                # Render the light before blitting the rotated surface
+                light.Light.render(self.light)
+                self.game.objects.remove(self.light)
             elif not self.on:
                 self.light = None
 
+            super().render()
+
     def light_adjust(self, center_x, center_y):
+        self.light_start_x = center_x
+        self.light_start_y = center_y
         # Adjust the flashlight light position and direction
         direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
 
