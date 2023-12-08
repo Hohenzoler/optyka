@@ -3,8 +3,8 @@ import os.path
 def start():
     settings = []
 
-    if os.path.exists('settings.txt'):
-        with open('settings.txt', 'r') as f:
+    if os.path.exists('settings.ini'):
+        with open('settings.ini', 'r') as f:
             for row in f:
                 s = row.split('=', 1)[1].strip()
                 settings.append(s)
