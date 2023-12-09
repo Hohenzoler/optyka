@@ -49,7 +49,7 @@ class DropdownMenu:
         else:
             for i, option in enumerate(self.options):
                 option_rect = pygame.Rect(self.x, self.y + (i + 1) * self.height, self.width, self.height)
-                if option_rect.collidepoint(event.pos):
+                if option_rect.collidepoint(event.pos) and self.expanded:
                     self.selected_option = option
                     self.expanded = False
                     self.handle_button_click(option)
@@ -89,6 +89,7 @@ class DropdownMenu:
                 f.write(json_string)
                 f.close()
 
+            print(position)
 
 
 
