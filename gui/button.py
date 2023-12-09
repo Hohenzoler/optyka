@@ -38,10 +38,11 @@ class Button:
         mousepos[0] -= 100  # Centering the mouse
         mousepos[1] -= 50
 
-        self.f = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]),
-                                        (mousepos[0] + 200, mousepos[1]),
-                                        (mousepos[0] + 200, mousepos[1] + 100),
-                                        (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 180, image_path="images/torch.png")
+        # self.f = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]),
+        #                                 (mousepos[0] + 200, mousepos[1]),
+        #                                 (mousepos[0] + 200, mousepos[1] + 100),
+        #                                 (mousepos[0], mousepos[1] + 100)], (255, 0, 0), self.game.current_angle, image_path="images/torch.png")
+        self.f = self.game.current_flashlight
         self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
                                                 (mousepos[0] + 200, mousepos[1]),
                                                 (mousepos[0] + 50, mousepos[1] + 100),
@@ -55,8 +56,9 @@ class Button:
         if self.number == 0:
             if self.clicked == 1:
                 if self.game.r:
-                    # self.f.angle+=1
+                    #self.f.angle+=1
                     self.f.adjust(mousepos[0], mousepos[1], 1)
+                    adjust_flashlight()
                 else:
                     adjust_flashlight()
 
@@ -107,6 +109,7 @@ class Button:
                         0,
                         image_path="images/torch.png"
                     )
+                    self.game.current_flashlight = self.f
                 elif self.number == 1:
                     self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
                                                     (mousepos[0] + 200, mousepos[1]),

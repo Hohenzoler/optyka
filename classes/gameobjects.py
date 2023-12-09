@@ -101,10 +101,12 @@ class GameObject:
                 image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)+100),
                                                             (self.y + sum(pt[1] for pt in self.points) / len(self.points)+50)))
             self.game.screen.blit(rotated_image, image_rect.topleft)
-        else:
             # Draw the rotated lines without transparency
             rotated_points = self.rotate_points(self.points, self.angle)
-            pygame.draw.polygon(self.game.screen, self.color, [(x + self.x, y + self.y) for x, y in rotated_points])
+            self.points = [(x + self.x, y + self.y) for x, y in rotated_points]
+            pygame.draw.polygon(self.game.screen, self.color, self.points)
+        else:
+            pass
 
     def move(self):
         # code for moving object with mouse
@@ -124,14 +126,17 @@ class GameObject:
             rotated_image = rotate(self.image, -self.angle)
             image_rect = rotated_image.get_rect(center=(self.x + center_x, self.y + center_y))
             self.game.screen.blit(rotated_image, image_rect.topleft)
-        else:
             # Draw the rotated lines without transparency
             rotated_points = self.rotate_points(self.points, self.angle)
-            pygame.draw.polygon(self.game.screen, self.color, [(x + self.x, y + self.y) for x, y in rotated_points])
+            self.points = [(x + self.x, y + self.y) for x, y in rotated_points]
+            pygame.draw.polygon(self.game.screen, self.color, self.points)
 
+        else:
+            pass
     def drawoutline(self):
         # Draw an outline around the object
         pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
+        print(self.points)
 
     def checkifclicked(self, mousepos):
         # Check if the object is clicked

@@ -17,6 +17,7 @@ class Game:
         self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
         self.rightclickedmousepos = None  # right click mouse positon
         self.r = False
+        self.current_flashlight = None
 
     def events(self):
         for event in pygame.event.get():
