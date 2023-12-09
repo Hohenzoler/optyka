@@ -9,7 +9,7 @@ settings = settingsSetup.start()
 width = settings['WIDTH']
 height = settings['HEIGHT']
 
-position = settings['HOTBAR_POSITION']
+position = settings['HOPBAR_POSITION']
 
 
 startscreen = ss.StartScreen(width, height)

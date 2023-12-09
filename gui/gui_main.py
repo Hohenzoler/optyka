@@ -7,7 +7,7 @@ class GUI:
         self.game = game
         self.width = self.game.width
         self.height = self.game.height // 10
-        self.position = self.game.settings['HOTBAR_POSITION']
+        self.position = self.game.settings['HOPBAR_POSITION']
         print(self.position)
 
         if self.position == 'bottom':

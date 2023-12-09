@@ -15,15 +15,24 @@ class StartScreen:
         self.mode = 'default'
         self.objects = []
         self.font = pygame.font.Font('freesansbold.ttf', self.width//20)
+        self.font2 = pygame.font.Font('freesansbold.ttf', self.width // 40)
         self.maintext = self.font.render('Optyka', True, 'white')
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
+
+        self.resolutiontext = self.font2.render('Resolution:', True, 'white')
+        self.resolutiontextRect = self.resolutiontext.get_rect()
+        self.resolutiontextRect.center = (self.width // 2 - self.width//10, self.height // 2 - 2 * (self.height//20 + self.height//47))
+
+        self.hoptext = self.font2.render('Hopbar location:', True, 'white')
+        self.hoptextRect = self.hoptext.get_rect()
+        self.hoptextRect.center = (self.width // 2 - self.width//10, self.height // 2 - (self.height//20 + self.height//47))
 
         self.executed_functions = 'default'
 
 
         self.dimentions = [{'WIDTH': 2560, 'HEIGHT': 1440}, {'WIDTH': 1920, 'HEIGHT': 1080}, {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
-        self.HotbarPositions = ['Bottom', 'Top', 'Left', 'Right']
+        self.HopbarPositions = ['Bottom', 'Top', 'Left', 'Right']
 
 
         self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
@@ -68,13 +77,16 @@ class StartScreen:
             object.render()
 
         self.screen.blit(self.maintext, self.maintextRect)
+        if self.mode == 'settings':
+            self.screen.blit(self.resolutiontext, self.resolutiontextRect)
+            self.screen.blit(self.hoptext, self.hoptextRect)
+
         pygame.display.update()
 
     def defualt_mode(self):
         if self.executed_functions != 'default':
             self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
             self.executed_functions = 'default'
-            pygame.display.update()
 
     def settings_mode(self):
         if self.executed_functions != 'settings':
@@ -126,9 +138,20 @@ class StartScreen:
         self.height = settings['HEIGHT']
 
         self.font = pygame.font.Font('freesansbold.ttf', self.width // 20)
+        self.font2 = pygame.font.Font('freesansbold.ttf', self.width // 40)
         self.maintext = self.font.render('Optyka', True, 'white')
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
+
+        self.resolutiontext = self.font2.render('Resolution:', True, 'white')
+        self.resolutiontextRect = self.resolutiontext.get_rect()
+        self.resolutiontextRect.center = (
+        self.width // 2 - self.width // 10, self.height // 2 - 2 * (self.height // 20 + self.height // 47))
+
+        self.hoptext = self.font2.render('Hopbar location:', True, 'white')
+        self.hoptextRect = self.hoptext.get_rect()
+        self.hoptextRect.center = (
+        self.width // 2 - self.width // 10, self.height // 2 - (self.height // 20 + self.height // 47))
 
         self.screen = pygame.display.set_mode((self.width, self.height))
 

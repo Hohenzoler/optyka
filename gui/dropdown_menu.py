@@ -28,13 +28,13 @@ class DropdownMenu:
                 self.options.append(f'{dimention['WIDTH']}x{dimention['HEIGHT']}')
             self.selected_option_2 = f'{self.ss.width}x{self.ss.height}'
         elif self.number == 1:
-            for positon in self.ss.HotbarPositions:
+            for positon in self.ss.HopbarPositions:
                 self.options.append(positon)
             with open('settings.json', 'r') as f:
                 json_object = json.loads(f.read())
                 f.close()
             s = json_object
-            self.selected_option_2 = s['HOTBAR_POSITION'].capitalize()
+            self.selected_option_2 = s['HOPBAR_POSITION'].capitalize()
 
     def render(self):
         pygame.draw.rect(self.screen, self.menu_color, (self.x, self.y, self.width, self.height))
@@ -95,7 +95,7 @@ class DropdownMenu:
                 f.close()
             s = json_object
 
-            s['HOTBAR_POSITION'] = position
+            s['HOPBAR_POSITION'] = position
 
             json_string = json.dumps(s, indent=1)
             with open('settings.json', 'w') as f:
