@@ -18,19 +18,30 @@ class DropdownMenu:
         self.expanded = False
         self.selected_option = None
         self.number = number
+        self.selected_option_2 = None
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         self.ss.objects.append(self)
 
         if self.number == 2:
             for dimention in self.ss.dimentions:
                 self.options.append(f'{dimention['WIDTH']}x{dimention['HEIGHT']}')
+            self.selected_option_2 = f'{self.ss.width}x{self.ss.height}'
         elif self.number == 1:
             for positon in self.ss.HotbarPositions:
                 self.options.append(positon)
+            with open('settings.json', 'r') as f:
+                json_object = json.loads(f.read())
+                f.close()
+            s = json_object
+            self.selected_option_2 = s['HOTBAR_POSITION'].capitalize()
 
     def render(self):
         pygame.draw.rect(self.screen, self.menu_color, (self.x, self.y, self.width, self.height))
         pygame.draw.rect(self.screen, self.text_color, (self.x, self.y, self.width, self.height), 2)
+        option_text = self.font.render(self.selected_option_2, True, self.text_color)
+        option_text_rect = option_text.get_rect(center=self.rect.center)
+        self.screen.blit(option_text, option_text_rect)
 
         if self.expanded:
             for i, option in enumerate(self.options):
@@ -43,8 +54,8 @@ class DropdownMenu:
                 self.screen.blit(option_text, option_text_rect)
 
     def handle_event(self, event):
-        dropdown_rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        if dropdown_rect.collidepoint(event.pos):
+
+        if self.rect.collidepoint(event.pos):
             self.expanded = not self.expanded
         else:
             for i, option in enumerate(self.options):
@@ -56,6 +67,7 @@ class DropdownMenu:
 
     def handle_button_click(self, option):
         if self.number == 2:
+            self.selected_option_2 = option
             width, height = option.split('x')
 
             with open('settings.json', 'r') as f:
@@ -76,6 +88,7 @@ class DropdownMenu:
 
         elif self.number == 1:
             position = option.lower()
+            self.selected_option_2 = option
 
             with open('settings.json', 'r') as f:
                 json_object = json.loads(f.read())
