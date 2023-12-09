@@ -6,13 +6,15 @@ from gui import startscreen as ss
 
 settings = settingsSetup.start()
 
-width = int(settings[0])
-height = int(settings[1])
+width = settings['WIDTH']
+height = settings['HEIGHT']
+
+position = settings['HOTBAR_POSITION']
+
 
 startscreen = ss.StartScreen(width, height)
 
 
-position = settings[2]
 programIcon = pygame.image.load('images/torch.png')
 
 pygame.display.set_icon(programIcon)
