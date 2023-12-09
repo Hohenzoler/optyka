@@ -1,7 +1,7 @@
 import os.path
 import json
 
-settings = {'WIDTH': 1200, 'HEIGHT': 700, 'HOTBAR_POSITION': 'buttom'}
+settings = {'WIDTH': 1200, 'HEIGHT': 700, 'HOTBAR_POSITION': 'bottom'}
 
 def start(s=settings):
     if os.path.exists('settings.json'):

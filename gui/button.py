@@ -2,23 +2,34 @@ import pygame
 from classes import gameobjects, sounds
 
 class Button:
-    def __init__(self, game, number, width, y, position):
+    def __init__(self, game, number):
         self.game = game
         self.number = number
         self.screenheight = self.game.height
-        self.y = y
-        self.guiwith = width
+        self.screenwidth = self.game.settings['WIDTH']
+        self.position = self.game.settings['HOTBAR_POSITION']
+        self.gap = self.game.settings['HEIGHT'] // 10
 
-        self.position = position
+        self.y = self.screenheight//10
 
-        if self.position == 'buttom':
-            self.rect = pygame.Rect(60 * self.number + 10, self.screenheight - self.y + 10, self.y - 20, self.y - 20)
+        button_width = self.y - 20
+        button_height = self.y - 20
+
+        if self.position == 'bottom':
+            x = self.gap * self.number + 10
+            y = (self.screenheight-self.y) + ((self.screenheight - (self.screenheight - self.y) - button_height)//2)
+            print(y)
         elif self.position == 'left':
-            self.rect = pygame.Rect(20, 60 * self.number + 10, self.y - 10, self.y - 20)
+            x = (self.screenwidth//10 - button_width)//2
+            y = self.gap * self.number + 10
         elif self.position == 'right':
-            self.rect = pygame.Rect(self.guiwith - self.y, 60 * self.number + 10, self.y - 20, self.y - 20)
+            x = (self.screenwidth-self.screenwidth//10) + ((self.screenwidth - (self.screenwidth - self.screenwidth//10) - button_width)//2)
+            y = self.gap * self.number + 10
         elif self.position == 'top':
-            self.rect = pygame.Rect(60 * self.number + 10, 10, self.y - 20, self.y - 20)
+            x = self.gap * self.number + 10
+            y = (self.y - button_height)//2
+
+        self.rect = pygame.Rect(x, y, button_width, button_height)
 
 
         if self.number == 0:

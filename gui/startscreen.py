@@ -22,7 +22,7 @@ class StartScreen:
         self.executed_functions = 'default'
 
 
-        self.dimentions = [{'WIDTH': 2560, 'HEIGHT': 1440}, {'WIDTH': 1920, 'HEIGHT': 1080}, {'WIDTH': 1366, 'HEIGHT': 768}, {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
+        self.dimentions = [{'WIDTH': 2560, 'HEIGHT': 1440}, {'WIDTH': 1920, 'HEIGHT': 1080}, {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
 
 
         self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
