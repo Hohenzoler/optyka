@@ -23,6 +23,7 @@ class StartScreen:
 
 
         self.dimentions = [{'WIDTH': 2560, 'HEIGHT': 1440}, {'WIDTH': 1920, 'HEIGHT': 1080}, {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
+        self.HotbarPositions = ['bottom', 'top', 'left', 'right']
 
 
         self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
@@ -88,13 +89,11 @@ class StartScreen:
                 if type(object) == button.ButtonForStartScreen:
                     self.objects.remove(object)
 
-
-            self.DropdownMenus = [dm.DropdownMenu(self, x) for x in range(1)]
-
             save_n_exit = button.ButtonForStartScreen(71, self)
 
             self.buttons.append(save_n_exit)
-            print(self.buttons[0])
+
+            self.DropdownMenus = [dm.DropdownMenu(self, x) for x in range(3)]
 
             self.executed_functions = 'settings'
 
@@ -113,6 +112,13 @@ class StartScreen:
                 self.objects.remove(object)
             elif type(object) == dm.DropdownMenu:
                 self.objects.remove(object)
+
+        for object in self.objects:
+            if type(object) == button.ButtonForStartScreen:
+                self.objects.remove(object)
+            elif type(object) == dm.DropdownMenu:
+                self.objects.remove(object)
+
 
 
         settings = settingsSetup.load_settings()
