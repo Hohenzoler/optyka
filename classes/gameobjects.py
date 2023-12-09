@@ -94,12 +94,8 @@ class GameObject:
         # Blit the rotated image with transparency
         if self.image:
             rotated_image = pygame.transform.rotate(self.image, -self.angle)
-            if self.selectedtrue:
-                image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
-                                                            (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
-            else:
-                image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)+100),
-                                                            (self.y + sum(pt[1] for pt in self.points) / len(self.points)+50)))
+            image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
+                                                        (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
             self.game.screen.blit(rotated_image, image_rect.topleft)
             # Draw the rotated lines without transparency
             #rotated_points = self.rotate_points(self.points, self.angle)

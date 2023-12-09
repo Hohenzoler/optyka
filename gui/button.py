@@ -35,8 +35,8 @@ class Button:
     def render(self):
         # Render GUI elements
         mousepos = list(pygame.mouse.get_pos())
-        mousepos[0] -= 100  # Centering the mouse
-        mousepos[1] -= 50
+        # mousepos[0] -= 100  # Centering the mouse
+        # mousepos[1] -= 50
 
         # self.f = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]),
         #                                 (mousepos[0] + 200, mousepos[1]),
@@ -100,16 +100,17 @@ class Button:
                     self.f = gameobjects.Flashlight(
                         self.game,
                         [
-                            (mousepos[0], mousepos[1]),
-                            (mousepos[0] + 200, mousepos[1]),
-                            (mousepos[0] + 200, mousepos[1] + 100),
-                            (mousepos[0], mousepos[1] + 100)
+                            (mousepos[0] - 100, mousepos[1] - 50),
+                            (mousepos[0] - 100, mousepos[1] + 50),
+                            (mousepos[0] + 100, mousepos[1] + 50),
+                            (mousepos[0] + 100, mousepos[1] - 50)
                         ],
                         (255, 0, 0),
                         0,
                         image_path="images/torch.png"
                     )
                     self.game.current_flashlight = self.f
+                    # self.f.selected(mousepos)
                 elif self.number == 1:
                     self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
                                                     (mousepos[0] + 200, mousepos[1]),
