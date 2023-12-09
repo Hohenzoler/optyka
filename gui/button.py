@@ -145,7 +145,6 @@ class ButtonForStartScreen:
         #adjust y based on the number
         gap = 15
         self.y = (self.startscreen.height // 2) - self.height // 2 + (self.height + gap) * number
-
         self.x = (self.startscreen.width // 2) - self.width // 2
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
@@ -154,6 +153,11 @@ class ButtonForStartScreen:
 
         elif self.number == 1:
             self.text = self.font.render('Settings', True, 'black')
+
+        elif self.number == 71:
+            self.text = self.font.render('Save and Exit', True, 'black')
+            self.y = self.startscreen.height - self.startscreen.height//5
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         else:
             self.text = self.font.render('@', True, 'black')
@@ -167,6 +171,8 @@ class ButtonForStartScreen:
                 self.startscreen.run = False
             elif self.number == 1:
                 self.startscreen.mode = 'settings'
+            elif self.number == 71:
+                self.startscreen.mode = 'load_new_settings'
             else:
                 raise NotImplementedError('button function not yet added')
 
