@@ -23,13 +23,12 @@ class StartScreen:
 
 
         self.dimentions = [{'WIDTH': 2560, 'HEIGHT': 1440}, {'WIDTH': 1920, 'HEIGHT': 1080}, {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
-        self.HotbarPositions = ['bottom', 'top', 'left', 'right']
+        self.HotbarPositions = ['Bottom', 'Top', 'Left', 'Right']
 
 
         self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
 
         pygame.display.set_caption('Optyka')
-
 
         self.mainloop()
 

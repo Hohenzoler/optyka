@@ -75,7 +75,7 @@ class DropdownMenu:
 
 
         elif self.number == 1:
-            position = option
+            position = option.lower()
 
             with open('settings.json', 'r') as f:
                 json_object = json.loads(f.read())
