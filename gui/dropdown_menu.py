@@ -9,7 +9,7 @@ class DropdownMenu:
         self.options = []
         self.width = self.ss.width // 5
         self.height = self.ss.width // 20
-        gap_size = 15
+        gap_size = self.ss.height//47
         self.x = self.ss.width // 2 + self.width // 2
         self.y = self.ss.height // 2 - number * (self.height + gap_size)  # Adjusted y based on the number and gap size
         self.font = pygame.font.Font(None, self.height // 2)
