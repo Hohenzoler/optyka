@@ -55,10 +55,13 @@ class Button:
         if self.number == 0:
             if self.clicked == 1:
                 if self.game.r:
-                    adjust_flashlight()
+                    # self.f.angle+=1
+                    self.f.adjust(mousepos[0], mousepos[1], 1)
                 else:
                     adjust_flashlight()
+
                 self.f.drawoutline()
+                print(self.f.angle)
 
 
 

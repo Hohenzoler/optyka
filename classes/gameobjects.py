@@ -217,4 +217,4 @@ class Flashlight(GameObject):  # Inheriting from GameObject
             self.light_end_y = center_y + normalized_direction[1] * 1000
 
             # Calculate the angle between the normalized direction and the x-axis
-            self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
+            # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
