@@ -102,11 +102,11 @@ class GameObject:
                                                             (self.y + sum(pt[1] for pt in self.points) / len(self.points)+50)))
             self.game.screen.blit(rotated_image, image_rect.topleft)
             # Draw the rotated lines without transparency
-            rotated_points = self.rotate_points(self.points, self.angle)
-            self.points = [(x + self.x, y + self.y) for x, y in rotated_points]
-            pygame.draw.polygon(self.game.screen, self.color, self.points)
+            #rotated_points = self.rotate_points(self.points, self.angle)
+            self.points = [(x + self.x, y + self.y) for x, y in self.points]
+
         else:
-            pass
+            pygame.draw.polygon(self.game.screen, self.color, self.points)
 
     def move(self):
         # code for moving object with mouse
@@ -129,10 +129,9 @@ class GameObject:
             # Draw the rotated lines without transparency
             rotated_points = self.rotate_points(self.points, self.angle)
             self.points = [(x + self.x, y + self.y) for x, y in rotated_points]
-            pygame.draw.polygon(self.game.screen, self.color, self.points)
 
         else:
-            pass
+            pygame.draw.polygon(self.game.screen, self.color, self.points)
     def drawoutline(self):
         # Draw an outline around the object
         pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
