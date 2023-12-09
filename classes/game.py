@@ -4,9 +4,9 @@ from classes import gameobjects
 
 
 class Game:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
+    def __init__(self, settings):
+        self.width = settings['WIDTH']
+        self.height = settings['HEIGHT']
         self.objects = []
         # initializing pygame
         pygame.init()
