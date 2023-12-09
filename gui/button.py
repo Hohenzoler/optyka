@@ -136,7 +136,7 @@ class ButtonForStartScreen:
         self.number = number
         self.startscreen = StartScreen
         self.startscreen.objects.append(self)
-        self.font = pygame.font.Font('freesansbold.ttf',  20)
+        self.font = pygame.font.Font('freesansbold.ttf',  self.startscreen.height//35)
 
         self.width = self.startscreen.width // 3
         self.height = self.startscreen.height // 10
