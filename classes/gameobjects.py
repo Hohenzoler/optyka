@@ -104,6 +104,7 @@ class GameObject:
             # Draw the rotated lines without transparency
             #rotated_points = self.rotate_points(self.points, self.angle)
             self.points = [(x + self.x, y + self.y) for x, y in self.points]
+            self.update_rect()
 
         else:
             pygame.draw.polygon(self.game.screen, self.color, self.points)
@@ -129,7 +130,7 @@ class GameObject:
             # Draw the rotated lines without transparency
             rotated_points = self.rotate_points(self.points, self.angle)
             self.points = [(x + self.x, y + self.y) for x, y in rotated_points]
-
+            self.update_rect()
         else:
             pygame.draw.polygon(self.game.screen, self.color, self.points)
     def drawoutline(self):
