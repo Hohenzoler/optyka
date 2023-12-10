@@ -133,6 +133,8 @@ class Button:
                 self.game.objects.insert(-2, self.m)
                 self.clicked = 0
 
+
+
         if self.number == -2:
             self.game.screen.blit(self.settings_icon, self.settings_icon_rect)
 
@@ -160,23 +162,29 @@ class Button:
                     )
                     self.game.current_flashlight = self.f
                     # self.f.selected(mousepos)
+                    sounds.selected_sound()
                 elif self.number == 1:
                     self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
                                                     (mousepos[0] + 200, mousepos[1]),
                                                     (mousepos[0] + 50, mousepos[1] + 100),
                                                     (mousepos[0] -20, mousepos[1]-100),
                                                     (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100)
+                    sounds.selected_sound()
+
+                elif self.number == 2:
+                    sounds.selected_sound()
 
                 elif self.number == -1:
                     self.game.run = False
 
                 elif self.number == -2:
                     self.game.mode = 'settings'
+                    sounds.clicked_sound()
 
 
 
 
-                sounds.selected_sound()
+
 
             elif self.rect.collidepoint(mousepos) and self.clicked == 1:
                 self.clicked = 0
