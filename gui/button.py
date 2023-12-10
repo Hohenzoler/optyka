@@ -78,9 +78,8 @@ class Button:
         self.f = self.game.current_flashlight
         self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
                                                 (mousepos[0] + 200, mousepos[1]),
-                                                (mousepos[0] + 50, mousepos[1] + 100),
-                                                (mousepos[0] -20, mousepos[1]-100),
-                                                (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100)
+                                                (mousepos[0] + 200, mousepos[1] + 100),
+                                                (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0)
 
 
         def adjust_flashlight():
