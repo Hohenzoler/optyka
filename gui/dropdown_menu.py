@@ -81,6 +81,7 @@ class DropdownMenu:
                     self.handle_button_click(option)
 
     def handle_button_click(self, option):
+        sounds.clicked_sound()
         if self.number == 2:
             self.selected_option_2 = option
             width, height = option.split('x')
