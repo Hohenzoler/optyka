@@ -91,8 +91,8 @@ class Button:
 
         def adjust_flashlight():
             self.f.adjust(mousepos[0], mousepos[1], 0)
-
-        pygame.draw.rect(self.game.screen, self.color, self.rect)
+        if self.number != -2:
+            pygame.draw.rect(self.game.screen, self.color, self.rect)
         if self.number == 0:
             torch_icon_rect = self.torch_icon.get_rect(center=self.rect.center)
             self.game.screen.blit(self.torch_icon, torch_icon_rect)
