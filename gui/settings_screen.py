@@ -62,7 +62,7 @@ class Settings_screen:
     def checkevent(self, pos):
         for object in self.objects:
             object.checkcollision(pos)
-            sounds.clicked_sound()
+
 
 
 
