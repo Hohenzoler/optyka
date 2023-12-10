@@ -13,7 +13,10 @@ class Game:
         self.objects = []
         # initializing pygame
         pygame.init()
-        self.screen = pygame.display.set_mode((self.width, self.height))
+        if self.settings['FULLSCREEN'] == 'ON':
+            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((self.width, self.height))
         self.run = True
         self.fps = 165
         self.tick = int((1 / self.fps) * 1000)
@@ -86,7 +89,10 @@ class Game:
             self.settings = settingsSetup.load_settings()
             self.width = self.settings['WIDTH']
             self.height = self.settings['HEIGHT']
-            self.screen = pygame.display.set_mode((self.width, self.height))
+            if self.settings['FULLSCREEN'] == 'ON':
+                self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+            else:
+                self.screen = pygame.display.set_mode((self.width, self.height))
 
             for object in self.objects:
                 if type(object) == gui.GUI:

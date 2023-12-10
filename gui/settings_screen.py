@@ -14,6 +14,8 @@ class Settings_screen:
                            {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
         self.HopbarPositions = ['Bottom', 'Top', 'Left', 'Right']
 
+        self.Fullscreen = [{'FULLSCREEN': 'ON'}, {'FULLSCREEN': 'OFF'}]
+
         self.font2 = pygame.font.Font('freesansbold.ttf', self.width // 40)
 
         self.font = pygame.font.Font('freesansbold.ttf', self.width // 20)

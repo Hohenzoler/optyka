@@ -37,6 +37,16 @@ class DropdownMenu:
                 f.close()
             s = json_object
             self.selected_option_2 = s['HOPBAR_POSITION'].capitalize()
+        elif self.number == 0:
+            for option in self.ss.Fullscreen:
+                self.options.append(option['FULLSCREEN'])
+
+            with open('settings.json', 'r') as f:
+                json_object = json.loads(f.read())
+                f.close()
+            s = json_object
+            self.selected_option_2 = s['FULLSCREEN']
+
 
     def render(self):
         pygame.draw.rect(self.screen, (55, 55, 55), (self.x, self.y, self.width, self.height))
@@ -104,4 +114,17 @@ class DropdownMenu:
                 f.write(json_string)
                 f.close()
 
-            print(position)
+        elif self.number == 0:
+            self.selected_option_2 = option
+
+            with open('settings.json', 'r') as f:
+                json_object = json.loads(f.read())
+                f.close()
+            s = json_object
+
+            s['FULLSCREEN'] = option
+
+            json_string = json.dumps(s, indent=1)
+            with open('settings.json', 'w') as f:
+                f.write(json_string)
+                f.close()

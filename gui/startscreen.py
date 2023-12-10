@@ -8,9 +8,13 @@ pygame.init()
 
 class StartScreen:
     def __init__(self, width, height):
+        settings = settingsSetup.load_settings()
         self.width = width
         self.height = height
-        self.screen = pygame.display.set_mode((width, height))
+        if settings['FULLSCREEN'] == 'ON':
+            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((self.width, self.height))
         self.run = True
         self.mode = 'default'
         self.objects = []
@@ -98,7 +102,9 @@ class StartScreen:
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
 
-
-        self.screen = pygame.display.set_mode((self.width, self.height))
+        if settings['FULLSCREEN'] == 'ON':
+            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((self.width, self.height))
 
         self.mode = 'default'
