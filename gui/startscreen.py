@@ -13,7 +13,9 @@ class StartScreen:
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
 
-        if settings['FULLSCREEN'] == 'ON':
+        self.settings_fullscreen = settings['FULLSCREEN']
+
+        if self.settings_fullscreen == 'ON':
             self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
 
         self.run = True
