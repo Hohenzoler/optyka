@@ -25,7 +25,9 @@ class DropdownMenu:
 
         if self.number == 2:
             for dimention in self.ss.dimentions:
-                self.options.append(f'{dimention['WIDTH']}x{dimention['HEIGHT']}')
+                self.dimention_width = dimention['WIDTH']
+                self.dimention_height = dimention['HEIGHT']
+                self.options.append(f'{self.dimention_width}x{self.dimention_height}')
             self.selected_option_2 = f'{self.ss.width}x{self.ss.height}'
         elif self.number == 1:
             for positon in self.ss.HopbarPositions:
