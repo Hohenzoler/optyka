@@ -224,10 +224,13 @@ class ButtonForgame:
         if self.rect.collidepoint(pos[0], pos[1]):
             if self.number == 0:
                 self.screen.run = False
+                sounds.clicked_sound()
             elif self.number == 1:
                 self.screen.mode = 'settings'
+                sounds.clicked_sound()
             elif self.number == 71:
                 self.screen.game.mode = 'load_new_settings'
+                sounds.clicked_sound()
             else:
                 raise NotImplementedError('button function not yet added')
 

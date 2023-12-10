@@ -9,3 +9,8 @@ def selected_sound():
 def placed_sound():
     placed_sound = pygame.mixer.Sound('sounds/place.wav')
     placed_sound.play()
+
+
+def clicked_sound():
+    clicked_sound = pygame.mixer.Sound('sounds/goofy_ahh.wav')
+    clicked_sound.play()
