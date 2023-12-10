@@ -16,6 +16,12 @@ class Settings_screen:
 
         self.font2 = pygame.font.Font('freesansbold.ttf', self.width // 40)
 
+        self.font = pygame.font.Font('freesansbold.ttf', self.width // 20)
+
+        self.maintext = self.font.render('Settings', True, 'white')
+        self.maintextRect = self.maintext.get_rect()
+        self.maintextRect.center = (self.width // 2, (self.height // 2) - (3 * self.height // 10))
+
         self.resolutiontext = self.font2.render('Resolution:', True, 'white')
         self.resolutiontextRect = self.resolutiontext.get_rect()
         self.resolutiontextRect.center = (
@@ -38,6 +44,7 @@ class Settings_screen:
     def render(self):
         self.screen.blit(self.resolutiontext, self.resolutiontextRect)
         self.screen.blit(self.hoptext, self.hoptextRect)
+        self.screen.blit(self.maintext, self.maintextRect)
 
         for object in self.objects:
             object.render()

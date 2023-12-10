@@ -21,9 +21,10 @@ class Game:
         self.rightclickedmousepos = None  # right click mouse positon
         self.r = False
         self.current_flashlight = None
-
         self.mode = 'default'
         self.executed_command = 'default'
+
+
 
     def events(self):
         for event in pygame.event.get():

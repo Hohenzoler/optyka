@@ -62,7 +62,8 @@ class StartScreen:
         for object in self.objects:
             object.render()
 
-        self.screen.blit(self.maintext, self.maintextRect)
+        if self.mode == 'default':
+            self.screen.blit(self.maintext, self.maintextRect)
 
 
         pygame.display.update()
@@ -76,13 +77,7 @@ class StartScreen:
         if self.executed_functions != 'settings':
             self.buttons = []
 
-            for object in self.objects:
-                if type(object) == button.ButtonForgame:
-                    self.objects.remove(object)
-
-            for object in self.objects:
-                if type(object) == button.ButtonForgame:
-                    self.objects.remove(object)
+            self.objects = []
 
             self.settingsscreen = settings_screen.Settings_screen(self)
 
@@ -92,44 +87,17 @@ class StartScreen:
 
         self.objects.remove(self.settingsscreen)
 
-        for object in self.objects:
-            if type(object) == button.ButtonForgame:
-                self.objects.remove(object)
-
-        for object in self.objects:
-            if type(object) == button.ButtonForgame:
-                self.objects.remove(object)
-            elif type(object) == dm.DropdownMenu:
-                self.objects.remove(object)
-
-        for object in self.objects:
-            if type(object) == button.ButtonForgame:
-                self.objects.remove(object)
-            elif type(object) == dm.DropdownMenu:
-                self.objects.remove(object)
-
-
-
         settings = settingsSetup.load_settings()
 
         self.width = settings['WIDTH']
         self.height = settings['HEIGHT']
 
         self.font = pygame.font.Font('freesansbold.ttf', self.width // 20)
-        self.font2 = pygame.font.Font('freesansbold.ttf', self.width // 40)
+
         self.maintext = self.font.render('Optyka', True, 'white')
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
 
-        self.resolutiontext = self.font2.render('Resolution:', True, 'white')
-        self.resolutiontextRect = self.resolutiontext.get_rect()
-        self.resolutiontextRect.center = (
-        self.width // 2 - self.width // 10, self.height // 2 - 2 * (self.height // 20 + self.height // 47))
-
-        self.hoptext = self.font2.render('Hopbar location:', True, 'white')
-        self.hoptextRect = self.hoptext.get_rect()
-        self.hoptextRect.center = (
-        self.width // 2 - self.width // 10, self.height // 2 - (self.height // 20 + self.height // 47))
 
         self.screen = pygame.display.set_mode((self.width, self.height))
 
