@@ -34,7 +34,6 @@ class Button:
             if self.position == 'bottom':
                 x = self.gap * self.number + 10
                 y = (self.screenheight-self.y) + ((self.screenheight - (self.screenheight - self.y) - button_height)//2)
-                print(y)
             elif self.position == 'left':
                 x = (self.screenwidth//10 - button_width)//2
                 y = self.gap * self.number + 10
