@@ -29,10 +29,15 @@ class Settings_screen:
         self.resolutiontextRect.center = (
         self.width // 2 - self.width // 10, self.height // 2 - 2 * (self.height // 20 + self.height // 47))
 
+        self.FStext = self.font2.render('Fullscreen:', True, 'white')
+        self.FStextRect = self.FStext.get_rect()
+        self.FStextRect.center = (
+        self.width // 2 - self.width // 10, self.height // 2 - (self.height // 27 + self.height // 47))
+
         self.hoptext = self.font2.render('Hopbar location:', True, 'white')
         self.hoptextRect = self.hoptext.get_rect()
-        self.hoptextRect.center = (
-        self.width // 2 - self.width // 10, self.height // 2 - (self.height // 20 + self.height // 47))
+
+        self.hoptextRect.center = (self.width // 2 - self.width // 10, self.height // 2 + (self.height // 50 + self.height // 47))
 
         save_n_exit = button.ButtonForgame(71, self)
 
@@ -47,6 +52,7 @@ class Settings_screen:
         self.screen.blit(self.resolutiontext, self.resolutiontextRect)
         self.screen.blit(self.hoptext, self.hoptextRect)
         self.screen.blit(self.maintext, self.maintextRect)
+        self.screen.blit(self.FStext, self.FStextRect)
 
         for object in self.objects:
             object.render()
