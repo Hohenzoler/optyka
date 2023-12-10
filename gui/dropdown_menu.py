@@ -39,7 +39,7 @@ class DropdownMenu:
             self.selected_option_2 = s['HOPBAR_POSITION'].capitalize()
 
     def render(self):
-        pygame.draw.rect(self.screen, self.menu_color, (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(self.screen, (55, 55, 55), (self.x, self.y, self.width, self.height))
         pygame.draw.rect(self.screen, self.text_color, (self.x, self.y, self.width, self.height), 2)
         option_text = self.font.render(self.selected_option_2, True, self.text_color)
         option_text_rect = option_text.get_rect(center=self.rect.center)
