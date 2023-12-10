@@ -58,8 +58,6 @@ class Light:
                             self.points.append((self.vx, self.vy))
                             object_angle=-object.angle/360*2*math.pi
                             print(object_angle)
-                            if object_angle == 0:
-                                break
                             self.bend(object_angle)
     def update_vp(self):
 
