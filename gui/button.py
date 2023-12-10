@@ -62,8 +62,13 @@ class Button:
         # Scale the torch icon to the size of the button
         self.torch_icon = pygame.transform.scale(self.torch_icon, (button_width, button_height))
         self.object_icon = pygame.image.load("images/object_icon.png")
+
         # Scale the object icon to the size of the button
         self.object_icon = pygame.transform.scale(self.object_icon, (button_width, button_height))
+
+        self.settings_icon = pygame.image.load('images/settings.png')
+        self.settings_icon = pygame.transform.scale(self.settings_icon, (button_width, button_height))
+        self.settings_icon_rect = self.settings_icon.get_rect(center=self.rect.center)
 
     def render(self):
         # Render GUI elements
@@ -82,11 +87,12 @@ class Button:
                                                 (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0)
 
 
+
+
         def adjust_flashlight():
             self.f.adjust(mousepos[0], mousepos[1], 0)
 
         pygame.draw.rect(self.game.screen, self.color, self.rect)
-
         if self.number == 0:
             torch_icon_rect = self.torch_icon.get_rect(center=self.rect.center)
             self.game.screen.blit(self.torch_icon, torch_icon_rect)
@@ -126,6 +132,10 @@ class Button:
             if self.clicked == 2:
                 self.game.objects.insert(-2, self.m)
                 self.clicked = 0
+
+        if self.number == -2:
+            self.game.screen.blit(self.settings_icon, self.settings_icon_rect)
+
 
 
 
