@@ -156,10 +156,3 @@ class StartScreen:
         self.screen = pygame.display.set_mode((self.width, self.height))
 
         self.mode = 'default'
-
-
-
-
-
-
-

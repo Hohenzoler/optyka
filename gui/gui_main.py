@@ -24,13 +24,14 @@ class GUI:
         self.game.objects.append(self)
         self.f = None
 
-        self.buttons = [button.Button(self.game, x) for x in range(3)] #creates buttons
+        self.buttons = [button.Button(self.game, x) for x in range(-1, 3)] #creates buttons
 
 
     def render(self):
         pygame.draw.rect(self.game.screen, (100, 100, 100), self.rect)
         for button in self.buttons: #renders buttons
             button.render()
+
 
     def checkifclicked(self, mousepos):
         for button in self.buttons:

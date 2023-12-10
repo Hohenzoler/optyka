@@ -103,6 +103,3 @@ class DropdownMenu:
                 f.close()
 
             print(position)
-
-
-
