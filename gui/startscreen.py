@@ -1,7 +1,7 @@
 import pygame
 from gui import button
-from gui import dropdown_menu as dm
 import settingsSetup
+from gui import settings_screen
 
 
 pygame.init()
@@ -15,27 +15,15 @@ class StartScreen:
         self.mode = 'default'
         self.objects = []
         self.font = pygame.font.Font('freesansbold.ttf', self.width//20)
-        self.font2 = pygame.font.Font('freesansbold.ttf', self.width // 40)
-        self.maintext = self.font.render('Optyka', True, 'white')
-        self.maintextRect = self.maintext.get_rect()
-        self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
 
-        self.resolutiontext = self.font2.render('Resolution:', True, 'white')
-        self.resolutiontextRect = self.resolutiontext.get_rect()
-        self.resolutiontextRect.center = (self.width // 2 - self.width//10, self.height // 2 - 2 * (self.height//20 + self.height//47))
-
-        self.hoptext = self.font2.render('Hopbar location:', True, 'white')
-        self.hoptextRect = self.hoptext.get_rect()
-        self.hoptextRect.center = (self.width // 2 - self.width//10, self.height // 2 - (self.height//20 + self.height//47))
 
         self.executed_functions = 'default'
 
+        self.maintext = self.font.render('Optyka', True, 'white')
+        self.maintextRect = self.maintext.get_rect()
+        self.maintextRect.center = (self.width // 2, (self.height // 2) - (3 * self.height // 10))
 
-        self.dimentions = [{'WIDTH': 2560, 'HEIGHT': 1440}, {'WIDTH': 1920, 'HEIGHT': 1080}, {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
-        self.HopbarPositions = ['Bottom', 'Top', 'Left', 'Right']
-
-
-        self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
+        self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
 
         pygame.display.set_caption('Optyka')
 
@@ -56,8 +44,6 @@ class StartScreen:
             self.checkforevents()
             self.render()
 
-
-
     def checkforevents(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -66,10 +52,10 @@ class StartScreen:
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 for object in self.objects:
-                    if type(object) == button.ButtonForStartScreen:
+                    if type(object) == button.ButtonForgame:
                         object.checkcollision(event.pos)
-                    elif type(object) == dm.DropdownMenu:
-                        object.handle_event(event)
+                    elif type(object) == settings_screen.Settings_screen:
+                        object.checkevent(event.pos)
 
     def render(self):
         self.screen.fill('black')
@@ -77,15 +63,13 @@ class StartScreen:
             object.render()
 
         self.screen.blit(self.maintext, self.maintextRect)
-        if self.mode == 'settings':
-            self.screen.blit(self.resolutiontext, self.resolutiontextRect)
-            self.screen.blit(self.hoptext, self.hoptextRect)
+
 
         pygame.display.update()
 
     def defualt_mode(self):
         if self.executed_functions != 'default':
-            self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
+            self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
             self.executed_functions = 'default'
 
     def settings_mode(self):
@@ -93,39 +77,33 @@ class StartScreen:
             self.buttons = []
 
             for object in self.objects:
-                if type(object) == button.ButtonForStartScreen:
+                if type(object) == button.ButtonForgame:
                     self.objects.remove(object)
 
             for object in self.objects:
-                if type(object) == button.ButtonForStartScreen:
+                if type(object) == button.ButtonForgame:
                     self.objects.remove(object)
 
-            save_n_exit = button.ButtonForStartScreen(71, self)
-
-            self.buttons.append(save_n_exit)
-
-            self.DropdownMenus = [dm.DropdownMenu(self, x) for x in range(3)]
+            self.settingsscreen = settings_screen.Settings_screen(self)
 
             self.executed_functions = 'settings'
 
     def load_new_settings(self):
 
-        self.buttons = []
+        self.objects.remove(self.settingsscreen)
 
         for object in self.objects:
-            if type(object) == button.ButtonForStartScreen:
+            if type(object) == button.ButtonForgame:
+                self.objects.remove(object)
+
+        for object in self.objects:
+            if type(object) == button.ButtonForgame:
                 self.objects.remove(object)
             elif type(object) == dm.DropdownMenu:
                 self.objects.remove(object)
 
         for object in self.objects:
-            if type(object) == button.ButtonForStartScreen:
-                self.objects.remove(object)
-            elif type(object) == dm.DropdownMenu:
-                self.objects.remove(object)
-
-        for object in self.objects:
-            if type(object) == button.ButtonForStartScreen:
+            if type(object) == button.ButtonForgame:
                 self.objects.remove(object)
             elif type(object) == dm.DropdownMenu:
                 self.objects.remove(object)

@@ -148,6 +148,9 @@ class Button:
                 elif self.number == -1:
                     self.game.run = False
 
+                elif self.number == -2:
+                    self.game.mode = 'settings'
+
 
 
 
@@ -161,21 +164,21 @@ class Button:
 
 
 
-class ButtonForStartScreen:
-    def __init__(self, number, StartScreen):
+class ButtonForgame:
+    def __init__(self, number, screen):
         self.number = number
-        self.startscreen = StartScreen
-        self.startscreen.objects.append(self)
-        self.font = pygame.font.Font('freesansbold.ttf',  self.startscreen.height//35)
+        self.screen = screen
+        self.screen.objects.append(self)
+        self.font = pygame.font.Font('freesansbold.ttf',  self.screen.height//35)
 
-        self.width = self.startscreen.width // 3
-        self.height = self.startscreen.height // 10
+        self.width = self.screen.width // 3
+        self.height = self.screen.height // 10
 
 
         #adjust y based on the number
         gap = 15
-        self.y = (self.startscreen.height // 2) - self.height // 2 + (self.height + gap) * number
-        self.x = (self.startscreen.width // 2) - self.width // 2
+        self.y = (self.screen.height // 2) - self.height // 2 + (self.height + gap) * number
+        self.x = (self.screen.width // 2) - self.width // 2
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         if self.number == 0:
@@ -185,8 +188,8 @@ class ButtonForStartScreen:
             self.text = self.font.render('Settings', True, 'black')
 
         elif self.number == 71:
-            self.text = self.font.render('Save and Exit', True, 'black')
-            self.y = self.startscreen.height - self.startscreen.height//5
+            self.text = self.font.render('Back', True, 'black')
+            self.y = self.screen.height - self.screen.height//5
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         else:
@@ -198,16 +201,16 @@ class ButtonForStartScreen:
     def checkcollision(self, pos):
         if self.rect.collidepoint(pos[0], pos[1]):
             if self.number == 0:
-                self.startscreen.run = False
+                self.screen.run = False
             elif self.number == 1:
-                self.startscreen.mode = 'settings'
+                self.screen.mode = 'settings'
             elif self.number == 71:
-                self.startscreen.mode = 'load_new_settings'
+                self.screen.game.mode = 'load_new_settings'
             else:
                 raise NotImplementedError('button function not yet added')
 
 
     def render(self):
-        pygame.draw.rect(self.startscreen.screen, (255,255,255), self.rect)
-        self.startscreen.screen.blit(self.text, self.textRect)
+        pygame.draw.rect(self.screen.screen, (255,255,255), self.rect)
+        self.screen.screen.blit(self.text, self.textRect)
 
