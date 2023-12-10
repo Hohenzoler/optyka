@@ -3,18 +3,18 @@ from gui import button
 
 
 class GUI:
-    def __init__(self, game, width, height, position):
+    def __init__(self, game):
         self.game = game
-        self.width = width
-        self.height = height // 10
-        self.position = position
+        self.width = self.game.width
+        self.height = self.game.height // 10
+        self.position = self.game.settings['HOPBAR_POSITION']
 
-        if self.position == 'buttom':
-            self.rect = pygame.Rect(0, height - self.height, self.width, self.height)
+        if self.position == 'bottom':
+            self.rect = pygame.Rect(0, self.height*10 - self.height, self.width, self.height)
         elif self.position == 'left':
-            self.rect = pygame.Rect(0, 0, self.width//10, height)
+            self.rect = pygame.Rect(0, 0, self.width//10, self.height*10)
         elif self.position == 'right':
-            self.rect = pygame.Rect(self.width - self.width//10, 0, self.width//10, height)
+            self.rect = pygame.Rect(self.width - self.width//10, 0, self.width//10, self.height*10)
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
 
@@ -23,9 +23,7 @@ class GUI:
         self.game.objects.append(self)
         self.f = None
 
-        self.buttons = [button.Button(self.game, x, self.width, self.height, self.position) for x in range(3)] #creates buttons
-
-
+        self.buttons = [button.Button(self.game, x) for x in range(-2, 3)] #creates buttons
 
 
     def render(self):
@@ -33,6 +31,23 @@ class GUI:
         for button in self.buttons: #renders buttons
             button.render()
 
+
     def checkifclicked(self, mousepos):
         for button in self.buttons:
             button.checkifclicked(mousepos)
+
+    def load_settings(self):
+        self.width = self.game.width
+        self.height = self.game.height // 10
+        self.position = self.game.settings['HOPBAR_POSITION']
+
+        if self.position == 'bottom':
+            self.rect = pygame.Rect(0, self.height * 10 - self.height, self.width, self.height)
+        elif self.position == 'left':
+            self.rect = pygame.Rect(0, 0, self.width // 10, self.height * 10)
+        elif self.position == 'right':
+            self.rect = pygame.Rect(self.width - self.width // 10, 0, self.width // 10, self.height * 10)
+        elif self.position == 'top':
+            self.rect = pygame.Rect(0, 0, self.width, self.height)
+
+        self.buttons = [button.Button(self.game, x) for x in range(-2, 3)] #creates buttons

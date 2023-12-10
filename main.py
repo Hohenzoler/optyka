@@ -6,17 +6,19 @@ from gui import startscreen as ss
 
 settings = settingsSetup.start()
 
-width = int(settings[0])
-height = int(settings[1])
+width = settings['WIDTH']
+height = settings['HEIGHT']
+
+position = settings['HOPBAR_POSITION']
+
 
 startscreen = ss.StartScreen(width, height)
 
 
-position = settings[2]
 programIcon = pygame.image.load('images/torch.png')
 
 pygame.display.set_icon(programIcon)
-game = game.Game(width, height)
+game = game.Game()
 # light1=light.Light(game,[[0,0],[100,10],[200,300]],(255,255,255))
-GUI = gui.GUI(game, width, height, position)
+GUI = gui.GUI(game)
 game.loop()

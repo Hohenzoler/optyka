@@ -1,29 +1,38 @@
 import pygame
 from gui import button
+import settingsSetup
+from gui import settings_screen
 
 
 pygame.init()
 
 class StartScreen:
     def __init__(self, width, height):
+        settings = settingsSetup.load_settings()
         self.width = width
         self.height = height
-        self.screen = pygame.display.set_mode((width, height))
+        self.screen = pygame.display.set_mode((self.width, self.height))
+
+        self.settings_fullscreen = settings['FULLSCREEN']
+
+        if self.settings_fullscreen == 'ON':
+            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+
         self.run = True
         self.mode = 'default'
         self.objects = []
         self.font = pygame.font.Font('freesansbold.ttf', self.width//20)
-        self.maintext = self.font.render('Optyka', True, 'white')
-        self.maintextRect = self.maintext.get_rect()
-        self.maintextRect.center = (width//2, (height//2) - 200)
+
 
         self.executed_functions = 'default'
 
+        self.maintext = self.font.render('Optyka', True, 'white')
+        self.maintextRect = self.maintext.get_rect()
+        self.maintextRect.center = (self.width // 2, (self.height // 2) - (3 * self.height // 10))
 
-        self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
+        self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
 
         pygame.display.set_caption('Optyka')
-
 
         self.mainloop()
 
@@ -36,10 +45,11 @@ class StartScreen:
             elif self.mode == 'settings':
                 self.settings_mode()
 
+            elif self.mode == 'load_new_settings':
+                self.load_new_settings()
+
             self.checkforevents()
             self.render()
-
-
 
     def checkforevents(self):
         for event in pygame.event.get():
@@ -49,38 +59,55 @@ class StartScreen:
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 for object in self.objects:
-                    if type(object) == button.ButtonForStartScreen:
+                    if type(object) == button.ButtonForgame:
                         object.checkcollision(event.pos)
+                    elif type(object) == settings_screen.Settings_screen:
+                        object.checkevent(event.pos)
 
     def render(self):
+        self.screen.fill('black')
         for object in self.objects:
             object.render()
 
-        self.screen.blit(self.maintext, self.maintextRect)
+        if self.mode == 'default':
+            self.screen.blit(self.maintext, self.maintextRect)
+
+
         pygame.display.update()
 
     def defualt_mode(self):
         if self.executed_functions != 'default':
-            self.buttons = [button.ButtonForStartScreen(x, self) for x in range(3)]
+            self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
             self.executed_functions = 'default'
-            pygame.display.update()
-        else:
-            pass
+
     def settings_mode(self):
         if self.executed_functions != 'settings':
             self.buttons = []
 
-            for object in self.objects:
-                if type(object) == button.ButtonForStartScreen:
-                    self.objects.remove(object)
+            self.objects = []
 
-            for object in self.objects:
-                if type(object) == button.ButtonForStartScreen:
-                    self.objects.remove(object)
+            self.settingsscreen = settings_screen.Settings_screen(self)
 
-            self.screen.fill('black')
             self.executed_functions = 'settings'
-        else:
-            self.screen.fill('black')
-            print(self.objects)
 
+    def load_new_settings(self):
+
+        self.objects.remove(self.settingsscreen)
+
+        settings = settingsSetup.load_settings()
+
+        self.width = settings['WIDTH']
+        self.height = settings['HEIGHT']
+
+        self.font = pygame.font.Font('freesansbold.ttf', self.width // 20)
+
+        self.maintext = self.font.render('Optyka', True, 'white')
+        self.maintextRect = self.maintext.get_rect()
+        self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
+
+        if settings['FULLSCREEN'] == 'ON':
+            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((self.width, self.height))
+
+        self.mode = 'default'

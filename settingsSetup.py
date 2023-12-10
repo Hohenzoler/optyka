@@ -1,21 +1,25 @@
 import os.path
+import json
 
-def start():
-    settings = []
+settings = {'WIDTH': 1000, 'HEIGHT': 700, 'FULLSCREEN': 'OFF', 'HOPBAR_POSITION': 'bottom'}
 
-    if os.path.exists('settings.ini'):
-        with open('settings.ini', 'r') as f:
-            for row in f:
-                s = row.split('=', 1)[1].strip()
-                settings.append(s)
-        f.close()
-    else:
-        with open("settings.txt", 'a') as f:
-            f.write('WIDTH=1000\n')
-            f.write('HEIGHT=700\n')
-            f.write('POSITION=buttom\n')
+def start(s=settings):
+    if os.path.exists('settings.json'):
+        with open('settings.json', 'r') as f:
+            json_object = json.loads(f.read())
             f.close()
-        settings.append(1000)
-        settings.append(700)
-        settings.append('buttom')
-    return settings
+        s = json_object
+
+    else:
+        json_string = json.dumps(s, indent=1)
+        with open('settings.json', 'w') as f:
+            f.write(json_string)
+            f.close()
+    return s
+
+def load_settings():
+    with open('settings.json', 'r') as f:
+        json_object = json.loads(f.read())
+        f.close()
+    s = json_object
+    return s
