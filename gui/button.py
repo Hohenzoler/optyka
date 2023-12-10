@@ -58,6 +58,10 @@ class Button:
 
         self.clicked = 0 #0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
 
+        self.torch_icon = pygame.image.load("images/torch_icon.png")
+        # Scale the torch icon to the size of the button
+        self.torch_icon = pygame.transform.scale(self.torch_icon, (button_width, button_height))
+
     def render(self):
         # Render GUI elements
         mousepos = list(pygame.mouse.get_pos())
@@ -79,7 +83,11 @@ class Button:
         def adjust_flashlight():
             self.f.adjust(mousepos[0], mousepos[1], 0)
 
+        pygame.draw.rect(self.game.screen, self.color, self.rect)
+
         if self.number == 0:
+            torch_icon_rect = self.torch_icon.get_rect(center=self.rect.center)
+            self.game.screen.blit(self.torch_icon, torch_icon_rect)
             if self.clicked == 1:
                 if self.game.r:
                     #self.f.angle+=1
@@ -115,7 +123,7 @@ class Button:
                 self.clicked = 0
 
 
-        pygame.draw.rect(self.game.screen, self.color, self.rect)
+
 
     def checkifclicked(self, pos):
         if self.rect.collidepoint(pos[0], pos[1]):
