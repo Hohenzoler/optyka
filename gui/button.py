@@ -54,7 +54,7 @@ class Button:
         elif self.number == 2:
             self.color = (0, 255, 0)
         else:
-            self.color = (255, 255, 255)
+            self.color = (20, 0, 0)
 
         self.clicked = 0 #0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
 
@@ -62,8 +62,17 @@ class Button:
         # Scale the torch icon to the size of the button
         self.torch_icon = pygame.transform.scale(self.torch_icon, (button_width, button_height))
         self.object_icon = pygame.image.load("images/object_icon.png")
+
         # Scale the object icon to the size of the button
         self.object_icon = pygame.transform.scale(self.object_icon, (button_width, button_height))
+
+        self.settings_icon = pygame.image.load('images/settings.png')
+        self.settings_icon = pygame.transform.scale(self.settings_icon, (button_width, button_height))
+        self.settings_icon_rect = self.settings_icon.get_rect(center=self.rect.center)
+
+        self.exit_icon = pygame.image.load('images/exit.png')
+        self.exit_icon = pygame.transform.scale(self.exit_icon, (button_width, button_height))
+        self.exit_icon_rect = self.exit_icon.get_rect(center=self.rect.center)
 
     def render(self):
         # Render GUI elements
@@ -82,11 +91,12 @@ class Button:
                                                 (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0)
 
 
+
+
         def adjust_flashlight():
             self.f.adjust(mousepos[0], mousepos[1], 0)
-
-        pygame.draw.rect(self.game.screen, self.color, self.rect)
-
+        if self.number != -2 and self.number != -1:
+            pygame.draw.rect(self.game.screen, self.color, self.rect)
         if self.number == 0:
             torch_icon_rect = self.torch_icon.get_rect(center=self.rect.center)
             self.game.screen.blit(self.torch_icon, torch_icon_rect)
@@ -113,7 +123,7 @@ class Button:
                 self.game.objects.insert(-2, self.f)
                 self.clicked = 0
                 self.f = None
-                sounds.placed_sound()
+                sounds.laser_sound()
 
 
 
@@ -126,6 +136,15 @@ class Button:
             if self.clicked == 2:
                 self.game.objects.insert(-2, self.m)
                 self.clicked = 0
+
+
+
+        if self.number == -2:
+            self.game.screen.blit(self.settings_icon, self.settings_icon_rect)
+
+        if self.number == -1:
+            self.game.screen.blit(self.exit_icon, self.exit_icon_rect)
+
 
 
 
@@ -150,23 +169,29 @@ class Button:
                     )
                     self.game.current_flashlight = self.f
                     # self.f.selected(mousepos)
+                    sounds.selected_sound()
                 elif self.number == 1:
                     self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
                                                     (mousepos[0] + 200, mousepos[1]),
                                                     (mousepos[0] + 50, mousepos[1] + 100),
                                                     (mousepos[0] -20, mousepos[1]-100),
                                                     (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100)
+                    sounds.selected_sound()
+
+                elif self.number == 2:
+                    sounds.selected_sound()
 
                 elif self.number == -1:
                     self.game.run = False
 
                 elif self.number == -2:
                     self.game.mode = 'settings'
+                    sounds.clicked_sound()
 
 
 
 
-                sounds.selected_sound()
+
 
             elif self.rect.collidepoint(mousepos) and self.clicked == 1:
                 self.clicked = 0
@@ -214,10 +239,13 @@ class ButtonForgame:
         if self.rect.collidepoint(pos[0], pos[1]):
             if self.number == 0:
                 self.screen.run = False
+                sounds.clicked_sound()
             elif self.number == 1:
                 self.screen.mode = 'settings'
+                sounds.clicked_sound()
             elif self.number == 71:
                 self.screen.game.mode = 'load_new_settings'
+                sounds.clicked_sound()
             else:
                 raise NotImplementedError('button function not yet added')
 

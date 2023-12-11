@@ -1,6 +1,7 @@
 import pygame
 import sys
 import json
+from classes import sounds
 
 
 class DropdownMenu:
@@ -70,6 +71,7 @@ class DropdownMenu:
 
         if self.rect.collidepoint(pos):
             self.expanded = not self.expanded
+            sounds.clicked_sound()
         else:
             for i, option in enumerate(self.options):
                 option_rect = pygame.Rect(self.x, self.y + (i + 1) * self.height, self.width, self.height)
@@ -79,6 +81,7 @@ class DropdownMenu:
                     self.handle_button_click(option)
 
     def handle_button_click(self, option):
+        sounds.clicked_sound()
         if self.number == 2:
             self.selected_option_2 = option
             width, height = option.split('x')

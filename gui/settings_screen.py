@@ -1,6 +1,8 @@
 import pygame
 from gui import button
 from gui import dropdown_menu as dm
+from classes import sounds
+
 class Settings_screen:
     def __init__(self, game):
         self.game = game
@@ -60,6 +62,7 @@ class Settings_screen:
     def checkevent(self, pos):
         for object in self.objects:
             object.checkcollision(pos)
+
 
 
 
