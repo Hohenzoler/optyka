@@ -132,7 +132,6 @@ class GameObject:
     def drawoutline(self):
         # Draw an outline around the object
         pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
-        print(self.points)
 
     def checkifclicked(self, mousepos):
         # Check if the object is clicked
@@ -175,7 +174,6 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
     def render(self):
         super().render()
-
         if self.islighting:
             if self.on:
                 # Calculate the starting point of the light from the center of the rotated rectangle/surface

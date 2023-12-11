@@ -99,7 +99,7 @@ class Button:
                     adjust_flashlight()
 
                 self.f.drawoutline()
-                print(self.f.angle)
+                # print(self.f.angle)
 
 
 
