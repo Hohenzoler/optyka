@@ -14,3 +14,7 @@ def placed_sound():
 def clicked_sound():
     clicked_sound = pygame.mixer.Sound('sounds/goofy_ahh.wav')
     clicked_sound.play()
+
+def laser_sound():
+    laser_sound = pygame.mixer.Sound('sounds/laser_sound.wav')
+    laser_sound.play()

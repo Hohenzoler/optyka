@@ -119,7 +119,7 @@ class Button:
                 self.game.objects.insert(-2, self.f)
                 self.clicked = 0
                 self.f = None
-                sounds.placed_sound()
+                sounds.laser_sound()
 
 
 
