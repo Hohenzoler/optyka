@@ -54,7 +54,7 @@ class Button:
         elif self.number == 2:
             self.color = (0, 255, 0)
         else:
-            self.color = (255, 255, 255)
+            self.color = (20, 0, 0)
 
         self.clicked = 0 #0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
 
@@ -69,6 +69,10 @@ class Button:
         self.settings_icon = pygame.image.load('images/settings.png')
         self.settings_icon = pygame.transform.scale(self.settings_icon, (button_width, button_height))
         self.settings_icon_rect = self.settings_icon.get_rect(center=self.rect.center)
+
+        self.exit_icon = pygame.image.load('images/exit.png')
+        self.exit_icon = pygame.transform.scale(self.exit_icon, (button_width, button_height))
+        self.exit_icon_rect = self.exit_icon.get_rect(center=self.rect.center)
 
     def render(self):
         # Render GUI elements
@@ -137,6 +141,9 @@ class Button:
 
         if self.number == -2:
             self.game.screen.blit(self.settings_icon, self.settings_icon_rect)
+
+        if self.number == -1:
+            self.game.screen.blit(self.exit_icon, self.exit_icon_rect)
 
 
 
