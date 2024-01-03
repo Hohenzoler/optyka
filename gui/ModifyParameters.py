@@ -1,11 +1,18 @@
 import tkinter as tk
+from ttkbootstrap import Style
+from ttkbootstrap import ttk
 
 class Parameters:
     def __init__(self):
         self.root = tk.Tk()
+
+        # Apply ttkbootstrap theme 'solar'
+        style = Style(theme='solar')
+        style.master = self.root
+
         self.root.title("Parameters")
-        self.root.geometry('200x250')
-        self.root.resizable = False
+        self.root.geometry('200x300')
+        self.root.resizable(False, False)
 
         self.parameters_dict = {'x': 23, 'y': 342, 'width': 23, 'height': 4, 'angle': 32}
 
@@ -30,7 +37,7 @@ class Parameters:
         label = tk.Label(self.root, text=f"{param.capitalize()}:")
         label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
 
-        entry = tk.Entry(self.root)
+        entry = ttk.Entry(self.root)
         entry.insert(0, str(self.parameters_dict[param]))  # Set default value
         entry.grid(row=row, column=1, padx=5, pady=5, sticky='w')
         self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
@@ -42,7 +49,7 @@ class Parameters:
 
     def display_initial_values(self):
         for param, entry_widget in self.parameters_dict.items():
-            if isinstance(entry_widget, tk.Entry):
+            if isinstance(entry_widget, ttk.Entry):
                 value = str(self.parameters_dict[param].get())
                 print(f"{param}: {value}")
 
