@@ -224,6 +224,9 @@ class ButtonForgame:
         elif self.number == 1:
             self.text = self.font.render('Settings', True, 'black')
 
+        elif self.number == 2:
+            self.text = self.font.render('Quit', True, 'black')
+
         elif self.number == 71:
             self.text = self.font.render('Back', True, 'black')
             self.y = self.screen.height - self.screen.height//5
@@ -243,6 +246,9 @@ class ButtonForgame:
             elif self.number == 1:
                 self.screen.mode = 'settings'
                 sounds.clicked_sound()
+            elif self.number == 2:
+                sounds.clicked_sound()
+                exit()
             elif self.number == 71:
                 self.screen.game.mode = 'load_new_settings'
                 sounds.clicked_sound()
