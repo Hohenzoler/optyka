@@ -11,12 +11,11 @@ height = settings['HEIGHT']
 
 position = settings['HOPBAR_POSITION']
 
-programIcon = pygame.image.load('images/torch.png')
+programIcon = pygame.image.load('images/torch_icon.png')
 
 pygame.display.set_icon(programIcon)
 
 startscreen = ss.StartScreen(width, height)
-
 
 
 game = game.Game()
