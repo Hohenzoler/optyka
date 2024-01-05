@@ -68,6 +68,8 @@ class Game:
                         object.checkifclicked(self.mousepos)
                     elif type(object) is gameobjects.Flashlight:
                         object.checkifclicked(self.mousepos)
+                    elif type(object) is gameobjects.Mirror:
+                        object.checkifclicked(self.mousepos)
                 if type(self.rightclickedmousepos) is tuple:
                     if type(object) is gameobjects.Flashlight:
                         object.selected(self.rightclickedmousepos)
