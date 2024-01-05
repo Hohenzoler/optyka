@@ -154,7 +154,10 @@ class GameObject:
             sounds.selected_sound()
         elif mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and self.selectedtrue:
             self.selectedtrue = False
-            sounds.placed_sound()
+            if type(self) == Flashlight:
+                sounds.laser_sound()
+            else:
+                sounds.placed_sound()
 
 class Mirror(GameObject):
     def __init__(self, game, points, color, angle, islighting=True, image_path=None):
