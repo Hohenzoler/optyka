@@ -160,7 +160,7 @@ class GameObject:
                 sounds.placed_sound()
 
 class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, islighting=True, image_path=None):
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, image_path)
 
 
