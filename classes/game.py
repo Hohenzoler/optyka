@@ -71,6 +71,8 @@ class Game:
                 if type(self.rightclickedmousepos) is tuple:
                     if type(object) is gameobjects.Flashlight:
                         object.selected(self.rightclickedmousepos)
+                    if type(object) is gameobjects.Mirror:
+                        object.selected(self.rightclickedmousepos)
                 object.render()
 
         elif self.mode == 'settings':
