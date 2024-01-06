@@ -103,6 +103,7 @@ class GameObject:
             self.update_rect()
 
         else:
+            self.points = [(x + self.x, y + self.y) for x, y in self.points]
             pygame.draw.polygon(self.game.screen, self.color, self.points)
 
     def move(self):
