@@ -105,6 +105,7 @@ class GameObject:
         else:
             self.points = [(x + self.x, y + self.y) for x, y in self.points]
             pygame.draw.polygon(self.game.screen, self.color, self.points)
+            self.update_rect()
 
     def move(self):
         # code for moving object with mouse
