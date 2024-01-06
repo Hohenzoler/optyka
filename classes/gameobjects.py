@@ -2,6 +2,7 @@ import pygame
 from classes import light, sounds
 import math
 from pygame.transform import rotate
+import time
 
 class GameObject:
 
@@ -178,7 +179,6 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.image = pygame.image.load(image_path) if image_path else None
 
     def render(self):
-        super().render()
         if self.islighting:
             if self.on:
                 # Calculate the starting point of the light from the center of the rotated rectangle/surface
