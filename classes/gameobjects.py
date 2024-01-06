@@ -197,10 +197,11 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                 # Render the light before blitting the rotated surface
                 light.Light.render(self.light)
                 self.game.objects.remove(self.light)
+                super().render()
+
             elif not self.on:
                 self.light = None
 
-            super().render()
 
     def light_adjust(self, center_x, center_y):
         self.light_start_x = center_x
