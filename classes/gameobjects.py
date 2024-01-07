@@ -18,6 +18,7 @@ class GameObject:
         self.angle = angle
         self.image_path = image_path
         self.image = pygame.image.load(image_path) if image_path else None
+        self.image = self.image.convert() if self.image else None
         self.rect = pygame.Rect(0, 0, 0, 0)
         self.update_rect()
 
