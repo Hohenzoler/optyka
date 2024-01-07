@@ -31,13 +31,11 @@ class GameObject:
 
     def render(self):
         if not self.selectedtrue:
-            # Rotate the points of the object
-            rotated_points = self.rotate_points(self.points, self.angle)
 
             # Render the image if available
             if self.image:
-                center_x = sum(x for x, _ in rotated_points) / len(rotated_points)
-                center_y = sum(y for _, y in rotated_points) / len(rotated_points)
+                center_x = sum(x for x, _ in self.points) / len(self.points)
+                center_y = sum(y for _, y in self.points) / len(self.points)
                 rotated_image = rotate(self.image, -self.angle)
                 image_rect = rotated_image.get_rect(center=(center_x, center_y))
 
@@ -45,7 +43,7 @@ class GameObject:
                 self.game.screen.blit(rotated_image, image_rect.topleft)
             else:
                 # Draw the rotated lines without transparency
-                pygame.draw.polygon(self.game.screen, self.color, rotated_points)
+                pygame.draw.polygon(self.game.screen, self.color, self.points)
         else:
             mousepos = pygame.mouse.get_pos()
             if self.game.r:
