@@ -14,9 +14,15 @@ class Game:
         # initializing pygame
         pygame.init()
         if self.settings['FULLSCREEN'] == 'ON':
-            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+            if self.settings['VSYNC'] == 'ON':
+                self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=1)
+            else:
+                self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=0)
         else:
-            self.screen = pygame.display.set_mode((self.width, self.height))
+            if self.settings['VSYNC'] == 'ON':
+                self.screen = pygame.display.set_mode((self.width, self.height), vsync=1)
+            else:
+                self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
         self.run = True
         self.fps = 165
         self.tick = int((1 / self.fps) * 1000)

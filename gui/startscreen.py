@@ -106,8 +106,14 @@ class StartScreen:
         self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
 
         if settings['FULLSCREEN'] == 'ON':
-            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+            if settings['VSYNC'] == 'ON':
+                self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=1)
+            else:
+                self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=0)
         else:
-            self.screen = pygame.display.set_mode((self.width, self.height))
+            if settings['VSYNC'] == 'ON':
+                self.screen = pygame.display.set_mode((self.width, self.height), vsync=1)
+            else:
+                self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
 
         self.mode = 'default'
