@@ -1,7 +1,7 @@
 import os.path
 import json
 
-settings = {'WIDTH': 1000, 'HEIGHT': 700, 'FULLSCREEN': 'OFF', 'HOPBAR_POSITION': 'bottom'}
+settings = {'WIDTH': 1000, 'HEIGHT': 700, 'FULLSCREEN': 'OFF', 'HOTBAR_POSITION': 'bottom', 'VSYNC': 'OFF'}
 
 def start(s=settings):
     if os.path.exists('settings.json'):
