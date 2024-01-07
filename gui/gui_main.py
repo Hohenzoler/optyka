@@ -7,7 +7,7 @@ class GUI:
         self.game = game
         self.width = self.game.width
         self.height = self.game.height // 10
-        self.position = self.game.settings['HOPBAR_POSITION']
+        self.position = self.game.settings['HOTBAR_POSITION']
 
         if self.position == 'bottom':
             self.rect = pygame.Rect(0, self.height*10 - self.height, self.width, self.height)
@@ -39,7 +39,7 @@ class GUI:
     def load_settings(self):
         self.width = self.game.width
         self.height = self.game.height // 10
-        self.position = self.game.settings['HOPBAR_POSITION']
+        self.position = self.game.settings['HOTBAR_POSITION']
 
         if self.position == 'bottom':
             self.rect = pygame.Rect(0, self.height * 10 - self.height, self.width, self.height)

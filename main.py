@@ -9,7 +9,7 @@ settings = settingsSetup.start()
 width = settings['WIDTH']
 height = settings['HEIGHT']
 
-position = settings['HOPBAR_POSITION']
+position = settings['HOTBAR_POSITION']
 
 programIcon = pygame.image.load('images/torch_icon.png')
 

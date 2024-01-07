@@ -32,13 +32,13 @@ class DropdownMenu:
                 self.options.append(f'{self.dimention_width}x{self.dimention_height}')
             self.selected_option_2 = f'{self.ss.width}x{self.ss.height}'
         elif self.number == 0:
-            for positon in self.ss.HopbarPositions:
+            for positon in self.ss.HotbarPositions:
                 self.options.append(positon)
             with open('settings.json', 'r') as f:
                 json_object = json.loads(f.read())
                 f.close()
             s = json_object
-            self.selected_option_2 = s['HOPBAR_POSITION'].capitalize()
+            self.selected_option_2 = s['HOTBAR_POSITION'].capitalize()
         elif self.number == 1:
             for option in self.ss.Fullscreen:
                 self.options.append(option['FULLSCREEN'])
@@ -111,7 +111,7 @@ class DropdownMenu:
                 f.close()
             s = json_object
 
-            s['HOPBAR_POSITION'] = position
+            s['HOTBAR_POSITION'] = position
 
             json_string = json.dumps(s, indent=1)
             with open('settings.json', 'w') as f:

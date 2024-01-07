@@ -7,7 +7,7 @@ class Button:
         self.number = number
         self.screenheight = self.game.height
         self.screenwidth = self.game.settings['WIDTH']
-        self.position = self.game.settings['HOPBAR_POSITION']
+        self.position = self.game.settings['HOTBAR_POSITION']
         self.gap = self.game.settings['HEIGHT'] // 10
 
         self.y = self.screenheight//10

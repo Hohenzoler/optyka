@@ -14,7 +14,7 @@ class Settings_screen:
 
         self.dimentions = [{'WIDTH': 2560, 'HEIGHT': 1440}, {'WIDTH': 1920, 'HEIGHT': 1080},
                            {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
-        self.HopbarPositions = ['Bottom', 'Top', 'Left', 'Right']
+        self.HotbarPositions = ['Bottom', 'Top', 'Left', 'Right']
 
         self.Fullscreen = [{'FULLSCREEN': 'ON'}, {'FULLSCREEN': 'OFF'}]
 
@@ -36,10 +36,10 @@ class Settings_screen:
         self.FStextRect.center = (
         self.width // 2 - self.width // 10, self.height // 2 - (self.height // 27 + self.height // 47))
 
-        self.hoptext = self.font2.render('Hopbar location:', True, 'white')
-        self.hoptextRect = self.hoptext.get_rect()
+        self.hottext = self.font2.render('Hotbar location:', True, 'white')
+        self.hottextRect = self.hottext.get_rect()
 
-        self.hoptextRect.center = (self.width // 2 - self.width // 10, self.height // 2 + (self.height // 50 + self.height // 47))
+        self.hottextRect.center = (self.width // 2 - self.width // 10, self.height // 2 + (self.height // 50 + self.height // 47))
 
         save_n_exit = button.ButtonForgame(71, self)
 
@@ -52,7 +52,7 @@ class Settings_screen:
 
     def render(self):
         self.screen.blit(self.resolutiontext, self.resolutiontextRect)
-        self.screen.blit(self.hoptext, self.hoptextRect)
+        self.screen.blit(self.hottext, self.hottextRect)
         self.screen.blit(self.maintext, self.maintextRect)
         self.screen.blit(self.FStext, self.FStextRect)
 
