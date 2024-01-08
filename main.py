@@ -6,6 +6,8 @@ from gui import startscreen as ss
 
 settings = settingsSetup.start()
 
+print(settings)
+
 width = settings['WIDTH']
 height = settings['HEIGHT']
 
