@@ -1,6 +1,8 @@
 import pygame
 import math
-from classes import gameobjects
+from classes import gameobjects, fps
+import time
+
 
 class Light:
     def __init__(self, game, points, color, angle, light_width):
@@ -27,13 +29,14 @@ class Light:
     def callibrate_r(self):
         if self.r > 2*math.pi:
             self.r-=2*math.pi
-    def trace_path(self):
+    def trace_path(self, max_time_seconds=(1/fps.return_fps())):
         self.r=-self.angle/360*2*math.pi
 
         self.vx = self.x
         self.vy = self.y
         self.trace=True
-        while self.trace:
+        start_time = time.time()
+        while self.trace and (time.time() - start_time) < max_time_seconds:
             # print(self.r)
             self.callibrate_r()
             self.forward()

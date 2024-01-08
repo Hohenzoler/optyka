@@ -3,6 +3,7 @@ from gui import gui_main as gui
 from gui import settings_screen
 from classes import gameobjects
 import settingsSetup
+from classes import fps
 
 
 class Game:
@@ -24,7 +25,7 @@ class Game:
             # else:
                 self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
         self.run = True
-        self.fps = 165
+        self.fps = fps.return_fps()
         self.tick = int((1 / self.fps) * 1000)
         self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
         self.rightclickedmousepos = None  # right click mouse positon
