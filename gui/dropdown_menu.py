@@ -38,7 +38,7 @@ class DropdownMenu:
                 json_object = json.loads(f.read())
                 f.close()
             s = json_object
-            self.selected_option_2 = s['HOPBAR_POSITION'].capitalize()
+            self.selected_option_2 = s['HOTBAR_POSITION'].capitalize()
         elif self.number == 1:
             for option in self.ss.Fullscreen:
                 self.options.append(option['FULLSCREEN'])
