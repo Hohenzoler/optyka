@@ -14,14 +14,14 @@ class Game:
         # initializing pygame
         pygame.init()
         if self.settings['FULLSCREEN'] == 'ON':
-            if self.settings['VSYNC'] == 'ON':
-                self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=1)
-            else:
-                self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=0)
+        #     if self.settings['VSYNC'] == 'ON':
+        #         self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=1)
+        #     else:
+            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=0)
         else:
-            if self.settings['VSYNC'] == 'ON':
-                self.screen = pygame.display.set_mode((self.width, self.height), vsync=1)
-            else:
+            # if self.settings['VSYNC'] == 'ON':
+            #     self.screen = pygame.display.set_mode((self.width, self.height), vsync=1)
+            # else:
                 self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
         self.run = True
         self.fps = 165
@@ -43,14 +43,16 @@ class Game:
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
-                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                     self.rightclickedmousepos = event.pos
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_r:
-                        self.r = True
-                elif event.type == pygame.KEYUP:
-                    if event.key == pygame.K_r:
-                        self.r = False
+                if event.type == pygame.MOUSEWHEEL:
+                    if event.y > 0:
+                        self.r = 10
+                    if event.y < 0:
+                        self.r = -10
+                # elif event.type == pygame.KEYUP:
+                #     if event.key == pygame.K_r:
+                #         self.r = False
 
             elif self.mode == 'settings':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

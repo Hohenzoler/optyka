@@ -34,7 +34,7 @@ class Light:
         self.vy = self.y
         self.trace=True
         while self.trace:
-            print(self.r)
+            # print(self.r)
             self.callibrate_r()
             self.forward()
             self.update_vp()
@@ -58,7 +58,7 @@ class Light:
                         pass
                     else:
                         if self.vp_rect.colliderect(object.rect):
-                            print('touch')
+                            # print('touch')
                             self.points.append((self.vx, self.vy))
                             self.trace=False
                             # object_angle=-object.angle/360*2*math.pi
@@ -66,13 +66,13 @@ class Light:
                             # self.bend(object_angle)
             if type(object) == gameobjects.Mirror:
                 if self.vp_rect.colliderect(object.rect):
-                    print('touch')
+                    # print('touch')
                     self.points.append((self.vx, self.vy))
 
                     # object_angle = -object.angle / 360 * 2 * math.pi
                     # print(object_angle)
                     angle=self.find_angle(object)
-                    print(self.r)
+                    # print(self.r)
                     self.bend(angle)
 
     def find_angle(self,object):

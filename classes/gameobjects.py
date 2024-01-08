@@ -47,7 +47,9 @@ class GameObject:
         else:
             mousepos = pygame.mouse.get_pos()
             if self.game.r:
-                self.adjust(mousepos[0], mousepos[1], 1)
+                print(self.game.r)
+                self.adjust(mousepos[0], mousepos[1], self.game.r)
+                self.game.r = False
             else:
                 self.adjust(mousepos[0], mousepos[1], 0)
             self.drawoutline()
