@@ -50,9 +50,6 @@ class Game:
                         self.r = 10
                     if event.y < 0:
                         self.r = -10
-                # elif event.type == pygame.KEYUP:
-                #     if event.key == pygame.K_r:
-                #         self.r = False
 
             elif self.mode == 'settings':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

@@ -102,9 +102,8 @@ class Button:
             self.game.screen.blit(self.torch_icon, torch_icon_rect)
             if self.clicked == 1:
                 if self.game.r:
-                    #self.f.angle+=1
-                    self.f.adjust(mousepos[0], mousepos[1], 1)
-                    adjust_flashlight()
+                    self.f.adjust(mousepos[0], mousepos[1], self.game.r)
+                    self.game.r = False
                 else:
                     adjust_flashlight()
 
