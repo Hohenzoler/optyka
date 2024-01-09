@@ -1,5 +1,6 @@
 import pygame
 from classes import gameobjects as go
+from classes import sounds
 
 class Bin:
     def __init__(self, game):
@@ -19,3 +20,4 @@ class Bin:
     def checkCollision(self, obj):
         if obj.rect.colliderect(self.rect) and isinstance(obj, go.GameObject):
             self.game.objects.remove(obj)
+            sounds.destroy_sound()

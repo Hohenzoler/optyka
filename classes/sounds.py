@@ -19,5 +19,9 @@ def laser_sound():
     laser_sound = pygame.mixer.Sound('sounds/laser_sound.wav')
     laser_sound.play()
 
+def destroy_sound():
+    destroy_sound = pygame.mixer.Sound('sounds/explosion.wav')
+    destroy_sound.play()
+
 if __name__ == '__main__':
     print("why are you running this file?")
