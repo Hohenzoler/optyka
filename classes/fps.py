@@ -8,6 +8,5 @@ def refresh_rate(device):
 
 print(refresh_rate(device_info))
 
-
 def return_fps():
     return refresh_rate(device_info)

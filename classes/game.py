@@ -11,6 +11,7 @@ class Game:
         self.settings = settingsSetup.load_settings()
         self.width = self.settings['WIDTH']
         self.height = self.settings['HEIGHT']
+        self.font = pygame.font.Font(None, self.height//20)
         self.objects = []
         # initializing pygame
         pygame.init()
@@ -26,6 +27,7 @@ class Game:
                 self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
         self.run = True
         self.fps = fps.return_fps()
+
         self.tick = int((1 / self.fps) * 1000)
         self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
         self.rightclickedmousepos = None  # right click mouse positon
@@ -33,6 +35,8 @@ class Game:
         self.current_flashlight = None
         self.mode = 'default'
         self.executed_command = 'default'
+
+        self.clock = pygame.time.Clock()
 
 
 
@@ -61,7 +65,7 @@ class Game:
 
     def update(self):
         pygame.display.update()
-        pygame.time.wait(self.tick)
+        self.clock.tick(self.fps)
 
     def render(self):
         if self.mode == 'default':
@@ -111,8 +115,16 @@ class Game:
 
             self.executed_command = 'default'
 
+        self.displayFPS()
+
     def background(self):
         self.screen.fill((0, 0, 0))
+
+
+    def displayFPS(self):
+        fps = self.clock.get_fps()
+        fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+        self.screen.blit(fps_text, (10, 10))
 
     def loop(self):
         while self.run:
