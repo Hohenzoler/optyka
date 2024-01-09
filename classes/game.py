@@ -4,6 +4,7 @@ from gui import settings_screen
 from classes import gameobjects
 import settingsSetup
 from classes import fps
+from classes import bin
 
 
 class Game:
@@ -71,6 +72,7 @@ class Game:
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
 
             for object in sorted_objects:
+
                 if type(self.mousepos) is tuple:
                     if type(object) is gui.GUI:
                         object.checkifclicked(self.mousepos)
@@ -84,6 +86,12 @@ class Game:
                     if type(object) is gameobjects.Mirror:
                         object.selected(self.rightclickedmousepos)
                 object.render()
+
+                if type(object) != bin.Bin:
+                    for bin_2 in self.objects:
+                        if type(bin_2) == bin.Bin:
+                            bin_2.checkCollision(object)
+                            break
 
         elif self.mode == 'settings':
             if self.executed_command != 'settings':
