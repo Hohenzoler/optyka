@@ -1,4 +1,4 @@
-from classes import game
+from classes import game, sounds
 from gui import gui_main as gui
 import pygame
 import settingsSetup
@@ -19,6 +19,7 @@ pygame.display.set_icon(programIcon)
 
 startscreen = ss.StartScreen(width, height)
 
+sounds.soundtrack()
 
 game = game.Game()
 # light1=light.Light(game,[[0,0],[100,10],[200,300]],(255,255,255))
