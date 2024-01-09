@@ -11,8 +11,10 @@ class Bin:
 
         self.game.objects.append(self)
 
+        self.bin_img = pygame.image.load("images/trash.png")
+
     def render(self):
-        pygame.draw.rect(self.game.screen, 'grey', self.rect)
+        self.game.screen.blit(self.bin_img, self.rect)
 
     def checkCollision(self, obj):
         if obj.rect.colliderect(self.rect) and isinstance(obj, go.GameObject):
