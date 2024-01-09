@@ -7,7 +7,7 @@ def refresh_rate(device):
     return settings.DisplayFrequency
 
 def gpuInfo(device):
-    return((device.DeviceName, device.DeviceString))
+    return((device.DeviceString))
 
 
 print(f"User's refresh rate: {refresh_rate(device_info)}")

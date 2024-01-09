@@ -38,8 +38,6 @@ class Game:
 
         self.clock = pygame.time.Clock()
 
-
-
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
