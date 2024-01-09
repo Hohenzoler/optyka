@@ -2,6 +2,7 @@ import pygame
 import sys
 import json
 from classes import sounds
+import settingsSetup
 
 
 class DropdownMenu:
@@ -34,19 +35,14 @@ class DropdownMenu:
         elif self.number == 0:
             for positon in self.ss.HotbarPositions:
                 self.options.append(positon)
-            with open('settings.json', 'r') as f:
-                json_object = json.loads(f.read())
-                f.close()
-            s = json_object
+            s = settingsSetup.load_settings()
             self.selected_option_2 = s['HOTBAR_POSITION'].capitalize()
         elif self.number == 1:
             for option in self.ss.Fullscreen:
                 self.options.append(option['FULLSCREEN'])
 
-            with open('settings.json', 'r') as f:
-                json_object = json.loads(f.read())
-                f.close()
-            s = json_object
+            s = settingsSetup.load_settings()
+
             self.selected_option_2 = s['FULLSCREEN']
 
 
@@ -67,6 +63,7 @@ class DropdownMenu:
                 option_text_rect = option_text.get_rect(center=option_rect.center)
                 self.screen.blit(option_text, option_text_rect)
 
+
     def checkcollision(self, pos):
 
         if self.rect.collidepoint(pos):
@@ -86,49 +83,31 @@ class DropdownMenu:
             self.selected_option_2 = option
             width, height = option.split('x')
 
-            with open('settings.json', 'r') as f:
-                json_object = json.loads(f.read())
-                f.close()
-            s = json_object
+            s = settingsSetup.load_settings()
 
             s['WIDTH'] = int(width)
             s['HEIGHT'] = int(height)
 
             print(width, height)
 
-            json_string = json.dumps(s, indent=1)
-            with open('settings.json', 'w') as f:
-                f.write(json_string)
-                f.close()
+            settingsSetup.writesettingstofile(s)
 
 
         elif self.number == 0:
             position = option.lower()
             self.selected_option_2 = option
 
-            with open('settings.json', 'r') as f:
-                json_object = json.loads(f.read())
-                f.close()
-            s = json_object
+            s = settingsSetup.load_settings()
 
             s['HOTBAR_POSITION'] = position
 
-            json_string = json.dumps(s, indent=1)
-            with open('settings.json', 'w') as f:
-                f.write(json_string)
-                f.close()
+            settingsSetup.writesettingstofile(s)
 
         elif self.number == 1:
             self.selected_option_2 = option
 
-            with open('settings.json', 'r') as f:
-                json_object = json.loads(f.read())
-                f.close()
-            s = json_object
+            s = settingsSetup.load_settings()
 
             s['FULLSCREEN'] = option
 
-            json_string = json.dumps(s, indent=1)
-            with open('settings.json', 'w') as f:
-                f.write(json_string)
-                f.close()
+            settingsSetup.writesettingstofile(s)
