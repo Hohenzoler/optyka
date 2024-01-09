@@ -1,6 +1,6 @@
 import pygame
 from gui import button
-from gui import dropdown_menu as dm
+from gui import menu_buttons as dm
 from classes import sounds
 
 class Settings_screen:
@@ -43,9 +43,9 @@ class Settings_screen:
 
         save_n_exit = button.ButtonForgame(71, self)
 
-        self.DropdownMenus = []
+        self.Menu_buttons = []
 
-        self.DropdownMenus = [dm.DropdownMenu(self, x) for x in range(3)]
+        self.Menu_buttons = [dm.ButtonMenus(self, x) for x in range(3)]
 
         self.game.objects.append(self)
 
