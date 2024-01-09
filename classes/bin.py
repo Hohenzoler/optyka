@@ -1,4 +1,5 @@
 import pygame
+from classes import gameobjects as go
 
 class Bin:
     def __init__(self, game):
@@ -14,5 +15,5 @@ class Bin:
         pygame.draw.rect(self.game.screen, 'grey', self.rect)
 
     def checkCollision(self, obj):
-        if obj.rect.colliderect(self.rect):
+        if obj.rect.colliderect(self.rect) and isinstance(obj, go.GameObject):
             self.game.objects.remove(obj)
