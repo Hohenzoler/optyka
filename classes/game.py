@@ -68,6 +68,7 @@ class Game:
 
     def render(self):
         if self.mode == 'default':
+            print(self.objects)
             # Sort objects based on their layer attribute (assuming you have a layer attribute)
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
 
@@ -80,6 +81,7 @@ class Game:
                         object.checkifclicked(self.mousepos)
                     elif type(object) is gameobjects.Mirror:
                         object.checkifclicked(self.mousepos)
+
                 if type(self.rightclickedmousepos) is tuple:
                     if type(object) is gameobjects.Flashlight:
                         object.selected(self.rightclickedmousepos)
