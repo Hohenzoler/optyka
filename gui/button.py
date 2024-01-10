@@ -85,10 +85,10 @@ class Button:
         #                                 (mousepos[0] + 200, mousepos[1] + 100),
         #                                 (mousepos[0], mousepos[1] + 100)], (255, 0, 0), self.game.current_angle, image_path="images/torch.png")
         self.f = self.game.current_flashlight
-        self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
-                                                (mousepos[0] + 200, mousepos[1]),
-                                                (mousepos[0] + 200, mousepos[1] + 100),
-                                                (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0)
+        self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
+                                                (mousepos[0] + 100, mousepos[1] - 50),
+                                                (mousepos[0] + 100, mousepos[1] + 50),
+                                                (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
 
 
 
@@ -113,12 +113,11 @@ class Button:
 
 
             if self.clicked == 2:
-                if self.game.r:
-                    adjust_flashlight()
-                else:
-                    adjust_flashlight()
+
+                adjust_flashlight()
 
                 self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
+                print(self.f.points[0][0], self.f.points[0][1])
                 self.game.objects.insert(-2, self.f)
                 self.clicked = 0
                 self.f = None
@@ -133,6 +132,8 @@ class Button:
                 self.m.adjust(mousepos[0], mousepos[1], 0)
 
             if self.clicked == 2:
+                print(self.m.points)
+                print(mousepos)
                 self.game.objects.insert(-2, self.m)
                 self.clicked = 0
 
@@ -170,11 +171,13 @@ class Button:
                     # self.f.selected(mousepos)
                     sounds.selected_sound()
                 elif self.number == 1:
-                    self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
+                    self.m = gameobjects.Mirror(self.game,
+                                                [
                                                     (mousepos[0] + 200, mousepos[1]),
                                                     (mousepos[0] + 50, mousepos[1] + 100),
                                                     (mousepos[0] -20, mousepos[1]-100),
-                                                    (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100)
+                                                    (mousepos[0], mousepos[1] + 100)],
+                                                (255, 0, 0), 100)
                     sounds.selected_sound()
 
                 elif self.number == 2:
@@ -196,6 +199,7 @@ class Button:
                 self.clicked = 0
                 sounds.selected_sound()
         elif self.rect.collidepoint(pos) is False and self.clicked == 1:
+
             self.clicked = 2
 
 
