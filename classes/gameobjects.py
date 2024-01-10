@@ -2,6 +2,8 @@ import pygame
 from classes import light, sounds
 import math
 from pygame.transform import rotate
+import random
+
 
 class GameObject:
 
@@ -200,7 +202,12 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                 self.light = light.Light(self.game,
                                          [[self.light_start_x, self.light_start_y]],
-                                         "white", -1*self.angle, self.light_width)
+                                         self.color, -1*self.angle, self.light_width)
+
+                #if up arrow clicked, color goes random
+                if pygame.key.get_pressed()[pygame.K_UP]:
+                    self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
                 self.light.trace_path()
                 self.placed = True
                 # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
