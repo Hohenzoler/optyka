@@ -28,8 +28,18 @@ class GameObject:
         max_x = max(pt[0] for pt in self.points)
         max_y = max(pt[1] for pt in self.points)
         self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
+    def get_triangles(self):
+        center_x = sum(x for x, _ in self.points) / len(self.points)
+        center_y = sum(y for _, y in self.points) / len(self.points)
+        self.triangles=[((center_x,center_y),(self.points[i][0],self.points[i][1]),(self.points[i+1][0],self.points[i+1][1])) for i in range(len(self.points)-1)]
+        self.triangles.append(((center_x,center_y),(self.points[len(self.points)-1][0],self.points[len(self.points)-1][1]),(self.points[0][0],self.points[0][1])))
 
+        return self.triangles
+    def draw_triangle(self,index):
+        pygame.draw.polygon(self.game.screen, (255, 255, 255), self.triangles[index])
     def render(self):
+        # print(self.get_triangles())
+
         if not self.selectedtrue:
 
             # Render the image if available
@@ -44,6 +54,7 @@ class GameObject:
             else:
                 # Draw the rotated lines without transparency
                 pygame.draw.polygon(self.game.screen, self.color, self.points)
+
         else:
             mousepos = pygame.mouse.get_pos()
             if self.game.r:

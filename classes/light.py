@@ -1,6 +1,8 @@
 import pygame
 import math
-from classes import gameobjects
+from classes import gameobjects, fps
+import time
+
 
 class Light:
     def __init__(self, game, points, color, angle, light_width):
@@ -27,13 +29,14 @@ class Light:
     def callibrate_r(self):
         if self.r > 2*math.pi:
             self.r-=2*math.pi
-    def trace_path(self):
+    def trace_path(self, max_time_seconds=(1/fps.return_fps())):
         self.r=-self.angle/360*2*math.pi
 
         self.vx = self.x
         self.vy = self.y
         self.trace=True
-        while self.trace:
+        start_time = time.time()
+        while self.trace and (time.time() - start_time) < max_time_seconds:
             # print(self.r)
             self.callibrate_r()
             self.forward()
@@ -48,6 +51,7 @@ class Light:
         # self.r=2*math.pi-(math.pi+self.r-2*angle)
         self.r = 2*angle-self.r+math.pi
     def collision_check(self):
+
         for object in self.game.objects:
             if type(object)==gameobjects.Flashlight:
                 if self.vp_rect.colliderect(object):
@@ -71,9 +75,42 @@ class Light:
 
                     # object_angle = -object.angle / 360 * 2 * math.pi
                     # print(object_angle)
-                    angle=self.find_angle(object)
+                    angle=self.find_angle2(object)
+
                     # print(self.r)
                     self.bend(angle)
+    def area(self,triangle):
+        p1,p2,p3=triangle
+        a=self.length(p1,p2)
+        b = self.length(p3, p2)
+        c = self.length(p1, p3)
+        s=(a+b+c)/2
+        return (s*(s-a)*(s-b)*(s-c))**(1/2)
+    def length(self,p1,p2):
+        return ((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)**(1/2)
+    def find_angle2(self,object):
+        triangles=object.get_triangles()
+        # print(len(triangles))
+        i=0
+        for triangle in triangles:
+
+            area=self.area(triangle)
+            t1=(triangle[0],triangle[1],self.vp)
+            area1=self.area(t1)
+
+            t2 = (triangle[2], triangle[1], self.vp)
+            area2 = self.area(t2)
+
+            t3 = (triangle[0], triangle[2], self.vp)
+            area3 = self.area(t3)
+
+            sum=area1+area2+area3
+            if sum-area<=0:
+                print(math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2])))
+                return math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2]))
+
+            i+=1
+        return self.find_angle(object)
 
     def find_angle(self,object):
         two_points=[]
@@ -93,6 +130,10 @@ class Light:
 
         angle=math.asin((two_points[0][1] - two_points[1][1]) / self.dist(two_points[0][0], two_points[0][1], two_points[1][0],two_points[1][1]))
         return angle
+    def two_points_angle(self,two_points):
+        return math.asin(
+            (two_points[0][1] - two_points[1][1]) / self.dist(two_points[0][0], two_points[0][1], two_points[1][0],
+                                                              two_points[1][1]))
     def dist(self,x1,y1,x2,y2):
         return ((x1-x2)**2 + (y1-y2)**2)**(1/2)
     def update_vp(self):

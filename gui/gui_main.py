@@ -1,5 +1,6 @@
 import pygame
 from gui import button
+from classes import bin
 
 
 class GUI:
@@ -22,6 +23,8 @@ class GUI:
         self.layer = 2  # Assign a higher layer value to GUI to ensure it's rendered on top
         self.game.objects.append(self)
         self.f = None
+
+        self.bin = bin.Bin(self.game)
 
         self.buttons = [button.Button(self.game, x) for x in range(-2, 3)] #creates buttons
 

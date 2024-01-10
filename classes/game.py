@@ -3,6 +3,8 @@ from gui import gui_main as gui
 from gui import settings_screen
 from classes import gameobjects
 import settingsSetup
+from classes import fps
+from classes import bin
 
 
 class Game:
@@ -10,6 +12,7 @@ class Game:
         self.settings = settingsSetup.load_settings()
         self.width = self.settings['WIDTH']
         self.height = self.settings['HEIGHT']
+        self.font = pygame.font.Font(None, self.height//20)
         self.objects = []
         # initializing pygame
         pygame.init()
@@ -24,7 +27,8 @@ class Game:
             # else:
                 self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
         self.run = True
-        self.fps = 165
+        self.fps = fps.return_fps()
+
         self.tick = int((1 / self.fps) * 1000)
         self.mousepos = None  # Mouse position which will be updated every time the mouse is left clicked
         self.rightclickedmousepos = None  # right click mouse positon
@@ -33,7 +37,7 @@ class Game:
         self.mode = 'default'
         self.executed_command = 'default'
 
-
+        self.clock = pygame.time.Clock()
 
     def events(self):
         for event in pygame.event.get():
@@ -60,7 +64,7 @@ class Game:
 
     def update(self):
         pygame.display.update()
-        pygame.time.wait(self.tick)
+        self.clock.tick(self.fps)
 
     def render(self):
         if self.mode == 'default':
@@ -68,6 +72,7 @@ class Game:
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
 
             for object in sorted_objects:
+
                 if type(self.mousepos) is tuple:
                     if type(object) is gui.GUI:
                         object.checkifclicked(self.mousepos)
@@ -81,6 +86,12 @@ class Game:
                     if type(object) is gameobjects.Mirror:
                         object.selected(self.rightclickedmousepos)
                 object.render()
+
+                if type(object) != bin.Bin:
+                    for bin_2 in self.objects:
+                        if type(bin_2) == bin.Bin:
+                            bin_2.checkCollision(object)
+                            break
 
         elif self.mode == 'settings':
             if self.executed_command != 'settings':
@@ -110,8 +121,16 @@ class Game:
 
             self.executed_command = 'default'
 
+        self.displayFPS()
+
     def background(self):
         self.screen.fill((0, 0, 0))
+
+
+    def displayFPS(self):
+        fps = self.clock.get_fps()
+        fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+        self.screen.blit(fps_text, (10, 10))
 
     def loop(self):
         while self.run:
