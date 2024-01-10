@@ -5,8 +5,8 @@ from classes import sounds
 class Bin:
     def __init__(self, game):
         self.game = game
-        self.x = self.game.width - 350
-        self.y = self.game.height - 66
+        self.x = self.game.width - 200
+        self.y = self.game.height - 70
         self.layer = 10
         self.rect = pygame.Rect(self.x, self.y, 100, 100)
 
