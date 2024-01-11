@@ -53,6 +53,8 @@ class Button:
             self.color = (0, 0, 255)
         elif self.number == 2:
             self.color = (0, 255, 0)
+        elif self.number == 3:
+            self.color = (0, 200, 100)
         else:
             self.color = (20, 0, 0)
 
@@ -137,6 +139,18 @@ class Button:
                 self.game.objects.insert(-2, self.m)
                 self.clicked = 0
 
+        #future prism
+        if self.number == 3:
+            self.game.screen.blit(self.exit_icon, self.exit_icon_rect)
+            if self.clicked == 1:
+                self.p.adjust(mousepos[0], mousepos[1], 0)
+
+            if self.clicked == 2:
+                print(self.p.points)
+                print(mousepos)
+                self.game.objects.insert(-2, self.p)
+                self.clicked = 0
+
 
 
         if self.number == -2:
@@ -182,6 +196,14 @@ class Button:
 
                 elif self.number == 2:
                     sounds.selected_sound()
+
+                elif self.number == 3:
+                    self.p = gameobjects.Prism(self.game,
+                                                [
+                                                    (mousepos[0] + 150, mousepos[1]),
+                                                    (mousepos[0] + 100, mousepos[1] - 100),
+                                                    (mousepos[0] + 50, mousepos[1])],
+                                                (255, 0, 0), 100)
 
                 elif self.number == -1:
                     self.game.run = False
