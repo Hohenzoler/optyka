@@ -1,5 +1,6 @@
 import pygame
 from classes import gameobjects, sounds
+import random
 
 class Button:
     def __init__(self, game, number):
@@ -79,6 +80,8 @@ class Button:
         self.exit_icon = pygame.transform.scale(self.exit_icon, (button_width, button_height))
         self.exit_icon_rect = self.exit_icon.get_rect(center=self.rect.center)
 
+        self.shape_of_mirror = None
+
     def render(self):
         # Render GUI elements
         mousepos = list(pygame.mouse.get_pos())
@@ -90,10 +93,7 @@ class Button:
         #                                 (mousepos[0] + 200, mousepos[1] + 100),
         #                                 (mousepos[0], mousepos[1] + 100)], (255, 0, 0), self.game.current_angle, image_path="images/torch.png")
         self.f = self.game.current_flashlight
-        self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
-                                                (mousepos[0] + 100, mousepos[1] - 50),
-                                                (mousepos[0] + 100, mousepos[1] + 50),
-                                                (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
+
 
 
 
@@ -189,13 +189,20 @@ class Button:
                     # self.f.selected(mousepos)
                     sounds.selected_sound()
                 elif self.number == 1:
-                    self.m = gameobjects.Mirror(self.game,
-                                                [
-                                                    (mousepos[0] + 200, mousepos[1]),
-                                                    (mousepos[0] + 50, mousepos[1] + 100),
-                                                    (mousepos[0] -20, mousepos[1]-100),
-                                                    (mousepos[0], mousepos[1] + 100)],
-                                                (255, 0, 0), 100)
+                    self.shape_of_mirror = random.randint(0, 1)
+
+                    if self.shape_of_mirror == 1:
+                        self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
+                                                                (mousepos[0], mousepos[1] - 75),
+                                                                (mousepos[0] + 100, mousepos[1] - 50),
+                                                                (mousepos[0] + 100, mousepos[1] + 50),
+                                                                (mousepos[0], mousepos[1] + 75),
+                                                                (mousepos[0] - 100, mousepos[1] + 50)], (0, 255, 0), 0)
+                    if self.shape_of_mirror == 0:
+                        self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
+                                                                (mousepos[0] + 100, mousepos[1] - 50),
+                                                                (mousepos[0] + 100, mousepos[1] + 50),
+                                                                (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
                     sounds.selected_sound()
 
                 elif self.number == 2:
