@@ -204,6 +204,7 @@ class Button:
                                                     (mousepos[0] + 100, mousepos[1] - 100),
                                                     (mousepos[0] + 50, mousepos[1])],
                                                 (255, 0, 0), 100)
+                    sounds.selected_sound()
 
                 elif self.number == -1:
                     self.game.run = False
