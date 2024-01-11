@@ -72,7 +72,7 @@ class ButtonMenus:
 
         if self.rect.collidepoint(pos):
             self.handle_button_click(self.options[(self.current_index + 1) % len(self.options)])
-            sounds.clicked_sound()
+
     def handle_button_click(self, option):
         sounds.clicked_sound()
         if self.number == 2:
