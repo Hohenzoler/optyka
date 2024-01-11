@@ -16,8 +16,8 @@ def get_cpu_type():
 
 
 print(f"User's refresh rate: {refresh_rate(device_info)}")
-print(f"User's GPU: {gpuInfo(device_info)}")
-print(f"User's CPU: {get_cpu_type()}")
+# print(f"User's GPU: {gpuInfo(device_info)}")
+# print(f"User's CPU: {get_cpu_type()}")
 
 def return_fps():
     return refresh_rate(device_info)

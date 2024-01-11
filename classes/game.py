@@ -116,7 +116,7 @@ class Game:
                 self.screen = pygame.display.set_mode((self.width, self.height))
 
             for object in self.objects:
-                if type(object) == gui.GUI:
+                if type(object) == gui.GUI or type(object) == bin.Bin:
                     object.load_settings()
 
             self.executed_command = 'default'
