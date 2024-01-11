@@ -1,5 +1,6 @@
 import pygame
 from classes import gameobjects, sounds
+import random
 
 class Button:
     def __init__(self, game, number):
@@ -53,6 +54,8 @@ class Button:
             self.color = (0, 0, 255)
         elif self.number == 2:
             self.color = (0, 255, 0)
+        elif self.number == 3:
+            self.color = (0, 200, 100)
         else:
             self.color = (20, 0, 0)
 
@@ -62,6 +65,9 @@ class Button:
         # Scale the torch icon to the size of the button
         self.torch_icon = pygame.transform.scale(self.torch_icon, (button_width, button_height))
         self.object_icon = pygame.image.load("images/object_icon.png")
+
+        self.prism_icon = pygame.image.load("images/Prism.png")
+        self.prism_icon = pygame.transform.scale(self.prism_icon, (button_width, button_height))
 
         # Scale the object icon to the size of the button
         self.object_icon = pygame.transform.scale(self.object_icon, (button_width, button_height))
@@ -74,6 +80,8 @@ class Button:
         self.exit_icon = pygame.transform.scale(self.exit_icon, (button_width, button_height))
         self.exit_icon_rect = self.exit_icon.get_rect(center=self.rect.center)
 
+        self.shape_of_mirror = None
+
     def render(self):
         # Render GUI elements
         mousepos = list(pygame.mouse.get_pos())
@@ -85,10 +93,7 @@ class Button:
         #                                 (mousepos[0] + 200, mousepos[1] + 100),
         #                                 (mousepos[0], mousepos[1] + 100)], (255, 0, 0), self.game.current_angle, image_path="images/torch.png")
         self.f = self.game.current_flashlight
-        self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
-                                                (mousepos[0] + 200, mousepos[1]),
-                                                (mousepos[0] + 200, mousepos[1] + 100),
-                                                (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0)
+
 
 
 
@@ -113,12 +118,11 @@ class Button:
 
 
             if self.clicked == 2:
-                if self.game.r:
-                    adjust_flashlight()
-                else:
-                    adjust_flashlight()
+
+                adjust_flashlight()
 
                 self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
+                print(self.f.points[0][0], self.f.points[0][1])
                 self.game.objects.insert(-2, self.f)
                 self.clicked = 0
                 self.f = None
@@ -133,7 +137,22 @@ class Button:
                 self.m.adjust(mousepos[0], mousepos[1], 0)
 
             if self.clicked == 2:
+                print(self.m.points)
+                print(mousepos)
                 self.game.objects.insert(-2, self.m)
+                self.clicked = 0
+
+        #future prism
+        if self.number == 3:
+            self.prism_icon_rect = self.prism_icon.get_rect(center=self.rect.center)
+            self.game.screen.blit(self.prism_icon, self.prism_icon_rect)
+            if self.clicked == 1:
+                self.p.adjust(mousepos[0], mousepos[1], 0)
+
+            if self.clicked == 2:
+                print(self.p.points)
+                print(mousepos)
+                self.game.objects.insert(-2, self.p)
                 self.clicked = 0
 
 
@@ -170,14 +189,32 @@ class Button:
                     # self.f.selected(mousepos)
                     sounds.selected_sound()
                 elif self.number == 1:
-                    self.m = gameobjects.Mirror(self.game, [(mousepos[0], mousepos[1]),
-                                                    (mousepos[0] + 200, mousepos[1]),
-                                                    (mousepos[0] + 50, mousepos[1] + 100),
-                                                    (mousepos[0] -20, mousepos[1]-100),
-                                                    (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 100)
+                    self.shape_of_mirror = random.randint(0, 1)
+
+                    if self.shape_of_mirror == 1:
+                        self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
+                                                                (mousepos[0], mousepos[1] - 75),
+                                                                (mousepos[0] + 100, mousepos[1] - 50),
+                                                                (mousepos[0] + 100, mousepos[1] + 50),
+                                                                (mousepos[0], mousepos[1] + 75),
+                                                                (mousepos[0] - 100, mousepos[1] + 50)], (0, 255, 0), 0)
+                    if self.shape_of_mirror == 0:
+                        self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
+                                                                (mousepos[0] + 100, mousepos[1] - 50),
+                                                                (mousepos[0] + 100, mousepos[1] + 50),
+                                                                (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
                     sounds.selected_sound()
 
                 elif self.number == 2:
+                    sounds.selected_sound()
+
+                elif self.number == 3:
+                    self.p = gameobjects.Prism(self.game,
+                                                [
+                                                    (mousepos[0] + 150, mousepos[1]),
+                                                    (mousepos[0] + 100, mousepos[1] - 100),
+                                                    (mousepos[0] + 50, mousepos[1])],
+                                                (255, 0, 0), 100)
                     sounds.selected_sound()
 
                 elif self.number == -1:
@@ -196,6 +233,7 @@ class Button:
                 self.clicked = 0
                 sounds.selected_sound()
         elif self.rect.collidepoint(pos) is False and self.clicked == 1:
+
             self.clicked = 2
 
 

@@ -26,7 +26,7 @@ class GUI:
 
         self.bin = bin.Bin(self.game)
 
-        self.buttons = [button.Button(self.game, x) for x in range(-2, 3)] #creates buttons
+        self.buttons = [button.Button(self.game, x) for x in range(-2, 4)] #creates buttons
 
 
     def render(self):

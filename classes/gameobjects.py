@@ -178,6 +178,10 @@ class Mirror(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, image_path)
 
+class Prism(GameObject):
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, image_path)
+
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, points, color, angle, islighting=True, image_path=None):
