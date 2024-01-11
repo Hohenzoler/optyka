@@ -3,16 +3,24 @@ from win32com.client import GetObject
 device_info = win32api.EnumDisplayDevices()
 
 def refresh_rate(device):
-    settings = win32api.EnumDisplaySettings(device.DeviceName, -1)
-    return settings.DisplayFrequency
-
+    try:
+        settings = win32api.EnumDisplaySettings(device.DeviceName, -1)
+        return settings.DisplayFrequency
+    except:
+        return 60
 def gpuInfo(device):
-    return((device.DeviceString))
+    try:
+        return((device.DeviceString))
+    except:
+        return "GPU not found"
 
 def get_cpu_type():
-    root_winmgmts = GetObject("winmgmts:root\cimv2")
-    cpus = root_winmgmts.ExecQuery("Select * from Win32_Processor")
-    return cpus[0].Name
+    try:
+        root_winmgmts = GetObject("winmgmts:root\cimv2")
+        cpus = root_winmgmts.ExecQuery("Select * from Win32_Processor")
+        return cpus[0].Name
+    except:
+        return "CPU not found"
 
 
 print(f"User's refresh rate: {refresh_rate(device_info)}")
