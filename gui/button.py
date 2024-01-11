@@ -65,6 +65,9 @@ class Button:
         self.torch_icon = pygame.transform.scale(self.torch_icon, (button_width, button_height))
         self.object_icon = pygame.image.load("images/object_icon.png")
 
+        self.prism_icon = pygame.image.load("images/Prism.png")
+        self.prism_icon = pygame.transform.scale(self.prism_icon, (button_width, button_height))
+
         # Scale the object icon to the size of the button
         self.object_icon = pygame.transform.scale(self.object_icon, (button_width, button_height))
 
@@ -141,7 +144,8 @@ class Button:
 
         #future prism
         if self.number == 3:
-            self.game.screen.blit(self.exit_icon, self.exit_icon_rect)
+            self.prism_icon_rect = self.prism_icon.get_rect(center=self.rect.center)
+            self.game.screen.blit(self.prism_icon, self.prism_icon_rect)
             if self.clicked == 1:
                 self.p.adjust(mousepos[0], mousepos[1], 0)
 
