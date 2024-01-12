@@ -1,6 +1,6 @@
 import pygame
 from classes import gameobjects, sounds
-import random
+
 
 class Button:
     def __init__(self, game, number):
@@ -11,7 +11,7 @@ class Button:
         self.position = self.game.settings['HOTBAR_POSITION']
         self.gap = self.game.settings['HEIGHT'] // 10
 
-        self.y = self.screenheight//10
+        self.y = self.screenheight // 10
 
         button_width = self.y - 20
         button_height = self.y - 20
@@ -20,7 +20,7 @@ class Button:
             if self.position == 'bottom':
                 x = self.screenwidth - self.gap * (-self.number - 1) - button_width - 10
                 y = (self.screenheight - self.y) + (
-                            (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
+                        (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
             elif self.position == 'left':
                 x = (self.screenwidth // 10 - button_width) // 2
                 y = self.screenheight - self.gap * (-self.number - 1) - button_height - 10
@@ -34,19 +34,20 @@ class Button:
         else:
             if self.position == 'bottom':
                 x = self.gap * self.number + 10
-                y = (self.screenheight-self.y) + ((self.screenheight - (self.screenheight - self.y) - button_height)//2)
+                y = (self.screenheight - self.y) + (
+                            (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
             elif self.position == 'left':
-                x = (self.screenwidth//10 - button_width)//2
+                x = (self.screenwidth // 10 - button_width) // 2
                 y = self.gap * self.number + 10
             elif self.position == 'right':
-                x = (self.screenwidth-self.screenwidth//10) + ((self.screenwidth - (self.screenwidth - self.screenwidth//10) - button_width)//2)
+                x = (self.screenwidth - self.screenwidth // 10) + (
+                            (self.screenwidth - (self.screenwidth - self.screenwidth // 10) - button_width) // 2)
                 y = self.gap * self.number + 10
             elif self.position == 'top':
                 x = self.gap * self.number + 10
-                y = (self.y - button_height)//2
+                y = (self.y - button_height) // 2
 
         self.rect = pygame.Rect(x, y, button_width, button_height)
-
 
         if self.number == 0:
             self.color = (255, 0, 0)
@@ -59,7 +60,7 @@ class Button:
         else:
             self.color = (20, 0, 0)
 
-        self.clicked = 0 #0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
+        self.clicked = 0  # 0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
 
         self.torch_icon = pygame.image.load("images/torch_icon.png")
         # Scale the torch icon to the size of the button
@@ -94,12 +95,9 @@ class Button:
         #                                 (mousepos[0], mousepos[1] + 100)], (255, 0, 0), self.game.current_angle, image_path="images/torch.png")
         self.f = self.game.current_flashlight
 
-
-
-
-
         def adjust_flashlight():
             self.f.adjust(mousepos[0], mousepos[1], 0)
+
         if self.number != -2 and self.number != -1:
             pygame.draw.rect(self.game.screen, self.color, self.rect)
         if self.number == 0:
@@ -115,10 +113,7 @@ class Button:
                 self.f.drawoutline()
                 # print(self.f.angle)
 
-
-
             if self.clicked == 2:
-
                 adjust_flashlight()
 
                 self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
@@ -142,7 +137,7 @@ class Button:
                 self.game.objects.insert(-2, self.m)
                 self.clicked = 0
 
-        #future prism
+        # future prism
         if self.number == 3:
             self.prism_icon_rect = self.prism_icon.get_rect(center=self.rect.center)
             self.game.screen.blit(self.prism_icon, self.prism_icon_rect)
@@ -155,17 +150,11 @@ class Button:
                 self.game.objects.insert(-2, self.p)
                 self.clicked = 0
 
-
-
         if self.number == -2:
             self.game.screen.blit(self.settings_icon, self.settings_icon_rect)
 
         if self.number == -1:
             self.game.screen.blit(self.exit_icon, self.exit_icon_rect)
-
-
-
-
 
     def checkifclicked(self, pos):
         if self.rect.collidepoint(pos[0], pos[1]):
@@ -189,20 +178,24 @@ class Button:
                     # self.f.selected(mousepos)
                     sounds.selected_sound()
                 elif self.number == 1:
-                    self.shape_of_mirror = random.randint(0, 1)
-
-                    if self.shape_of_mirror == 1:
-                        self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
-                                                                (mousepos[0], mousepos[1] - 75),
-                                                                (mousepos[0] + 100, mousepos[1] - 50),
-                                                                (mousepos[0] + 100, mousepos[1] + 50),
-                                                                (mousepos[0], mousepos[1] + 75),
-                                                                (mousepos[0] - 100, mousepos[1] + 50)], (0, 255, 0), 0)
-                    if self.shape_of_mirror == 0:
-                        self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
-                                                                (mousepos[0] + 100, mousepos[1] - 50),
-                                                                (mousepos[0] + 100, mousepos[1] + 50),
-                                                                (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
+                    self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
+                                                            (mousepos[0] + 100, mousepos[1] - 50),
+                                                            (mousepos[0] + 100, mousepos[1] + 50),
+                                                            (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
+                    # self.shape_of_mirror = random.randint(0, 1)
+                    #
+                    # if self.shape_of_mirror == 1:
+                    #     self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
+                    #                                             (mousepos[0], mousepos[1] - 75),
+                    #                                             (mousepos[0] + 100, mousepos[1] - 50),
+                    #                                             (mousepos[0] + 100, mousepos[1] + 50),
+                    #                                             (mousepos[0], mousepos[1] + 75),
+                    #                                             (mousepos[0] - 100, mousepos[1] + 50)], (0, 255, 0), 0)
+                    # if self.shape_of_mirror == 0:
+                    #     self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
+                    #                                             (mousepos[0] + 100, mousepos[1] - 50),
+                    #                                             (mousepos[0] + 100, mousepos[1] + 50),
+                    #                                             (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
                     sounds.selected_sound()
 
                 elif self.number == 2:
@@ -210,11 +203,11 @@ class Button:
 
                 elif self.number == 3:
                     self.p = gameobjects.Prism(self.game,
-                                                [
-                                                    (mousepos[0] + 150, mousepos[1]),
-                                                    (mousepos[0] + 100, mousepos[1] - 100),
-                                                    (mousepos[0] + 50, mousepos[1])],
-                                                (255, 0, 0), 100)
+                                               [
+                                                   (mousepos[0] + 150, mousepos[1]),
+                                                   (mousepos[0] + 100, mousepos[1] - 100),
+                                                   (mousepos[0] + 50, mousepos[1])],
+                                               (255, 0, 0), 100)
                     sounds.selected_sound()
 
                 elif self.number == -1:
@@ -237,19 +230,17 @@ class Button:
             self.clicked = 2
 
 
-
 class ButtonForgame:
     def __init__(self, number, screen):
         self.number = number
         self.screen = screen
         self.screen.objects.append(self)
-        self.font = pygame.font.Font('freesansbold.ttf',  self.screen.height//35)
+        self.font = pygame.font.Font('freesansbold.ttf', self.screen.height // 35)
 
         self.width = self.screen.width // 3
         self.height = self.screen.height // 10
 
-
-        #adjust y based on the number
+        # adjust y based on the number
         gap = 15
         self.y = (self.screen.height // 2) - self.height // 2 + (self.height + gap) * number
         self.x = (self.screen.width // 2) - self.width // 2
@@ -266,7 +257,7 @@ class ButtonForgame:
 
         elif self.number == 71:
             self.text = self.font.render('Back', True, 'black')
-            self.y = self.screen.height - self.screen.height//5
+            self.y = self.screen.height - self.screen.height // 5
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         else:
@@ -292,8 +283,6 @@ class ButtonForgame:
             else:
                 raise NotImplementedError('button function not yet added')
 
-
     def render(self):
-        pygame.draw.rect(self.screen.screen, (255,255,255), self.rect)
+        pygame.draw.rect(self.screen.screen, (255, 255, 255), self.rect)
         self.screen.screen.blit(self.text, self.textRect)
-
