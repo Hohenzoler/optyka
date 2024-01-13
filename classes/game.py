@@ -39,6 +39,10 @@ class Game:
 
         self.clock = pygame.time.Clock()
 
+        pygame.mouse.set_visible(False)
+        self.cursor_img = pygame.image.load('images/bad_coursor.png')
+        self.cursor_img_rect = self.cursor_img.get_rect()
+
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -126,6 +130,9 @@ class Game:
                     object.load_settings()
 
             self.executed_command = 'default'
+
+        self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
+        self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
 
         self.displayFPS()
 
