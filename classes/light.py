@@ -22,9 +22,8 @@ class Light:
 
     def render(self):
         try:
-            for p in range(0, len(self.points) - 1):
-                pygame.draw.line(self.game.screen, self.color, self.points[p], self.points[p + 1], self.light_width)
-        except AttributeError:  # if line doesnt have evailible points
+            pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
+        except AttributeError:
             pass
     def callibrate_r(self):
         if self.r > 2*math.pi:
