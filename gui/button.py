@@ -270,5 +270,5 @@ class ButtonForgame:
                 raise NotImplementedError('button function not yet added')
 
     def render(self):
-        pygame.draw.rect(self.screen.screen, (255, 255, 255), self.rect)
+        pygame.draw.rect(self.screen.screen, (255, 255, 255), self.rect, 0, 4)
         self.screen.screen.blit(self.text, self.textRect)
