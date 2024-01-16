@@ -1,5 +1,5 @@
 import pygame
-from classes import light, sounds
+from classes import light, sounds, images
 import math
 from pygame.transform import rotate
 import random
@@ -7,7 +7,7 @@ import random
 
 class GameObject:
 
-    def __init__(self, game, points, color, angle, image_path=None):
+    def __init__(self, game, points, color, angle, image = None):
         # Initialize common attributes
         self.game = game
         self.points = points
@@ -18,8 +18,7 @@ class GameObject:
         self.layer = 1
         self.placed = False
         self.angle = angle
-        self.image_path = image_path
-        self.image = pygame.image.load(image_path).convert() if image_path else None
+        self.image = image if image else None
         self.rect = pygame.Rect(0, 0, 0, 0)
         self.update_rect()
 
@@ -184,15 +183,14 @@ class Prism(GameObject):
 
 
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, points, color, angle, islighting=True, image_path=None):
-        super().__init__(game, points, color, angle, image_path)
+    def __init__(self, game, points, color, angle, islighting=True, image = None):
+        super().__init__(game, points, color, angle, image)
         self.islighting = bool(islighting)
         self.light = None
         self.light_width = 8
         self.color = color
         self.angle = angle
-        self.image_path = image_path
-        self.image = pygame.image.load(image_path) if image_path else None
+        self.image = image if image else None
 
     def render(self):
         super().render()

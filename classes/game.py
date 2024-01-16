@@ -4,7 +4,7 @@ from gui import settings_screen
 from classes import gameobjects
 import settingsSetup
 from classes import fps
-from classes import bin
+from classes import bin, images
 
 
 class Game:
@@ -40,7 +40,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         pygame.mouse.set_visible(False)
-        self.cursor_img = pygame.image.load('images/bad_coursor.png')
+        self.cursor_img = images.bad_coursor
         self.cursor_img_rect = self.cursor_img.get_rect()
 
     def events(self):

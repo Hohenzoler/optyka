@@ -1,6 +1,6 @@
 import pygame
 from classes import gameobjects, sounds
-
+from classes import images
 
 class Button:
     def __init__(self, game, number):
@@ -62,22 +62,22 @@ class Button:
 
         self.clicked = 0  # 0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
 
-        self.torch_icon = pygame.image.load("images/torch_icon.png")
+        self.torch_icon = images.torch_icon
         # Scale the torch icon to the size of the button
         self.torch_icon = pygame.transform.scale(self.torch_icon, (button_width, button_height))
-        self.object_icon = pygame.image.load("images/object_icon.png")
+        self.object_icon = images.object_icon
 
-        self.prism_icon = pygame.image.load("images/Prism.png")
+        self.prism_icon = images.prism_icon
         self.prism_icon = pygame.transform.scale(self.prism_icon, (button_width, button_height))
 
         # Scale the object icon to the size of the button
         self.object_icon = pygame.transform.scale(self.object_icon, (button_width, button_height))
 
-        self.settings_icon = pygame.image.load('images/settings.png')
+        self.settings_icon = images.settings_icon
         self.settings_icon = pygame.transform.scale(self.settings_icon, (button_width, button_height))
         self.settings_icon_rect = self.settings_icon.get_rect(center=self.rect.center)
 
-        self.exit_icon = pygame.image.load('images/exit.png')
+        self.exit_icon = images.exit_icon
         self.exit_icon = pygame.transform.scale(self.exit_icon, (button_width, button_height))
         self.exit_icon_rect = self.exit_icon.get_rect(center=self.rect.center)
 
@@ -138,7 +138,7 @@ class Button:
                 self.clicked = 0
 
         # future prism
-        if self.number == 3:
+        elif self.number == 3:
             self.prism_icon_rect = self.prism_icon.get_rect(center=self.rect.center)
             self.game.screen.blit(self.prism_icon, self.prism_icon_rect)
             if self.clicked == 1:
@@ -172,7 +172,7 @@ class Button:
                         ],
                         (255, 0, 0),
                         0,
-                        image_path="images/torch.png"
+                        image=images.torch
                     )
                     self.game.current_flashlight = self.f
                     # self.f.selected(mousepos)
@@ -182,20 +182,6 @@ class Button:
                                                             (mousepos[0] + 100, mousepos[1] - 50),
                                                             (mousepos[0] + 100, mousepos[1] + 50),
                                                             (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
-                    # self.shape_of_mirror = random.randint(0, 1)
-                    #
-                    # if self.shape_of_mirror == 1:
-                    #     self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
-                    #                                             (mousepos[0], mousepos[1] - 75),
-                    #                                             (mousepos[0] + 100, mousepos[1] - 50),
-                    #                                             (mousepos[0] + 100, mousepos[1] + 50),
-                    #                                             (mousepos[0], mousepos[1] + 75),
-                    #                                             (mousepos[0] - 100, mousepos[1] + 50)], (0, 255, 0), 0)
-                    # if self.shape_of_mirror == 0:
-                    #     self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
-                    #                                             (mousepos[0] + 100, mousepos[1] - 50),
-                    #                                             (mousepos[0] + 100, mousepos[1] + 50),
-                    #                                             (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
                     sounds.selected_sound()
 
                 elif self.number == 2:

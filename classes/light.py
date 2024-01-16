@@ -14,7 +14,6 @@ class Light:
         self.light_width = light_width
         self.layer = 0  # Assign a layer value to control rendering order
         self.game.objects.insert(-1, self)
-        self.points=(self.points)
 
         self.x=self.points[0][0]
         self.y=self.points[0][1]
