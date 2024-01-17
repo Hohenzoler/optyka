@@ -7,6 +7,7 @@ import time
 class Light:
     def __init__(self, game, points, color, angle, light_width):
         # points is a list that represents endpoints of next lines building a stream of light
+        self.starting_point=points[0]
         self.points = points
         self.game = game
         self.color = color
@@ -14,20 +15,30 @@ class Light:
         self.light_width = light_width
         self.layer = 0  # Assign a layer value to control rendering order
         self.game.objects.insert(-1, self)
-
+        self.colors=[]
+        self.RGB = RGB(self.color[0], self.color[1], self.color[2])
+        self.colors.append(self.RGB.rgb)
         self.x=self.points[0][0]
         self.y=self.points[0][1]
         self.count=1
 
     def render(self):
         try:
-            pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
+            for l in range(len(self.points)-1):
+                print(self.colors[l])
+                pygame.draw.line(self.game.screen,self.colors[l],self.points[l],self.points[l+1],self.light_width)
+            # pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
         except AttributeError:
             pass
     def callibrate_r(self):
         if self.r > 2*math.pi:
             self.r-=2*math.pi
     def trace_path(self, max_time_seconds=(1/fps.return_fps())):
+        self.points=[self.starting_point]
+
+        self.colors = []
+        self.RGB = RGB(self.color[0], self.color[1], self.color[2])
+        self.colors.append(self.RGB.rgb)
         self.r=-self.angle/360*2*math.pi
 
         self.vx = self.x
@@ -62,6 +73,7 @@ class Light:
                         if self.vp_rect.colliderect(object.rect):
                             # print('touch')
                             self.points.append((self.vx, self.vy))
+                            self.colors.append(self.RGB.rgb)
                             self.trace=False
                             # object_angle=-object.angle/360*2*math.pi
                             # print(object_angle)
@@ -70,6 +82,8 @@ class Light:
                 if self.vp_rect.colliderect(object.rect):
                     # print('touch')
                     self.points.append((self.vx, self.vy))
+                    # self.RGB.compare(RGB(255,255,0)) - enter to code to try for yourself!!! :)
+                    self.colors.append(self.RGB.rgb)
 
                     # object_angle = -object.angle / 360 * 2 * math.pi
                     # print(object_angle)
@@ -143,3 +157,23 @@ class Light:
         self.vy+=math.sin(self.r)
 
         # print(self.vx,self.vy)
+class RGB():
+    def __init__(self,r,g,b):
+        self.r=r
+        self.g=g
+        self.b=b
+        self.rgb=(r,g,b)
+    def compare(self,RGB2):
+        if RGB2.r<self.r:
+            self.r=RGB2.r
+        if RGB2.g < self.g:
+            self.g = RGB2.g
+        if RGB2.b<self.b:
+            print('aaa')
+            self.b=RGB2.b
+
+        self.update()
+
+    def update(self):
+        print(self.b)
+        self.rgb=(self.r,self.g,self.b)
