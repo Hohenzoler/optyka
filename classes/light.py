@@ -98,7 +98,7 @@ class Light:
         b = self.length(p3, p2)
         c = self.length(p1, p3)
         s=(a+b+c)/2
-        return (s*(s-a)*(s-b)*(s-c))**(1/2)
+        return abs((s*(s-a)*(s-b)*(s-c))**(1/2))
     def length(self,p1,p2):
         return ((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)**(1/2)
     def find_angle2(self,object):
