@@ -26,7 +26,7 @@ class Light:
     def render(self):
         try:
             for l in range(len(self.points)-1):
-                print(self.colors[l])
+                # print(self.colors[l])
                 pygame.draw.line(self.game.screen,self.colors[l],self.points[l],self.points[l+1],self.light_width)
             # pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
         except AttributeError:
@@ -94,11 +94,13 @@ class Light:
                     self.bend(angle)
     def area(self,triangle):
         p1,p2,p3=triangle
+        print(p1,p2,p3)
+
         a=self.length(p1,p2)
         b = self.length(p3, p2)
         c = self.length(p1, p3)
         s=(a+b+c)/2
-        return abs((s*(s-a)*(s-b)*(s-c)))**(1/2)
+        return (s*(s-a)*(s-b)*(s-c))**(1/2)
     def length(self,p1,p2):
         return ((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)**(1/2)
     def find_angle2(self,object):
@@ -119,7 +121,8 @@ class Light:
 
             sum=area1+area2+area3
             if sum-area<=0:
-                print(math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2])))
+                pygame.draw.polygon(self.game.screen, (255, 255, 255), triangle)
+                # print(math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2])))
                 return math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2]))
 
             i+=1
@@ -172,11 +175,11 @@ class RGB():
         if RGB2.g < self.g:
             self.g = RGB2.g
         if RGB2.b<self.b:
-            print('aaa')
+            # print('aaa')
             self.b=RGB2.b
 
         self.update()
 
     def update(self):
-        print(self.b)
+        # print(self.b)
         self.rgb=(self.r,self.g,self.b)
