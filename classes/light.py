@@ -34,7 +34,7 @@ class Light:
     def callibrate_r(self):
         if self.r > 2*math.pi:
             self.r-=2*math.pi
-    def trace_path(self, max_time_seconds=(69420/fps.return_fps())):
+    def trace_path(self, max_time_seconds=(1/fps.return_fps())):
         self.points=[self.starting_point]
 
         self.colors = []
