@@ -72,7 +72,6 @@ class Game:
 
     def render(self):
         if self.mode == 'default':
-            print(self.objects)
             # Sort objects based on their layer attribute (assuming you have a layer attribute)
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
 
