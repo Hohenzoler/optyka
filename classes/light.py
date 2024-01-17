@@ -46,7 +46,7 @@ class Light:
         self.vy = self.y
         self.trace=True
         start_time = time.time()
-        while self.trace and (time.time() - start_time) < max_time_seconds:
+        while self.trace:
             # print(self.r)
             self.callibrate_r()
             self.forward()
