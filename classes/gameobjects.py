@@ -3,7 +3,8 @@ from classes import light, sounds, images
 import math
 from pygame.transform import rotate
 import random
-
+import settingsSetup
+settings = settingsSetup.start()
 
 class GameObject:
 
@@ -146,6 +147,8 @@ class GameObject:
     def drawoutline(self):
         # Draw an outline around the object
         pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
+        if settings['DEBUG'] == "True":
+            pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
 
     def checkifclicked(self, mousepos):
         # Check if the object is clicked

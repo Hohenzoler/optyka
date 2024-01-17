@@ -2,6 +2,7 @@ import pygame
 import math
 from classes import gameobjects, fps
 import time
+import functions
 
 
 class Light:
@@ -79,7 +80,7 @@ class Light:
                             # print(object_angle)
                             # self.bend(object_angle)
             if type(object) == gameobjects.Mirror:
-                if self.vp_rect.colliderect(object.rect):
+                if functions.collidepoly(self.vp_polygon, object.points): # Changed colliderect to collidepoly for optimal hitboxes
                     # print('touch')
                     self.points.append((self.vx, self.vy))
                     # self.RGB.compare(RGB(255,255,0)) - enter to code to try for yourself!!! :)
@@ -151,10 +152,12 @@ class Light:
     def update_vp(self):
 
         self.vp = (self.vx, self.vy)  # vp - virtual pointer - a place where the light will come
-        self.vp_rect=pygame.Rect(self.vx,self.vy,1,1)
+        self.vp_rect=pygame.Rect(self.vx, self.vy, 1, 1)
+        self.vp_polygon = [(self.vx, self.vy + 1), (self.vx + 1, self.vy+1), (self.vx + 1, self.vy), (self.vx, self.vy)]
+        #pygame.draw.polygon(self.game.screen, self.color, self.vp_polygon) # For visualizing hitbox
     def forward(self):
-        self.vx+=math.cos(self.r)
-        self.vy+=math.sin(self.r)
+        self.vx += math.cos(self.r)
+        self.vy += math.sin(self.r)
 
         # print(self.vx,self.vy)
 class RGB():
