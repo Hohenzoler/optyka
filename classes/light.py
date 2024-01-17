@@ -94,7 +94,6 @@ class Light:
                     self.bend(angle)
     def area(self,triangle):
         p1,p2,p3=triangle
-        print(p1,p2,p3)
 
         a=self.length(p1,p2)
         b = self.length(p3, p2)
@@ -120,7 +119,8 @@ class Light:
             area3 = self.area(t3)
 
             sum=area1+area2+area3
-            if sum-area<=0:
+            print(sum,area)
+            if sum<=area+200:
                 pygame.draw.polygon(self.game.screen, (255, 255, 255), triangle)
                 # print(math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2])))
                 return math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2]))
