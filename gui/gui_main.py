@@ -53,4 +53,4 @@ class GUI:
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
 
-        self.buttons = [button.Button(self.game, x) for x in range(-2, 3)] #creates buttons
+        self.buttons = [button.Button(self.game, x) for x in range(-2, 5)] #creates buttons
