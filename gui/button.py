@@ -57,6 +57,8 @@ class Button:
             self.color = (0, 255, 0)
         elif self.number == 3:
             self.color = (0, 200, 100)
+        elif self.number == 4:
+            self.color = (5, 75, 60)
         else:
             self.color = (20, 0, 0)
 
@@ -80,6 +82,10 @@ class Button:
         self.exit_icon = images.exit_icon
         self.exit_icon = pygame.transform.scale(self.exit_icon, (button_width, button_height))
         self.exit_icon_rect = self.exit_icon.get_rect(center=self.rect.center)
+
+        self.topopisy_icon = images.topopisy
+        self.topopisy_icon = pygame.transform.scale(self.topopisy_icon, (button_width, button_height))
+        self.topopisy_icon_rect = self.topopisy_icon.get_rect(center=self.rect.center)
 
         self.shape_of_mirror = None
 
@@ -150,6 +156,9 @@ class Button:
                 self.game.objects.insert(-2, self.p)
                 self.clicked = 0
 
+        elif self.number == 4:
+            self.game.screen.blit(self.topopisy_icon, self.topopisy_icon_rect)
+
         if self.number == -2:
             self.game.screen.blit(self.settings_icon, self.settings_icon_rect)
 
@@ -194,6 +203,9 @@ class Button:
                                                    (mousepos[0] + 100, mousepos[1] - 100),
                                                    (mousepos[0] + 50, mousepos[1])],
                                                (255, 0, 0), 100)
+                    sounds.selected_sound()
+
+                elif self.number == 4:
                     sounds.selected_sound()
 
                 elif self.number == -1:
