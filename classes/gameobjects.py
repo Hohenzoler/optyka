@@ -22,6 +22,7 @@ class GameObject:
         self.image = image if image else None
         self.rect = pygame.Rect(0, 0, 0, 0)
         self.update_rect()
+        self.triangles_generated = False
 
     def update_rect(self):
         # Update the rect based on the points
@@ -31,10 +32,13 @@ class GameObject:
         max_y = max(pt[1] for pt in self.points)
         self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
     def get_triangles(self):
-        center_x = sum(x for x, _ in self.points) / len(self.points)
-        center_y = sum(y for _, y in self.points) / len(self.points)
-        self.triangles=[((center_x,center_y),(self.points[i][0],self.points[i][1]),(self.points[i+1][0],self.points[i+1][1])) for i in range(len(self.points)-1)]
-        self.triangles.append(((center_x,center_y),(self.points[len(self.points)-1][0],self.points[len(self.points)-1][1]),(self.points[0][0],self.points[0][1])))
+        # Check if triangles have already been generated
+        if not self.triangles_generated:
+            center_x = sum(x for x, _ in self.points) / len(self.points)
+            center_y = sum(y for _, y in self.points) / len(self.points)
+            self.triangles = [((center_x, center_y), (self.points[i][0], self.points[i][1]),(self.points[i + 1][0], self.points[i + 1][1])) for i in range(len(self.points) - 1)]
+            self.triangles.append(((center_x, center_y), (self.points[len(self.points) - 1][0],self.points[len(self.points) - 1][1]),(self.points[0][0], self.points[0][1])))
+            self.triangles_generated = True  # Set the flag to True after generating triangles
 
         return self.triangles
     def draw_triangle(self,index):
@@ -99,6 +103,9 @@ class GameObject:
         self.angle += d_angle
         self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
         self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
+
+        # Reset the flag to regenerate triangles
+        self.triangles_generated = False
 
         # Update the points based on the new position and angle
         self.points = self.rotate_points(self.points, d_angle)
