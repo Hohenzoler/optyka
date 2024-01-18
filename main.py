@@ -1,28 +1,30 @@
+import cProfile
 from classes import game, sounds
 from gui import gui_main as gui
 import pygame
 import settingsSetup
 from gui import startscreen as ss
 
-settings = settingsSetup.start()
+def main():
+    settings = settingsSetup.start()
+    width = settings['WIDTH']
+    height = settings['HEIGHT']
 
-# print(settings)
+    position = settings['HOTBAR_POSITION']
 
-width = settings['WIDTH']
-height = settings['HEIGHT']
+    programIcon = pygame.image.load('images/torch_icon.png')
 
-position = settings['HOTBAR_POSITION']
+    pygame.display.set_icon(programIcon)
 
-programIcon = pygame.image.load('images/torch_icon.png')
+    startscreen = ss.StartScreen(width, height)
 
-pygame.display.set_icon(programIcon)
+    # sounds.soundtrack()
 
-startscreen = ss.StartScreen(width, height)
+    game_instance = game.Game()
+    # light1=light.Light(game,[[0,0],[100,10],[200,300]],(255,255,255))
+    GUI = gui.GUI(game_instance)
+    # print(pygame.display.Info())
+    game_instance.loop()
 
-# sounds.soundtrack()
-
-game = game.Game()
-# light1=light.Light(game,[[0,0],[100,10],[200,300]],(255,255,255))
-GUI = gui.GUI(game)
-# print(pygame.display.Info())
-game.loop()
+if __name__ == "__main__":
+    cProfile.run("main()", sort="cumulative")
