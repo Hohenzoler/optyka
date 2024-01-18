@@ -80,18 +80,19 @@ class Light:
                             # print(object_angle)
                             # self.bend(object_angle)
             if type(object) == gameobjects.Mirror:
-                if functions.collidepoly(self.vp_polygon, object.points): # Changed colliderect to collidepoly for optimal hitboxes
-                    # print('touch')
-                    self.points.append((self.vx, self.vy))
-                    # self.RGB.compare(RGB(255,255,0)) - enter to code to try for yourself!!! :)
-                    self.colors.append(self.RGB.rgb)
+                if self.vp_rect.colliderect(object.rect):
+                    if functions.collidepoly(self.vp_polygon, object.points): # Changed colliderect to collidepoly for optimal hitboxes
+                        # print('touch')
+                        self.points.append((self.vx, self.vy))
+                        # self.RGB.compare(RGB(255,255,0)) - enter to code to try for yourself!!! :)
+                        self.colors.append(self.RGB.rgb)
 
-                    # object_angle = -object.angle / 360 * 2 * math.pi
-                    # print(object_angle)
-                    angle=self.find_angle2(object)
+                        # object_angle = -object.angle / 360 * 2 * math.pi
+                        # print(object_angle)
+                        angle=self.find_angle2(object)
 
-                    # print(self.r)
-                    self.bend(angle)
+                        # print(self.r)
+                        self.bend(angle)
     def area(self,triangle):
         p1,p2,p3=triangle
 
