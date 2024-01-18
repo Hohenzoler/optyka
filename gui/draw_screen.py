@@ -57,12 +57,13 @@ while running:
         if drawing:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 point_list.append(event.pos)
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                point_list = point_list[:-1]
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 drawing = False
         else:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                 drawing = True
-
     screen.fill(black)
 
     if drawing:
