@@ -1,7 +1,3 @@
-import pygame
-import sys
-import numpy as np
-
 def collidepoly(poly1, poly2):
     def is_point_inside_polygon(point, polygon):
         x, y = point
