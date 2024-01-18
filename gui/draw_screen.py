@@ -31,10 +31,14 @@ def confirm_screen(points):
 
     font = pygame.font.Font(None, 36)
     text = font.render("Polygon Created!", True, white)
-    text_rect = text.get_rect(center=(width // 2, height // 2 - 50))
+    text_rect = text.get_rect(center=(width // 2, height // 2 - 100))
     confirm_surface.blit(text, text_rect)
 
     text = font.render("Press Enter to continue", True, white)
+    text_rect = text.get_rect(center=(width // 2, height // 2))
+    confirm_surface.blit(text, text_rect)
+
+    text = font.render("Press R to continue drawing", True, white)
     text_rect = text.get_rect(center=(width // 2, height // 2 + 50))
     confirm_surface.blit(text, text_rect)
 
@@ -55,6 +59,9 @@ while running:
                 point_list.append(event.pos)
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 drawing = False
+        else:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                drawing = True
 
     screen.fill(black)
 
