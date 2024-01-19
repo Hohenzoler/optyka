@@ -26,7 +26,7 @@ class Light:
     def render(self):
         try:
             pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
-        except AttributeError or ValueError:
+        except (AttributeError, ValueError):
             pass
 
     def callibrate_r(self):
