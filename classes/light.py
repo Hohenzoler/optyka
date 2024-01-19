@@ -158,8 +158,19 @@ class Light:
         self.vp_polygon = [(self.vx, self.vy + 1), (self.vx + 1, self.vy+1), (self.vx + 1, self.vy), (self.vx, self.vy)]
         #pygame.draw.polygon(self.game.screen, self.color, self.vp_polygon) # For visualizing hitbox
     def forward(self):
-        self.vx += math.cos(self.r)
-        self.vy += math.sin(self.r)
+
+        is_mirror = False
+
+        for object in self.game.objects:
+            if type(object)==gameobjects.Mirror:
+                is_mirror = True
+        if is_mirror == False:
+            self.vx += 1000 * math.cos(self.r)
+            self.vy += 1000 * math.sin(self.r)
+        else:
+            self.vx += math.cos(self.r)
+            self.vy += math.sin(self.r)
+
 
         # print(self.vx,self.vy)
 class RGB():
