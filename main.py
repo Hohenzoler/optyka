@@ -27,4 +27,4 @@ def main():
     game_instance.loop()
 
 if __name__ == "__main__":
-    cProfile.run("main()", sort="cumulative")
+    cProfile.run("main()", sort="tottime")
