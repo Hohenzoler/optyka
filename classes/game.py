@@ -146,17 +146,9 @@ class Game:
 
     def loop(self):
         while self.run:
-            try:
-                self.background()
-                self.render()
-                self.update()
-                self.mousepos = None  # resets self.mouspos
-                self.rightclickedmousepos = None
-                self.events()
-            except Exception as e:
-                print(f"It' not a bug, it's a feature: {e}")
-                try:
-                    self.loop()
-                except Exception as e:
-                    print(f"It' not a bug, it's a feature: {e}")
-                    self.loop()
+            self.background()
+            self.render()
+            self.update()
+            self.mousepos = None  # resets self.mouspos
+            self.rightclickedmousepos = None
+            self.events()
