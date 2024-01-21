@@ -184,12 +184,10 @@ class Light:
 
     def render(self):
         try:
-            for l in range(len(self.points)-1):
-                # print(self.colors[l])
-                pygame.draw.line(self.game.screen,self.colors[l],self.points[l],self.points[l+1],self.light_width)
-            # pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
-        except AttributeError:
+            pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
+        except (AttributeError, ValueError):
             pass
+
     def callibrate_r(self):
         if self.r > 2*math.pi:
             self.r-=2*math.pi
@@ -205,7 +203,7 @@ class Light:
         self.vy = self.y
         self.trace=True
         start_time = time.time()
-        while self.trace:
+        while self.trace and (time.time() - start_time) < max_time_seconds:
             # print(self.r)
             self.callibrate_r()
             self.forward()
@@ -239,18 +237,19 @@ class Light:
                             # print(object_angle)
                             # self.bend(object_angle)
             if type(object) == gameobjects.Mirror:
-                if functions.collidepoly(self.vp_polygon, object.points): # Changed colliderect to collidepoly for optimal hitboxes
-                    # print('touch')
-                    self.points.append((self.vx, self.vy))
-                    # self.RGB.compare(RGB(255,255,0)) - enter to code to try for yourself!!! :)
-                    self.colors.append(self.RGB.rgb)
+                if self.vp_rect.colliderect(object.rect):
+                    if functions.collidepoly(self.vp_polygon, object.points): # Changed colliderect to collidepoly for optimal hitboxes
+                        # print('touch')
+                        self.points.append((self.vx, self.vy))
+                        # self.RGB.compare(RGB(255,255,0)) - enter to code to try for yourself!!! :)
+                        self.colors.append(self.RGB.rgb)
 
-                    # object_angle = -object.angle / 360 * 2 * math.pi
-                    # print(object_angle)
-                    angle=self.find_angle2(object)
+                        # object_angle = -object.angle / 360 * 2 * math.pi
+                        # print(object_angle)
+                        angle=self.find_angle2(object)
 
-                    # print(self.r)
-                    self.bend(angle)
+                        # print(self.r)
+                        self.bend(angle)
     def area(self,triangle):
         p1,p2,p3=triangle
 
@@ -318,8 +317,19 @@ class Light:
         self.vp_polygon = [(self.vx, self.vy + 1), (self.vx + 1, self.vy+1), (self.vx + 1, self.vy), (self.vx, self.vy)]
         #pygame.draw.polygon(self.game.screen, self.color, self.vp_polygon) # For visualizing hitbox
     def forward(self):
-        self.vx += math.cos(self.r)
-        self.vy += math.sin(self.r)
+
+        is_mirror = False
+
+        for object in self.game.objects:
+            if type(object)==gameobjects.Mirror:
+                is_mirror = True
+        if is_mirror == False:
+            self.vx += 1000 * math.cos(self.r)
+            self.vy += 1000 * math.sin(self.r)
+        else:
+            self.vx += math.cos(self.r)
+            self.vy += math.sin(self.r)
+
 
         # print(self.vx,self.vy)
 

@@ -152,4 +152,3 @@ class Game:
             self.mousepos = None  # resets self.mouspos
             self.rightclickedmousepos = None
             self.events()
-
