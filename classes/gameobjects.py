@@ -22,6 +22,8 @@ class GameObject:
         self.image = image if image else None
         self.rect = pygame.Rect(0, 0, 0, 0)
         self.update_rect()
+        self.get_slopes()
+
 
     def update_rect(self):
         # Update the rect based on the points
@@ -37,10 +39,17 @@ class GameObject:
         self.triangles.append(((center_x,center_y),(self.points[len(self.points)-1][0],self.points[len(self.points)-1][1]),(self.points[0][0],self.points[0][1])))
 
         return self.triangles
+    def get_slopes(self):
+        self.slopes=[(self.points[i],self.points[i+1]) for i in range(len(self.points)-1)]
+        self.slopes.append((self.points[len(self.points)-1],self.points[0]))
+
+
     def draw_triangle(self,index):
         pygame.draw.polygon(self.game.screen, (255, 255, 255), self.triangles[index])
     def render(self):
         # print(self.get_triangles())
+        self.get_slopes()
+
 
         if not self.selectedtrue:
 
@@ -207,13 +216,14 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                 self.light = light.Light(self.game,
                                          [[self.light_start_x, self.light_start_y]],
-                                         self.color, -1*self.angle, self.light_width)
+                                         (255,255,255), -1*self.angle, self.light_width)
 
                 #if up arrow clicked, color goes random
                 if pygame.key.get_pressed()[pygame.K_UP]:
                     self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
-                self.light.trace_path()
+                # self.light.trace_path()
+                self.light.trace_path2()
                 self.placed = True
                 # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
 

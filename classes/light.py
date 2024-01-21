@@ -1,5 +1,7 @@
 import pygame
 import math
+
+import classes.gameobjects
 from classes import gameobjects, fps
 import time
 import functions
@@ -22,6 +24,163 @@ class Light:
         self.x=self.points[0][0]
         self.y=self.points[0][1]
         self.count=1
+        self.get_r()
+
+        # print(self.r,self.linear_function)
+    def find_b(self,a,point):
+        return point[1]-a*point[0]
+
+    def trace_path2(self):
+        current_starting_point = self.starting_point
+        print(self.r)
+
+        mini_run=True
+        index=0
+        while mini_run:
+            print(self.r,'ccccccccccccccccccccc')
+            if self.r < math.pi:
+                self.vertical = 'up'
+            else:
+                self.vertical = 'down'
+            if self.r < 3 / 2 * math.pi and self.r > 1 / 2 * math.pi:
+                self.horizontal = 'left'
+            else:
+                self.horizontal = 'right'
+            print(index)
+            index+=1
+            self.linear_function = Linear_Function(math.tan(-self.r),
+                                                   self.find_b(math.tan(-self.r), current_starting_point))
+            self.linear_function.draw(self.game)
+            try:
+                slope_before=current_slope
+            except:
+                slope_before=None
+            current_point_before=current_starting_point
+            current_distance = None
+            current_point = None
+            current_slope = None
+
+            print(self.vertical, self.horizontal)
+            for object in self.game.objects:
+
+                if type(object) == gameobjects.Mirror:
+                    object.get_slopes()
+                    slopes = object.slopes
+                    # print(slopes)
+                    i = 0
+                    for slope in slopes:
+                        if slope==slope_before:
+                            pass
+                        else:
+                            if (slope[0][0] - slope[1][0]) == 0:
+                                dx = 0.001
+                            else:
+                                dx = (slope[0][0] - slope[1][0])
+                            # r=math.atan((slope[0][0]-slope[1][0])/dy)
+
+                            lf = Linear_Function((slope[0][1] - slope[1][1]) / dx,
+                                                 self.find_b(((slope[0][1] - slope[1][1]) / dx), slope[0]))
+                            # lf.draw(self.game)
+                            x = lf.intercept(self.linear_function)
+                            y = lf.calculate(x)
+                            # if i%2==0:
+                            #     pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),2)
+                            #     pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 2)
+                            #     pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 2)
+                            #     lf.draw(self.game)
+                            # print(slope[0][0],slope[1][0],x)
+                            point = (x, self.linear_function.calculate(x))
+                            if x <= max(slope[0][0], slope[1][0]) + 1 and x >= min(slope[0][0], slope[1][0]) - 1:
+                                if y <= max(slope[0][1], slope[1][1]) + 1 and y >= min(slope[0][1], slope[1][1]) - 1:
+                                    cases = 0
+                                    if self.horizontal == 'right':
+                                        if x >= current_starting_point[0]:
+                                            cases += 1
+                                            # print('aaaaaaa')
+                                    else:
+                                        if x <= current_starting_point[0]:
+                                            cases += 1
+                                    if self.vertical == 'up':
+                                        if y <= current_starting_point[1]:
+                                            cases += 1
+                                    else:
+                                        if y >= current_starting_point[1]:
+                                            cases += 1
+                                    # print(cases)
+                                    if cases == 2:
+                                        pygame.draw.line(self.game.screen, (0, 255, 0), slope[0], slope[1],
+                                                         5)
+                                        dist = abs(x - current_starting_point[0])
+                                        if current_distance == None:
+                                            current_distance = dist
+                                            current_point = point
+                                            current_slope = slope
+
+                                        else:
+                                            if dist < current_distance:
+                                                current_distance = dist
+                                                current_point = point
+                                                current_slope = slope
+
+
+
+                        i += 1
+
+            if current_slope == None:
+                self.points.append((current_point_before[0] + 1000 * math.cos(-self.r),
+                                    current_point_before[1] + 1000 * math.sin(-self.r)))
+                self.colors.append(self.RGB.rgb)
+                mini_run = False
+            else:
+                pygame.draw.line(self.game.screen, (0, 0, 255), current_slope[0], current_slope[1], 5)
+                self.points.append(current_point)
+                self.colors.append(self.RGB.rgb)
+                if (current_slope[0][0] - current_slope[1][0]) == 0:
+                    slope_angle = math.pi/2
+                else:
+
+                    slope_angle = math.atan((current_slope[0][1] - current_slope[1][1]) / (
+                            current_slope[0][0] - current_slope[1][0]))
+                    if current_slope[0][0]>=current_slope[1][0] and current_slope[0][1]>current_slope[1][1]:
+                        slope_angle=math.pi-slope_angle
+                        print('ddddddddddddddddddddd')
+                    elif current_slope[1][0]>=current_slope[0][0] and current_slope[1][1]>current_slope[0][1]:
+                        slope_angle=math.pi-slope_angle
+                        print('ddddddddddddddddddddd')
+                    else:
+                        slope_angle=-slope_angle
+                print(self.r,'aaaaaaaaaaaaaaaaaaaa')
+                self.r = 2 * slope_angle - self.r
+                print(slope_angle, self.r, 'bbbbbbbbbbbbbbbbbbb')
+                self.calibrate_r2()
+
+                current_starting_point = current_point
+            if index >= 2:
+                mini_run = False
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def calibrate_r2(self):
+        if self.r>2*math.pi:
+            self.r-=2*math.pi
+        if self.r<0:
+            self.r+=2*math.pi
+    def get_r(self):
+        self.r=self.angle/360*2*math.pi
+        if self.r>2*math.pi:
+            self.r-=2*math.pi
+        if self.r<0:
+            self.r+=2*math.pi
 
     def render(self):
         try:
@@ -163,6 +322,8 @@ class Light:
         self.vy += math.sin(self.r)
 
         # print(self.vx,self.vy)
+
+
 class RGB():
     def __init__(self,r,g,b):
         self.r=r
@@ -183,3 +344,21 @@ class RGB():
     def update(self):
         # print(self.b)
         self.rgb=(self.r,self.g,self.b)
+class Linear_Function:
+    def __init__(self,a,b):
+        self.a=a
+        self.b=b
+    def calculate(self,number):
+        return self.a*number+self.b
+    def intercept(self,linear_function):
+        if self.a==linear_function.a:
+            return -1
+        else:
+            return (self.b-linear_function.b)/(linear_function.a-self.a)
+    def __str__(self):
+        return f" {self.a}*x + {self.b}"
+    def draw(self,game):
+        pygame.draw.line(game.screen, (255, 255, 255), (0, self.calculate(0)),
+                         (1000, self.calculate(1000)), 2)
+
+
