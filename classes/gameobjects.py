@@ -200,7 +200,7 @@ class Prism(GameObject):
 
 
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, points, color, angle, islighting=True, image = None):
+    def __init__(self, game, points, color, angle, islighting=True, image=None):
         super().__init__(game, points, color, angle, image)
         self.islighting = bool(islighting)
         self.light = None
