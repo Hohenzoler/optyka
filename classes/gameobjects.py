@@ -21,6 +21,7 @@ class GameObject:
         self.angle = angle
         self.image = image if image else None
         self.rect = pygame.Rect(0, 0, 0, 0)
+        self.triangles_generated = False
         self.update_rect()
 
     def update_rect(self):
@@ -109,6 +110,9 @@ class GameObject:
         self.angle += d_angle
         self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
         self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
+
+        # Reset the flag to regenerate triangles
+        self.triangles_generated = False
 
         # Update the points based on the new position and angle
         self.points = self.rotate_points(self.points, d_angle)
