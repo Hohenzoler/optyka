@@ -232,7 +232,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                 # if up arrow clicked, color goes random
                 if pygame.key.get_pressed()[pygame.K_UP]:
                     self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-                for ray in range(NUM_RAYS):
+                for ray in range(1):
                     # self.light = light.Light(self.game,
                     #                          [[self.light_start_x, self.light_start_y]],
                     #                          self.color, -1*self.angle, self.light_width)

@@ -56,12 +56,14 @@ class Light:
             current_distance = None
             current_point = None
             current_slope = None
+            current_object=None
 
             print(self.vertical, self.horizontal)
             for object in self.game.objects:
 
-                if type(object) == gameobjects.Mirror:
+                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass:
                     object.get_slopes()
+
                     slopes = object.slopes
                     # print(slopes)
                     i = 0
@@ -112,44 +114,57 @@ class Light:
                                             current_distance = dist
                                             current_point = point
                                             current_slope = slope
+                                            if type(object)==gameobjects.Mirror:
+                                                current_object = 'mirror'
+                                                print('eeeeeeeeeeeeeeeeeeeeeeee')
+                                            elif type(object)==gameobjects.ColoredGlass:
+                                                current_object= ' glass'
 
                                         else:
                                             if dist < current_distance:
                                                 current_distance = dist
                                                 current_point = point
                                                 current_slope = slope
+                                                if type(object) == gameobjects.Mirror:
+                                                    current_object = 'mirror'
+                                                    print('eeeeeeeeeeeeeeeeeeeeeeee')
+                                                elif type(object) == gameobjects.ColoredGlass:
+                                                    current_object = ' glass'
+
 
                         i += 1
-
+            print(current_object,'eeeeeeeeeeeeeeeeeeeeeeee')
             if current_slope == None:
                 self.points.append((current_point_before[0] + 1000 * math.cos(-self.r),
                                     current_point_before[1] + 1000 * math.sin(-self.r)))
                 self.colors.append(self.RGB.rgb)
                 mini_run = False
             else:
-                pygame.draw.line(self.game.screen, (0, 0, 255), current_slope[0], current_slope[1], 5)
-                self.points.append(current_point)
-                self.colors.append(self.RGB.rgb)
-                if (current_slope[0][0] - current_slope[1][0]) == 0:
-                    slope_angle = math.pi/2
-                else:
-
-                    slope_angle = math.atan((current_slope[0][1] - current_slope[1][1]) / (
-                            current_slope[0][0] - current_slope[1][0]))
-                    if current_slope[0][0]>=current_slope[1][0] and current_slope[0][1]>current_slope[1][1]:
-                        slope_angle=math.pi-slope_angle
-                        print('ddddddddddddddddddddd')
-                    elif current_slope[1][0]>=current_slope[0][0] and current_slope[1][1]>current_slope[0][1]:
-                        slope_angle=math.pi-slope_angle
-                        print('ddddddddddddddddddddd')
+                if current_object=='mirror':
+                    pygame.draw.line(self.game.screen, (0, 0, 255), current_slope[0], current_slope[1], 5)
+                    self.points.append(current_point)
+                    self.colors.append(self.RGB.rgb)
+                    if (current_slope[0][0] - current_slope[1][0]) == 0:
+                        slope_angle = math.pi / 2
                     else:
-                        slope_angle=-slope_angle
-                print(self.r,'aaaaaaaaaaaaaaaaaaaa')
-                self.r = 2 * slope_angle - self.r
-                print(slope_angle, self.r, 'bbbbbbbbbbbbbbbbbbb')
-                self.calibrate_r2()
 
-                current_starting_point = current_point
+                        slope_angle = math.atan((current_slope[0][1] - current_slope[1][1]) / (
+                                current_slope[0][0] - current_slope[1][0]))
+                        if current_slope[0][0] >= current_slope[1][0] and current_slope[0][1] > current_slope[1][1]:
+                            slope_angle = math.pi - slope_angle
+                            print('ddddddddddddddddddddd')
+                        elif current_slope[1][0] >= current_slope[0][0] and current_slope[1][1] > current_slope[0][1]:
+                            slope_angle = math.pi - slope_angle
+                            print('ddddddddddddddddddddd')
+                        else:
+                            slope_angle = -slope_angle
+                    print(self.r, 'aaaaaaaaaaaaaaaaaaaa')
+                    self.r = 2 * slope_angle - self.r
+                    print(slope_angle, self.r, 'bbbbbbbbbbbbbbbbbbb')
+                    self.calibrate_r2()
+
+                    current_starting_point = current_point
+
             if index >= 10:
                 mini_run = False
 
