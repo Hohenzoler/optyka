@@ -11,7 +11,7 @@ class Slider:
 
     def render(self, screen):
         pygame.draw.rect(screen, (255, 255, 255), self.rect, 2)
-        pygame.draw.circle(screen, (255, 0, 0), (int(self.slider_pos[0]), int(self.slider_pos[1])), 10)
+        pygame.draw.circle(screen, (255, 0, 0), (int(self.slider_pos[0]-10), int(self.slider_pos[1])+10), 10)
 
     def check_if_clicked(self, pos):
         if self.rect.collidepoint(pos):
