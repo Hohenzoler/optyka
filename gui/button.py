@@ -1,6 +1,6 @@
 import pygame
 from classes import gameobjects, sounds
-from classes import images
+from classes import images, game
 
 class Button:
     def __init__(self, game, number):
@@ -104,6 +104,7 @@ class Button:
         if self.rect.collidepoint(mousepos[0], mousepos[1]):
             if self.number == 0:
                 obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
+                self.game.current_flashlight = obj
             elif self.number == 1:
                 obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
 
