@@ -1,15 +1,8 @@
 import pygame
 import math
-from settingsSetup import *
-import classes.gameobjects
 from classes import gameobjects, fps
 import time
 import functions
-
-HALF_FOV = settings['Flashlight_FOV'] // 2
-NUM_RAYS = settings['Flashlight_Rays']
-MAX_DEPTH = settings['Flashlight_Depth']
-
 class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light

@@ -1,6 +1,5 @@
 import pygame
 
-import functions
 from classes import light, sounds, images
 import math
 from pygame.transform import rotate
