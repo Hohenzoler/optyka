@@ -227,7 +227,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                 if pygame.key.get_pressed()[pygame.K_UP]:
                     self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
-                self.light.trace_path()
+                self.light.trace_path2()
                 self.placed = True
                 # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
 
