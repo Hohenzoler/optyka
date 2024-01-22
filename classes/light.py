@@ -1,14 +1,10 @@
 import pygame
 import math
-
-import classes.gameobjects
 from classes import gameobjects, fps
 import time
 import functions
-
-
 class Light:
-    def __init__(self, game, points, color, angle, light_width):
+    def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light
         self.starting_point=points[0]
         self.points = points
@@ -17,7 +13,7 @@ class Light:
         self.angle = angle
         self.light_width = light_width
         self.layer = 0  # Assign a layer value to control rendering order
-        self.game.objects.insert(-1, self)
+        #self.game.objects.insert(-1, self)
         self.colors=[]
         self.RGB = RGB(self.color[0], self.color[1], self.color[2])
         self.colors.append(self.RGB.rgb)
@@ -25,6 +21,7 @@ class Light:
         self.y=self.points[0][1]
         self.count=1
         self.get_r()
+        self.alpha = alpha
 
         # print(self.r,self.linear_function)
     def find_b(self,a,point):
@@ -50,7 +47,7 @@ class Light:
             index+=1
             self.linear_function = Linear_Function(math.tan(-self.r),
                                                    self.find_b(math.tan(-self.r), current_starting_point))
-            self.linear_function.draw(self.game)
+            #self.linear_function.draw(self.game)
             try:
                 slope_before=current_slope
             except:
@@ -122,8 +119,6 @@ class Light:
                                                 current_point = point
                                                 current_slope = slope
 
-
-
                         i += 1
 
             if current_slope == None:
@@ -158,18 +153,6 @@ class Light:
             if index >= 10:
                 mini_run = False
 
-
-
-
-
-
-
-
-
-
-
-
-
     def calibrate_r2(self):
         if self.r>2*math.pi:
             self.r-=2*math.pi
@@ -184,7 +167,15 @@ class Light:
 
     def render(self):
         try:
-            pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
+            new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+            new_line_surface.set_alpha(self.alpha)
+
+            pygame.draw.lines(new_line_surface, self.color, False, self.points, self.light_width)
+            self.game.screen.blit(new_line_surface, (0, 0))
+            #pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
+
+            # pygame.draw.lines(surface, [200, 0, 0, self.alpha], False, self.points, self.light_width)
+
         except (AttributeError, ValueError):
             pass
 

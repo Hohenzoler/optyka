@@ -1,10 +1,16 @@
 import pygame
+
 from classes import light, sounds, images
 import math
 from pygame.transform import rotate
 import random
 import settingsSetup
 settings = settingsSetup.start()
+
+NUM_RAYS = 25
+FOV = 5
+HALF_FOV = 2.5
+DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
 
@@ -198,9 +204,12 @@ class Prism(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, image_path)
 
+class ColoredGlass(GameObject):
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, image_path)
 
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, points, color, angle, islighting=True, image = None):
+    def __init__(self, game, points, color, angle, islighting=True, image=None):
         super().__init__(game, points, color, angle, image)
         self.islighting = bool(islighting)
         self.light = None
@@ -212,29 +221,37 @@ class Flashlight(GameObject):  # Inheriting from GameObject
     def render(self):
         super().render()
         if self.islighting:
+            #surface = pygame.surface.Surface(self.game.screen.get_size()).convert_alpha()
+            #surface.fill([0, 0, 0, 0])
             if self.on:
+                ray_angle = self.angle - HALF_FOV + 0.0001
                 # Calculate the starting point of the light from the center of the rotated rectangle/surface
                 center_x = sum(x for x, _ in self.points) / len(self.points)
                 center_y = sum(y for _, y in self.points) / len(self.points)
-
                 self.light_adjust(center_x, center_y)
-
-                self.light = light.Light(self.game,
-                                         [[self.light_start_x, self.light_start_y]],
-                                         self.color, -1*self.angle, self.light_width)
-
-                #if up arrow clicked, color goes random
+                # if up arrow clicked, color goes random
                 if pygame.key.get_pressed()[pygame.K_UP]:
                     self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+                for ray in range(NUM_RAYS):
+                    # self.light = light.Light(self.game,
+                    #                          [[self.light_start_x, self.light_start_y]],
+                    #                          self.color, -1*self.angle, self.light_width)
+                    self.light = light.Light(self.game,
+                                             [[self.light_start_x, self.light_start_y]],
+                                             self.color, -1 * ray_angle, self.light_width, alpha=40)
+                    self.light.angle = -1 * ray_angle
 
-                self.light.trace_path2()
-                self.placed = True
-                # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
+                    self.light.trace_path2()
+                    self.placed = True
+                    # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
 
-                # Render the light before blitting the rotated surface
-                light.Light.render(self.light)
-                self.game.objects.remove(self.light)
+                    # Render the light before blitting the rotated surface
+                    #light.Light.render(self.light, surface)
+                    light.Light.render(self.light)
+                    #self.game.objects.remove(self.light)
+                    ray_angle += DELTA_ANGLE
                 super().render()
+                #self.game.screen.blit(surface, (0, 0))
 
             elif not self.on:
                 self.light = None
