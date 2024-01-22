@@ -2,6 +2,9 @@ import pygame
 from classes import gameobjects, sounds
 from classes import images
 
+
+isDrawingModeOn = True
+
 class Button:
     def __init__(self, game, number):
         self.game = game
@@ -90,6 +93,7 @@ class Button:
         self.shape_of_mirror = None
 
     def render(self):
+        global isDrawingModeOn
         # Render GUI elements
         mousepos = list(pygame.mouse.get_pos())
         # mousepos[0] -= 100  # Centering the mouse
@@ -123,11 +127,12 @@ class Button:
                 adjust_flashlight()
 
                 self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
-                print(self.f.points[0][0], self.f.points[0][1])
+                # print(self.f.points[0][0], self.f.points[0][1])
                 self.game.objects.insert(-2, self.f)
                 self.clicked = 0
                 self.f = None
                 sounds.laser_sound()
+                print(isDrawingModeOn)
 
 
 
@@ -138,8 +143,8 @@ class Button:
                 self.m.adjust(mousepos[0], mousepos[1], 0)
 
             if self.clicked == 2:
-                print(self.m.points)
-                print(mousepos)
+                # print(self.m.points)
+                # print(mousepos)
                 self.game.objects.insert(-2, self.m)
                 self.clicked = 0
 
@@ -151,14 +156,16 @@ class Button:
                 self.p.adjust(mousepos[0], mousepos[1], 0)
 
             if self.clicked == 2:
-                print(self.p.points)
-                print(mousepos)
+                # print(self.p.points)
+                # print(mousepos)
                 self.game.objects.insert(-2, self.p)
                 self.clicked = 0
 
-        elif self.number == 4:
+        if self.number == 4:
             self.game.screen.blit(self.topopisy_icon, self.topopisy_icon_rect)
-
+            if self.clicked == 1:
+                print('drawing...', isDrawingModeOn)
+        # clicked = 0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
         if self.number == -2:
             self.game.screen.blit(self.settings_icon, self.settings_icon_rect)
 
@@ -170,7 +177,9 @@ class Button:
             mousepos = pygame.mouse.get_pos()
             if self.clicked == 0:
                 self.clicked = 1
+                sounds.selected_sound()
                 if self.number == 0:
+                    sounds.selected_sound()
                     self.f = gameobjects.Flashlight(
                         self.game,
                         [
@@ -206,8 +215,12 @@ class Button:
                     sounds.selected_sound()
 
                 elif self.number == 4:
-                    sounds.selected_sound()
-
+                    global isDrawingModeOn
+                    if not isDrawingModeOn:
+                        isDrawingModeOn = True
+                    else:
+                        isDrawingModeOn = False
+                    print(isDrawingModeOn, 2)
                 elif self.number == -1:
                     self.game.run = False
 
@@ -223,9 +236,9 @@ class Button:
             elif self.rect.collidepoint(mousepos) and self.clicked == 1:
                 self.clicked = 0
                 sounds.selected_sound()
-        elif self.rect.collidepoint(pos) is False and self.clicked == 1:
+        elif self.rect.collidepoint(pos) is False and self.clicked == 1 and self.number != 4:
 
-            self.clicked = 2
+             self.clicked = 2
 
 
 class ButtonForgame:

@@ -1,10 +1,17 @@
+import importlib
+
 import pygame
 from gui import gui_main as gui
-from gui import settings_screen
+from gui import settings_screen, button, gui_main
+
 from classes import gameobjects
 import settingsSetup
 from classes import fps
-from classes import bin, images
+from classes import bin, images, polygonDrawing
+from classes.polygonDrawing import *
+from gui.button import isDrawingModeOn
+# print(isDrawingModeOn)
+
 
 
 class Game:
@@ -44,13 +51,21 @@ class Game:
         self.cursor_img_rect = self.cursor_img.get_rect()
 
     def events(self):
+        global isDrawingModeOn
+        # print(isDrawingModeOn)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 self.run = False
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    importlib.reload(button)
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
+                    if isDrawingModeOn:
+                        print('succes')
+                        addPoint(self.mousepos)
+                    else:
+                        print('no')
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                     self.rightclickedmousepos = event.pos
                 if event.type == pygame.MOUSEWHEEL:
@@ -78,7 +93,7 @@ class Game:
             for object in sorted_objects:
 
                 if type(self.mousepos) is tuple:
-                    if type(object) is gui.GUI:
+                    if type(object) is gui.gui_main.GUI:
                         object.checkifclicked(self.mousepos)
                     elif type(object) is gameobjects.Flashlight:
                         object.checkifclicked(self.mousepos)
@@ -152,3 +167,4 @@ class Game:
             self.mousepos = None  # resets self.mouspos
             self.rightclickedmousepos = None
             self.events()
+

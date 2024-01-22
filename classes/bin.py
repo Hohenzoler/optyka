@@ -1,6 +1,6 @@
 import pygame
 from classes import gameobjects as go
-from classes import sounds, images
+from classes import sounds
 
 class Bin:
     def __init__(self, game):
@@ -12,7 +12,7 @@ class Bin:
 
         self.game.objects.append(self)
 
-        self.bin_img = images.bin
+        self.bin_img = pygame.image.load("images/trash1.png")
 
         self.load_parameters()
 

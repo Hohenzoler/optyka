@@ -54,7 +54,7 @@ class DropdownMenu:
         self.screen.blit(option_text, option_text_rect)
 
         if self.expanded:
-            print(self.options)
+            # print(self.options)
             for i, option in enumerate(self.options):
                 option_rect = pygame.Rect(self.x, self.y + (i + 1) * self.height, self.width, self.height)
                 pygame.draw.rect(self.screen, self.menu_color, option_rect)
@@ -88,7 +88,7 @@ class DropdownMenu:
             s['WIDTH'] = int(width)
             s['HEIGHT'] = int(height)
 
-            print(width, height)
+            # print(width, height)
 
             settingsSetup.writesettingstofile(s)
 

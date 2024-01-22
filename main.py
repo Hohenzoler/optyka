@@ -43,5 +43,6 @@ def main():
         raise
 
 if __name__ == "__main__":
+    main()
     # Use cProfile to profile your code
-    cProfile.run("main()", sort="tottime")
+    # cProfile.run("main()", sort="tottime")

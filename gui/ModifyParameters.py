@@ -45,13 +45,13 @@ class Parameters:
     def store_parameters(self):
         for param, entry_widget in self.parameters_dict.items():
             value = entry_widget.get()
-            print(f"{param}: {value}")
+            # print(f"{param}: {value}")
 
     def display_initial_values(self):
         for param, entry_widget in self.parameters_dict.items():
             if isinstance(entry_widget, ttk.Entry):
                 value = str(self.parameters_dict[param].get())
-                print(f"{param}: {value}")
+                # print(f"{param}: {value}")
 
 if __name__ == "__main__":
     window = Parameters()

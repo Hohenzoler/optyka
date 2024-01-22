@@ -29,12 +29,12 @@ class Light:
 
     def trace_path2(self):
         current_starting_point = self.starting_point
-        print(self.r)
+        # print(self.r)
 
         mini_run=True
         index=0
         while mini_run:
-            print(self.r,'ccccccccccccccccccccc')
+            # print(self.r,'ccccccccccccccccccccc')
             if self.r < math.pi:
                 self.vertical = 'up'
             else:
@@ -43,7 +43,7 @@ class Light:
                 self.horizontal = 'left'
             else:
                 self.horizontal = 'right'
-            print(index)
+            # print(index)
             index+=1
             self.linear_function = Linear_Function(math.tan(-self.r),
                                                    self.find_b(math.tan(-self.r), current_starting_point))
@@ -57,7 +57,7 @@ class Light:
             current_point = None
             current_slope = None
 
-            print(self.vertical, self.horizontal)
+            # print(self.vertical, self.horizontal)
             for object in self.game.objects:
 
                 if type(object) == gameobjects.Mirror:
@@ -138,15 +138,15 @@ class Light:
                             current_slope[0][0] - current_slope[1][0]))
                     if current_slope[0][0]>=current_slope[1][0] and current_slope[0][1]>current_slope[1][1]:
                         slope_angle=math.pi-slope_angle
-                        print('ddddddddddddddddddddd')
+                        # print('ddddddddddddddddddddd')
                     elif current_slope[1][0]>=current_slope[0][0] and current_slope[1][1]>current_slope[0][1]:
                         slope_angle=math.pi-slope_angle
-                        print('ddddddddddddddddddddd')
+                        # print('ddddddddddddddddddddd')
                     else:
                         slope_angle=-slope_angle
-                print(self.r,'aaaaaaaaaaaaaaaaaaaa')
+                # print(self.r,'aaaaaaaaaaaaaaaaaaaa')
                 self.r = 2 * slope_angle - self.r
-                print(slope_angle, self.r, 'bbbbbbbbbbbbbbbbbbb')
+                # print(slope_angle, self.r, 'bbbbbbbbbbbbbbbbbbb')
                 self.calibrate_r2()
 
                 current_starting_point = current_point
@@ -268,7 +268,7 @@ class Light:
             area3 = self.area(t3)
 
             sum=area1+area2+area3
-            print(sum,area)
+            # print(sum,area)
             if sum<=area+200:
                 pygame.draw.polygon(self.game.screen, (255, 255, 255), triangle)
                 # print(math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2])))
