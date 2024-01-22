@@ -1,3 +1,11 @@
+import math
+from settingsSetup import *
+import pygame as pg
+HALF_FOV = settings['Flashlight_FOV'] // 2
+NUM_RAYS = settings['Flashlight_Rays']
+MAX_DEPTH = settings['Flashlight_Depth']
+
+
 def collidepoly(poly1, poly2):
     def is_point_inside_polygon(point, polygon):
         x, y = point
@@ -27,3 +35,17 @@ def collidepoly(poly1, poly2):
             return True
 
     return False
+
+def ray_cast(game_obj, flashlight):
+    ox, oy = flashlight.points[0]
+
+    ray_angle = flashlight.angle - HALF_FOV + 0.0001
+    for ray in range(NUM_RAYS):
+        sin_a = math.sin(ray_angle)
+        cos_a = math.cos(ray_angle)
+        depth = MAX_DEPTH
+
+        # remove fishbowl effect
+        depth *= math.cos(flashlight.angle - ray_angle)
+
+        pg.draw.line(game_obj.screen, (255, 255, 255), (100 * ox, 100*oy), (100*ox + 100 * depth * cos_a, 100 * oy + 100 * depth * sin_a), 2)

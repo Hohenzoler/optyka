@@ -2,7 +2,11 @@
  "WIDTH": 1000,
  "HEIGHT": 700,
  "FULLSCREEN": "OFF",
- "HOPBAR_POSITION": "bottom",
  "HOTBAR_POSITION": "bottom",
- "DEBUG": "True"
+ "VSYNC": "OFF",
+ "DEBUG": "True",
+ "Flashlight_FOV": 60,
+ "Flashlight_Rays": 200,
+ "Flashlight_Depth": 500,
+ "HOPBAR_POSITION": "bottom"
 }
