@@ -155,7 +155,7 @@ class Light:
                 self.calibrate_r2()
 
                 current_starting_point = current_point
-            if index >= 2:
+            if index >= 10:
                 mini_run = False
 
 
