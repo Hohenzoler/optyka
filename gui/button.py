@@ -334,7 +334,7 @@ class Button:
                 obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
 
             elif self.number == 3:
-                obj = gameobjects.Prism(self.game, [(mousepos[0] + 150, mousepos[1]), (mousepos[0] + 100, mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (255, 0, 0), 0)
+                obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (255, 0, 0), 0)
 
             elif self.number == -1:
                 self.game.run = False
