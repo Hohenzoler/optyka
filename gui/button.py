@@ -3,7 +3,7 @@ from classes import gameobjects, sounds
 from classes import images
 
 
-isDrawingModeOn = True
+isDrawingModeOn = False
 
 class Button:
     def __init__(self, game, number):
@@ -218,9 +218,11 @@ class Button:
                     global isDrawingModeOn
                     if not isDrawingModeOn:
                         isDrawingModeOn = True
+                        print(1)
                     else:
                         isDrawingModeOn = False
-                    print(isDrawingModeOn, 2)
+                        print(2)
+
                 elif self.number == -1:
                     self.game.run = False
 
