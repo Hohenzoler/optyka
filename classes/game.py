@@ -80,20 +80,13 @@ class Game:
                 if type(self.mousepos) is tuple:
                     if type(object) is gui.GUI:
                         object.checkifclicked(self.mousepos)
-                    elif type(object) is gameobjects.Flashlight:
-                        object.checkifclicked(self.mousepos)
-                    elif type(object) is gameobjects.Mirror:
-                        object.checkifclicked(self.mousepos)
-                    elif type(object) is gameobjects.Prism:
+                    if issubclass(type(object), gameobjects.GameObject):
                         object.checkifclicked(self.mousepos)
 
                 if type(self.rightclickedmousepos) is tuple:
-                    if type(object) is gameobjects.Flashlight:
+                    if issubclass(type(object), gameobjects.GameObject):
                         object.selected(self.rightclickedmousepos)
-                    if type(object) is gameobjects.Mirror:
-                        object.selected(self.rightclickedmousepos)
-                    if type(object) is gameobjects.Prism:
-                        object.selected(self.rightclickedmousepos)
+
                 object.render()
 
                 if type(object) != bin.Bin:
