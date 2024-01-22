@@ -56,21 +56,27 @@ class Button:
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
         elif self.number == 1:
+            self.color = (0, 255, 0)
+            self.icon = images.torch_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
+        elif self.number == 2:
             self.color = (0, 0, 255)
             self.icon = images.object_icon
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
-        elif self.number == 2:
+        elif self.number == 3:
             self.color = (0, 255, 0)
 
-        elif self.number == 3:
+        elif self.number == 4:
             self.color = (0, 200, 100)
             self.icon = images.prism_icon
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
-        elif self.number == 4:
+        elif self.number == 5:
             self.color = (5, 75, 60)
             self.icon = images.topopisy
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
@@ -105,14 +111,22 @@ class Button:
             if self.number == 0:
                 obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
                 self.game.current_flashlight = obj
+
             elif self.number == 1:
-                obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
+                obj = gameobjects.oldFlashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
+                self.game.current_flashlight = obj
 
             elif self.number == 2:
-                obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0)
+                obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
 
             elif self.number == 3:
+                obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0)
+
+            elif self.number == 4:
                 obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0)
+
+            elif self.number == 5:
+                pass
 
             elif self.number == -1:
                 self.game.run = False
