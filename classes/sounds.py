@@ -28,4 +28,5 @@ def soundtrack():
     pygame.mixer.music.play(-1)
 
 if __name__ == '__main__':
-    print("why are you running this file?")
+    # print("why are you running this file?")
+   pass
