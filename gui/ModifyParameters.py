@@ -9,8 +9,8 @@ class Parameters:
         self.object = object
 
         # Apply ttkbootstrap theme 'solar'
-        style = Style(theme='solar')
-        style.master = self.root
+        self.style = Style(theme='solar')
+        self.style.master = self.root
 
         self.root.title("Parameters")
         self.root.geometry('250x450')
