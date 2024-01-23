@@ -13,7 +13,7 @@ class Parameters:
         style.master = self.root
 
         self.root.title("Parameters")
-        self.root.geometry('250x300')
+        self.root.geometry('250x450')
         self.root.resizable(False, False)
 
         self.parameters_dict = self.object.parameters
@@ -26,7 +26,7 @@ class Parameters:
 
         # Create a button to store parameters
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
-        self.store_button.grid(row=6, column=0, columnspan=2, pady=10)
+        self.store_button.grid(row=len(self.parameters_dict) + 2, column=0, columnspan=2, pady=10)
 
         self.display_initial_values()
 
@@ -42,12 +42,15 @@ class Parameters:
         self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
 
     def store_parameters(self):
-        new_parameters = {}
-        for param, entry_widget in self.parameters_dict.items():
-            value = entry_widget.get()
-            value = float(value)
-            new_parameters[param] = value
-        self.object.parameters = new_parameters
+        try:
+            new_parameters = {}
+            for param, entry_widget in self.parameters_dict.items():
+                value = entry_widget.get()
+                value = float(value)
+                new_parameters[param] = value
+            self.object.parameters = new_parameters
+        except:
+            pass
         self.root.destroy()
 
 
@@ -57,6 +60,3 @@ class Parameters:
                 value = str(self.parameters_dict[param].get())
                 print(f"{param}: {value}")
 
-# if __name__ == "__main__":
-#     parameters_dict = {'x': 23, 'y': 342, 'width': 23, 'height': 4, 'angle': 32}
-#     window = Parameters(parameters_dict)
