@@ -29,12 +29,10 @@ class Light:
 
     def trace_path2(self):
         current_starting_point = self.starting_point
-        # print(self.r)
 
         mini_run=True
         index=0
         while mini_run:
-            # print(self.r,'ccccccccccccccccccccc')
             if self.r < math.pi:
                 self.vertical = 'up'
             else:
@@ -43,7 +41,6 @@ class Light:
                 self.horizontal = 'left'
             else:
                 self.horizontal = 'right'
-            # print(index)
             index+=1
             self.linear_function = Linear_Function(math.tan(-self.r),
                                                    self.find_b(math.tan(-self.r), current_starting_point))
@@ -56,12 +53,13 @@ class Light:
             current_distance = None
             current_point = None
             current_slope = None
+            current_object=None
 
-            # print(self.vertical, self.horizontal)
             for object in self.game.objects:
 
-                if type(object) == gameobjects.Mirror:
+                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass:
                     object.get_slopes()
+
                     slopes = object.slopes
                     # print(slopes)
                     i = 0
@@ -112,44 +110,50 @@ class Light:
                                             current_distance = dist
                                             current_point = point
                                             current_slope = slope
+                                            if type(object)==gameobjects.Mirror:
+                                                current_object = 'mirror'
+                                            elif type(object)==gameobjects.ColoredGlass:
+                                                current_object= ' glass'
 
                                         else:
                                             if dist < current_distance:
                                                 current_distance = dist
                                                 current_point = point
                                                 current_slope = slope
+                                                if type(object) == gameobjects.Mirror:
+                                                    current_object = 'mirror'
+                                                elif type(object) == gameobjects.ColoredGlass:
+                                                    current_object = ' glass'
+
 
                         i += 1
-
             if current_slope == None:
                 self.points.append((current_point_before[0] + 1000 * math.cos(-self.r),
                                     current_point_before[1] + 1000 * math.sin(-self.r)))
                 self.colors.append(self.RGB.rgb)
                 mini_run = False
             else:
-                pygame.draw.line(self.game.screen, (0, 0, 255), current_slope[0], current_slope[1], 5)
-                self.points.append(current_point)
-                self.colors.append(self.RGB.rgb)
-                if (current_slope[0][0] - current_slope[1][0]) == 0:
-                    slope_angle = math.pi/2
-                else:
-
-                    slope_angle = math.atan((current_slope[0][1] - current_slope[1][1]) / (
-                            current_slope[0][0] - current_slope[1][0]))
-                    if current_slope[0][0]>=current_slope[1][0] and current_slope[0][1]>current_slope[1][1]:
-                        slope_angle=math.pi-slope_angle
-                        # print('ddddddddddddddddddddd')
-                    elif current_slope[1][0]>=current_slope[0][0] and current_slope[1][1]>current_slope[0][1]:
-                        slope_angle=math.pi-slope_angle
-                        # print('ddddddddddddddddddddd')
+                if current_object=='mirror':
+                    pygame.draw.line(self.game.screen, (0, 0, 255), current_slope[0], current_slope[1], 5)
+                    self.points.append(current_point)
+                    self.colors.append(self.RGB.rgb)
+                    if (current_slope[0][0] - current_slope[1][0]) == 0:
+                        slope_angle = math.pi / 2
                     else:
-                        slope_angle=-slope_angle
-                # print(self.r,'aaaaaaaaaaaaaaaaaaaa')
-                self.r = 2 * slope_angle - self.r
-                # print(slope_angle, self.r, 'bbbbbbbbbbbbbbbbbbb')
-                self.calibrate_r2()
 
-                current_starting_point = current_point
+                        slope_angle = math.atan((current_slope[0][1] - current_slope[1][1]) / (
+                                current_slope[0][0] - current_slope[1][0]))
+                        if current_slope[0][0] >= current_slope[1][0] and current_slope[0][1] > current_slope[1][1]:
+                            slope_angle = math.pi - slope_angle
+                        elif current_slope[1][0] >= current_slope[0][0] and current_slope[1][1] > current_slope[0][1]:
+                            slope_angle = math.pi - slope_angle
+                        else:
+                            slope_angle = -slope_angle
+                    self.r = 2 * slope_angle - self.r
+                    self.calibrate_r2()
+
+                    current_starting_point = current_point
+
             if index >= 10:
                 mini_run = False
 
@@ -230,16 +234,15 @@ class Light:
             if type(object) == gameobjects.Mirror:
                 if self.vp_rect.colliderect(object.rect):
                     if functions.collidepoly(self.vp_polygon, object.points): # Changed colliderect to collidepoly for optimal hitboxes
-                        # print('touch')
+                        # ('touch')
                         self.points.append((self.vx, self.vy))
                         # self.RGB.compare(RGB(255,255,0)) - enter to code to try for yourself!!! :)
                         self.colors.append(self.RGB.rgb)
 
                         # object_angle = -object.angle / 360 * 2 * math.pi
-                        # print(object_angle)
+                        # (object_angle)
                         angle=self.find_angle2(object)
 
-                        # print(self.r)
                         self.bend(angle)
     def area(self,triangle):
         p1,p2,p3=triangle
@@ -253,7 +256,6 @@ class Light:
         return ((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)**(1/2)
     def find_angle2(self,object):
         triangles=object.get_triangles()
-        # print(len(triangles))
         i=0
         for triangle in triangles:
 
@@ -268,7 +270,6 @@ class Light:
             area3 = self.area(t3)
 
             sum=area1+area2+area3
-            # print(sum,area)
             if sum<=area+200:
                 pygame.draw.polygon(self.game.screen, (255, 255, 255), triangle)
                 # print(math.asin((triangle[1][0]-triangle[2][0])/self.length(triangle[1],triangle[2])))

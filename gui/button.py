@@ -1,12 +1,33 @@
 import pygame
 from classes import gameobjects, sounds
-from classes import images
-
-
-isDrawingModeOn = False
+from classes import images, game
 
 class Button:
+    """
+    This class represents a Button in the game.
+
+    Attributes:
+        game (object): The game object that this button is a part of.
+        number (int): The number that identifies this button.
+        screenheight (int): The height of the game screen.
+        screenwidth (int): The width of the game screen.
+        position (str): The position of the button on the screen.
+        gap (int): The gap between buttons.
+        y (int): The y-coordinate of the button.
+        rect (pygame.Rect): The rectangle that represents the button.
+        color (tuple): The color of the button.
+        icon (pygame.Surface): The icon of the button.
+        icon_rect (pygame.Rect): The rectangle that represents the icon.
+    """
+
     def __init__(self, game, number):
+        """
+        The constructor for the Button class.
+
+        Parameters:
+            game (object): The game object that this button is a part of.
+            number (int): The number that identifies this button.
+        """
         self.game = game
         self.number = number
         self.screenheight = self.game.height
@@ -54,197 +75,133 @@ class Button:
 
         if self.number == 0:
             self.color = (255, 0, 0)
+            self.icon = images.torch_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
         elif self.number == 1:
-            self.color = (0, 0, 255)
-        elif self.number == 2:
             self.color = (0, 255, 0)
+            self.icon = images.torch_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
+        elif self.number == 2:
+            self.color = (0, 0, 255)
+            self.icon = images.object_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
         elif self.number == 3:
-            self.color = (0, 200, 100)
+            self.color = (0, 255, 0)
+
         elif self.number == 4:
+            self.color = (0, 200, 100)
+            self.icon = images.prism_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
+        elif self.number == 5:
             self.color = (5, 75, 60)
+            self.icon = images.topopisy
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
+        elif self.number == -1:
+            self.color = None
+            self.icon = images.exit_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
+        elif self.number == -2:
+            self.color = None
+            self.icon = images.settings_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
         else:
             self.color = (20, 0, 0)
 
-        self.clicked = 0  # 0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
-
-        self.torch_icon = images.torch_icon
-        # Scale the torch icon to the size of the button
-        self.torch_icon = pygame.transform.scale(self.torch_icon, (button_width, button_height))
-        self.object_icon = images.object_icon
-
-        self.prism_icon = images.prism_icon
-        self.prism_icon = pygame.transform.scale(self.prism_icon, (button_width, button_height))
-
-        # Scale the object icon to the size of the button
-        self.object_icon = pygame.transform.scale(self.object_icon, (button_width, button_height))
-
-        self.settings_icon = images.settings_icon
-        self.settings_icon = pygame.transform.scale(self.settings_icon, (button_width, button_height))
-        self.settings_icon_rect = self.settings_icon.get_rect(center=self.rect.center)
-
-        self.exit_icon = images.exit_icon
-        self.exit_icon = pygame.transform.scale(self.exit_icon, (button_width, button_height))
-        self.exit_icon_rect = self.exit_icon.get_rect(center=self.rect.center)
-
-        self.topopisy_icon = images.topopisy
-        self.topopisy_icon = pygame.transform.scale(self.topopisy_icon, (button_width, button_height))
-        self.topopisy_icon_rect = self.topopisy_icon.get_rect(center=self.rect.center)
-
-        self.shape_of_mirror = None
-
     def render(self):
-        global isDrawingModeOn
-        # Render GUI elements
-        mousepos = list(pygame.mouse.get_pos())
-        # mousepos[0] -= 100  # Centering the mouse
-        # mousepos[1] -= 50
-
-        # self.f = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]),
-        #                                 (mousepos[0] + 200, mousepos[1]),
-        #                                 (mousepos[0] + 200, mousepos[1] + 100),
-        #                                 (mousepos[0], mousepos[1] + 100)], (255, 0, 0), self.game.current_angle, image_path="images/torch.png")
-        self.f = self.game.current_flashlight
-
-        def adjust_flashlight():
-            self.f.adjust(mousepos[0], mousepos[1], 0)
-
-        if self.number != -2 and self.number != -1:
+        """
+        Renders the button on the screen.
+        """
+        if self.color != None:
             pygame.draw.rect(self.game.screen, self.color, self.rect)
-        if self.number == 0:
-            torch_icon_rect = self.torch_icon.get_rect(center=self.rect.center)
-            self.game.screen.blit(self.torch_icon, torch_icon_rect)
-            if self.clicked == 1:
-                if self.game.r:
-                    self.f.adjust(mousepos[0], mousepos[1], self.game.r)
-                    self.game.r = False
-                else:
-                    adjust_flashlight()
 
-                self.f.drawoutline()
-                # print(self.f.angle)
+        try:
+            self.game.screen.blit(self.icon, self.icon_rect)
 
-            if self.clicked == 2:
-                adjust_flashlight()
+        except:
+            pass
+    def checkifclicked(self, mousepos):
+        """
+        Checks if the button was clicked and performs the corresponding action.
 
-                self.f.light_adjust(self.f.points[0][0], self.f.points[0][1])
-                # print(self.f.points[0][0], self.f.points[0][1])
-                self.game.objects.insert(-2, self.f)
-                self.clicked = 0
-                self.f = None
-                sounds.laser_sound()
-                print(isDrawingModeOn)
+        Parameters:
+            mousepos (tuple): The position of the mouse.
+        """
+        if self.rect.collidepoint(mousepos[0], mousepos[1]):
+            if self.number == 0:
+                obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
+                self.game.current_flashlight = obj
+                self.game.achievements.handle_achievement_unlocked("first_flashlight_placed")
 
+            elif self.number == 1:
+                obj = gameobjects.oldFlashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
+                self.game.current_flashlight = obj
 
+            elif self.number == 2:
+                obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
+                self.game.achievements.handle_achievement_unlocked("first_mirror_placed")
 
-        elif self.number == 1:
-            object_icon_rect = self.object_icon.get_rect(center=self.rect.center)
-            self.game.screen.blit(self.object_icon, object_icon_rect)
-            if self.clicked == 1:
-                self.m.adjust(mousepos[0], mousepos[1], 0)
+            elif self.number == 3:
+                obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0)
 
-            if self.clicked == 2:
-                # print(self.m.points)
-                # print(mousepos)
-                self.game.objects.insert(-2, self.m)
-                self.clicked = 0
+            elif self.number == 4:
+                obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0)
 
-        # future prism
-        elif self.number == 3:
-            self.prism_icon_rect = self.prism_icon.get_rect(center=self.rect.center)
-            self.game.screen.blit(self.prism_icon, self.prism_icon_rect)
-            if self.clicked == 1:
-                self.p.adjust(mousepos[0], mousepos[1], 0)
+            elif self.number == 5:
+                pass
 
-            if self.clicked == 2:
-                # print(self.p.points)
-                # print(mousepos)
-                self.game.objects.insert(-2, self.p)
-                self.clicked = 0
+            elif self.number == -1:
+                self.game.run = False
 
-        if self.number == 4:
-            self.game.screen.blit(self.topopisy_icon, self.topopisy_icon_rect)
-            if self.clicked == 1:
-                print('drawing...', isDrawingModeOn)
-        # clicked = 0 means the button is not clicked, 1 means the button was clicked and is currently active and 2 means that the selectd object is being placed and the button will revert to 0 afterwards.
-        if self.number == -2:
-            self.game.screen.blit(self.settings_icon, self.settings_icon_rect)
+            elif self.number == -2:
+                self.game.mode = 'settings'
 
-        if self.number == -1:
-            self.game.screen.blit(self.exit_icon, self.exit_icon_rect)
+            try:
+                self.game.objects.append(obj)
+                obj.selected(mousepos)
 
-    def checkifclicked(self, pos):
-        if self.rect.collidepoint(pos[0], pos[1]):
-            mousepos = pygame.mouse.get_pos()
-            if self.clicked == 0:
-                self.clicked = 1
-                sounds.selected_sound()
-                if self.number == 0:
-                    sounds.selected_sound()
-                    self.f = gameobjects.Flashlight(
-                        self.game,
-                        [
-                            (mousepos[0] - 100, mousepos[1] - 50),
-                            (mousepos[0] - 100, mousepos[1] + 50),
-                            (mousepos[0] + 100, mousepos[1] + 50),
-                            (mousepos[0] + 100, mousepos[1] - 50)
-                        ],
-                        (255, 0, 0),
-                        0,
-                        image=images.torch
-                    )
-                    self.game.current_flashlight = self.f
-                    # self.f.selected(mousepos)
-                    sounds.selected_sound()
-                elif self.number == 1:
-                    self.m = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
-                                                            (mousepos[0] + 100, mousepos[1] - 50),
-                                                            (mousepos[0] + 100, mousepos[1] + 50),
-                                                            (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
-                    sounds.selected_sound()
+            except:
+                pass
 
-                elif self.number == 2:
-                    sounds.selected_sound()
-
-                elif self.number == 3:
-                    self.p = gameobjects.Prism(self.game,
-                                               [
-                                                   (mousepos[0] + 150, mousepos[1]),
-                                                   (mousepos[0] + 100, mousepos[1] - 100),
-                                                   (mousepos[0] + 50, mousepos[1])],
-                                               (255, 0, 0), 100)
-                    sounds.selected_sound()
-
-                elif self.number == 4:
-                    global isDrawingModeOn
-                    if not isDrawingModeOn:
-                        isDrawingModeOn = True
-                        print(1)
-                    else:
-                        isDrawingModeOn = False
-                        print(2)
-
-                elif self.number == -1:
-                    self.game.run = False
-
-                elif self.number == -2:
-                    self.game.mode = 'settings'
-                    sounds.clicked_sound()
-
-
-
-
-
-
-            elif self.rect.collidepoint(mousepos) and self.clicked == 1:
-                self.clicked = 0
-                sounds.selected_sound()
-        elif self.rect.collidepoint(pos) is False and self.clicked == 1 and self.number != 4:
-
-             self.clicked = 2
-
+            sounds.selected_sound()
 
 class ButtonForgame:
+    """
+    This class represents a Button for the game menu.
+
+    Attributes:
+        number (int): The number that identifies this button.
+        screen (object): The screen object that this button is a part of.
+        font (pygame.font.Font): The font used for the button text.
+        width (int): The width of the button.
+        height (int): The height of the button.
+        y (int): The y-coordinate of the button.
+        x (int): The x-coordinate of the button.
+        rect (pygame.Rect): The rectangle that represents the button.
+        text (pygame.Surface): The text of the button.
+        textRect (pygame.Rect): The rectangle that represents the text.
+    """
     def __init__(self, number, screen):
+        """
+        The constructor for the ButtonForgame class.
+
+        Parameters:
+            number (int): The number that identifies this button.
+            screen (object): The screen object that this button is a part of.
+        """
         self.number = number
         self.screen = screen
         self.screen.objects.append(self)
@@ -280,6 +237,12 @@ class ButtonForgame:
         self.textRect.center = (self.rect[0] + (self.rect[2] // 2), self.rect[1] + (self.rect[3] // 2))
 
     def checkcollision(self, pos):
+        """
+        Checks if the button was clicked and performs the corresponding action.
+
+        Parameters:
+            pos (tuple): The position of the mouse.
+        """
         if self.rect.collidepoint(pos[0], pos[1]):
             if self.number == 0:
                 self.screen.run = False
@@ -297,5 +260,8 @@ class ButtonForgame:
                 raise NotImplementedError('button function not yet added')
 
     def render(self):
+        """
+        Renders the button on the screen.
+        """
         pygame.draw.rect(self.screen.screen, (255, 255, 255), self.rect, 0, 4)
         self.screen.screen.blit(self.text, self.textRect)
