@@ -1,0 +1,125 @@
+2024-01-23 19:07:21,387 - ERROR - module 'classes.images' has no attribute 'pen'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 34, in main
+    game_instance = game.Game()
+  File "D:\Python\optyka\classes\game.py", line 45, in __init__
+    self.pen_img = images.pen
+AttributeError: module 'classes.images' has no attribute 'pen'
+2024-01-23 19:20:43,472 - ERROR - 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 162, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 62, in events
+    optyka.gui.polygonDrawing.addPoint(self.mousepos)
+  File "D:\Python\optyka\gui\polygonDrawing.py", line 15, in addPoint
+    mousePos = gameobjects.GameObject(game, mousePos, (200, 200, 200), None, None)
+  File "D:\Python\optyka\classes\gameobjects.py", line 33, in __init__
+    self.update_rect()
+  File "D:\Python\optyka\classes\gameobjects.py", line 40, in update_rect
+    min_x = min(pt[0] for pt in self.points)
+  File "D:\Python\optyka\classes\gameobjects.py", line 40, in <genexpr>
+    min_x = min(pt[0] for pt in self.points)
+TypeError: 'int' object is not subscriptable
+2024-01-23 19:30:38,944 - ERROR - 'module' object is not callable
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 102, in render
+    optyka.gui.polygonDrawing.draw(optyka.gui.polygonDrawing.currentPolygonPoints)
+TypeError: 'module' object is not callable
+2024-01-23 19:31:26,436 - ERROR - 'module' object is not callable
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 102, in render
+    optyka.gui.polygonDrawing.draw()
+TypeError: 'module' object is not callable
+2024-01-23 19:32:39,697 - ERROR - module 'gui.gui_main' has no attribute 'polygonDrawing'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 102, in render
+    gui.polygonDrawing.draw()
+AttributeError: module 'gui.gui_main' has no attribute 'polygonDrawing'
+2024-01-23 19:33:28,965 - ERROR - module 'gui.gui_main' has no attribute 'polygonDrawing'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 109, in render
+    gui.polygonDrawing.draw()
+AttributeError: module 'gui.gui_main' has no attribute 'polygonDrawing'
+2024-01-23 19:33:57,334 - ERROR - name 'gui' is not defined
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 94, in render
+    if type(object) is gui.GUI:
+NameError: name 'gui' is not defined
+2024-01-23 19:35:13,634 - ERROR - name 'gui' is not defined
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 94, in render
+    if type(object) is gui.gui_main.GUI:
+NameError: name 'gui' is not defined
+2024-01-23 19:35:34,255 - ERROR - name 'gui' is not defined
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 94, in render
+    if type(object) is gui.gui_main.GUI:
+NameError: name 'gui' is not defined
+2024-01-23 19:36:01,592 - ERROR - module 'optyka.gui' has no attribute 'gui_main'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 94, in render
+    if type(object) is optyka.gui.gui_main.GUI:
+AttributeError: module 'optyka.gui' has no attribute 'gui_main'
+2024-01-23 19:36:30,274 - ERROR - module 'gui.gui_main' has no attribute 'polygonDrawing'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 160, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 110, in render
+    gui.polygonDrawing.draw()
+AttributeError: module 'gui.gui_main' has no attribute 'polygonDrawing'
+2024-01-23 19:36:48,368 - ERROR - 'module' object is not callable
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 160, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 110, in render
+    optyka.gui.polygonDrawing.draw()
+TypeError: 'module' object is not callable
+2024-01-23 19:37:39,860 - ERROR - name 'screen' is not defined
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 160, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 110, in render
+    optyka.gui.polygonDrawing.renderDots()
+  File "D:\Python\optyka\gui\polygonDrawing.py", line 19, in renderDots
+    pygame.draw.circle(screen, (200, 200, 200), i, 10)
+NameError: name 'screen' is not defined

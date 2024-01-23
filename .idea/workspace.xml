@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="Drawing 1">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_17_2024_7_04_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_17_2024_7_04_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_22_2024_6_08_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_22_2024_6_08_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/achievements.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui/polygonDrawing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/2024-01-23.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/gameobjects.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/gameobjects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/images.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/images.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/polygonDrawing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/ModifyParameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/ModifyParameters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/button.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
     </list>
@@ -25,7 +32,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -174,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1705955040431</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Drawing 1">
+      <created>1706030599555</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1706030599555</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -17,3 +17,5 @@ bin = pygame.image.load('images/trash.png')
 bad_coursor = pygame.image.load('images/bad_coursor.png')
 
 topopisy = pygame.image.load('images/topopisy.png')
+
+pen = pygame.image.load('images/pen.png')

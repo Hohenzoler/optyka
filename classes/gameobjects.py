@@ -9,7 +9,7 @@ import random
 import settingsSetup
 settings = settingsSetup.start()
 
-NUM_RAYS = 25
+NUM_RAYS = 15
 FOV = 5
 HALF_FOV = 2.5
 DELTA_ANGLE = FOV / NUM_RAYS

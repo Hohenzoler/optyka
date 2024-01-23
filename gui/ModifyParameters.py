@@ -1,6 +1,6 @@
 import tkinter as tk
-from ttkbootstrap import Style
-from ttkbootstrap import ttk
+from tkinter import *
+# from ttkbootstrap import ttk
 
 class Parameters:
     def __init__(self, object):

@@ -1,4 +1,4 @@
-
+import optyka.gui.polygonDrawing
 import pygame
 from gui import gui_main as gui
 from gui import settings_screen
@@ -8,6 +8,7 @@ from classes import fps
 from classes import bin, images
 from classes.achievements import Achievements
 
+isDrawingModeOn = False
 class Game:
     """
     The main game class that handles the game loop, events, rendering and settings.
@@ -40,6 +41,8 @@ class Game:
         pygame.mouse.set_visible(False)  # Hide the default mouse cursor
         self.cursor_img = images.bad_coursor  # Custom cursor image
         self.cursor_img_rect = self.cursor_img.get_rect()  # Rectangle for the custom cursor image
+        self.pen_img = images.pen
+        self.pen_img_rect = self.pen_img.get_rect()
         self.achievements = Achievements()  # Achievements object
 
         self.p = False #used for properties windows for gameobjects
@@ -55,13 +58,16 @@ class Game:
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
+                    if isDrawingModeOn:
+                        optyka.gui.polygonDrawing.addPoint(self.mousepos)
+
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                     self.rightclickedmousepos = event.pos
                 if event.type == pygame.MOUSEWHEEL:
                     if event.y > 0:
-                        self.r = 10
+                        self.r = 5
                     if event.y < 0:
-                        self.r = -10
+                        self.r = -5
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                     self.p = True
             elif self.mode == 'settings':
@@ -93,12 +99,15 @@ class Game:
                     if issubclass(type(object), gameobjects.GameObject):
                         object.selected(self.rightclickedmousepos)
 
+
                 object.render()
                 if type(object) != bin.Bin:
                     for bin_2 in self.objects:
                         if type(bin_2) == bin.Bin:
                             bin_2.checkCollision(object)
                             break
+            if isDrawingModeOn:
+                optyka.gui.polygonDrawing.renderDots()
         elif self.mode == 'settings':
             if self.executed_command != 'settings':
                 self.settings_screen = settings_screen.Settings_screen(self)
@@ -122,7 +131,10 @@ class Game:
                     object.load_settings()
             self.executed_command = 'default'
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
-        self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
+        if isDrawingModeOn:
+            self.screen.blit(self.pen_img, self.cursor_img_rect)
+        else:
+            self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
         self.displayFPS()
 
     def background(self):

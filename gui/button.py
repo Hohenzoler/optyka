@@ -1,3 +1,4 @@
+import classes.game
 import pygame
 from classes import gameobjects, sounds
 from classes import images, game
@@ -161,11 +162,14 @@ class Button:
                 obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0)
 
             elif self.number == 5:
-                pass
+                if classes.game.isDrawingModeOn == True:
+                    classes.game.isDrawingModeOn = False
+                elif classes.game.isDrawingModeOn == False:
+                    classes.game.isDrawingModeOn = True
+                # print(classes.game.isDrawingModeOn)
 
             elif self.number == -1:
                 self.game.run = False
-
             elif self.number == -2:
                 self.game.mode = 'settings'
 

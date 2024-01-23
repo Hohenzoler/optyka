@@ -2,7 +2,7 @@
  "WIDTH": 1280,
  "HEIGHT": 720,
  "FULLSCREEN": "OFF",
- "HOTBAR_POSITION": "top",
+ "HOTBAR_POSITION": "bottom",
  "VSYNC": "OFF",
  "DEBUG": "False",
  "Flashlight_FOV": 60,
