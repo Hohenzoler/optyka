@@ -3,7 +3,7 @@ from ttkbootstrap import Style
 from ttkbootstrap import ttk
 
 class Parameters:
-    def __init__(self):
+    def __init__(self, object):
         self.root = tk.Tk()
 
         # Apply ttkbootstrap theme 'solar'
@@ -11,19 +11,16 @@ class Parameters:
         style.master = self.root
 
         self.root.title("Parameters")
-        self.root.geometry('200x300')
+        self.root.geometry('250x300')
         self.root.resizable(False, False)
 
-        self.parameters_dict = {'x': 23, 'y': 342, 'width': 23, 'height': 4, 'angle': 32}
+        self.parameters_dict = object.parameters
 
         title_label = tk.Label(self.root, text="Enter Parameters:")
         title_label.grid(row=0, column=0, columnspan=2, pady=10)
 
-        self.create_entry("x", row=1)
-        self.create_entry("y", row=2)
-        self.create_entry("width", row=3)
-        self.create_entry("height", row=4)
-        self.create_entry("angle", row=5)
+        for idx, param in enumerate(self.parameters_dict):
+            self.create_entry(param, idx+1)
 
         # Create a button to store parameters
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
@@ -39,7 +36,7 @@ class Parameters:
 
         entry = ttk.Entry(self.root)
         entry.insert(0, str(self.parameters_dict[param]))  # Set default value
-        entry.grid(row=row, column=1, padx=5, pady=5, sticky='w')
+        entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
         self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
 
     def store_parameters(self):
@@ -54,4 +51,5 @@ class Parameters:
                 print(f"{param}: {value}")
 
 if __name__ == "__main__":
-    window = Parameters()
+    parameters_dict = {'x': 23, 'y': 342, 'width': 23, 'height': 4, 'angle': 32}
+    window = Parameters(parameters_dict)

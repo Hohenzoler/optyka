@@ -30,6 +30,9 @@ class GameObject:
         self.triangles_generated = False
         self.update_rect()
 
+
+        self.find_parameters()
+
     def update_rect(self):
         # Update the rect based on the points
         min_x = min(pt[0] for pt in self.points)
@@ -152,6 +155,7 @@ class GameObject:
         self.x = self.mousepos[0] - center_x
         self.y = self.mousepos[1] - center_y
 
+
         # Assuming self.transparent_surface is a surface with transparency
         # Blit the rotated image with transparency
         if self.image:
@@ -186,6 +190,8 @@ class GameObject:
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
         pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
 
+        self.find_parameters()
+
         if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
             self.selectedtrue = True
             sounds.selected_sound()
@@ -195,6 +201,13 @@ class GameObject:
                 sounds.laser_sound()
             else:
                 sounds.placed_sound()
+
+    def find_parameters(self):
+        centerx = sum(x[0] for x in self.points) / len(self.points)
+        centery = sum(y[1] for y in self.points) / len(self.points)
+
+        self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
+        print(self.parameters)
 
 class Mirror(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None):
