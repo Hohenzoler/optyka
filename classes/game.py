@@ -5,7 +5,7 @@ from classes import gameobjects
 import settingsSetup
 from classes import fps
 from classes import bin, images
-
+from classes.achievements import Achievements
 
 class Game:
     def __init__(self):
@@ -43,6 +43,7 @@ class Game:
         self.cursor_img = images.bad_coursor
         self.cursor_img_rect = self.cursor_img.get_rect()
 
+        self.achievements = Achievements()
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
