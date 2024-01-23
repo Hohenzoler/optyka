@@ -88,7 +88,6 @@ class GameObject:
 
             elif self.game.p:
                 self.change_parameters()
-                self.game.p = False
                 self.selectedtrue = False
 
             else:
