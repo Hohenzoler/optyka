@@ -211,16 +211,18 @@ class GameObject:
         centerx = sum(x[0] for x in self.points) / len(self.points)
         centery = sum(y[1] for y in self.points) / len(self.points)
 
-        self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
-        print(self.parameters)
+        self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle, 'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
 
     def change_parameters(self):
         self.find_parameters()
 
         window = mp.Parameters(self)
+
         try:
             d_angle = self.parameters['angle'] - self.angle
             self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
+            self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
+            print(self.color)
         except:
             pass
 
