@@ -111,7 +111,7 @@ class Button:
             if self.number == 0:
                 obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
                 self.game.current_flashlight = obj
-                self.game.achievements.flashlight_achievement(obj)
+                self.game.achievements.handle_achievement_unlocked("first_flashlight_placed")
 
             elif self.number == 1:
                 obj = gameobjects.oldFlashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
@@ -119,7 +119,7 @@ class Button:
 
             elif self.number == 2:
                 obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0)
-                self.game.achievements.morrir_achievement(obj)
+                self.game.achievements.handle_achievement_unlocked("first_mirror_placed")
 
             elif self.number == 3:
                 obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0)
