@@ -6,6 +6,8 @@ class Parameters:
     def __init__(self, object):
         self.root = tk.Tk()
 
+        self.object = object
+
         # Apply ttkbootstrap theme 'solar'
         style = Style(theme='solar')
         style.master = self.root
@@ -14,7 +16,7 @@ class Parameters:
         self.root.geometry('250x300')
         self.root.resizable(False, False)
 
-        self.parameters_dict = object.parameters
+        self.parameters_dict = self.object.parameters
 
         title_label = tk.Label(self.root, text="Enter Parameters:")
         title_label.grid(row=0, column=0, columnspan=2, pady=10)
@@ -40,9 +42,14 @@ class Parameters:
         self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
 
     def store_parameters(self):
+        new_parameters = {}
         for param, entry_widget in self.parameters_dict.items():
             value = entry_widget.get()
-            print(f"{param}: {value}")
+            value = float(value)
+            new_parameters[param] = value
+        self.object.parameters = new_parameters
+        self.root.destroy()
+
 
     def display_initial_values(self):
         for param, entry_widget in self.parameters_dict.items():
@@ -50,6 +57,6 @@ class Parameters:
                 value = str(self.parameters_dict[param].get())
                 print(f"{param}: {value}")
 
-if __name__ == "__main__":
-    parameters_dict = {'x': 23, 'y': 342, 'width': 23, 'height': 4, 'angle': 32}
-    window = Parameters(parameters_dict)
+# if __name__ == "__main__":
+#     parameters_dict = {'x': 23, 'y': 342, 'width': 23, 'height': 4, 'angle': 32}
+#     window = Parameters(parameters_dict)

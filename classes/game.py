@@ -1,4 +1,4 @@
-```python
+
 import pygame
 from gui import gui_main as gui
 from gui import settings_screen
@@ -42,6 +42,8 @@ class Game:
         self.cursor_img_rect = self.cursor_img.get_rect()  # Rectangle for the custom cursor image
         self.achievements = Achievements()  # Achievements object
 
+        self.p = False #used for properties windows for gameobjects
+
     def events(self):
         """
         Handles all the pygame events.
@@ -60,6 +62,8 @@ class Game:
                         self.r = 10
                     if event.y < 0:
                         self.r = -10
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                    self.p = True
             elif self.mode == 'settings':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     for object in self.objects:
@@ -88,6 +92,7 @@ class Game:
                 if type(self.rightclickedmousepos) is tuple:
                     if issubclass(type(object), gameobjects.GameObject):
                         object.selected(self.rightclickedmousepos)
+
                 object.render()
                 if type(object) != bin.Bin:
                     for bin_2 in self.objects:

@@ -1,5 +1,7 @@
-import pygame
+import time
 
+import pygame
+from gui import ModifyParameters as mp
 from classes import light, sounds, images
 import math
 from pygame.transform import rotate
@@ -83,6 +85,12 @@ class GameObject:
 
                 self.adjust(mousepos[0], mousepos[1], self.game.r)
                 self.game.r = False
+
+            elif self.game.p:
+                self.change_parameters()
+                self.game.p = False
+                self.selectedtrue = False
+
             else:
                 self.adjust(mousepos[0], mousepos[1], 0)
             self.drawoutline()
@@ -190,8 +198,6 @@ class GameObject:
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
         pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
 
-        self.find_parameters()
-
         if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
             self.selectedtrue = True
             sounds.selected_sound()
@@ -208,6 +214,17 @@ class GameObject:
 
         self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
         print(self.parameters)
+
+    def change_parameters(self):
+        self.find_parameters()
+
+        window = mp.Parameters(self)
+        try:
+            d_angle = self.parameters['angle'] - self.angle
+            self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
+        except:
+            pass
+
 
 class Mirror(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None):
