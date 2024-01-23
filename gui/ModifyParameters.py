@@ -28,7 +28,7 @@ class Parameters:
 
         # Create a button to store parameters
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
-        self.store_button.grid(row=len(self.parameters_dict) + 2, column=0, columnspan=2, pady=10)
+        self.store_button.grid(row=len(self.parameters_dict) + 3, column=0, columnspan=2, pady=10)
 
         self.display_initial_values()
 
@@ -38,15 +38,27 @@ class Parameters:
         label = tk.Label(self.root, text=f"{param.capitalize()}:")
         label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
         if param == 'red' or param == 'blue' or param == 'green':
-            slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150)
+            slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
             slider.set(self.parameters_dict[param])
             slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
             self.sliders.append(slider)
+
+            self.color_preview_canvas = tk.Canvas(self.root, width=50, height=50)
+            self.color_preview_canvas.grid(row=len(self.parameters_dict) + 1, column=0, columnspan=2, pady=10)
+
         else:
             entry = ttk.Entry(self.root)
             entry.insert(0, str(self.parameters_dict[param]))  # Set default value
             entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
             self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
+
+    def update_color_preview(self, param):
+        red = self.sliders[0].get()
+        green = self.sliders[1].get()
+        blue = self.sliders[2].get()
+        color = f'#{int(red):02X}{int(green):02X}{int(blue):02X}'
+        self.color_preview_canvas.config(bg=color)
+
 
     def store_parameters(self):
         new_parameters = {}
