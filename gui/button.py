@@ -3,7 +3,31 @@ from classes import gameobjects, sounds
 from classes import images, game
 
 class Button:
+    """
+    This class represents a Button in the game.
+
+    Attributes:
+        game (object): The game object that this button is a part of.
+        number (int): The number that identifies this button.
+        screenheight (int): The height of the game screen.
+        screenwidth (int): The width of the game screen.
+        position (str): The position of the button on the screen.
+        gap (int): The gap between buttons.
+        y (int): The y-coordinate of the button.
+        rect (pygame.Rect): The rectangle that represents the button.
+        color (tuple): The color of the button.
+        icon (pygame.Surface): The icon of the button.
+        icon_rect (pygame.Rect): The rectangle that represents the icon.
+    """
+
     def __init__(self, game, number):
+        """
+        The constructor for the Button class.
+
+        Parameters:
+            game (object): The game object that this button is a part of.
+            number (int): The number that identifies this button.
+        """
         self.game = game
         self.number = number
         self.screenheight = self.game.height
@@ -98,6 +122,9 @@ class Button:
             self.color = (20, 0, 0)
 
     def render(self):
+        """
+        Renders the button on the screen.
+        """
         if self.color != None:
             pygame.draw.rect(self.game.screen, self.color, self.rect)
 
@@ -107,6 +134,12 @@ class Button:
         except:
             pass
     def checkifclicked(self, mousepos):
+        """
+        Checks if the button was clicked and performs the corresponding action.
+
+        Parameters:
+            mousepos (tuple): The position of the mouse.
+        """
         if self.rect.collidepoint(mousepos[0], mousepos[1]):
             if self.number == 0:
                 obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
@@ -146,7 +179,29 @@ class Button:
             sounds.selected_sound()
 
 class ButtonForgame:
+    """
+    This class represents a Button for the game menu.
+
+    Attributes:
+        number (int): The number that identifies this button.
+        screen (object): The screen object that this button is a part of.
+        font (pygame.font.Font): The font used for the button text.
+        width (int): The width of the button.
+        height (int): The height of the button.
+        y (int): The y-coordinate of the button.
+        x (int): The x-coordinate of the button.
+        rect (pygame.Rect): The rectangle that represents the button.
+        text (pygame.Surface): The text of the button.
+        textRect (pygame.Rect): The rectangle that represents the text.
+    """
     def __init__(self, number, screen):
+        """
+        The constructor for the ButtonForgame class.
+
+        Parameters:
+            number (int): The number that identifies this button.
+            screen (object): The screen object that this button is a part of.
+        """
         self.number = number
         self.screen = screen
         self.screen.objects.append(self)
@@ -182,6 +237,12 @@ class ButtonForgame:
         self.textRect.center = (self.rect[0] + (self.rect[2] // 2), self.rect[1] + (self.rect[3] // 2))
 
     def checkcollision(self, pos):
+        """
+        Checks if the button was clicked and performs the corresponding action.
+
+        Parameters:
+            pos (tuple): The position of the mouse.
+        """
         if self.rect.collidepoint(pos[0], pos[1]):
             if self.number == 0:
                 self.screen.run = False
@@ -199,5 +260,8 @@ class ButtonForgame:
                 raise NotImplementedError('button function not yet added')
 
     def render(self):
+        """
+        Renders the button on the screen.
+        """
         pygame.draw.rect(self.screen.screen, (255, 255, 255), self.rect, 0, 4)
         self.screen.screen.blit(self.text, self.textRect)
