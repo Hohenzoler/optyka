@@ -1,7 +1,6 @@
-import optyka.gui.polygonDrawing
 import pygame
 from gui import gui_main as gui
-from gui import settings_screen
+from gui import settings_screen, polygonDrawing
 from classes import gameobjects
 import settingsSetup
 from classes import fps

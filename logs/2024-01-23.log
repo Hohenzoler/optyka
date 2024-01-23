@@ -123,3 +123,37 @@ Traceback (most recent call last):
   File "D:\Python\optyka\gui\polygonDrawing.py", line 19, in renderDots
     pygame.draw.circle(screen, (200, 200, 200), i, 10)
 NameError: name 'screen' is not defined
+2024-01-23 21:43:30,159 - ERROR - name 'Style' is not defined
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 102, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 90, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 219, in change_parameters
+    window = mp.Parameters(self)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\This PC\Documents\GitHub\optyka\gui\ModifyParameters.py", line 12, in __init__
+    self.style = Style(theme='solar')
+                 ^^^^^
+NameError: name 'Style' is not defined
+2024-01-23 21:44:03,122 - ERROR - name 'Style' is not defined
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 159, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 102, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 90, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 219, in change_parameters
+    window = mp.Parameters(self)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\This PC\Documents\GitHub\optyka\gui\ModifyParameters.py", line 12, in __init__
+    self.style = Style(theme='solar')
+                 ^^^^^
+NameError: name 'Style' is not defined

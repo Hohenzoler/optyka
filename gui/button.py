@@ -143,12 +143,12 @@ class Button:
         """
         if self.rect.collidepoint(mousepos[0], mousepos[1]):
             if self.number == 0:
-                obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
+                obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, image=images.torch)
                 self.game.current_flashlight = obj
                 self.game.achievements.handle_achievement_unlocked("first_flashlight_placed")
 
             elif self.number == 1:
-                obj = gameobjects.oldFlashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 0, 0), 0, image=images.torch)
+                obj = gameobjects.oldFlashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, image=images.torch)
                 self.game.current_flashlight = obj
 
             elif self.number == 2:
