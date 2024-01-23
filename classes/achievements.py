@@ -13,7 +13,20 @@ class Achievements:
         """)
         self.conn.commit()
 
-    def unlock_achievement(self, achievement_name, rarity):
+        # Define the dictionary of achievements
+        self.achievements_dict = {
+            "first_flashlight_placed": "common",
+            "first_mirror_placed": "common",
+            "complex_numbers": "legendary",
+        }
+
+    def unlock_achievement(self, achievement_name):
+        # Check if the achievement exists in the dictionary
+        if achievement_name not in self.achievements_dict:
+            print(f"Error: Achievement '{achievement_name}' does not exist.")
+            return
+
+        rarity = self.achievements_dict[achievement_name]
         self.cursor.execute("""
             INSERT OR REPLACE INTO achievements VALUES (?, ?, ?)
         """, (achievement_name, 1, rarity))
@@ -34,10 +47,9 @@ class Achievements:
         result = self.cursor.fetchone()
         return result[0] if result else "unknown"
 
-    def flashlight_achievement(self, flashlight):
-        if not self.is_achievement_unlocked("first_flashlight_placed"):
-            self.unlock_achievement("first_flashlight_placed", "common")
+    def handle_achievement_unlocked(self, achievement_name):
+        if self.is_achievement_unlocked(achievement_name):
+            print(f"Achievement already unlocked: {achievement_name}")
+            return
 
-    def morrir_achievement(self, mirror):
-        if not self.is_achievement_unlocked("first_mirror_placed"):
-            self.unlock_achievement("first_mirror_placed", "common")
+        self.unlock_achievement(achievement_name)
