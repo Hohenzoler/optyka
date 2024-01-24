@@ -46,6 +46,8 @@ class Game:
 
         self.p = False #used for properties windows for gameobjects
 
+        self.selected_object = None
+
     def events(self):
         """
         Handles all the pygame events.

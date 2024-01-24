@@ -193,19 +193,24 @@ class GameObject:
                 self.on = 1
 
     def selected(self, mousepos):
-        # Check if the object is selected
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
         pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
 
-        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
-            self.selectedtrue = True
-            sounds.selected_sound()
-        elif mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and self.selectedtrue:
-            self.selectedtrue = False
-            if type(self) == Flashlight:
-                sounds.laser_sound()
+        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+            if self.game.selected_object is not None and self.game.selected_object != self:
+                self.game.selected_object.selectedtrue = False  # Deselect the currently selected object
+
+            if not self.selectedtrue:
+                self.selectedtrue = True
+                self.game.selected_object = self  # Set this object as the currently selected object
+                sounds.selected_sound()
             else:
-                sounds.placed_sound()
+                self.selectedtrue = False
+                self.game.selected_object = None  # No object is selected now
+                if type(self) == Flashlight:
+                    sounds.laser_sound()
+                else:
+                    sounds.placed_sound()
 
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)
