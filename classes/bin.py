@@ -1,11 +1,11 @@
 import pygame
 from classes import gameobjects as go
-from classes import sounds
+from classes import sounds, parkinson as particles
 import random
 
 class Bin:
     def __init__(self, game):
-        self.particle_system = ParticleSystem()
+        self.particle_system = particles.ParticleSystem()
         self.game = game
         self.x = self.game.width - 150
         self.y = self.game.height - 200
@@ -28,7 +28,7 @@ class Bin:
             self.game.objects.remove(obj)
             sounds.destroy_sound()
             for i in range(random.randint(10, 200)):
-                self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-1, 1), random.uniform(-1, 1), 100)
+                self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-1, 1), random.uniform(-1, 1), 1000)
 
     def render(self):
         self.game.screen.blit(self.bin_img, self.rect)
@@ -61,35 +61,3 @@ class Bin:
         self.rect = pygame.Rect(self.x, self.y, self.rect_w, self.rect_h)
 
 
-class Particle:
-    def __init__(self, x, y, vx, vy, lifespan):
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-        self.lifespan = lifespan
-
-    def update(self):
-        self.x += self.vx
-        self.y += self.vy
-        self.lifespan -= 1
-
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 150, 0), (self.x, self.y), 5)
-
-class ParticleSystem:
-    def __init__(self):
-        self.particles = []
-
-    def add_particle(self, x, y, vx, vy, lifespan):
-        self.particles.append(Particle(x, y, vx, vy, lifespan))
-
-    def update(self):
-        for particle in self.particles:
-            particle.update()
-            if particle.lifespan <= 0:
-                self.particles.remove(particle)
-
-    def draw(self, screen):
-        for particle in self.particles:
-            particle.draw(screen)
