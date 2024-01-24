@@ -17,6 +17,7 @@ class Achievements:
         self.achievements_dict = {
             "first_flashlight_placed": "common",
             "first_mirror_placed": "common",
+            "BIN": "uncommon",
             "complex_numbers": "legendary",
         }
 

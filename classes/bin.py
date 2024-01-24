@@ -1,6 +1,6 @@
 import pygame
 from classes import gameobjects as go
-from classes import sounds, parkinson as particles
+from classes import sounds, parkinson as particles, achievements
 import random
 
 class Bin:
@@ -23,10 +23,13 @@ class Bin:
 
         self.game.objects.append(self)
 
+        self.achievements = game.achievements
+
     def checkCollision(self, obj):
         if obj.rect.colliderect(self.rect) and isinstance(obj, go.GameObject):
             self.game.objects.remove(obj)
             sounds.destroy_sound()
+            achievements.Achievements.handle_achievement_unlocked(self.achievements, "BIN")
             for i in range(random.randint(10, 200)):
                 self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-1, 1), random.uniform(-1, 1), 1000)
 
