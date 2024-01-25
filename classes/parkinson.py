@@ -16,7 +16,7 @@ class Particle:
     def draw(self, screen):
         pygame.draw.circle(screen, (255, 150, 0), (self.x, self.y), 5)
 
-class ParticleSystem:
+class UnityParticleSystem:
     def __init__(self):
         self.particles = []
 
