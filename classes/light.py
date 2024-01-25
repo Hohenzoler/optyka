@@ -28,11 +28,11 @@ class Light:
         return point[1]-a*point[0]
 
     def trace_path2(self):
-        current_starting_point = self.starting_point
+        self.current_starting_point = self.starting_point
 
-        mini_run=True
-        index=0
-        while mini_run:
+        self.mini_run=True
+        self.index=0
+        while self.mini_run:
             if self.r < math.pi:
                 self.vertical = 'up'
             else:
@@ -41,30 +41,30 @@ class Light:
                 self.horizontal = 'left'
             else:
                 self.horizontal = 'right'
-            index+=1
+            self.index+=1
             self.linear_function = Linear_Function(math.tan(-self.r),
-                                                   self.find_b(math.tan(-self.r), current_starting_point))
+                                                   self.find_b(math.tan(-self.r), self.current_starting_point))
             #self.linear_function.draw(self.game)
             try:
-                slope_before=current_slope
+                self.slope_before=self.current_slope
             except:
-                slope_before=None
-            current_point_before=current_starting_point
-            current_distance = None
-            current_point = None
-            current_slope = None
-            current_object=None
+                self.slope_before=None
+            self.current_point_before=self.current_starting_point
+            self.current_distance = None
+            self.current_point = None
+            self.current_slope = None
+            self.current_object=None
 
             for object in self.game.objects:
 
                 if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass:
                     object.get_slopes()
 
-                    slopes = object.slopes
+                    self.slopes = object.slopes
                     # print(slopes)
                     i = 0
-                    for slope in slopes:
-                        if slope==slope_before:
+                    for slope in self.slopes:
+                        if slope==self.slope_before:
                             pass
                         else:
                             if (slope[0][0] - slope[1][0]) == 0:
@@ -89,74 +89,82 @@ class Light:
                                 if y <= max(slope[0][1], slope[1][1]) + 1 and y >= min(slope[0][1], slope[1][1]) - 1:
                                     cases = 0
                                     if self.horizontal == 'right':
-                                        if x >= current_starting_point[0]:
+                                        if x >= self.current_starting_point[0]:
                                             cases += 1
                                             # print('aaaaaaa')
                                     else:
-                                        if x <= current_starting_point[0]:
+                                        if x <= self.current_starting_point[0]:
                                             cases += 1
                                     if self.vertical == 'up':
-                                        if y <= current_starting_point[1]:
+                                        if y <= self.current_starting_point[1]:
                                             cases += 1
                                     else:
-                                        if y >= current_starting_point[1]:
+                                        if y >= self.current_starting_point[1]:
                                             cases += 1
                                     # print(cases)
                                     if cases == 2:
                                         pygame.draw.line(self.game.screen, (0, 255, 0), slope[0], slope[1],
                                                          5)
-                                        dist = abs(x - current_starting_point[0])
-                                        if current_distance == None:
-                                            current_distance = dist
-                                            current_point = point
-                                            current_slope = slope
+                                        dist = abs(x - self.current_starting_point[0])
+                                        if self.current_distance == None:
+                                            self.current_distance = dist
+                                            self.current_point = point
+                                            self.current_slope = slope
                                             if type(object)==gameobjects.Mirror:
-                                                current_object = 'mirror'
+                                                self.current_object = 'mirror'
                                             elif type(object)==gameobjects.ColoredGlass:
-                                                current_object= ' glass'
+                                                self.current_object= ' glass'
 
                                         else:
-                                            if dist < current_distance:
-                                                current_distance = dist
-                                                current_point = point
-                                                current_slope = slope
+                                            if dist < self.current_distance:
+                                                self.current_distance = dist
+                                                self.current_point = point
+                                                self.current_slope = slope
                                                 if type(object) == gameobjects.Mirror:
-                                                    current_object = 'mirror'
+                                                    self.current_object = 'mirror'
                                                 elif type(object) == gameobjects.ColoredGlass:
-                                                    current_object = ' glass'
+                                                    self.current_object = ' glass'
 
 
                         i += 1
-            if current_slope == None:
-                self.points.append((current_point_before[0] + 1000 * math.cos(-self.r),
-                                    current_point_before[1] + 1000 * math.sin(-self.r)))
-                self.colors.append(self.RGB.rgb)
-                mini_run = False
+            if self.current_slope == None:
+                self.border_stuff()
+            elif self.current_object=='mirror':
+                self.mirror_stuff()
+            elif self.current_object=='glass':
+                self.glass_stuff()
+
+            if self.index >= 10:
+                self.mini_run = False
+    def glass_stuff(self):
+        self.border_stuff()
+    def border_stuff(self):
+        self.points.append((self.current_point_before[0] + 1000 * math.cos(-self.r),
+                            self.current_point_before[1] + 1000 * math.sin(-self.r)))
+        self.colors.append(self.RGB.rgb)
+        self.mini_run = False
+    def mirror_stuff(self):
+        pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
+        self.points.append(self.current_point)
+        self.colors.append(self.RGB.rgb)
+        if (self.current_slope[0][0] - self.current_slope[1][0]) == 0:
+            self.slope_angle = math.pi / 2
+        else:
+
+            self.slope_angle = math.atan((self.current_slope[0][1] - self.current_slope[1][1]) / (
+                    self.current_slope[0][0] - self.current_slope[1][0]))
+            if self.current_slope[0][0] >= self.current_slope[1][0] and self.current_slope[0][1] > \
+                    self.current_slope[1][1]:
+                self.slope_angle = math.pi - self.slope_angle
+            elif self.current_slope[1][0] >= self.current_slope[0][0] and self.current_slope[1][1] > \
+                    self.current_slope[0][1]:
+                self.slope_angle = math.pi - self.slope_angle
             else:
-                if current_object=='mirror':
-                    pygame.draw.line(self.game.screen, (0, 0, 255), current_slope[0], current_slope[1], 5)
-                    self.points.append(current_point)
-                    self.colors.append(self.RGB.rgb)
-                    if (current_slope[0][0] - current_slope[1][0]) == 0:
-                        slope_angle = math.pi / 2
-                    else:
+                self.slope_angle = -self.slope_angle
+        self.r = 2 * self.slope_angle - self.r
+        self.calibrate_r2()
 
-                        slope_angle = math.atan((current_slope[0][1] - current_slope[1][1]) / (
-                                current_slope[0][0] - current_slope[1][0]))
-                        if current_slope[0][0] >= current_slope[1][0] and current_slope[0][1] > current_slope[1][1]:
-                            slope_angle = math.pi - slope_angle
-                        elif current_slope[1][0] >= current_slope[0][0] and current_slope[1][1] > current_slope[0][1]:
-                            slope_angle = math.pi - slope_angle
-                        else:
-                            slope_angle = -slope_angle
-                    self.r = 2 * slope_angle - self.r
-                    self.calibrate_r2()
-
-                    current_starting_point = current_point
-
-            if index >= 10:
-                mini_run = False
-
+        self.current_starting_point = self.current_point
     def calibrate_r2(self):
         if self.r>2*math.pi:
             self.r-=2*math.pi
@@ -182,6 +190,46 @@ class Light:
 
         except (AttributeError, ValueError):
             pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def callibrate_r(self):
         if self.r > 2*math.pi:
