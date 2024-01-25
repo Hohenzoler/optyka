@@ -42,11 +42,15 @@ class Game:
         self.cursor_img_rect = self.cursor_img.get_rect()  # Rectangle for the custom cursor image
         self.pen_img = images.pen
         self.pen_img_rect = self.pen_img.get_rect()
-        self.achievements = Achievements()  # Achievements object
+        self.achievements = Achievements(self)  # Achievements object
 
         self.p = False #used for properties windows for gameobjects
 
         self.selected_object = None
+
+
+    def return_fps(self):
+        return self.displayFPS()
 
     def events(self):
         """
@@ -151,6 +155,9 @@ class Game:
         fps = self.clock.get_fps()
         fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
         self.screen.blit(fps_text, (10, 10))
+        return fps
+
+
 
     def loop(self):
         """
@@ -164,3 +171,4 @@ class Game:
             self.rightclickedmousepos = None
             self.p = False
             self.events()
+            self.achievements.fps_achievements()
