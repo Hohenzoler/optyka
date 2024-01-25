@@ -1,7 +1,9 @@
 import sqlite3
+from classes import game
+import time
 
 class Achievements:
-    def __init__(self):
+    def __init__(self, game):
         self.conn = sqlite3.connect('achievements.db')
         self.cursor = self.conn.cursor()
         self.cursor.execute("""
@@ -12,12 +14,17 @@ class Achievements:
             )
         """)
         self.conn.commit()
+        self.game = game
+        self.start_time = time.time()
+
 
         # Define the dictionary of achievements
         self.achievements_dict = {
             "first_flashlight_placed": "common",
             "first_mirror_placed": "common",
             "BIN": "uncommon",
+            "back and forth": "epic",
+            "need for nasa": "epic",
             "complex_numbers": "legendary",
         }
 
@@ -54,3 +61,8 @@ class Achievements:
             return
 
         self.unlock_achievement(achievement_name)
+
+    def fps_achievements(self):
+        if time.time()>self.start_time+5:
+            if int(game.Game.return_fps(self.game)) < 10:
+                self.handle_achievement_unlocked("need for nasa")
