@@ -59,7 +59,7 @@ class GameObject:
 
 
     def draw_triangle(self,index):
-        pygame.gfxdraw.polygon(self.game.screen, (255, 255, 255), self.triangles[index])
+        pygame.gfxdraw.aapolygon(self.game.screen, (255, 255, 255), self.triangles[index])
     def render(self):
         # print(self.get_triangles())
         self.get_slopes()
@@ -178,7 +178,7 @@ class GameObject:
             pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
     def drawoutline(self):
         # Draw an outline around the object
-        pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
+        pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))
         if settings['DEBUG'] == "True":
             pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
 
