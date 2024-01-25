@@ -12,6 +12,8 @@ exit_icon = pygame.image.load('images/exit.png')
 
 torch = pygame.image.load('images/torch.png')
 
+laser = pygame.image.load('images/black_rectangle.png')
+
 bin = pygame.image.load('images/trash.png')
 
 bad_coursor = pygame.image.load('images/bad_coursor.png')
