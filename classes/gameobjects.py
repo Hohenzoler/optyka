@@ -7,6 +7,7 @@ import math
 from pygame.transform import rotate
 import random
 import settingsSetup
+from pygame import gfxdraw
 settings = settingsSetup.start()
 
 NUM_RAYS = 15
@@ -58,7 +59,7 @@ class GameObject:
 
 
     def draw_triangle(self,index):
-        pygame.draw.polygon(self.game.screen, (255, 255, 255), self.triangles[index])
+        pygame.gfxdraw.polygon(self.game.screen, (255, 255, 255), self.triangles[index])
     def render(self):
         # print(self.get_triangles())
         self.get_slopes()
@@ -77,7 +78,7 @@ class GameObject:
                 self.game.screen.blit(rotated_image, image_rect.topleft)
             else:
                 # Draw the rotated lines without transparency
-                pygame.draw.polygon(self.game.screen, self.color, self.points)
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
 
         else:
             mousepos = pygame.mouse.get_pos()
@@ -147,7 +148,7 @@ class GameObject:
 
         else:
             self.points = [(x + self.x, y + self.y) for x, y in self.points]
-            pygame.draw.polygon(self.game.screen, self.color, self.points)
+            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
             self.update_rect()
 
     def move(self):
@@ -174,7 +175,7 @@ class GameObject:
             self.points = [(x + self.x, y + self.y) for x, y in rotated_points]
             self.update_rect()
         else:
-            pygame.draw.polygon(self.game.screen, self.color, self.points)
+            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
     def drawoutline(self):
         # Draw an outline around the object
         pygame.draw.lines(self.game.screen, (255, 255, 255), True, self.points, 2)
@@ -184,7 +185,7 @@ class GameObject:
     def checkifclicked(self, mousepos):
         # Check if the object is clicked
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-        pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
+        pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
 
         if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
             if self.on == 1:
@@ -194,7 +195,7 @@ class GameObject:
 
     def selected(self, mousepos):
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-        pygame.draw.polygon(mask_surface, (255, 255, 255, 1), self.points)
+        pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
 
         if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
             if self.game.selected_object is not None and self.game.selected_object != self:
@@ -261,7 +262,6 @@ class oldFlashlight(GameObject):
                 # Calculate the starting point of the light from the center of the rotated rectangle/surface
                 center_x = sum(x for x, _ in self.points) / len(self.points)
                 center_y = sum(y for _, y in self.points) / len(self.points)
-
                 self.light_adjust(center_x, center_y)
 
                 self.light = light.Light(self.game,
@@ -274,9 +274,6 @@ class oldFlashlight(GameObject):
 
                 self.light.trace_path2()
                 self.placed = True
-                # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
-
-                # Render the light before blitting the rotated surface
                 light.Light.render(self.light)
                 super().render()
 
@@ -304,6 +301,7 @@ class oldFlashlight(GameObject):
 
             # Calculate the angle between the normalized direction and the x-axis
             # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
+
 
 
 
