@@ -5,7 +5,7 @@ import random
 
 class Bin:
     def __init__(self, game):
-        self.particle_system = particles.ParticleSystem()
+        self.particle_system = particles.UnityParticleSystem()
         self.game = game
         self.x = self.game.width - 150
         self.y = self.game.height - 200
