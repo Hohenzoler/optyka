@@ -110,34 +110,42 @@ class Light:
                                             self.current_distance = dist
                                             self.current_point = point
                                             self.current_slope = slope
+                                            self.current_object = object
                                             if type(object)==gameobjects.Mirror:
-                                                self.current_object = 'mirror'
+                                                self.current_object_type = 'mirror'
+
                                             elif type(object)==gameobjects.ColoredGlass:
-                                                self.current_object= ' glass'
+                                                self.current_object_type= 'glass'
 
                                         else:
                                             if dist < self.current_distance:
+                                                self.current_object = object
                                                 self.current_distance = dist
                                                 self.current_point = point
                                                 self.current_slope = slope
                                                 if type(object) == gameobjects.Mirror:
-                                                    self.current_object = 'mirror'
+                                                    self.current_object_type = 'mirror'
                                                 elif type(object) == gameobjects.ColoredGlass:
-                                                    self.current_object = ' glass'
+                                                    self.current_object_type = 'glass'
 
 
                         i += 1
             if self.current_slope == None:
                 self.border_stuff()
-            elif self.current_object=='mirror':
+            elif self.current_object_type=='mirror':
                 self.mirror_stuff()
-            elif self.current_object=='glass':
+            elif self.current_object_type=='glass':
                 self.glass_stuff()
 
             if self.index >= 10:
                 self.mini_run = False
+
     def glass_stuff(self):
-        self.border_stuff()
+        self.points.append(self.current_point)
+        self.RGB.compare(RGB(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
+        self.colors.append(self.RGB.rgb)
+        print(self.RGB.rgb)
+        self.current_starting_point = self.current_point
     def border_stuff(self):
         self.points.append((self.current_point_before[0] + 1000 * math.cos(-self.r),
                             self.current_point_before[1] + 1000 * math.sin(-self.r)))
@@ -181,9 +189,10 @@ class Light:
         try:
             new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
             new_line_surface.set_alpha(self.alpha)
-
-            pygame.draw.lines(new_line_surface, self.color, False, self.points, self.light_width)
-            self.game.screen.blit(new_line_surface, (0, 0))
+            for x in range(0,len(self.points)-1):
+                pygame.draw.line(self.game.screen,self.colors[x],self.points[x],self.points[x+1],self.light_width)
+            # pygame.draw.lines(new_line_surface, self.color, False, self.points, self.light_width)
+            # self.game.screen.blit(new_line_surface, (0, 0))
             #pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
 
             # pygame.draw.lines(surface, [200, 0, 0, self.alpha], False, self.points, self.light_width)
