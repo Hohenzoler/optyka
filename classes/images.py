@@ -21,3 +21,11 @@ bad_coursor = pygame.image.load('images/bad_coursor.png')
 topopisy = pygame.image.load('images/topopisy.png')
 
 pen = pygame.image.load('images/pen.png')
+
+water = pygame.image.load('images/materials/water.png')
+
+clouds = pygame.image.load('images/materials/clouds.png')
+
+wood = pygame.image.load('images/materials/wood.png')
+
+papier = pygame.image.load('images/materials/paper.png')
