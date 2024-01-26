@@ -17,7 +17,7 @@ DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
 
-    def __init__(self, game, points, color, angle, image = None):
+    def __init__(self, game, points, color, angle, image = None, texture = None):
         # Initialize common attributes
         self.game = game
         self.points = points
