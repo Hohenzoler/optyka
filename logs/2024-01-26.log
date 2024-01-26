@@ -431,3 +431,22 @@ Traceback (most recent call last):
     fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 pygame.error: Library not initialized
+2024-01-26 19:27:44,973 - ERROR - name 'texture' is not defined
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 175, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 107, in render
+    object.checkifclicked(self.mousepos)
+  File "C:\Users\This PC\Documents\GitHub\optyka\gui\gui_main.py", line 40, in checkifclicked
+    button.checkifclicked(mousepos)
+  File "C:\Users\This PC\Documents\GitHub\optyka\gui\button.py", line 140, in checkifclicked
+    obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, image=images.torch)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 337, in __init__
+    super().__init__(game, points, color, angle, image)
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 38, in __init__
+    self.texture = texture if texture else None
+                              ^^^^^^^
+NameError: name 'texture' is not defined
