@@ -14,7 +14,7 @@ class Parameters:
         self.style.master = self.root
 
         self.root.title("Parameters")
-        self.root.geometry('250x500')
+        self.root.geometry('250x550')
         self.root.resizable(False, False)
 
         self.parameters_dict = self.object.parameters
