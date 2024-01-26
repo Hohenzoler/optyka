@@ -78,7 +78,7 @@ class GameObject:
                 self.game.screen.blit(rotated_image, image_rect.topleft)
             else:
                 # Draw the rotated lines without transparency
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, images.bin, 0, 0)
 
         else:
             mousepos = pygame.mouse.get_pos()
@@ -148,7 +148,8 @@ class GameObject:
 
         else:
             self.points = [(x + self.x, y + self.y) for x, y in self.points]
-            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+            mousepos = pygame.mouse.get_pos()
+            pygame.gfxdraw.textured_polygon(self.game.screen, self.points, images.bin, mousepos[0], -mousepos[1])
             self.update_rect()
 
     def move(self):
@@ -175,7 +176,9 @@ class GameObject:
             self.points = [(x + self.x, y + self.y) for x, y in rotated_points]
             self.update_rect()
         else:
-            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+
+            mousepos = pygame.mouse.get_pos()
+            pygame.gfxdraw.textured_polygon(self.game.screen, self.points, images.bin, mousepos[0], -mousepos[1])
     def drawoutline(self):
         # Draw an outline around the object
         pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))
