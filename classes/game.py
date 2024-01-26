@@ -1,8 +1,6 @@
 import pygame
 from pygame import *
-import optyka
-from optyka import gui
-from optyka.gui import polygonDrawing
+from gui import polygonDrawing
 from gui import gui_main as gui
 from gui import settings_screen, polygonDrawing
 import settingsSetup
@@ -67,7 +65,7 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
                     if isDrawingModeOn:
-                        optyka.gui.polygonDrawing.addPoint(self.mousepos)
+                        gui.polygonDrawing.addPoint(self.mousepos)
 
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                     self.rightclickedmousepos = event.pos
@@ -81,7 +79,7 @@ class Game:
                     if event.key == pygame.K_p:
                         self.p = True
                     elif event.key == 13:
-                        optyka.gui.polygonDrawing.createPolygon()
+                        gui.polygonDrawing.createPolygon()
 
 
             elif self.mode == 'settings':

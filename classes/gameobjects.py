@@ -35,6 +35,7 @@ class GameObject:
 
         self.lazer = False
 
+        self.texture = texture if texture else None
 
         self.find_parameters()
 
@@ -82,7 +83,10 @@ class GameObject:
                 self.game.screen.blit(rotated_image, image_rect.topleft)
             else:
                 # Draw the rotated lines without transparency
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, images.bin, int(self.x), int(self.y))
+                if self.texture:
+                    pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
+                else:
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
 
         else:
             mousepos = pygame.mouse.get_pos()
@@ -153,7 +157,10 @@ class GameObject:
         else:
             self.points = [(x + self.x, y + self.y) for x, y in self.points]
             mousepos = pygame.mouse.get_pos()
-            pygame.gfxdraw.textured_polygon(self.game.screen, self.points, images.bin, mousepos[0], -mousepos[1])
+            if self.texture:
+                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+            else:
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
             self.update_rect()
 
     def move(self):
@@ -182,7 +189,10 @@ class GameObject:
         else:
 
             mousepos = pygame.mouse.get_pos()
-            pygame.gfxdraw.textured_polygon(self.game.screen, self.points, images.bin, mousepos[0], -mousepos[1])
+            if self.texture:
+                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+            else:
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
     def drawoutline(self):
         # Draw an outline around the object
         pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))
@@ -251,16 +261,16 @@ class GameObject:
 
 
 class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, image_path)
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):
+        super().__init__(game, points, color, angle, image_path, texture)
 
 class Prism(GameObject):
-    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, image_path)
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):
+        super().__init__(game, points, color, angle, image_path, texture)
 
 class ColoredGlass(GameObject):
-    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, image_path)
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):
+        super().__init__(game, points, color, angle, image_path, texture)
 
 # class oldFlashlight(GameObject):
 #     def __init__(self, game, points, color, angle, islighting=True, image=None):
