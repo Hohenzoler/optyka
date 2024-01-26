@@ -33,6 +33,8 @@ class GameObject:
         self.triangles_generated = False
         self.update_rect()
 
+        self.lazer = False
+
 
         self.find_parameters()
 
@@ -222,14 +224,14 @@ class GameObject:
 
         self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
 
-        try:
-            self.parameters['lazer'] = self.lazer
-        except:
-            print('not a flashlight')
+        if type(self) == Flashlight:
+            lazer_on = {'lazer': self.lazer}
+            self.parameters.update(lazer_on)
 
-        self.parameters['red'] = self.color[0]
-        self.parameters['blue'] = self.color[1]
-        self.parameters['green'] = self.color[2]
+        colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
+
+        self.parameters.update(colors)
+
 
     def change_parameters(self):
         self.find_parameters()
@@ -240,7 +242,8 @@ class GameObject:
             d_angle = self.parameters['angle'] - self.angle
             self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
-            print(self.color)
+            self.lazer = self.parameters["lazer"]
+            print('lazer: ', self.lazer)
         except:
             pass
 
@@ -257,65 +260,65 @@ class ColoredGlass(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, image_path)
 
-class oldFlashlight(GameObject):
-    def __init__(self, game, points, color, angle, islighting=True, image=None):
-        super().__init__(game, points, color, angle, image)
-        self.islighting = bool(islighting)
-        self.light = None
-        self.light_width = 8
-        self.color = color
-        self.angle = angle
-        self.image = image if image else None
-
-    def render(self):
-        super().render()
-        if self.islighting:
-            if self.on:
-                # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                center_x = sum(x for x, _ in self.points) / len(self.points)
-                center_y = sum(y for _, y in self.points) / len(self.points)
-                self.light_adjust(center_x, center_y)
-
-                self.light = light.Light(self.game,
-                                         [[self.light_start_x, self.light_start_y]],
-                                         self.color, -1*self.angle, self.light_width)
-
-                #if up arrow clicked, color goes random
-                if pygame.key.get_pressed()[pygame.K_UP]:
-                    self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
-                self.light.trace_path2()
-                self.placed = True
-                light.Light.render(self.light)
-                super().render()
-
-            elif not self.on:
-                self.light = None
-
-
-    def light_adjust(self, center_x, center_y):
-        self.light_start_x = center_x
-        self.light_start_y = center_y
-        # Adjust the flashlight light position and direction
-        direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
-
-        # Calculate the length of the direction vector
-        length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
-
-        # Check if the length is not zero before normalizing
-        if length != 0:
-            # Normalize the direction vector
-            normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
-
-            # Calculate the end point of the light
-            self.light_end_x = center_x + normalized_direction[0] * 1000
-            self.light_end_y = center_y + normalized_direction[1] * 1000
-
-            # Calculate the angle between the normalized direction and the x-axis
-            # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
-
-
-
+# class oldFlashlight(GameObject):
+#     def __init__(self, game, points, color, angle, islighting=True, image=None):
+#         super().__init__(game, points, color, angle, image)
+#         self.islighting = bool(islighting)
+#         self.light = None
+#         self.light_width = 8
+#         self.color = color
+#         self.angle = angle
+#         self.image = image if image else None
+#
+#     def render(self):
+#         super().render()
+#         if self.islighting:
+#             if self.on:
+#                 # Calculate the starting point of the light from the center of the rotated rectangle/surface
+#                 center_x = sum(x for x, _ in self.points) / len(self.points)
+#                 center_y = sum(y for _, y in self.points) / len(self.points)
+#                 self.light_adjust(center_x, center_y)
+#
+#                 self.light = light.Light(self.game,
+#                                          [[self.light_start_x, self.light_start_y]],
+#                                          self.color, -1*self.angle, self.light_width)
+#
+#                 #if up arrow clicked, color goes random
+#                 if pygame.key.get_pressed()[pygame.K_UP]:
+#                     self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+#
+#                 self.light.trace_path2()
+#                 self.placed = True
+#                 light.Light.render(self.light)
+#                 super().render()
+#
+#             elif not self.on:
+#                 self.light = None
+#
+#
+#     def light_adjust(self, center_x, center_y):
+#         self.light_start_x = center_x
+#         self.light_start_y = center_y
+#         # Adjust the flashlight light position and direction
+#         direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
+#
+#         # Calculate the length of the direction vector
+#         length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
+#
+#         # Check if the length is not zero before normalizing
+#         if length != 0:
+#             # Normalize the direction vector
+#             normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
+#
+#             # Calculate the end point of the light
+#             self.light_end_x = center_x + normalized_direction[0] * 1000
+#             self.light_end_y = center_y + normalized_direction[1] * 1000
+#
+#             # Calculate the angle between the normalized direction and the x-axis
+#             # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
+#
+#
+#
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, points, color, angle, islighting=True, image=None):
@@ -329,61 +332,107 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.lazer = False
 
     def render(self):
-        super().render()
-        if self.islighting:
-            #surface = pygame.surface.Surface(self.game.screen.get_size()).convert_alpha()
-            #surface.fill([0, 0, 0, 0])
-            if self.on:
-                ray_angle = self.angle - HALF_FOV + 0.0001
-                # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                center_x = sum(x for x, _ in self.points) / len(self.points)
-                center_y = sum(y for _, y in self.points) / len(self.points)
-                self.light_adjust(center_x, center_y)
-                # if up arrow clicked, color goes random
-                if pygame.key.get_pressed()[pygame.K_UP]:
-                    self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-                for ray in range(NUM_RAYS):
-                    # self.light = light.Light(self.game,
-                    #                          [[self.light_start_x, self.light_start_y]],
-                    #                          self.color, -1*self.angle, self.light_width)
+        if not self.lazer:
+            super().render()
+            if self.islighting:
+                #surface = pygame.surface.Surface(self.game.screen.get_size()).convert_alpha()
+                #surface.fill([0, 0, 0, 0])
+                if self.on:
+                    ray_angle = self.angle - HALF_FOV + 0.0001
+                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
+                    center_x = sum(x for x, _ in self.points) / len(self.points)
+                    center_y = sum(y for _, y in self.points) / len(self.points)
+                    self.light_adjust(center_x, center_y)
+                    # if up arrow clicked, color goes random
+                    if pygame.key.get_pressed()[pygame.K_UP]:
+                        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+                    for ray in range(NUM_RAYS):
+                        # self.light = light.Light(self.game,
+                        #                          [[self.light_start_x, self.light_start_y]],
+                        #                          self.color, -1*self.angle, self.light_width)
+                        self.light = light.Light(self.game,
+                                                 [[self.light_start_x, self.light_start_y]],
+                                                 self.color, -1 * ray_angle, self.light_width, alpha=40)
+                        self.light.angle = -1 * ray_angle
+
+                        self.light.trace_path2()
+                        self.placed = True
+                        # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
+
+                        # Render the light before blitting the rotated surface
+                        #light.Light.render(self.light, surface)
+                        light.Light.render(self.light)
+                        #self.game.objects.remove(self.light)
+                        ray_angle += DELTA_ANGLE
+                    super().render()
+                    #self.game.screen.blit(surface, (0, 0))
+
+                elif not self.on:
+                    self.light = None
+        else:
+            super().render()
+            if self.islighting:
+                if self.on:
+                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
+                    center_x = sum(x for x, _ in self.points) / len(self.points)
+                    center_y = sum(y for _, y in self.points) / len(self.points)
+                    self.light_adjust(center_x, center_y)
+
                     self.light = light.Light(self.game,
                                              [[self.light_start_x, self.light_start_y]],
-                                             self.color, -1 * ray_angle, self.light_width, alpha=40)
-                    self.light.angle = -1 * ray_angle
+                                             self.color, -1 * self.angle, self.light_width)
+
+                    # if up arrow clicked, color goes random
+                    if pygame.key.get_pressed()[pygame.K_UP]:
+                        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
                     self.light.trace_path2()
                     self.placed = True
-                    # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
-
-                    # Render the light before blitting the rotated surface
-                    #light.Light.render(self.light, surface)
                     light.Light.render(self.light)
-                    #self.game.objects.remove(self.light)
-                    ray_angle += DELTA_ANGLE
-                super().render()
-                #self.game.screen.blit(surface, (0, 0))
+                    super().render()
 
-            elif not self.on:
-                self.light = None
+                elif not self.on:
+                    self.light = None
 
 
     def light_adjust(self, center_x, center_y):
-        self.light_start_x = center_x
-        self.light_start_y = center_y
-        # Adjust the flashlight light position and direction
-        direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
+        if not self.lazer:
+            self.light_start_x = center_x
+            self.light_start_y = center_y
+            # Adjust the flashlight light position and direction
+            direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
 
-        # Calculate the length of the direction vector
-        length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
+            # Calculate the length of the direction vector
+            length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
 
-        # Check if the length is not zero before normalizing
-        if length != 0:
-            # Normalize the direction vector
-            normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
+            # Check if the length is not zero before normalizing
+            if length != 0:
+                # Normalize the direction vector
+                normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
 
-            # Calculate the end point of the light
-            self.light_end_x = center_x + normalized_direction[0] * 1000
-            self.light_end_y = center_y + normalized_direction[1] * 1000
+                # Calculate the end point of the light
+                self.light_end_x = center_x + normalized_direction[0] * 1000
+                self.light_end_y = center_y + normalized_direction[1] * 1000
 
-            # Calculate the angle between the normalized direction and the x-axis
-            # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
+                # Calculate the angle between the normalized direction and the x-axis
+                # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
+        else:
+            self.light_start_x = center_x
+            self.light_start_y = center_y
+            # Adjust the flashlight light position and direction
+            direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
+
+            # Calculate the length of the direction vector
+            length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
+
+            # Check if the length is not zero before normalizing
+            if length != 0:
+                # Normalize the direction vector
+                normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
+
+                # Calculate the end point of the light
+                self.light_end_x = center_x + normalized_direction[0] * 1000
+                self.light_end_y = center_y + normalized_direction[1] * 1000
+
+                # Calculate the angle between the normalized direction and the x-axis
+                # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))

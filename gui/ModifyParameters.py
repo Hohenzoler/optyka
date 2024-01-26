@@ -20,6 +20,7 @@ class Parameters:
         self.parameters_dict = self.object.parameters
 
         self.sliders = []
+        self.slider_buttons = []
 
         title_label = tk.Label(self.root, text="Enter Parameters:")
         title_label.grid(row=0, column=0, columnspan=2, pady=10)
@@ -48,8 +49,8 @@ class Parameters:
             self.color_preview_canvas.grid(row=len(self.parameters_dict) + 1, column=0, columnspan=2, pady=10)
 
         elif param == 'lazer':
-            toggleswitch = ToggleSwitch(self.root)
-            toggleswitch.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+            self.slider_buttons.append(ToggleSwitch(self.parameters_dict[param], self.root))
+            self.slider_buttons[0].grid(row=row, column=1, padx=25, pady=5, sticky='w')
 
         else:
             entry = ttk.Entry(self.root)
@@ -76,10 +77,15 @@ class Parameters:
             new_parameters['red'] = new_color[0]
             new_parameters['green'] = new_color[1]
             new_parameters['blue'] = new_color[2]
+        if len(self.slider_buttons) > 0:
+            lazer_on = {'lazer': self.slider_buttons[0].value}
+            new_parameters.update(lazer_on)
+
 
         try:
             for param, entry_widget in self.parameters_dict.items():
-                if param == 'red':
+                print(param)
+                if param == 'lazer' or param == 'red':
                     break
                 value = entry_widget.get()
                 value = float(value)
@@ -102,18 +108,15 @@ class Parameters:
 
 
 class ToggleSwitch(tk.Canvas):
-    def __init__(self, master=None, **kwargs):
+    def __init__(self, value, master=None, **kwargs):
         super().__init__(master, **kwargs)
         self.configure(width=60, height=30, bd=0, highlightthickness=0)
-        self.value = False
+        self.value = value
         self.create_rounded_rectangle()
         self.bind("<Button-1>", self.toggle)
 
     def create_rounded_rectangle(self):
         radius = 10
-
-        rgb_color_gold = (188, 149, 26)
-        hex_color_gold = "#{:02x}{:02x}{:02x}".format(*rgb_color_gold)
 
         rgb_color_blue = (7, 54, 66)
         hex_color_blue = "#{:02x}{:02x}{:02x}".format(*rgb_color_blue)
@@ -121,16 +124,32 @@ class ToggleSwitch(tk.Canvas):
         rgb_color_outline = (11, 81, 98)
         hex_color_outline = "#{:02x}{:02x}{:02x}".format(*rgb_color_outline)
 
-
-        # self.create_oval(5, 5, 5 + 2 * radius, 5 + 2 * radius, fill="gray", outline="gray")
-        # self.create_oval(45 - 2 * radius, 5, 55, 5 + 2 * radius, fill="gray", outline="gray")
         self.create_oval(5, 25 - 2 * radius, 5 + 2 * radius, 25, fill=hex_color_blue, outline=hex_color_outline)
         self.create_oval(45 - 2 * radius, 25 - 2 * radius, 55, 25, fill=hex_color_blue, outline=hex_color_outline)
         self.create_rectangle(5 + radius, 5, 55 - radius, 25, fill=hex_color_blue, outline=hex_color_outline)
         self.create_rectangle(5 + radius, 7, 55 - radius, 23, fill=hex_color_blue, outline=hex_color_blue)
 
-        self.create_oval(2, 2, 28, 28, fill=hex_color_gold, outline="black", width=2, tags="slider")
+        # self.create_oval(2, 2, 28, 28, fill=hex_color_gold, outline="black", width=2, tags="slider")
+        self.update_oval_color()
 
     def toggle(self, event):
         self.value = not self.value
-        self.move("slider", 30 if self.value else -30, 0)
+        self.update_oval_color()
+
+    def update_oval_color(self):
+        try:
+            self.delete("slider")
+        except:
+            pass
+        amount_to_move = 0
+        if self.value:
+            rgb_color = (188, 149, 26)
+            amount_to_move = 30
+        else:
+            rgb_color = (169, 169, 169)
+
+        hex_color = "#{:02x}{:02x}{:02x}".format(*rgb_color)
+
+        self.create_oval(2, 2, 28, 28, fill=hex_color, outline="black", width=2, tags="slider")
+
+        self.move("slider", amount_to_move, 0)
