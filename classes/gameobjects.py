@@ -220,7 +220,16 @@ class GameObject:
         centerx = sum(x[0] for x in self.points) / len(self.points)
         centery = sum(y[1] for y in self.points) / len(self.points)
 
-        self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle, 'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
+        self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
+
+        try:
+            self.parameters['lazer'] = self.lazer
+        except:
+            print('not a flashlight')
+
+        self.parameters['red'] = self.color[0]
+        self.parameters['blue'] = self.color[1]
+        self.parameters['green'] = self.color[2]
 
     def change_parameters(self):
         self.find_parameters()
@@ -317,6 +326,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.color = color
         self.angle = angle
         self.image = image if image else None
+        self.lazer = False
 
     def render(self):
         super().render()

@@ -7,7 +7,7 @@ def refresh_rate(device):
         settings = win32api.EnumDisplaySettings(device.DeviceName, -1)
         return settings.DisplayFrequency
     except:
-        return 60
+        return 165
 def gpuInfo(device):
     try:
         return((device.DeviceString))

@@ -47,6 +47,10 @@ class Parameters:
             self.color_preview_canvas = tk.Canvas(self.root, width=50, height=50)
             self.color_preview_canvas.grid(row=len(self.parameters_dict) + 1, column=0, columnspan=2, pady=10)
 
+        elif param == 'lazer':
+            toggleswitch = ToggleSwitch(self.root)
+            toggleswitch.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+
         else:
             entry = ttk.Entry(self.root)
             entry.insert(0, str(self.parameters_dict[param]))  # Set default value
@@ -94,3 +98,39 @@ class Parameters:
 
     def get_slider_value(self, slider):
         return slider.get()
+
+
+
+class ToggleSwitch(tk.Canvas):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+        self.configure(width=60, height=30, bd=0, highlightthickness=0)
+        self.value = False
+        self.create_rounded_rectangle()
+        self.bind("<Button-1>", self.toggle)
+
+    def create_rounded_rectangle(self):
+        radius = 10
+
+        rgb_color_gold = (188, 149, 26)
+        hex_color_gold = "#{:02x}{:02x}{:02x}".format(*rgb_color_gold)
+
+        rgb_color_blue = (7, 54, 66)
+        hex_color_blue = "#{:02x}{:02x}{:02x}".format(*rgb_color_blue)
+
+        rgb_color_outline = (11, 81, 98)
+        hex_color_outline = "#{:02x}{:02x}{:02x}".format(*rgb_color_outline)
+
+
+        # self.create_oval(5, 5, 5 + 2 * radius, 5 + 2 * radius, fill="gray", outline="gray")
+        # self.create_oval(45 - 2 * radius, 5, 55, 5 + 2 * radius, fill="gray", outline="gray")
+        self.create_oval(5, 25 - 2 * radius, 5 + 2 * radius, 25, fill=hex_color_blue, outline=hex_color_outline)
+        self.create_oval(45 - 2 * radius, 25 - 2 * radius, 55, 25, fill=hex_color_blue, outline=hex_color_outline)
+        self.create_rectangle(5 + radius, 5, 55 - radius, 25, fill=hex_color_blue, outline=hex_color_outline)
+        self.create_rectangle(5 + radius, 7, 55 - radius, 23, fill=hex_color_blue, outline=hex_color_blue)
+
+        self.create_oval(2, 2, 28, 28, fill=hex_color_gold, outline="black", width=2, tags="slider")
+
+    def toggle(self, event):
+        self.value = not self.value
+        self.move("slider", 30 if self.value else -30, 0)
