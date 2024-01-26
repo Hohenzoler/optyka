@@ -78,7 +78,7 @@ class GameObject:
                 self.game.screen.blit(rotated_image, image_rect.topleft)
             else:
                 # Draw the rotated lines without transparency
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, images.bin, 0, 0)
+                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, images.bin, int(self.x), int(self.y))
 
         else:
             mousepos = pygame.mouse.get_pos()
