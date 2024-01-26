@@ -58,10 +58,12 @@ class GameObject:
         self.slopes.append((self.points[len(self.points)-1],self.points[0]))
 
 
+
     def draw_triangle(self,index):
         pygame.gfxdraw.aapolygon(self.game.screen, (255, 255, 255), self.triangles[index])
     def render(self):
         # print(self.get_triangles())
+
         self.get_slopes()
 
 

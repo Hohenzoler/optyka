@@ -17,3 +17,9 @@ def addPoint(mousePos):
 def renderDots():
     for i in currentPolygonPoints:
         pygame.draw.circle(screen, (200, 200, 200), i, 10)
+
+def createPolygon():
+    if len(currentPolygonPoints) >= 3:
+        print(1345)
+        Adam = gameobjects.GameObject(game, currentPolygonPoints, (200, 0, 0), None, None)
+    currentPolygonPoints.clear()
