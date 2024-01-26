@@ -1,10 +1,13 @@
 import pygame
+from pygame import *
+import optyka
+from optyka import gui
+from optyka.gui import polygonDrawing
 from gui import gui_main as gui
 from gui import settings_screen, polygonDrawing
-from classes import gameobjects
 import settingsSetup
 from classes import fps
-from classes import bin, images
+from classes import bin, images, gameobjects
 from classes.achievements import Achievements
 
 isDrawingModeOn = False
@@ -73,8 +76,14 @@ class Game:
                         self.r = 5
                     if event.y < 0:
                         self.r = -5
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-                    self.p = True
+                if event.type == pygame.KEYDOWN:
+                    print(event.key)
+                    if event.key == pygame.K_p:
+                        self.p = True
+                    elif event.key == 13:
+                        optyka.gui.polygonDrawing.createPolygon()
+
+
             elif self.mode == 'settings':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     for object in self.objects:
@@ -111,8 +120,8 @@ class Game:
                         if type(bin_2) == bin.Bin:
                             bin_2.checkCollision(object)
                             break
-            if isDrawingModeOn:
-                optyka.gui.polygonDrawing.renderDots()
+            # if isDrawingModeOn:
+            #     optyka.gui.polygonDrawing.renderDots()
         elif self.mode == 'settings':
             if self.executed_command != 'settings':
                 self.settings_screen = settings_screen.Settings_screen(self)

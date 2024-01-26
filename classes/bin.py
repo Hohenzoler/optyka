@@ -30,8 +30,8 @@ class Bin:
             self.game.objects.remove(obj)
             sounds.destroy_sound()
             achievements.Achievements.handle_achievement_unlocked(self.achievements, "BIN")
-            for i in range(random.randint(10, 200)):
-                self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-1, 1), random.uniform(-1, 1), 1000)
+            for i in range(random.randint(60, 300)):
+                self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-2, 2), random.uniform(-2, 2), 1000)
 
     def render(self):
         self.game.screen.blit(self.bin_img, self.rect)

@@ -4,19 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="fixed bugs">
-      <change afterPath="$PROJECT_DIR$/logs/2024-01-23.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logs/2024-01-26.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.spec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/optyka.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/optyka.iml" afterDir="false" />
+    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="Drawing 2">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_17_2024_7_04_PM_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_17_2024_7_04_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/achievements.db" beforeDir="false" afterPath="$PROJECT_DIR$/achievements.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/fps.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/fps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/bin.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/bin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/gameobjects.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/gameobjects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/ModifyParameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/ModifyParameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/parkinson.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/parkinson.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/polygonDrawing.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/polygonDrawing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +29,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -86,7 +84,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="D:\Python\python.exe" />
-      <option name="SDK_NAME" value="Python 3.11" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -101,8 +98,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.draw_screen" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.draw_screen" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -191,23 +188,7 @@
       <option name="project" value="LOCAL" />
       <updated>1706030599555</updated>
     </task>
-    <task id="LOCAL-00012" summary="fixed bugs">
-      <option name="closed" value="true" />
-      <created>1706042905133</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1706042905133</updated>
-    </task>
-    <task id="LOCAL-00013" summary="fixed bugs">
-      <option name="closed" value="true" />
-      <created>1706042924679</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1706042924679</updated>
-    </task>
-    <option name="localTasksCounter" value="14" />
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -233,7 +214,6 @@
     <MESSAGE value="better placement of bin" />
     <MESSAGE value="Drawing 1" />
     <MESSAGE value="." />
-    <MESSAGE value="fixed bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>
