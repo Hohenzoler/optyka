@@ -14,10 +14,14 @@ class Parameters:
         self.style.master = self.root
 
         self.root.title("Parameters")
-        self.root.geometry('250x450')
+        self.root.geometry('250x500')
         self.root.resizable(False, False)
 
         self.parameters_dict = self.object.parameters
+
+        self.theme_choice = tk.StringVar()
+
+        self.create_theme_change_button()
 
         self.sliders = []
         self.slider_buttons = []
@@ -35,6 +39,24 @@ class Parameters:
         self.display_initial_values()
 
         self.root.mainloop()
+
+    def change_theme(self):
+        selected_theme = self.theme_choice.get()
+        self.style.theme_use(selected_theme)
+
+    def create_theme_change_button(self):
+        label_theme = ttk.Label(self.root, text="Select theme:")
+        label_theme.grid(row=len(self.parameters_dict) + 4, column=0, columnspan=2, pady=10)
+
+        theme_choices = ["flatly", "darkly", "united", "yeti", "cosmo", "lumen", "sandstone", "superhero", "solar",
+                         "cyborg", "vapor", "journal", "litera", "minty", "pulse", "morph", "simplex", "cerculean"]
+        theme_combobox = ttk.Combobox(
+            self.root, values=theme_choices, state="readonly", textvariable=self.theme_choice
+        )
+        theme_combobox.grid(row=len(self.parameters_dict) + 5, column=0, columnspan=2, pady=5)
+
+        theme_button = ttk.Button(self.root, text="Change Theme", command=self.change_theme)
+        theme_button.grid(row=len(self.parameters_dict) + 6, column=0, columnspan=2, pady=10)
 
     def create_element(self, param, row):
         label = tk.Label(self.root, text=f"{param.capitalize()}:")
