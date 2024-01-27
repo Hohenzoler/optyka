@@ -147,7 +147,7 @@ class Light:
         self.points.append(self.current_point)
         self.RGB.compare(RGB(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
         self.colors.append(self.RGB.rgb)
-        print(self.RGB.rgb)
+        #print(self.RGB.rgb)
         self.current_starting_point = self.current_point
     def border_stuff(self):
         self.points.append((self.current_point_before[0] + 1000 * math.cos(-self.r),

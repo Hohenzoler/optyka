@@ -272,6 +272,18 @@ class ColoredGlass(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):
         super().__init__(game, points, color, angle, image_path, texture)
 
+class Lens(GameObject):
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, image_path)
+
+    def generate_points(self, rect_points):
+        self.rotate_points(rect_points, 90)
+        x1 = rect_points[0][0]
+        y1 = rect_points[0][1]
+
+    def draw_convex(self, rect, angle):
+        pass
+
 # class oldFlashlight(GameObject):
 #     def __init__(self, game, points, color, angle, islighting=True, image=None):
 #         super().__init__(game, points, color, angle, image)

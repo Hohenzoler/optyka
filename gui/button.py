@@ -100,6 +100,11 @@ class Button:
             self.icon = images.topopisy
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
+        elif self.number == 5:
+            self.color = (64, 137, 189)
+            self.icon = images.lens
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
         elif self.number == -1:
             self.color = None
@@ -157,6 +162,11 @@ class Button:
                 elif classes.game.isDrawingModeOn == False:
                     classes.game.isDrawingModeOn = True
                 # print(classes.game.isDrawingModeOn)
+            elif self.number == 5:
+                obj = gameobjects.Lens(self.game,
+                                       [(mousepos[0] - 50, mousepos[1] - 50), (mousepos[0], mousepos[1] - 50),
+                                        (mousepos[0], mousepos[1] + 50), (mousepos[0] - 50, mousepos[1] + 50)],
+                                       (64, 137, 189), 0)
 
             elif self.number == -1:
                 self.game.run = False
