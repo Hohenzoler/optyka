@@ -18,6 +18,8 @@ class Settings_screen:
 
         self.Fullscreen = [{'FULLSCREEN': 'ON'}, {'FULLSCREEN': 'OFF'}]
 
+        self.Flashlight = [{'HD_Flashlight': 'ON'}, {'HD_Flashlight': 'OFF'}]
+
         self.font2 = pygame.font.Font('freesansbold.ttf', self.width // 40)
 
         self.font = pygame.font.Font('freesansbold.ttf', self.width // 20)
@@ -41,11 +43,15 @@ class Settings_screen:
 
         self.hottextRect.center = (self.width // 2 - self.width // 10, self.height // 2 + (self.height // 50 + self.height // 47))
 
+        self.flashlighttext = self.font2.render('HD Flashlight:', True, 'white')
+        self.flashlighttextRect = self.flashlighttext.get_rect()
+
+        self.flashlighttextRect.center = (self.width // 2 - self.width // 10, self.height // 2 + (self.height // 9 + self.height // 47))
         save_n_exit = button.ButtonForgame(71, self)
 
         self.Menu_buttons = []
 
-        self.Menu_buttons = [dm.ButtonMenus(self, x) for x in range(3)]
+        self.Menu_buttons = [dm.ButtonMenus(self, x) for x in range(4)]
 
         self.game.objects.append(self)
 
@@ -55,6 +61,7 @@ class Settings_screen:
         self.screen.blit(self.hottext, self.hottextRect)
         self.screen.blit(self.maintext, self.maintextRect)
         self.screen.blit(self.FStext, self.FStextRect)
+        self.screen.blit(self.flashlighttext, self.flashlighttextRect)
 
         for object in self.objects:
             object.render()

@@ -10,9 +10,9 @@ import settingsSetup
 from pygame import gfxdraw
 settings = settingsSetup.start()
 
-NUM_RAYS = 15
-FOV = 5
-HALF_FOV = 2.5
+NUM_RAYS = settings['Flashlight_Rays']
+FOV = settings['Flashlight_FOV']
+HALF_FOV = FOV / 2
 DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
