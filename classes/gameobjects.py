@@ -34,6 +34,7 @@ class GameObject:
         self.update_rect()
 
         self.lazer = False
+        self.parameters_counters = 0
 
         self.texture = texture if texture else None
 
@@ -247,8 +248,7 @@ class GameObject:
 
     def change_parameters(self):
         self.find_parameters()
-
-        window = mp.Parameters(self)
+        mp.Parameters(self)
 
         try:
             d_angle = self.parameters['angle'] - self.angle
@@ -258,6 +258,8 @@ class GameObject:
             print('lazer: ', self.lazer)
         except:
             pass
+
+
 
 
 class Mirror(GameObject):
