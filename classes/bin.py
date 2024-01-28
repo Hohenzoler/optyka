@@ -63,4 +63,7 @@ class Bin:
 
         self.rect = pygame.Rect(self.x, self.y, self.rect_w, self.rect_h)
 
+        self.particle_center_x = self.x + self.rect_w//2
+        self.particle_center_y = self.y + self.rect_h//2
+
 
