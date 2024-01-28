@@ -7,7 +7,6 @@ from classes import gameobjects, fps
 import gui
 from gui.button import *
 import time
-import functions
 
 currentPolygonPoints = []
 def addPoint(mousePos):

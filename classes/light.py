@@ -2,7 +2,6 @@ import pygame
 import math
 from classes import gameobjects, fps
 import time
-import functions
 import settingsSetup
 class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
@@ -276,38 +275,7 @@ class Light:
     def bend(self,angle):
         # self.r=2*math.pi-(math.pi+self.r-2*angle)
         self.r = 2*angle-self.r+math.pi
-    def collision_check(self):
 
-        for object in self.game.objects:
-            if type(object)==gameobjects.Flashlight:
-                if self.vp_rect.colliderect(object):
-                    if self.count == 1:
-                        self.flashlight = object
-                        self.count = 0
-                    elif object == self.flashlight:
-                        pass
-                    else:
-                        if self.vp_rect.colliderect(object.rect):
-                            # print('touch')
-                            self.points.append((self.vx, self.vy))
-                            self.colors.append(self.RGB.rgb)
-                            self.trace=False
-                            # object_angle=-object.angle/360*2*math.pi
-                            # print(object_angle)
-                            # self.bend(object_angle)
-            if type(object) == gameobjects.Mirror:
-                if self.vp_rect.colliderect(object.rect):
-                    if functions.collidepoly(self.vp_polygon, object.points): # Changed colliderect to collidepoly for optimal hitboxes
-                        # ('touch')
-                        self.points.append((self.vx, self.vy))
-                        # self.RGB.compare(RGB(255,255,0)) - enter to code to try for yourself!!! :)
-                        self.colors.append(self.RGB.rgb)
-
-                        # object_angle = -object.angle / 360 * 2 * math.pi
-                        # (object_angle)
-                        angle=self.find_angle2(object)
-
-                        self.bend(angle)
     def area(self,triangle):
         p1,p2,p3=triangle
 
