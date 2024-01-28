@@ -27,6 +27,12 @@ class StartScreen:
         from classes.font import Font
         self.font = pygame.font.Font(Font, self.width//20)
 
+        from classes import fps
+        self.fps = fps.return_fps()
+
+        self.tick = int((1 / self.fps) * 1000)
+
+        self.clock = pygame.time.Clock()
 
         self.executed_functions = 'default'
 
@@ -56,6 +62,8 @@ class StartScreen:
 
             self.checkforevents()
             self.render()
+
+            self.clock.tick(self.fps)
 
     def checkforevents(self):
         for event in pygame.event.get():
