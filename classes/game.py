@@ -61,6 +61,7 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 self.run = False
+                quit()
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
