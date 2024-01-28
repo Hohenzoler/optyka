@@ -1,14 +1,17 @@
+import random
+
 import pygame
 from gui import button
 import settingsSetup
 from gui import settings_screen
-
+from classes import parkinson as particles
 
 pygame.init()
 
 class StartScreen:
     def __init__(self, width, height):
         settings = settingsSetup.load_settings()
+        self.particle_system = particles.UnityParticleSystem()
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
@@ -39,6 +42,7 @@ class StartScreen:
 
     def mainloop(self):
         while self.run:
+            self.generate_particles()
             if self.mode == 'default':
                 self.defualt_mode()
 
@@ -66,6 +70,8 @@ class StartScreen:
 
     def render(self):
         self.screen.fill('black')
+        self.particle_system.update()
+        self.particle_system.draw(self.screen)
         for object in self.objects:
             object.render()
 
@@ -74,6 +80,21 @@ class StartScreen:
 
 
         pygame.display.update()
+
+    def generate_particles(self):
+        # Adjust the parameters as needed
+        self.particle_system.add_particle(
+            x=random.randint(0, self.width),
+            y=random.randint(0, self.height),
+            vx=random.uniform(-0.1, 0.1),
+            vy=random.uniform(-0.1, 0.1),
+            lifespan=1000,
+            size=random.randint(1, 2),
+            red=random.randint(150, 255),
+            green=random.randint(150, 255),
+            blue=random.randint(150, 255),
+            alpha=100
+        )
 
     def defualt_mode(self):
         if self.executed_functions != 'default':
