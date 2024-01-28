@@ -33,7 +33,7 @@ class Parameters:
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
         self.store_button.grid(row=len(self.parameters_dict) + 3, column=0, columnspan=2, pady=10)
 
-        self.root.geometry(f'250x{70*len(self.parameters_dict)}')
+        self.root.geometry(f'250x{60*len(self.parameters_dict)}')
 
         self.root.mainloop()
 
@@ -101,7 +101,6 @@ class Parameters:
 
                 if param == 'size':
                     value = str(value)
-                    print(value)
                     value = value.strip("%")
                     value = float(value)/100
                     self.object.points = self.change_size(value)

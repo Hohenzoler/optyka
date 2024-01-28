@@ -95,7 +95,6 @@ class Game:
                     if event.y < 0:
                         self.r = -5
                 if event.type == pygame.KEYDOWN:
-                    print(event.key)
                     if event.key == pygame.K_p:
                         self.p = True
                     elif event.key == 13:

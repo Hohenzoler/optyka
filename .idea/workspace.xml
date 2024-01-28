@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="when deleting color of texture appeares on particles">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/settings_screen.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/settings_screen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/startscreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/startscreen.py" afterDir="false" />
+    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="fixed so particles appear in settings when opened thourgh the game and not through the start screen">
+      <change beforePath="$PROJECT_DIR$/gui/ModifyParameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/ModifyParameters.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706465435110</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fixed so particles appear in settings when opened thourgh the game and not through the start screen">
+      <option name="closed" value="true" />
+      <created>1706465918024</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706465918024</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -151,6 +157,7 @@
     <MESSAGE value="added rescaling for images" />
     <MESSAGE value="fixed bug with RTX flashlight always being on by default" />
     <MESSAGE value="when deleting color of texture appeares on particles" />
-    <option name="LAST_COMMIT_MESSAGE" value="when deleting color of texture appeares on particles" />
+    <MESSAGE value="fixed so particles appear in settings when opened thourgh the game and not through the start screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed so particles appear in settings when opened thourgh the game and not through the start screen" />
   </component>
 </project>
