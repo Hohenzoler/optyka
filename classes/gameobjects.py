@@ -278,14 +278,146 @@ class Lens(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, image_path)
 
-    def generate_points(self, rect_points):
-        self.rotate_points(rect_points, 90)
+    def calculate_function(self, x1, x2, ymin):
+        c = ymin
+        a = c / (x1*x2)
+        b = (x1 + x2)*(-a)
+        print(f'{a}x2 + {b}x + {c}')
+        return a, b, c
+
+    def generate_points(self, rect_points, angle):
+        rect_points = self.rotate_points(rect_points, -90)
         x1 = rect_points[0][0]
-        y1 = rect_points[0][1]
+        x2 = rect_points[2][0]
+        x_offset = min(x1, x2) + abs(x1 - x2)/2#
+        y_offset = min(rect_points[0][1], rect_points[2][1]) + abs(rect_points[0][1] - rect_points[2][1])#
+        width = abs(x1 - x2)
+        height = abs(rect_points[0][1] - rect_points[2][1])
+        x1 = -width/2
+        x2 = width/2
+        py = -height/2
+        a, b, c = self.calculate_function(x1, x2, py)
+        POINTS_NUM = int(width)
+        self.parabola_points = []
+        self.inverted_parabola_points = []
+        for i in range(int(-POINTS_NUM/2), int(POINTS_NUM/2)):
+            x = (width/POINTS_NUM)*i
+            y = a*x**2 + b*x + c + y_offset
+
+            inv_y = -a*x**2 + -b*x + c + y_offset + abs(rect_points[0][1] - rect_points[2][1])
+            x += x_offset
+            self.parabola_points.append((x, y))
+            self.inverted_parabola_points.append((x, inv_y))
+        center = (x_offset, y_offset)
+        self.rect.center = center
+        self.parabola_points = self.rotate_points2(self.parabola_points,90 + angle, center)
+        self.inverted_parabola_points = self.rotate_points2(self.inverted_parabola_points, 90 + angle, center)
+
+    def rotate_points2(self, points, angle, center):
+        # Rotate points around the center of the object
+        # center_x = sum(x for x, _ in points) / len(points)
+        # center_y = sum(y for _, y in points) / len(points)
+
+        center_x = center[0]
+        center_y = center[1]
+
+        # Create a new list to store the rotated points
+        rotated_points = []
+
+        # Rotate each point around the center
+        for x, y in points:
+            # Translate the point to the origin
+            translated_x = x - center_x
+            translated_y = y - center_y
+
+            # Rotate the translated point
+            rotated_x = translated_x * math.cos(math.radians(angle)) - translated_y * math.sin(math.radians(angle))
+            rotated_y = translated_x * math.sin(math.radians(angle)) + translated_y * math.cos(math.radians(angle))
+
+            # Translate the rotated point back to the original position
+            final_x = rotated_x + center_x
+            final_y = rotated_y + center_y
+
+            # Add the rotated point to the list
+            rotated_points.append((final_x, final_y))
+
+        return rotated_points
+
 
     def draw_convex(self, rect, angle):
-        pass
+        self.generate_points(rect, angle)
 
+    def render(self):
+        # print(self.get_triangles())
+
+        self.get_slopes()
+
+
+        if not self.selectedtrue:
+            # Draw the rotated lines without transparency
+            if self.texture:
+                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
+            else:
+                self.draw_convex(self.points, self.angle)
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.parabola_points, self.color)
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.inverted_parabola_points, self.color)
+
+        else:
+            mousepos = pygame.mouse.get_pos()
+            if self.game.r:
+
+                self.adjust(mousepos[0], mousepos[1], self.game.r)
+                self.game.r = False
+
+            elif self.game.p:
+                self.change_parameters()
+                self.selectedtrue = False
+
+            else:
+                self.adjust(mousepos[0], mousepos[1], 0)
+            self.draw_convex(self.points, self.angle)
+            pygame.gfxdraw.filled_polygon(self.game.screen, self.parabola_points, self.color)
+            pygame.gfxdraw.filled_polygon(self.game.screen, self.inverted_parabola_points, self.color)
+            self.drawoutline()
+    def adjust(self, x, y, d_angle):
+        # Adjust the object's position and angle
+        self.angle += d_angle
+        self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
+        self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
+
+        # Reset the flag to regenerate triangles
+        self.triangles_generated = False
+
+        # Update the points based on the new position and angle
+        #self.points = self.rotate_points(self.points, d_angle)
+
+        # Assuming self.transparent_surface is a surface with transparency
+        # Blit the rotated image with transparency
+        if self.image:
+            rotated_image = pygame.transform.rotate(self.image, -self.angle)
+            image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
+                                                        (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
+            self.game.screen.blit(rotated_image, image_rect.topleft)
+            # Draw the rotated lines without transparency
+            #rotated_points = self.rotate_points(self.points, self.angle)
+            self.points = [(x + self.x, y + self.y) for x, y in self.points]
+            #self.update_rect()
+
+        else:
+            self.points = [(x + self.x, y + self.y) for x, y in self.points]
+            mousepos = pygame.mouse.get_pos()
+            if self.texture:
+                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+            # else:
+                # pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+            self.update_rect()
+    def update_rect(self):
+        # Update the rect based on the points
+        min_x = min(pt[0] for pt in self.points)
+        min_y = min(pt[1] for pt in self.points)
+        max_x = max(pt[0] for pt in self.points)
+        max_y = max(pt[1] for pt in self.points)
+        self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
 # class oldFlashlight(GameObject):
 #     def __init__(self, game, points, color, angle, islighting=True, image=None):
 #         super().__init__(game, points, color, angle, image)
