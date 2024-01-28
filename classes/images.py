@@ -30,4 +30,6 @@ wood = pygame.image.load('images/materials/wood.png')
 
 papier = pygame.image.load('images/materials/paper.png')
 
-lens = pygame.image.load('images/lens.png')
+lens = pygame.image.load('images/trash.png')
+
+glass_icon = pygame.image.load("images/glass_thing_icon.png")
