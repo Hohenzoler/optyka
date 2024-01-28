@@ -33,6 +33,7 @@ class GameObject:
         self.triangles_generated = False
         self.update_rect()
 
+        self.scale_factor = 1
         self.lazer = False
         self.parameters_counters = 0
 
@@ -241,6 +242,8 @@ class GameObject:
             lazer_on = {'lazer': self.lazer}
             self.parameters.update(lazer_on)
 
+        self.parameters['size'] = self.scale_factor
+
         colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
 
         self.parameters.update(colors)
@@ -253,11 +256,12 @@ class GameObject:
         try:
             d_angle = self.parameters['angle'] - self.angle
             self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
+            self.scale_factor = self.parameters['size']
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
             self.lazer = self.parameters["lazer"]
-            print('lazer: ', self.lazer)
-        except:
-            pass
+
+        except Exception as e:
+            print(e)
 
 
 

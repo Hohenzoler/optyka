@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="deleted idea" />
+    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="added fps to always be 60">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/gameobjects.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/gameobjects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/ModifyParameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/ModifyParameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,6 +76,39 @@
       <option name="presentableId" value="Default" />
       <updated>1706293403760</updated>
     </task>
+    <task id="LOCAL-00001" summary="sorta fixed slider button">
+      <option name="closed" value="true" />
+      <created>1706435701033</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1706435701033</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added fps to always be 60">
+      <option name="closed" value="true" />
+      <created>1706441192045</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706441192045</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="sorta fixed slider button" />
+    <MESSAGE value="added fps to always be 60" />
+    <option name="LAST_COMMIT_MESSAGE" value="added fps to always be 60" />
   </component>
 </project>

@@ -19,9 +19,7 @@ class Parameters:
 
         self.parameters_dict = self.object.parameters
 
-        # self.theme_choice = tk.StringVar()
-        #
-        # self.create_theme_change_button()
+        self.points = self.object.points
 
         self.sliders = []
         self.slider_buttons = []
@@ -83,7 +81,10 @@ class Parameters:
         else:
             try:
                 entry = ttk.Entry(self.root)
-                entry.insert(0, str(self.parameters_dict[param]))  # Set default value
+                if param != 'size':
+                    entry.insert(0, str(self.parameters_dict[param]))# Set default value
+                else:
+                    entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
                 entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                 self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
             except Exception as e:
@@ -116,15 +117,25 @@ class Parameters:
 
         try:
             for param, entry_widget in self.parameters_dict.items():
-                print(entry_widget)
                 if param == 'lazer' or param == 'red':
                     break
+
                 value = entry_widget.get()
+
+                if param == 'size':
+                    value = str(value)
+                    value = value.strip("%")
+                    value = float(value)/100
+                    print(value)
+                    self.object.points = self.change_size(value)
+
                 value = float(value)
                 new_parameters[param] = value
+
             self.object.parameters.update(new_parameters)
-        except:
-            pass
+            print(self.object.parameters)
+        except Exception as e:
+            print(e)
 
         self.root.quit()
         self.root.destroy()
@@ -132,6 +143,17 @@ class Parameters:
     def get_slider_value(self, slider):
         return slider.get()
 
+
+    def change_size(self, percent):
+
+        new_points = []
+
+        for point in self.points:
+            new_x = ((point[0] - float(self.parameters_dict['x'].get())) * percent) + float(self.parameters_dict['x'].get())
+            new_y = (point[1] - float(self.parameters_dict['y'].get())) * percent + float(self.parameters_dict['y'].get())
+
+            new_points.append((new_x, new_y))
+        return new_points
 
 class TestObj:
     def __init__(self):
