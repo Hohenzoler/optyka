@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from pygame import *
 from gui import polygonDrawing
@@ -7,7 +9,7 @@ import settingsSetup
 from classes import fps
 from classes import bin, images, gameobjects
 from classes.achievements import Achievements
-
+from classes import parkinson as particles
 isDrawingModeOn = False
 class Game:
     """
@@ -49,6 +51,21 @@ class Game:
 
         self.selected_object = None
 
+        self.cursor_particle_system = particles.UnityParticleSystem()
+
+        self.cached_mousepos = None
+
+
+    def create_cursor_particles(self):
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        for i in range(1):
+            self.cursor_particle_system.add_particle(
+                mouse_x, mouse_y,
+                random.uniform(-1, 1), random.uniform(-1, 1),
+                150, random.randint(1, 2),
+                random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
+                250
+            )
 
     def return_fps(self):
         return self.displayFPS()
@@ -96,10 +113,24 @@ class Game:
         pygame.display.update()
         self.clock.tick(self.fps)
 
+    def render_particles(self):
+        """
+        Renders all the game objects and the custom cursor.
+        """
+        if self.cached_mousepos != pygame.mouse.get_pos():
+            self.create_cursor_particles()
+
+        self.cached_mousepos = pygame.mouse.get_pos()
+
+        self.cursor_particle_system.update()
+        self.cursor_particle_system.draw(self.screen)
+
     def render(self):
         """
         Renders all the game objects and the custom cursor.
         """
+        self.render_particles()
+
         if self.mode == 'default':
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
             for object in sorted_objects:
