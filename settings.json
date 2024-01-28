@@ -7,5 +7,5 @@
  "DEBUG": "False",
  "Flashlight_FOV": 5,
  "Flashlight_Rays": 15,
- "HD_Flashlight": "ON"
+ "HD_Flashlight": "OFF"
 }

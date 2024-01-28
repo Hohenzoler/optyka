@@ -191,7 +191,7 @@ class Light:
     def render(self):
         try:
             ### For RTX Flashlight ###
-            if settingsSetup.settings['HD_Flashlight'] == 'ON':
+            if self.game.settings['HD_Flashlight'] == 'ON':
                 new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
                 new_line_surface.set_alpha(self.alpha)
                 for x in range(0,len(self.points)-1):

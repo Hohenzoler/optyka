@@ -19,9 +19,7 @@ class Parameters:
 
         self.parameters_dict = self.object.parameters
 
-        # self.theme_choice = tk.StringVar()
-        #
-        # self.create_theme_change_button()
+        self.points = self.object.points
 
         self.sliders = []
         self.slider_buttons = []
@@ -36,28 +34,8 @@ class Parameters:
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
         self.store_button.grid(row=len(self.parameters_dict) + 3, column=0, columnspan=2, pady=10)
 
-        # self.display_initial_values()
 
         self.root.mainloop()
-
-    # def change_theme(self):
-    #     selected_theme = self.theme_choice.get()
-    #     self.style.theme_use(selected_theme)
-    #
-    # def create_theme_change_button(self):
-    #     label_theme = ttk.Label(self.root, text="Select theme:")
-    #     label_theme.grid(row=len(self.parameters_dict) + 4, column=0, columnspan=2, pady=10)
-    #
-    #     theme_choices = ["flatly", "darkly", "united", "yeti", "cosmo", "lumen", "sandstone", "superhero", "solar",
-    #                      "cyborg", "vapor", "journal", "litera", "minty", "pulse", "morph", "simplex", "cerculean"]
-    #     theme_combobox = ttk.Combobox(
-    #         self.root, values=theme_choices, state="readonly", textvariable=self.theme_choice
-    #     )
-    #     theme_combobox.grid(row=len(self.parameters_dict) + 5, column=0, columnspan=2, pady=5)
-    #
-    #     theme_button = ttk.Button(self.root, text="Change Theme", command=self.change_theme)
-    #     theme_button.grid(row=len(self.parameters_dict) + 6, column=0, columnspan=2, pady=10)
-
 
     def create_element(self, param, row):
         label = tk.Label(self.root, text=f"{param.capitalize()}:")
@@ -83,7 +61,10 @@ class Parameters:
         else:
             try:
                 entry = ttk.Entry(self.root)
-                entry.insert(0, str(self.parameters_dict[param]))  # Set default value
+                if param != 'size':
+                    entry.insert(0, str(self.parameters_dict[param]))# Set default value
+                else:
+                    entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
                 entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                 self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
             except Exception as e:
@@ -116,15 +97,24 @@ class Parameters:
 
         try:
             for param, entry_widget in self.parameters_dict.items():
-                print(entry_widget)
                 if param == 'lazer' or param == 'red':
                     break
+
                 value = entry_widget.get()
+
+                if param == 'size':
+                    value = str(value)
+                    print(value)
+                    value = value.strip("%")
+                    value = float(value)/100
+                    self.object.points = self.change_size(value)
+
                 value = float(value)
                 new_parameters[param] = value
+
             self.object.parameters.update(new_parameters)
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
         self.root.quit()
         self.root.destroy()
@@ -132,6 +122,17 @@ class Parameters:
     def get_slider_value(self, slider):
         return slider.get()
 
+
+    def change_size(self, percent):
+
+        new_points = []
+
+        for point in self.points:
+            new_x = ((point[0] - float(self.parameters_dict['x'].get())) * percent) + float(self.parameters_dict['x'].get())
+            new_y = (point[1] - float(self.parameters_dict['y'].get())) * percent + float(self.parameters_dict['y'].get())
+
+            new_points.append((new_x, new_y))
+        return new_points
 
 class TestObj:
     def __init__(self):
