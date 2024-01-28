@@ -24,7 +24,8 @@ class StartScreen:
         self.run = True
         self.mode = 'default'
         self.objects = []
-        self.font = pygame.font.Font('freesansbold.ttf', self.width//20)
+        from classes.font import Font
+        self.font = pygame.font.Font(Font, self.width//20)
 
 
         self.executed_functions = 'default'
@@ -120,7 +121,8 @@ class StartScreen:
         self.width = settings['WIDTH']
         self.height = settings['HEIGHT']
 
-        self.font = pygame.font.Font('freesansbold.ttf', self.width // 20)
+        from classes.font import Font
+        self.font = pygame.font.Font(Font, self.width // 20)
 
         self.maintext = self.font.render('Optyka', True, 'white')
         self.maintextRect = self.maintext.get_rect()

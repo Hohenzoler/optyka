@@ -15,7 +15,8 @@ class DropdownMenu:
         gap_size = self.ss.height//47
         self.x = self.ss.width // 2 + self.width // 2
         self.y = self.ss.height // 2 - number * (self.height + gap_size)  # Adjusted y based on the number and gap size
-        self.font = pygame.font.Font(None, self.height // 2)
+        from classes.font import Font
+        self.font = pygame.font.Font(Font, self.height // 2)
         self.text_color = 'white'
         self.menu_color = 'darkgrey'
         self.expanded = False

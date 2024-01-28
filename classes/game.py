@@ -10,6 +10,8 @@ from classes import fps
 from classes import bin, images, gameobjects
 from classes.achievements import Achievements
 from classes import parkinson as particles
+from classes.font import Font
+
 isDrawingModeOn = False
 class Game:
     """
@@ -22,7 +24,7 @@ class Game:
         self.settings = settingsSetup.load_settings()  # Load game settings
         self.width = self.settings['WIDTH']  # Game width
         self.height = self.settings['HEIGHT']  # Game height
-        self.font = pygame.font.Font(None, self.height//20)  # Font for displaying FPS
+        self.font = pygame.font.Font(Font, self.height//20)  # Font for displaying FPS
         self.objects = []  # List of game objects
         pygame.init()  # Initialize pygame
         # Set up the game display based on settings

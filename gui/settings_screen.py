@@ -20,9 +20,10 @@ class Settings_screen:
 
         self.Flashlight = [{'HD_Flashlight': 'ON'}, {'HD_Flashlight': 'OFF'}]
 
-        self.font2 = pygame.font.Font('freesansbold.ttf', self.width // 40)
+        from classes.font import Font
+        self.font2 = pygame.font.Font(Font, self.width // 40)
 
-        self.font = pygame.font.Font('freesansbold.ttf', self.width // 20)
+        self.font = pygame.font.Font(Font, self.width // 20)
 
         self.maintext = self.font.render('Settings', True, 'white')
         self.maintextRect = self.maintext.get_rect()
