@@ -16,9 +16,12 @@ class Particle:
     def update(self):
         self.x += self.vx
         self.y += self.vy
-        if self.alpha > 0:
-            self.alpha -= 1
         self.lifespan -= 2
+        if self.alpha > 0 and self.lifespan > 0:
+            self.alpha -= self.alpha // self.lifespan
+            if self.size > 0:
+                self.size -= 25*self.size // self.lifespan
+
 
     def draw(self, screen):
         surface = pygame.Surface((self.size * 2, self.size * 2), pygame.SRCALPHA)  # Create a surface
