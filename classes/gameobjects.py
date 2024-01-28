@@ -297,7 +297,6 @@ class Lens(GameObject):
         height = abs(rect_points[0][1] - rect_points[2][1])
         x1 = -width/2
         x2 = width/2
-        px = min(x1, x2) + abs(x1 + x2)/2
         py = -height/2
         a, b, c = self.calculate_function(x1, x2, py)
         POINTS_NUM = int(width)
@@ -311,7 +310,8 @@ class Lens(GameObject):
             x += x_offset
             self.parabola_points.append((x, y))
             self.inverted_parabola_points.append((x, inv_y))
-        center = (x_offset, c + y_offset)
+        center = (x_offset, y_offset)
+        self.rect.center = center
         self.parabola_points = self.rotate_points2(self.parabola_points,90 + angle, center)
         self.inverted_parabola_points = self.rotate_points2(self.inverted_parabola_points, 90 + angle, center)
 
