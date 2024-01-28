@@ -7,6 +7,5 @@
  "DEBUG": "False",
  "Flashlight_FOV": 5,
  "Flashlight_Rays": 15,
- "HD_Flashlight": "ON",
- "HOPBAR_POSITION": "bottom"
+ "HD_Flashlight": "ON"
 }
