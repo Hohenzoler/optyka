@@ -11,6 +11,7 @@ from classes import bin, images, gameobjects
 from classes.achievements import Achievements
 from classes import parkinson as particles
 from classes.font import Font
+import time
 
 isDrawingModeOn = False
 class Game:
@@ -181,6 +182,7 @@ class Game:
         else:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
         self.displayFPS()
+        self.displayClock()
 
     def background(self):
         """
@@ -196,6 +198,21 @@ class Game:
         fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
         self.screen.blit(fps_text, (10, 10))
         return fps
+
+    def displayClock(self):
+        current_time = time.localtime()
+        current_hour = current_time.tm_hour
+        current_minute = current_time.tm_min
+        current_second = current_time.tm_sec
+        if current_hour < 10:
+            current_hour = f"0{current_hour}"
+        if current_minute < 10:
+            current_minute = f"0{current_minute}"
+        if current_second < 10:
+            current_second = f"0{current_second}"
+        time_text = self.font.render(f"{current_hour}:{current_minute}:{current_second}", True, "white")
+        self.screen.blit(time_text, (self.width - 150, 10))
+        return time_text
 
 
 
