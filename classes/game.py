@@ -61,7 +61,7 @@ class Game:
         for i in range(1):
             self.cursor_particle_system.add_particle(
                 mouse_x, mouse_y,
-                random.uniform(-1, 1), random.uniform(-1, 1),
+                random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5),
                 150, random.randint(1, 2),
                 random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
                 250
