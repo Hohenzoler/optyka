@@ -17,11 +17,16 @@ DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
 
-    def __init__(self, game, points, color, angle, image = None, texture = None):
+    def __init__(self, game, points, color, angle, image = None, texture =None, textureName=None):
         # Initialize common attributes
         self.game = game
         self.points = points
-        self.color = color
+
+        self.texture = texture if texture else None
+        self.textureName = textureName if self.texture else None
+
+        self.color = color if not self.texture else None
+
         self.on = True
         self.selectedtrue = False
         self.mousepos = None
@@ -41,8 +46,6 @@ class GameObject:
         self.scale_factor = 1
         self.lazer = False
         self.parameters_counters = 0
-
-        self.texture = texture if texture else None
 
         self.find_parameters()
 
@@ -254,9 +257,9 @@ class GameObject:
             lazer_on = {'lazer': self.lazer}
             self.parameters.update(lazer_on)
 
-        colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
-
-        self.parameters.update(colors)
+        if self.color != None:
+            colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
+            self.parameters.update(colors)
 
 
     def change_parameters(self):
@@ -273,12 +276,9 @@ class GameObject:
         except Exception as e:
             print(e)
 
-
-
-
 class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):
-        super().__init__(game, points, color, angle, image_path, texture)
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None, textureName=None):
+        super().__init__(game, points, color, angle, image_path, texture, textureName)
 
 class Prism(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):

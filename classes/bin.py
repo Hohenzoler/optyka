@@ -1,6 +1,6 @@
 import pygame
 from classes import gameobjects as go
-from classes import sounds, parkinson as particles, achievements
+from classes import sounds, parkinson as particles, achievements, color_picker
 import random
 
 class Bin:
@@ -27,12 +27,18 @@ class Bin:
 
     def checkCollision(self, obj):
         if obj.rect.colliderect(self.rect) and isinstance(obj, go.GameObject):
-            rgb = obj.color
+            if obj.color != None:
+                rgb = obj.color
+            else:
+                path = f'images/materials/{obj.textureName}.png'
+                rgb = color_picker.get_colors(path)[0]
+                print(rgb)
             self.game.objects.remove(obj)
             sounds.destroy_sound()
             achievements.Achievements.handle_achievement_unlocked(self.achievements, "BIN")
             for i in range(random.randint(60, 300)):
                 self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-2, 2), random.uniform(-2, 2), 250, random.randint(1, 7), random.randint(rgb[0]//2, rgb[0]), random.randint(rgb[1]//2, rgb[1]), random.randint(rgb[2]//2, rgb[2]), 250)
+
 
     def render(self):
         self.game.screen.blit(self.bin_img, self.rect)
