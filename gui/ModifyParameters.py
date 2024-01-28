@@ -125,6 +125,7 @@ class Parameters:
             pass
 
         self.root.quit()
+        self.root.destroy()
 
     def get_slider_value(self, slider):
         return slider.get()
