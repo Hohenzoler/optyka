@@ -2,6 +2,9 @@ import classes.game
 import pygame
 from classes import gameobjects, sounds
 from classes import images, game
+from classes.font import Font
+
+
 
 class Button:
     """
@@ -212,7 +215,7 @@ class ButtonForgame:
         self.number = number
         self.screen = screen
         self.screen.objects.append(self)
-        self.font = pygame.font.Font('freesansbold.ttf', self.screen.height // 35)
+        self.font = pygame.font.Font(Font, self.screen.height // 35)
 
         self.width = self.screen.width // 3
         self.height = self.screen.height // 10

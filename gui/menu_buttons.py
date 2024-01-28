@@ -17,7 +17,8 @@ class ButtonMenus:
             self.y = self.ss.height // 2 + (self.height + gap_size)
         else:
             self.y = self.ss.height // 2 - number * (self.height + gap_size)  # Adjusted y based on the number and gap size
-        self.font = pygame.font.Font(None, self.height // 2)
+        from classes.font import Font
+        self.font = pygame.font.Font(Font, self.height // 3)
         self.text_color = 'white'
         self.menu_color = 'darkgrey'
         self.number = number
