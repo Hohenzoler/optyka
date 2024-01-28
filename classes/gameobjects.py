@@ -300,14 +300,50 @@ class Lens(GameObject):
         px = min(x1, x2) + abs(x1 + x2)/2
         py = -height/2
         a, b, c = self.calculate_function(x1, x2, py)
-        POINTS_NUM = int(width) + 1
+        POINTS_NUM = int(width)
         self.parabola_points = []
+        self.inverted_parabola_points = []
         for i in range(int(-POINTS_NUM/2), int(POINTS_NUM/2)):
             x = (width/POINTS_NUM)*i
             y = a*x**2 + b*x + c + y_offset
+
+            inv_y = -a*x**2 + -b*x + c + y_offset + abs(rect_points[0][1] - rect_points[2][1])
             x += x_offset
             self.parabola_points.append((x, y))
-        self.parabola_points = self.rotate_points(self.parabola_points,90 + angle)
+            self.inverted_parabola_points.append((x, inv_y))
+        center = (x_offset, c + y_offset)
+        self.parabola_points = self.rotate_points2(self.parabola_points,90 + angle, center)
+        self.inverted_parabola_points = self.rotate_points2(self.inverted_parabola_points, 90 + angle, center)
+
+    def rotate_points2(self, points, angle, center):
+        # Rotate points around the center of the object
+        # center_x = sum(x for x, _ in points) / len(points)
+        # center_y = sum(y for _, y in points) / len(points)
+
+        center_x = center[0]
+        center_y = center[1]
+
+        # Create a new list to store the rotated points
+        rotated_points = []
+
+        # Rotate each point around the center
+        for x, y in points:
+            # Translate the point to the origin
+            translated_x = x - center_x
+            translated_y = y - center_y
+
+            # Rotate the translated point
+            rotated_x = translated_x * math.cos(math.radians(angle)) - translated_y * math.sin(math.radians(angle))
+            rotated_y = translated_x * math.sin(math.radians(angle)) + translated_y * math.cos(math.radians(angle))
+
+            # Translate the rotated point back to the original position
+            final_x = rotated_x + center_x
+            final_y = rotated_y + center_y
+
+            # Add the rotated point to the list
+            rotated_points.append((final_x, final_y))
+
+        return rotated_points
 
 
     def draw_convex(self, rect, angle):
@@ -326,6 +362,7 @@ class Lens(GameObject):
             else:
                 self.draw_convex(self.points, self.angle)
                 pygame.gfxdraw.filled_polygon(self.game.screen, self.parabola_points, self.color)
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.inverted_parabola_points, self.color)
 
         else:
             mousepos = pygame.mouse.get_pos()
@@ -342,6 +379,7 @@ class Lens(GameObject):
                 self.adjust(mousepos[0], mousepos[1], 0)
             self.draw_convex(self.points, self.angle)
             pygame.gfxdraw.filled_polygon(self.game.screen, self.parabola_points, self.color)
+            pygame.gfxdraw.filled_polygon(self.game.screen, self.inverted_parabola_points, self.color)
             self.drawoutline()
     def adjust(self, x, y, d_angle):
         # Adjust the object's position and angle
