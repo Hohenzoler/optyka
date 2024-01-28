@@ -27,11 +27,12 @@ class Bin:
 
     def checkCollision(self, obj):
         if obj.rect.colliderect(self.rect) and isinstance(obj, go.GameObject):
+            rgb = obj.color
             self.game.objects.remove(obj)
             sounds.destroy_sound()
             achievements.Achievements.handle_achievement_unlocked(self.achievements, "BIN")
             for i in range(random.randint(60, 300)):
-                self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-2, 2), random.uniform(-2, 2), 1000, random.randint(1, 7), random.randint(130, 255), random.randint(0, 130), 0, 200)
+                self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-2, 2), random.uniform(-2, 2), 1000, random.randint(1, 7), random.randint(rgb[0]//2, rgb[0]), random.randint(rgb[1]//2, rgb[1]), random.randint(rgb[2]//2, rgb[2]), 200)
 
     def render(self):
         self.game.screen.blit(self.bin_img, self.rect)
