@@ -1,17 +1,16 @@
-import random
-
 import pygame
 
 class Particle:
-    def __init__(self, x, y, vx, vy, lifespan):
+    def __init__(self, x, y, vx, vy, lifespan, size, red, green, blue):
         self.x = x
         self.y = y
         self.vx = vx
         self.vy = vy
         self.lifespan = lifespan
-        self.size = random.randint(1, 7)
-        self.red = random.randint(130, 255)
-        self.green = random.randint(0, 130)
+        self.size = size
+        self.red = red
+        self.green = green
+        self.blue = blue
 
     def update(self):
         self.x += self.vx
@@ -19,14 +18,14 @@ class Particle:
         self.lifespan -= 2
 
     def draw(self, screen):
-        pygame.draw.circle(screen, (self.red, self.green, 0), (self.x, self.y), self.size)
+        pygame.draw.circle(screen, (self.red, self.green, self.blue), (self.x, self.y), self.size)
 
 class UnityParticleSystem:
     def __init__(self):
         self.particles = []
 
-    def add_particle(self, x, y, vx, vy, lifespan):
-        self.particles.append(Particle(x, y, vx, vy, lifespan))
+    def add_particle(self, x, y, vx, vy, lifespan, size, red, green, blue):
+        self.particles.append(Particle(x, y, vx, vy, lifespan, size, red, green, blue))
 
     def update(self):
         for particle in self.particles:
