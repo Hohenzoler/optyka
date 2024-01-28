@@ -13,7 +13,10 @@ class ButtonMenus:
         self.height = self.ss.width // 20
         gap_size = self.ss.height//47
         self.x = self.ss.width // 2 + self.width // 2
-        self.y = self.ss.height // 2 - number * (self.height + gap_size)  # Adjusted y based on the number and gap size
+        if number >= 3:
+            self.y = self.ss.height // 2 + (self.height + gap_size)
+        else:
+            self.y = self.ss.height // 2 - number * (self.height + gap_size)  # Adjusted y based on the number and gap size
         self.font = pygame.font.Font(None, self.height // 2)
         self.text_color = 'white'
         self.menu_color = 'darkgrey'
@@ -53,6 +56,13 @@ class ButtonMenus:
             s = settingsSetup.load_settings()
 
             self.selected_option_2 = s['FULLSCREEN']
+        elif self.number == 3:
+            for option in self.ss.Flashlight:
+                self.options.append(option['HD_Flashlight'])
+
+            s = settingsSetup.load_settings()
+
+            self.selected_option_2 = s['HD_Flashlight']
 
         self.current_index = 0
 
@@ -105,5 +115,15 @@ class ButtonMenus:
             s['FULLSCREEN'] = option
 
             settingsSetup.writesettingstofile(s)
+
+        elif self.number == 3:
+            self.selected_option_2 = option
+
+            s = settingsSetup.load_settings()
+
+            s['HD_Flashlight'] = option
+
+            settingsSetup.writesettingstofile(s)
+            settingsSetup.settings['HD_Flashlight'] = option
 
         self.current_index += 1

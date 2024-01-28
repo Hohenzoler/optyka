@@ -29,3 +29,7 @@ clouds = pygame.image.load('images/materials/clouds.png')
 wood = pygame.image.load('images/materials/wood.png')
 
 papier = pygame.image.load('images/materials/paper.png')
+
+lens = pygame.image.load('images/lens.png')
+
+glass_icon = pygame.image.load("images/glass_thing_icon.png")

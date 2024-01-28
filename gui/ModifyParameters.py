@@ -1,6 +1,7 @@
 import tkinter as tk
-from ttkbootstrap import ttk, Style
-
+from tkinter import *
+from ttkbootstrap import ttk
+from ttkbootstrap import Style
 
 class Parameters:
     def __init__(self, object):
@@ -8,6 +9,7 @@ class Parameters:
 
         self.object = object
 
+        # Apply ttkbootstrap theme 'solar'
         self.style = Style(theme='solar')
         self.style.master = self.root
 

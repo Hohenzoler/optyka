@@ -10,9 +10,9 @@ import settingsSetup
 from pygame import gfxdraw
 settings = settingsSetup.start()
 
-NUM_RAYS = 15
-FOV = 5
-HALF_FOV = 2.5
+NUM_RAYS = settings['Flashlight_Rays']
+FOV = settings['Flashlight_FOV']
+HALF_FOV = FOV / 2
 DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
@@ -273,6 +273,18 @@ class Prism(GameObject):
 class ColoredGlass(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):
         super().__init__(game, points, color, angle, image_path, texture)
+
+class Lens(GameObject):
+    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, image_path)
+
+    def generate_points(self, rect_points):
+        self.rotate_points(rect_points, 90)
+        x1 = rect_points[0][0]
+        y1 = rect_points[0][1]
+
+    def draw_convex(self, rect, angle):
+        pass
 
 # class oldFlashlight(GameObject):
 #     def __init__(self, game, points, color, angle, islighting=True, image=None):

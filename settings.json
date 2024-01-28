@@ -5,8 +5,8 @@
  "HOTBAR_POSITION": "bottom",
  "VSYNC": "OFF",
  "DEBUG": "False",
- "Flashlight_FOV": 60,
- "Flashlight_Rays": 600,
- "Flashlight_Depth": 500,
+ "Flashlight_FOV": 5,
+ "Flashlight_Rays": 15,
+ "HD_Flashlight": "ON",
  "HOPBAR_POSITION": "bottom"
 }

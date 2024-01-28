@@ -3,6 +3,7 @@ import math
 from classes import gameobjects, fps
 import time
 import functions
+import settingsSetup
 class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light
@@ -146,7 +147,7 @@ class Light:
         self.points.append(self.current_point)
         self.RGB.compare(RGB(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
         self.colors.append(self.RGB.rgb)
-        print(self.RGB.rgb)
+        #print(self.RGB.rgb)
         self.current_starting_point = self.current_point
     def border_stuff(self):
         self.points.append((self.current_point_before[0] + 1000 * math.cos(-self.r),
@@ -189,13 +190,17 @@ class Light:
 
     def render(self):
         try:
-            new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-            new_line_surface.set_alpha(self.alpha)
-            for x in range(0,len(self.points)-1):
-                pygame.draw.line(self.game.screen,self.colors[x],self.points[x],self.points[x+1],self.light_width)
-            # pygame.draw.lines(new_line_surface, self.color, False, self.points, self.light_width)
-            # self.game.screen.blit(new_line_surface, (0, 0))
-            #pygame.draw.lines(self.game.screen, self.color, False, self.points, self.light_width)
+            ### For RTX Flashlight ###
+            if settingsSetup.settings['HD_Flashlight'] == 'ON':
+                new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+                new_line_surface.set_alpha(self.alpha)
+                for x in range(0,len(self.points)-1):
+                    pygame.draw.line(new_line_surface, self.colors[x],self.points[x],self.points[x+1],self.light_width)
+                self.game.screen.blit(new_line_surface, (0, 0))
+            ### For Simple Flashlight ###
+            else:
+                for x in range(0,len(self.points)-1):
+                    pygame.draw.line(self.game.screen, self.colors[x],self.points[x],self.points[x+1],self.light_width)
 
             # pygame.draw.lines(surface, [200, 0, 0, self.alpha], False, self.points, self.light_width)
 
