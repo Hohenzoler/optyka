@@ -29,6 +29,11 @@ class GameObject:
         self.placed = False
         self.angle = angle
         self.image = image if image else None
+
+        if image != None:
+            self.image_width = self.image.get_width()
+            self.image_height = self.image.get_height()
+
         self.rect = pygame.Rect(0, 0, 0, 0)
         self.triangles_generated = False
         self.update_rect()
@@ -78,8 +83,13 @@ class GameObject:
             if self.image:
                 center_x = sum(x for x, _ in self.points) / len(self.points)
                 center_y = sum(y for _, y in self.points) / len(self.points)
+
+                self.image = pygame.transform.scale(self.image, (self.image_width*self.scale_factor, self.image_height*self.scale_factor))
+
                 rotated_image = rotate(self.image, -self.angle)
                 image_rect = rotated_image.get_rect(center=(center_x, center_y))
+
+                image_rect = pygame.Rect(image_rect[0], image_rect[1], image_rect[2]*self.scale_factor, image_rect[3]*self.scale_factor)
 
                 # Blit the rotated image without transparency
                 self.game.screen.blit(rotated_image, image_rect.topleft)
@@ -238,11 +248,11 @@ class GameObject:
 
         self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
 
+        self.parameters['size'] = self.scale_factor
+
         if type(self) == Flashlight:
             lazer_on = {'lazer': self.lazer}
             self.parameters.update(lazer_on)
-
-        self.parameters['size'] = self.scale_factor
 
         colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
 

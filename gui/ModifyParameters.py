@@ -124,16 +124,15 @@ class Parameters:
 
                 if param == 'size':
                     value = str(value)
+                    print(value)
                     value = value.strip("%")
                     value = float(value)/100
-                    print(value)
                     self.object.points = self.change_size(value)
 
                 value = float(value)
                 new_parameters[param] = value
 
             self.object.parameters.update(new_parameters)
-            print(self.object.parameters)
         except Exception as e:
             print(e)
 
