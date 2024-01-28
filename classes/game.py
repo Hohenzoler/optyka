@@ -196,7 +196,7 @@ class Game:
         """
         fps = self.clock.get_fps()
         fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-        self.screen.blit(fps_text, (10, 10))
+        self.screen.blit(fps_text, (12.5, 10))
         return fps
 
     def displayClock(self):
@@ -211,7 +211,7 @@ class Game:
         if current_second < 10:
             current_second = f"0{current_second}"
         time_text = self.font.render(f"{current_hour}:{current_minute}:{current_second}", True, "white")
-        self.screen.blit(time_text, (self.width - 150, 10))
+        self.screen.blit(time_text, (self.width - 157.5, 10))
         return time_text
 
 
