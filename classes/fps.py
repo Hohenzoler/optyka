@@ -1,13 +1,13 @@
-import win32api
-from win32com.client import GetObject
-device_info = win32api.EnumDisplayDevices()
+# import win32api
+# from win32com.client import GetObject
+# device_info = win32api.EnumDisplayDevices()
 
 def refresh_rate(device):
     try:
         settings = win32api.EnumDisplaySettings(device.DeviceName, -1)
         return settings.DisplayFrequency
     except:
-        return 165
+        return 60
 def gpuInfo(device):
     try:
         return((device.DeviceString))
@@ -28,4 +28,4 @@ def get_cpu_type():
 # print(f"User's CPU: {get_cpu_type()}")
 
 def return_fps():
-    return refresh_rate(device_info)
+    return 60

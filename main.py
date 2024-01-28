@@ -8,6 +8,8 @@ import pygame
 import settingsSetup
 from gui import startscreen as ss
 
+print("test from linux")
+
 # Create a "logs" folder if it doesn't exist
 if not os.path.exists("logs"):
     os.makedirs("logs")
@@ -46,3 +48,5 @@ if __name__ == "__main__":
     main()
     # Use cProfile to profile your code
     # cProfile.run("main()", sort="tottime")
+    
+
