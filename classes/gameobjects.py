@@ -288,7 +288,7 @@ class Lens(GameObject):
         return a, b, c
 
     def generate_points(self, rect_points, angle):
-        rect_points = self.rotate_points(rect_points, -90 -angle)
+        rect_points = self.rotate_points(rect_points, -90)
         x1 = rect_points[0][0]
         x2 = rect_points[2][0]
         x_offset = min(x1, x2) + abs(x1 - x2)/2#
