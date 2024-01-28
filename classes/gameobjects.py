@@ -1,5 +1,5 @@
 import time
-
+import threading
 import pygame
 from gui import ModifyParameters as mp
 from classes import light, sounds, images
@@ -245,11 +245,14 @@ class GameObject:
 
         self.parameters.update(colors)
 
-
     def change_parameters(self):
         self.find_parameters()
-        mp.Parameters(self)
+        # Create a new thread for the Tkinter window
+        self.parameters_thread = threading.Thread(target=self.open_parameters_window)
+        self.parameters_thread.start()
 
+    def open_parameters_window(self):
+        mp.Parameters(self)
         try:
             d_angle = self.parameters['angle'] - self.angle
             self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
@@ -258,7 +261,6 @@ class GameObject:
             print('lazer: ', self.lazer)
         except:
             pass
-
 
 
 
