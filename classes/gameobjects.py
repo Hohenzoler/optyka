@@ -280,14 +280,108 @@ class Lens(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, image_path)
 
-    def generate_points(self, rect_points):
-        self.rotate_points(rect_points, 90)
+    def calculate_function(self, x1, x2, ymin):
+        c = ymin
+        a = c / (x1*x2)
+        b = (x1 + x2)*(-a)
+        print(f'{a}x2 + {b}x + {c}')
+        return a, b, c
+
+    def generate_points(self, rect_points, angle):
+        rect_points = self.rotate_points(rect_points, -90 -angle)
         x1 = rect_points[0][0]
-        y1 = rect_points[0][1]
+        x2 = rect_points[2][0]
+        x_offset = min(x1, x2) + abs(x1 - x2)/2#
+        y_offset = min(rect_points[0][1], rect_points[2][1]) + abs(rect_points[0][1] - rect_points[2][1])#
+        width = abs(x1 - x2)
+        height = abs(rect_points[0][1] - rect_points[2][1])
+        x1 = -width/2
+        x2 = width/2
+        px = min(x1, x2) + abs(x1 + x2)/2
+        py = -height/2
+        a, b, c = self.calculate_function(x1, x2, py)
+        POINTS_NUM = int(width) + 1
+        self.parabola_points = []
+        for i in range(int(-POINTS_NUM/2), int(POINTS_NUM/2)):
+            x = (width/POINTS_NUM)*i
+            y = a*x**2 + b*x + c + y_offset
+            x += x_offset
+            self.parabola_points.append((x, y))
+        self.parabola_points = self.rotate_points(self.parabola_points,90 + angle)
+
 
     def draw_convex(self, rect, angle):
-        pass
+        self.generate_points(rect, angle)
 
+    def render(self):
+        # print(self.get_triangles())
+
+        self.get_slopes()
+
+
+        if not self.selectedtrue:
+            # Draw the rotated lines without transparency
+            if self.texture:
+                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
+            else:
+                self.draw_convex(self.points, self.angle)
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.parabola_points, self.color)
+
+        else:
+            mousepos = pygame.mouse.get_pos()
+            if self.game.r:
+
+                self.adjust(mousepos[0], mousepos[1], self.game.r)
+                self.game.r = False
+
+            elif self.game.p:
+                self.change_parameters()
+                self.selectedtrue = False
+
+            else:
+                self.adjust(mousepos[0], mousepos[1], 0)
+            self.draw_convex(self.points, self.angle)
+            pygame.gfxdraw.filled_polygon(self.game.screen, self.parabola_points, self.color)
+            self.drawoutline()
+    def adjust(self, x, y, d_angle):
+        # Adjust the object's position and angle
+        self.angle += d_angle
+        self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
+        self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
+
+        # Reset the flag to regenerate triangles
+        self.triangles_generated = False
+
+        # Update the points based on the new position and angle
+        #self.points = self.rotate_points(self.points, d_angle)
+
+        # Assuming self.transparent_surface is a surface with transparency
+        # Blit the rotated image with transparency
+        if self.image:
+            rotated_image = pygame.transform.rotate(self.image, -self.angle)
+            image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
+                                                        (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
+            self.game.screen.blit(rotated_image, image_rect.topleft)
+            # Draw the rotated lines without transparency
+            #rotated_points = self.rotate_points(self.points, self.angle)
+            self.points = [(x + self.x, y + self.y) for x, y in self.points]
+            #self.update_rect()
+
+        else:
+            self.points = [(x + self.x, y + self.y) for x, y in self.points]
+            mousepos = pygame.mouse.get_pos()
+            if self.texture:
+                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+            # else:
+                # pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+            self.update_rect()
+    def update_rect(self):
+        # Update the rect based on the points
+        min_x = min(pt[0] for pt in self.points)
+        min_y = min(pt[1] for pt in self.points)
+        max_x = max(pt[0] for pt in self.points)
+        max_y = max(pt[1] for pt in self.points)
+        self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
 # class oldFlashlight(GameObject):
 #     def __init__(self, game, points, color, angle, islighting=True, image=None):
 #         super().__init__(game, points, color, angle, image)
