@@ -6,6 +6,7 @@ from ttkbootstrap import Style
 class Parameters:
     def __init__(self, object):
         self.root = tk.Tk()
+        self.root.protocol("WM_DELETE_WINDOW", self.hide_window)
 
         self.object = object
 
@@ -39,6 +40,10 @@ class Parameters:
         # self.display_initial_values()
 
         self.root.mainloop()
+
+    def hide_window(self):
+        """Hide the window instead of closing it."""
+        self.root.withdraw()
 
     # def change_theme(self):
     #     selected_theme = self.theme_choice.get()
@@ -96,7 +101,6 @@ class Parameters:
         color = f'#{int(red):02X}{int(green):02X}{int(blue):02X}'
         self.color_preview_canvas.config(bg=color)
 
-
     def store_parameters(self):
         new_parameters = {}
 
@@ -109,10 +113,8 @@ class Parameters:
             new_parameters['green'] = new_color[1]
             new_parameters['blue'] = new_color[2]
         if len(self.slider_buttons) > 0:
-
             lazer_on = {'lazer': self.var_lazer.get()}
             new_parameters.update(lazer_on)
-
 
         try:
             for param, entry_widget in self.parameters_dict.items():
@@ -126,8 +128,7 @@ class Parameters:
         except:
             pass
 
-        self.root.quit()
-        self.root.destroy()
+        self.hide_window()  # Hide the window after storing the parameters
 
     def get_slider_value(self, slider):
         return slider.get()
