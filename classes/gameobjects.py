@@ -248,7 +248,7 @@ class GameObject:
     def change_parameters(self):
         self.find_parameters()
         # Create a new thread for the Tkinter window
-        self.parameters_thread = threading.Thread(target=self.open_parameters_window)
+        self.parameters_thread = threading.Thread(target=self.open_parameters_window, daemon=True)
         self.parameters_thread.start()
 
     def open_parameters_window(self):
