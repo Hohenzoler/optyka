@@ -32,4 +32,4 @@ def get_cpu_type():
 # print(f"User's CPU: {get_cpu_type()}")
 
 def return_fps():
-    return refresh_rate(device_info)
+    return refresh_rate(device_info)+1
