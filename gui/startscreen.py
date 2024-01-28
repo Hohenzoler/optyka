@@ -42,8 +42,9 @@ class StartScreen:
 
     def mainloop(self):
         while self.run:
-            self.generate_particles()
+
             if self.mode == 'default':
+                self.generate_particles()
                 self.defualt_mode()
 
             elif self.mode == 'settings':

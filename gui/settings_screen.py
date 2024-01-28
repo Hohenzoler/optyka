@@ -2,6 +2,8 @@ import pygame
 from gui import button
 from gui import menu_buttons as dm
 from classes import sounds
+from classes import parkinson as particles
+import random
 
 class Settings_screen:
     def __init__(self, game):
@@ -9,6 +11,8 @@ class Settings_screen:
         self.width = self.game.width
         self.height = self.game.height
         self.screen = self.game.screen
+
+        self.particle_system = particles.UnityParticleSystem()
 
         self.objects = []
 
@@ -63,12 +67,31 @@ class Settings_screen:
         self.screen.blit(self.FStext, self.FStextRect)
         self.screen.blit(self.flashlighttext, self.flashlighttextRect)
 
+        self.generate_particles()
+        self.particle_system.update()
+        self.particle_system.draw(self.screen)
+
         for object in self.objects:
             object.render()
 
     def checkevent(self, pos):
         for object in self.objects:
             object.checkcollision(pos)
+
+    def generate_particles(self):
+        # Adjust the parameters as needed
+        self.particle_system.add_particle(
+            x=random.randint(0, self.width),
+            y=random.randint(0, self.height),
+            vx=random.uniform(-0.1, 0.1),
+            vy=random.uniform(-0.1, 0.1),
+            lifespan=1000,
+            size=random.randint(1, 2),
+            red=random.randint(150, 255),
+            green=random.randint(150, 255),
+            blue=random.randint(150, 255),
+            alpha=100
+        )
 
 
 
