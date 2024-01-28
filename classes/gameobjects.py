@@ -432,65 +432,6 @@ class Lens(GameObject):
         max_x = max(pt[0] for pt in self.points)
         max_y = max(pt[1] for pt in self.points)
         self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
-# class oldFlashlight(GameObject):
-#     def __init__(self, game, points, color, angle, islighting=True, image=None):
-#         super().__init__(game, points, color, angle, image)
-#         self.islighting = bool(islighting)
-#         self.light = None
-#         self.light_width = 8
-#         self.color = color
-#         self.angle = angle
-#         self.image = image if image else None
-#
-#     def render(self):
-#         super().render()
-#         if self.islighting:
-#             if self.on:
-#                 # Calculate the starting point of the light from the center of the rotated rectangle/surface
-#                 center_x = sum(x for x, _ in self.points) / len(self.points)
-#                 center_y = sum(y for _, y in self.points) / len(self.points)
-#                 self.light_adjust(center_x, center_y)
-#
-#                 self.light = light.Light(self.game,
-#                                          [[self.light_start_x, self.light_start_y]],
-#                                          self.color, -1*self.angle, self.light_width)
-#
-#                 #if up arrow clicked, color goes random
-#                 if pygame.key.get_pressed()[pygame.K_UP]:
-#                     self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-#
-#                 self.light.trace_path2()
-#                 self.placed = True
-#                 light.Light.render(self.light)
-#                 super().render()
-#
-#             elif not self.on:
-#                 self.light = None
-#
-#
-#     def light_adjust(self, center_x, center_y):
-#         self.light_start_x = center_x
-#         self.light_start_y = center_y
-#         # Adjust the flashlight light position and direction
-#         direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
-#
-#         # Calculate the length of the direction vector
-#         length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
-#
-#         # Check if the length is not zero before normalizing
-#         if length != 0:
-#             # Normalize the direction vector
-#             normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
-#
-#             # Calculate the end point of the light
-#             self.light_end_x = center_x + normalized_direction[0] * 1000
-#             self.light_end_y = center_y + normalized_direction[1] * 1000
-#
-#             # Calculate the angle between the normalized direction and the x-axis
-#             # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
-#
-#
-#
 
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, points, color, angle, islighting=True, image=None):
