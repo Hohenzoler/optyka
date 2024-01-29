@@ -1,4 +1,10 @@
 import pygame
+import imgtocode
+import os
+
+if not os.path.exists('images/'):
+    print('a')
+    imgtocode.generateImages()
 
 torch_icon = pygame.image.load("images/torch_icon.png")
 
