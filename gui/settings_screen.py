@@ -91,7 +91,8 @@ class Settings_screen:
             red=random.randint(150, 255),
             green=random.randint(150, 255),
             blue=random.randint(150, 255),
-            alpha=100
+            alpha=100,
+            shape='circle'
         )
 
 
