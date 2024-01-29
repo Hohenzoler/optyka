@@ -284,7 +284,7 @@ class Game:
                 obj = gameobjects.Lens(self, [(mousepos[0] - 50, mousepos[1] - 50), (mousepos[0], mousepos[1] - 50), (mousepos[0], mousepos[1] + 50), (mousepos[0] - 50, mousepos[1] + 50)], (64, 137, 189), 0)
 
             obj.parameters = parameters
-            obj.change_parameters('not None')
+            obj.change_parameters('not')
             self.objects.append(obj)
 
 
