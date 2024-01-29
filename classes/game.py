@@ -1,5 +1,5 @@
 import random
-
+import os
 import pygame
 from pygame import *
 from gui import polygonDrawing
@@ -12,6 +12,7 @@ from classes.achievements import Achievements
 from classes import parkinson as particles
 from classes.font import Font
 import time
+from datetime import datetime
 
 isDrawingModeOn = False
 class Game:
@@ -57,6 +58,9 @@ class Game:
         self.cursor_particle_system = particles.UnityParticleSystem()
 
         self.cached_mousepos = None
+
+        self.save = False
+        self.save_title = None
 
 
     def create_cursor_particles(self):
@@ -229,3 +233,26 @@ class Game:
             self.p = False
             self.events()
             self.achievements.fps_achievements()
+
+        if self.save:
+            save_obj = []
+            for object in self.objects:
+                if issubclass(type(object), gameobjects.GameObject):
+                    object.find_parameters()
+                    object.parameters['class'] = object.__class__.__name__
+                    save_obj.append(object.parameters)
+            if not os.path.exists("saves"):
+                os.makedirs("saves")
+
+            current_time = datetime.now()
+            formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+            save_obj.append(formatted_time)
+
+            if os.path.exists(f'saves/{self.save_title}'):
+                old_save = settingsSetup.load_settings(f'saves/{self.save_title}')
+                new_save = old_save.update(save_obj)
+                settingsSetup.writesettingstofile(new_save, 2, f'saves/{self.save_title}')
+            else:
+                settingsSetup.writesettingstofile(save_obj, 2, f'saves/{self.save_title}')
+
+

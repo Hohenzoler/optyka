@@ -4,7 +4,7 @@
  "FULLSCREEN": "OFF",
  "HOTBAR_POSITION": "bottom",
  "VSYNC": "OFF",
- "DEBUG": "False",
+ "DEBUG": "True",
  "Flashlight_FOV": 5,
  "Flashlight_Rays": 15,
  "HD_Flashlight": "OFF"

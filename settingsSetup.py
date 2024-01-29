@@ -20,15 +20,15 @@ def start(s=settings):
         writesettingstofile(s)
     return s
 
-def load_settings(): #czyta ustawienia z pliku
-    with open('settings.json', 'r') as f:
+def load_settings(js='settings.json'): #czyta ustawienia z pliku
+    with open(js, 'r') as f:
         json_object = json.loads(f.read())
         f.close()
     s = json_object
     return s
 
-def writesettingstofile(s): #funkcja zapisuje ustawienia do pilku
-    json_string = json.dumps(s, indent=1)
-    with open('settings.json', 'w') as f:
+def writesettingstofile(s, i=1, js='settings.json'): #funkcja zapisuje ustawienia do pilku
+    json_string = json.dumps(s, indent=i)
+    with open(js, 'w') as f:
         f.write(json_string)
         f.close()
