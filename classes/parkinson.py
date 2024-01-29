@@ -1,7 +1,8 @@
 import pygame
 
+
 class Particle:
-    def __init__(self, x, y, vx, vy, lifespan, size, red, green, blue, alpha):
+    def __init__(self, x, y, vx, vy, lifespan, size, red, green, blue, alpha, shape):
         self.x = x
         self.y = y
         self.vx = vx
@@ -12,6 +13,7 @@ class Particle:
         self.green = green
         self.blue = blue
         self.alpha = alpha
+        self.shape = shape
 
     def update(self):
         self.x += self.vx
@@ -20,20 +22,25 @@ class Particle:
         if self.alpha > 0 and self.lifespan > 0:
             self.alpha -= self.alpha // self.lifespan
             if self.size > 0:
-                self.size -= 25*self.size // self.lifespan
-
+                self.size -= 25 * self.size // self.lifespan
 
     def draw(self, screen):
-        surface = pygame.Surface((self.size * 2, self.size * 2), pygame.SRCALPHA)  # Create a surface
-        pygame.draw.circle(surface, (self.red, self.green, self.blue, self.alpha), (self.size, self.size),
-                           self.size)  # Draw the particle on the surface
+        surface = pygame.Surface((self.size * 2, self.size * 2), pygame.SRCALPHA)
+        if self.shape == 'circle':
+            pygame.draw.circle(surface, (self.red, self.green, self.blue, self.alpha), (self.size, self.size),
+                               self.size)
+        if self.shape == 'square':
+            pygame.draw.rect(surface, (self.red, self.green, self.blue, self.alpha),
+                             pygame.Rect(0, 0, self.size * 2, self.size * 2))
         screen.blit(surface, (self.x - self.size, self.y - self.size))
+
+
 class UnityParticleSystem:
     def __init__(self):
         self.particles = []
 
-    def add_particle(self, x, y, vx, vy, lifespan, size, red, green, blue, alpha):
-        self.particles.append(Particle(x, y, vx, vy, lifespan, size, red, green, blue, alpha))
+    def add_particle(self, x, y, vx, vy, lifespan, size, red, green, blue, alpha, shape):
+        self.particles.append(Particle(x, y, vx, vy, lifespan, size, red, green, blue, alpha, shape))
 
     def update(self):
         for particle in self.particles:

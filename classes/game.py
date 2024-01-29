@@ -67,7 +67,7 @@ class Game:
                 random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5),
                 150, random.randint(1, 2),
                 random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
-                250
+                250, 'square'
             )
 
     def return_fps(self):
