@@ -1,6 +1,8 @@
 import pygame
 from gui import button
 import os
+from classes import parkinson as particles
+import random
 
 
 class loading_saves_screen:
@@ -10,6 +12,8 @@ class loading_saves_screen:
         self.height = self.game.height
         self.screen = self.game.screen
         self.objects = []
+
+        self.particle_system = particles.UnityParticleSystem()
 
         new_game_button = button.ButtonForgame(72, self)
         self.objects.append(new_game_button)
@@ -25,12 +29,31 @@ class loading_saves_screen:
         self.game.objects.append(self)
 
     def render(self):
+        self.generate_particles()
+        self.particle_system.update()
+        self.particle_system.draw(self.screen)
         for object in self.objects:
             object.render()
 
     def checkevent(self, pos):
         for object in self.objects:
             object.checkcollision(pos)
+
+    def generate_particles(self):
+        # Adjust the parameters as needed
+        self.particle_system.add_particle(
+            x=random.randint(0, self.width),
+            y=random.randint(0, self.height),
+            vx=random.uniform(-0.1, 0.1),
+            vy=random.uniform(-0.1, 0.1),
+            lifespan=1000,
+            size=random.randint(1, 2),
+            red=random.randint(150, 255),
+            green=random.randint(150, 255),
+            blue=random.randint(150, 255),
+            alpha=100,
+            shape='circle'
+        )
 
 class saveselector:
     def __init__(self, game):

@@ -46,7 +46,6 @@ class StartScreen:
         self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
 
         pygame.display.set_caption('Optyka')
-        self.action = None
 
         self.mainloop()
 
