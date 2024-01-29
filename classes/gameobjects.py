@@ -490,14 +490,14 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                     center_x = sum(x for x, _ in self.points) / len(self.points)
                     center_y = sum(y for _, y in self.points) / len(self.points)
                     self.light_adjust(center_x, center_y)
+                    if pygame.key.get_pressed()[pygame.K_UP]:
+                        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
                     self.light = light.Light(self.game,
                                              [[self.light_start_x, self.light_start_y]],
-                                             self.color, -1 * self.angle, self.light_width)
+                                             self.color, -1 * self.angle, self.light_width, alpha=40)
 
                     # if up arrow clicked, color goes random
-                    if pygame.key.get_pressed()[pygame.K_UP]:
-                        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
                     self.light.trace_path2()
                     self.placed = True
