@@ -1,16 +1,20 @@
 import cProfile
 import logging
-import os
 from datetime import datetime
 from classes import game, sounds
 from gui import gui_main as gui
 import pygame
 import settingsSetup
 from screens import startscreen as ss
+import os
 
 # Create a "logs" folder if it doesn't exist
 if not os.path.exists("logs"):
     os.makedirs("logs")
+
+if not os.path.exists("saves"):
+    os.makedirs("saves")
+
 
 # Set up the logging configuration
 log_file = f"logs/{datetime.now().strftime('%Y-%m-%d')}.log"
