@@ -17,7 +17,7 @@ DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
 
-    def __init__(self, game, points, color, angle, image = None, texture =None, textureName=None):
+    def __init__(self, game, points, color, angle, reflection_factor, image = None, texture =None, textureName=None):
         # Initialize common attributes
         self.game = game
         self.points = points
@@ -34,6 +34,8 @@ class GameObject:
         self.placed = False
         self.angle = angle
         self.image = image if image else None
+
+        self.reflection_factor = reflection_factor
 
         if image != None:
             self.image_width = self.image.get_width()
@@ -279,20 +281,20 @@ class GameObject:
 
 
 class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None, textureName=None):
-        super().__init__(game, points, color, angle, image_path, texture, textureName)
+    def __init__(self, game, points, color, angle, reflection_factor, islighting=False, image_path=None, texture = None, textureName=None):
+        super().__init__(game, points, color, angle, reflection_factor, image_path, texture, textureName)
 
 class Prism(GameObject):
-    def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):
-        super().__init__(game, points, color, angle, image_path, texture)
+    def __init__(self, game, points, color, angle, reflection_factor, islighting=False, image_path=None, texture = None):
+        super().__init__(game, points, color, angle, reflection_factor, image_path, texture)
 
 class ColoredGlass(GameObject):
-    def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None):
-        super().__init__(game, points, color, angle, image_path, texture)
+    def __init__(self, game, points, color, angle, reflection_factor, islighting=False, image_path=None, texture = None):
+        super().__init__(game, points, color, angle, reflection_factor, image_path, texture)
 
 class Lens(GameObject):
-    def __init__(self, game, points, color, angle, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, image_path)
+    def __init__(self, game, points, color, angle, reflection_factor, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, reflection_factor, image_path)
 
     def calculate_function(self, x1, x2, ymin):
         c = ymin
@@ -436,8 +438,8 @@ class Lens(GameObject):
         self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
 
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, points, color, angle, islighting=True, image=None):
-        super().__init__(game, points, color, angle, image)
+    def __init__(self, game, points, color, angle, reflection_factor, islighting=True, image=None):
+        super().__init__(game, points, color, angle, reflection_factor, image)
         self.islighting = bool(islighting)
         self.light = None
         self.light_width = 8
