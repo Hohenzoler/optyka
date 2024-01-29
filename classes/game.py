@@ -281,19 +281,19 @@ class Game:
             mousepos = (500, 500)
 
             if parameters['class'] == "Flashlight":
-                obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, image=images.torch)
+                obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, image=images.torch)
 
             elif parameters['class'] == "Mirror":
-                obj = gameobjects.Mirror(self, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, texture=images.wood, textureName='wood')
+                obj = gameobjects.Mirror(self, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.4, texture=images.wood, textureName='wood')
 
             elif parameters['class'] == "ColoredGlass":
-                obj = gameobjects.ColoredGlass(self, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0)
+                obj = gameobjects.ColoredGlass(self, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0.4)
 
             elif parameters['class'] == "Prism":
-                obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0)
+                obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0, 0.4)
 
             elif parameters['class'] == "Lens":
-                obj = gameobjects.Lens(self, [(mousepos[0] - 50, mousepos[1] - 50), (mousepos[0], mousepos[1] - 50), (mousepos[0], mousepos[1] + 50), (mousepos[0] - 50, mousepos[1] + 50)], (64, 137, 189), 0)
+                obj = gameobjects.Lens(self, [(mousepos[0] - 50, mousepos[1] - 50), (mousepos[0], mousepos[1] - 50), (mousepos[0], mousepos[1] + 50), (mousepos[0] - 50, mousepos[1] + 50)], (64, 137, 189), 0, 0.4)
 
             obj.parameters = parameters
             obj.change_parameters('not')

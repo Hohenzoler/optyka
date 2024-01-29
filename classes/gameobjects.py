@@ -255,6 +255,8 @@ class GameObject:
 
         self.parameters['size'] = self.scale_factor
 
+        self.parameters['reflection_factor'] = self.reflection_factor
+
         if type(self) == Flashlight:
             lazer_on = {'lazer': self.lazer}
             self.parameters.update(lazer_on)
