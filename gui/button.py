@@ -1,7 +1,6 @@
 import classes.game
 import pygame
-from classes import gameobjects, sounds
-from classes import images, game
+from classes import gameobjects, sounds, images, saveTK
 from classes.font import Font
 
 
@@ -175,6 +174,7 @@ class Button:
                                        (64, 137, 189), 0)
 
             elif self.number == -1:
+                a = saveTK.Save()
                 self.game.run = False
             elif self.number == -2:
                 self.game.mode = 'settings'
