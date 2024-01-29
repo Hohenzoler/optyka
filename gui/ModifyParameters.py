@@ -33,7 +33,7 @@ class Parameters:
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
         self.store_button.grid(row=len(self.parameters_dict) + 3, column=0, columnspan=2, pady=10)
 
-        self.root.geometry(f'250x{60*len(self.parameters_dict)}')
+        self.root.geometry(f'300x{60*len(self.parameters_dict)}')
 
         self.root.mainloop()
 
@@ -104,6 +104,9 @@ class Parameters:
                     value = value.strip("%")
                     value = float(value)/100
                     self.object.points = self.change_size(value)
+
+                if param == 'reflection_ratio':
+                    self.object.reflection_factor = float(value)
 
                 value = float(value)
                 new_parameters[param] = value
