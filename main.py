@@ -37,7 +37,8 @@ def new_game(save):
         raise
 
 if __name__ == "__main__":
-    startscreen = ss.StartScreen()
-    new_game(startscreen.save_to_load)
+    while True:
+        startscreen = ss.StartScreen()
+        new_game(startscreen.save_to_load)
     
 

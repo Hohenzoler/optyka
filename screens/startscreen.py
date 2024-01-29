@@ -1,5 +1,5 @@
 import random
-
+from classes import images
 import pygame
 from gui import button
 import settingsSetup
@@ -16,6 +16,10 @@ class StartScreen:
         self.width = settings['WIDTH']
         self.height = settings['HEIGHT']
         self.screen = pygame.display.set_mode((self.width, self.height))
+
+        pygame.mouse.set_visible(False)  # Hide the default mouse cursor
+        self.cursor_img = images.bad_coursor  # Custom cursor image
+        self.cursor_img_rect = self.cursor_img.get_rect()  # Rectangle for the custom cursor image
 
         self.screen_mode = None
 
@@ -107,7 +111,8 @@ class StartScreen:
         if self.mode == 'default':
             self.screen.blit(self.maintext, self.maintextRect)
 
-
+        self.cursor_img_rect.center = pygame.mouse.get_pos()
+        self.screen.blit(self.cursor_img, self.cursor_img_rect)
         pygame.display.update()
 
     def generate_particles(self):
