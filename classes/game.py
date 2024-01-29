@@ -70,6 +70,17 @@ class Game:
                 250, 'square'
             )
 
+    def create_clicked_particles(self):
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        for i in range(20):
+            self.cursor_particle_system.add_particle(
+                mouse_x, mouse_y,
+                random.uniform(-2, 2), random.uniform(-2, 2),
+                75, random.randint(2, 3),
+                random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
+                200, 'circle'
+            )
+
     def return_fps(self):
         return self.displayFPS()
 
@@ -87,9 +98,10 @@ class Game:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
                     if isDrawingModeOn:
                         polygonDrawing.addPoint(self.mousepos)
-
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
-                    self.rightclickedmousepos = event.pos
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.create_clicked_particles()
+                    if event.button == 3:
+                        self.rightclickedmousepos = event.pos
                 if event.type == pygame.MOUSEWHEEL:
                     if event.y > 0:
                         self.r = 5
