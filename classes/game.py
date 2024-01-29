@@ -75,8 +75,8 @@ class Game:
         for i in range(20):
             self.cursor_particle_system.add_particle(
                 mouse_x, mouse_y,
-                random.uniform(-2, 2), random.uniform(-2, 2),
-                75, random.randint(2, 3),
+                random.uniform(-1.5, 1.5), random.uniform(-1.5, 1.5),
+                50, random.randint(2, 3),
                 random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
                 200, 'circle'
             )

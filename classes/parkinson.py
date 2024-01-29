@@ -20,9 +20,9 @@ class Particle:
         self.y += self.vy
         self.lifespan -= 2
         if self.alpha > 0 and self.lifespan > 0:
-            self.alpha -= self.alpha // self.lifespan
             if self.size > 0:
-                self.size -= 25 * self.size // self.lifespan
+                self.size -= 5 * self.size // self.lifespan
+            self.alpha -= self.alpha // self.lifespan
 
     def draw(self, screen):
         surface = pygame.Surface((self.size * 2, self.size * 2), pygame.SRCALPHA)
