@@ -41,7 +41,7 @@ class Parameters:
         label = tk.Label(self.root, text=f"{param.capitalize()}:")
         label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
         if param == 'red' or param == 'blue' or param == 'green':
-            slider = tk.Scale(self.root, from_=10, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
+            slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
             slider.set(self.parameters_dict[param])
             slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
             self.sliders.append(slider)

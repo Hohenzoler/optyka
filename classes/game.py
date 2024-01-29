@@ -4,7 +4,7 @@ import pygame
 from pygame import *
 from gui import polygonDrawing
 from gui import gui_main as gui
-from gui import settings_screen, polygonDrawing
+from screens import settings_screen
 import settingsSetup
 from classes import fps
 from classes import bin, images, gameobjects

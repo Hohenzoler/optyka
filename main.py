@@ -6,9 +6,7 @@ from classes import game, sounds
 from gui import gui_main as gui
 import pygame
 import settingsSetup
-from gui import startscreen as ss
-
-print("test from linux")
+from screens import startscreen as ss
 
 # Create a "logs" folder if it doesn't exist
 if not os.path.exists("logs"):
@@ -29,14 +27,8 @@ def main():
         programIcon = pygame.image.load('images/torch_icon.png')
         pygame.display.set_icon(programIcon)
 
-        startscreen = ss.StartScreen(width, height)
-
-        # sounds.soundtrack()
-
         game_instance = game.Game()
-        # light1=light.Light(game,[[0,0],[100,10],[200,300]],(255,255,255))
         GUI = gui.GUI(game_instance)
-        # print(pygame.display.Info())
         game_instance.loop()
 
     except Exception as e:
@@ -45,8 +37,7 @@ def main():
         raise
 
 if __name__ == "__main__":
-    main()
-    # Use cProfile to profile your code
-    # cProfile.run("main()", sort="tottime")
+    startscreen = ss.StartScreen()
+
     
 

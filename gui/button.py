@@ -240,6 +240,27 @@ class ButtonForgame:
             self.y = self.screen.height - self.screen.height // 5
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
+        elif self.number == 72:
+            self.text = self.font.render('New Game', True, 'black')
+            self.width = self.screen.width // 5
+            self.y = self.screen.height - self.screen.height // 5
+            self.x = (self.screen.width // 2) - self.width - self.width//2 - gap
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        elif self.number == 73:
+            self.text = self.font.render('Load Preset', True, 'black')
+            self.width = self.screen.width // 5
+            self.x = (self.screen.width // 2) - self.width // 2
+            self.y = self.screen.height - self.screen.height // 5
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        elif self.number == 74:
+            self.text = self.font.render('Back', True, 'black')
+            self.width = self.screen.width // 5
+            self.y = self.screen.height - self.screen.height // 5
+            self.x = (self.screen.width // 2) + self.width//2 + gap
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
         else:
             self.text = self.font.render('@', True, 'black')
 
@@ -255,7 +276,7 @@ class ButtonForgame:
         """
         if self.rect.collidepoint(pos[0], pos[1]):
             if self.number == 0:
-                self.screen.run = False
+                self.screen.mode = 'loading'
                 sounds.clicked_sound()
             elif self.number == 1:
                 self.screen.mode = 'settings'

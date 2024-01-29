@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="fixed so particles appear in settings when opened thourgh the game and not through the start screen">
+    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="bug fixes">
+      <change afterPath="$PROJECT_DIR$/screens/loading_saves_screen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/ModifyParameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/ModifyParameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/settings_screen.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/startscreen.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +143,23 @@
       <option name="project" value="LOCAL" />
       <updated>1706465918024</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="the return of ToggleSwitch cuz sometimes the checkbutton function doesnt work">
+      <option name="closed" value="true" />
+      <created>1706466665125</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1706466665125</updated>
+    </task>
+    <task id="LOCAL-00009" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1706466941085</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1706466941085</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,6 +181,8 @@
     <MESSAGE value="fixed bug with RTX flashlight always being on by default" />
     <MESSAGE value="when deleting color of texture appeares on particles" />
     <MESSAGE value="fixed so particles appear in settings when opened thourgh the game and not through the start screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed so particles appear in settings when opened thourgh the game and not through the start screen" />
+    <MESSAGE value="the return of ToggleSwitch cuz sometimes the checkbutton function doesnt work" />
+    <MESSAGE value="bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fixes" />
   </component>
 </project>
