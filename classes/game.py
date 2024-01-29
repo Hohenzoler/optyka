@@ -249,10 +249,10 @@ class Game:
             save_obj.append(formatted_time)
 
             if os.path.exists(f'saves/{self.save_title}'):
-                old_save = settingsSetup.load_settings(f'saves/{self.save_title}')
+                old_save = settingsSetup.load_settings(f'saves/{self.save_title}.json')
                 new_save = old_save.update(save_obj)
-                settingsSetup.writesettingstofile(new_save, 2, f'saves/{self.save_title}')
+                settingsSetup.writesettingstofile(new_save, 2, f'saves/{self.save_title}.json')
             else:
-                settingsSetup.writesettingstofile(save_obj, 2, f'saves/{self.save_title}')
+                settingsSetup.writesettingstofile(save_obj, 2, f'saves/{self.save_title}.json')
 
 

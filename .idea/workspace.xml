@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="added a save window using tkinter no functionality yet">
+    <list default="true" id="b83d3d9c-b994-49f4-88cb-dde67ba1f50f" name="Changes" comment="can now save game to a json file">
+      <change afterPath="$PROJECT_DIR$/cfdv.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/saveTK.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/saveTK.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/button.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settingsSetup.py" beforeDir="false" afterPath="$PROJECT_DIR$/settingsSetup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/loading_saves_screen.py" beforeDir="false" afterPath="$PROJECT_DIR$/screens/loading_saves_screen.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706538830258</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="can now save game to a json file">
+      <option name="closed" value="true" />
+      <created>1706544519273</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1706544519273</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -208,7 +215,8 @@
     <MESSAGE value="added loading saves screens with buttons but the buttons not working yet" />
     <MESSAGE value="added functionality to the new game and back button in  loading saves screen" />
     <MESSAGE value="added a save window using tkinter no functionality yet" />
-    <option name="LAST_COMMIT_MESSAGE" value="added a save window using tkinter no functionality yet" />
+    <MESSAGE value="can now save game to a json file" />
+    <option name="LAST_COMMIT_MESSAGE" value="can now save game to a json file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

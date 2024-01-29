@@ -174,7 +174,8 @@ class Button:
                                        (64, 137, 189), 0)
 
             elif self.number == -1:
-                a = saveTK.Save(self.game)
+                if len(self.game.objects) > 3:
+                    a = saveTK.Save(self.game)
                 self.game.run = False
             elif self.number == -2:
                 self.game.mode = 'settings'
