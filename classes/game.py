@@ -19,10 +19,12 @@ class Game:
     """
     The main game class that handles the game loop, events, rendering and settings.
     """
-    def __init__(self):
+    def __init__(self, save):
         """
         Initializes the game with settings, pygame, objects, and other necessary attributes.
         """
+        self.save_to_load = save
+
         self.settings = settingsSetup.load_settings()  # Load game settings
         self.width = self.settings['WIDTH']  # Game width
         self.height = self.settings['HEIGHT']  # Game height
@@ -233,6 +235,9 @@ class Game:
             self.p = False
             self.events()
             self.achievements.fps_achievements()
+            if self.save_to_load != None:
+                self.load()
+                self.save_to_load = None
 
         if self.save:
             save_obj = []
@@ -254,5 +259,32 @@ class Game:
                 settingsSetup.writesettingstofile(new_save, 2, f'saves/{self.save_title}.json')
             else:
                 settingsSetup.writesettingstofile(save_obj, 2, f'saves/{self.save_title}.json')
+
+    def load(self):
+        save = settingsSetup.load_settings(f"saves/{self.save_to_load}.json")
+        for parameters in save:
+            if type(parameters) != dict:
+                break
+
+            mousepos = (500, 500)
+
+            if parameters['class'] == "Flashlight":
+                obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, image=images.torch)
+
+            elif parameters['class'] == "Mirror":
+                obj = gameobjects.Mirror(self, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, texture=images.wood, textureName='wood')
+
+            elif parameters['class'] == "ColoredGlass":
+                obj = gameobjects.ColoredGlass(self, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0)
+
+            elif parameters['class'] == "Prism":
+                obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0)
+
+            elif parameters['class'] == "Lens":
+                obj = gameobjects.Lens(self, [(mousepos[0] - 50, mousepos[1] - 50), (mousepos[0], mousepos[1] - 50), (mousepos[0], mousepos[1] + 50), (mousepos[0] - 50, mousepos[1] + 50)], (64, 137, 189), 0)
+
+            obj.parameters = parameters
+            obj.change_parameters('not None')
+            self.objects.append(obj)
 
 

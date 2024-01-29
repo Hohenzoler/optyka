@@ -49,6 +49,10 @@ class saveselector:
 
         self.dir = "saves"
         self.saves_files = [file for file in os.listdir(self.dir) if file.endswith('.json')]
+
+        for i, file in enumerate(self.saves_files):
+            self.saves_files[i] = file[:-5]
+
         self.scrolling_needed = len(self.saves_files) > self.num_of_buttons
         self.scroll_offset = 0
 

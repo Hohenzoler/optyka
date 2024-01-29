@@ -262,9 +262,10 @@ class GameObject:
             self.parameters.update(colors)
 
 
-    def change_parameters(self):
-        self.find_parameters()
-        mp.Parameters(self)
+    def change_parameters(self, placeholder=None):
+        if placeholder == None:
+            self.find_parameters()
+            mp.Parameters(self)
 
         try:
             d_angle = self.parameters['angle'] - self.angle
@@ -275,6 +276,7 @@ class GameObject:
 
         except Exception as e:
             print(e)
+
 
 class Mirror(GameObject):
     def __init__(self, game, points, color, angle, islighting=False, image_path=None, texture = None, textureName=None):

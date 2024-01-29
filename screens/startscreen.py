@@ -10,6 +10,7 @@ pygame.init()
 
 class StartScreen:
     def __init__(self):
+        self.save_to_load = None
         settings = settingsSetup.load_settings()
         self.particle_system = particles.UnityParticleSystem()
         self.width = settings['WIDTH']
@@ -94,7 +95,8 @@ class StartScreen:
                         elif event.button == 1:
                             for button1 in object.buttons:
                                 if button1.rect.collidepoint(event.pos):
-                                    print(button1.text)
+                                    self.run = False
+                                    self.save_to_load = button1.text
 
     def render(self):
         self.screen.fill('black')
