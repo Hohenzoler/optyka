@@ -287,6 +287,14 @@ class ButtonForgame:
             elif self.number == 71:
                 self.screen.game.mode = 'load_new_settings'
                 sounds.clicked_sound()
+            elif self.number == 72:
+                self.screen.game.mode = 'default'
+                self.screen.game.run = False
+                self.screen.game.action = 'new_game'
+                sounds.clicked_sound()
+            elif self.number == 74:
+                self.screen.game.mode = 'default'
+                sounds.clicked_sound()
             else:
                 raise NotImplementedError('button function not yet added')
 

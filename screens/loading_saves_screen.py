@@ -25,3 +25,7 @@ class loading_saves_screen:
     def render(self):
         for object in self.objects:
             object.render()
+
+    def checkevent(self, pos):
+        for object in self.objects:
+            object.checkcollision(pos)
