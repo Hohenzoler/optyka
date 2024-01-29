@@ -1,6 +1,7 @@
 import base64
 import json
 import os
+from fontTools.ttLib import TTFont
 
 
 def image_to_code(image_path):

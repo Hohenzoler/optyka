@@ -12,6 +12,10 @@ import os
 if not os.path.exists("logs"):
     os.makedirs("logs")
 
+if not os.path.exists("saves"):
+    os.makedirs("saves")
+
+
 # Set up the logging configuration
 log_file = f"logs/{datetime.now().strftime('%Y-%m-%d')}.log"
 logging.basicConfig(filename=log_file, level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
