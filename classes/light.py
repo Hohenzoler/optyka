@@ -3,6 +3,7 @@ import math
 from classes import gameobjects, fps
 import time
 import settingsSetup
+import pygame.gfxdraw
 class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light
@@ -196,15 +197,15 @@ class Light:
             if self.game.settings['HD_Flashlight'] == 'ON':
                 new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
                 new_line_surface.set_alpha(self.alpha)
-                for x in range(0,len(self.points)-1):
-                    pygame.draw.line(new_line_surface, self.colors[x],self.points[x],self.points[x+1],self.light_width)
+                for x in range(0, len(self.points) - 1):
+                    pygame.gfxdraw.line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
+                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x])
                 self.game.screen.blit(new_line_surface, (0, 0))
             ### For Simple Flashlight ###
             else:
-                for x in range(0,len(self.points)-1):
-                    pygame.draw.line(self.game.screen, self.colors[x],self.points[x],self.points[x+1],self.light_width)
-
-            # pygame.draw.lines(surface, [200, 0, 0, self.alpha], False, self.points, self.light_width)
+                for x in range(0, len(self.points) - 1):
+                    pygame.gfxdraw.line(self.game.screen, int(self.points[x][0]), int(self.points[x][1]),
+                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x])
 
         except (AttributeError, ValueError):
             pass
@@ -328,7 +329,8 @@ class RGB():
         self.r=r
         self.g=g
         self.b=b
-        self.rgb=(r,g,b)
+        self.a = int((self.r + self.g + self.b) / 3)
+        self.rgb=(r,g,b, self.a)
     def compare(self,RGB2):
         if RGB2.r<self.r:
             self.r=RGB2.r
@@ -342,7 +344,7 @@ class RGB():
 
     def update(self):
         # print(self.b)
-        self.rgb=(self.r,self.g,self.b)
+        self.rgb=(self.r,self.g,self.b, self.a)
 class Linear_Function:
     def __init__(self,a,b):
         self.a=a

@@ -152,7 +152,7 @@ class Button:
                 self.game.achievements.handle_achievement_unlocked("first_flashlight_placed")
 
             elif self.number == 1:
-                obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.4, texture=images.wood, textureName='wood')
+                obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.5, texture=images.wood, textureName='wood')
                 self.game.achievements.handle_achievement_unlocked("first_mirror_placed")
 
             elif self.number == 2:
