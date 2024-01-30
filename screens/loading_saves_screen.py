@@ -85,13 +85,17 @@ class saveselector:
                 button1 = (self.Button_v2(self.game, self.saves_files[i], (self.screen_width - self.button_width) // 2, (self.screen_height - self.container_height - 150) // 2 + i * (self.button_height + self.spacing) + self.spacing, self.button_width, self.button_height))
                 self.buttons.append(button1)
 
+        self.target_positions = [button.rect.y for button in self.buttons]
+
         self.container_rect = pygame.Rect((self.screen_width - self.container_width) // 2, (self.screen_height - self.container_height) // 2, self.container_width, self.container_height)
 
         self.game.objects.append(self)
 
     def render(self):
         for i, button in enumerate(self.buttons):
-            button.rect.y = (self.screen_height - self.container_height) // 2 + i * (self.button_height + self.spacing) + self.spacing
+            self.target_positions[i] = (self.screen_height - self.container_height) // 2 + i * (
+                        self.button_height + self.spacing) + self.spacing
+            button.rect.y += (self.target_positions[i] - button.rect.y) * 0.1
             if button.is_visible(self.container_rect):
                 if i + self.scroll_offset < len(self.saves_files):
                     button.text = self.saves_files[i + self.scroll_offset]
