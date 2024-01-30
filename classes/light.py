@@ -209,13 +209,13 @@ class Light:
                 new_line_surface.set_alpha(self.alpha)
                 for x in range(0, len(self.points) - 1):
                     self.draw_thick_line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
-                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 10)
+                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
                 self.game.screen.blit(new_line_surface, (0, 0))
             ### For Simple Flashlight ###
             else:
                 for x in range(0, len(self.points) - 1):
                     self.draw_thick_line(self.game.screen, int(self.points[x][0]), int(self.points[x][1]),
-                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 10)
+                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
 
         except (AttributeError, ValueError):
             pass
