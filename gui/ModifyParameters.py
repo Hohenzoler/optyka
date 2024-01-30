@@ -105,7 +105,7 @@ class Parameters:
                     value = float(value)/100
                     self.object.points = self.change_size(value)
 
-                if param == 'reflection_ratio':
+                if param == 'reflection_factor':
                     self.object.reflection_factor = float(value)
 
                 value = float(value)
