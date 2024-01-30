@@ -329,7 +329,7 @@ class RGB():
         self.r=r
         self.g=g
         self.b=b
-        self.a = int((self.r + self.g + self.b) / 3)
+        self.a = max(r, g, b)
         self.rgb=(r,g,b, self.a)
     def compare(self,RGB2):
         if RGB2.r<self.r:
