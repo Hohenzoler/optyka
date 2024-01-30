@@ -64,6 +64,9 @@ class Game:
         self.save = False
         self.save_title = None
 
+        self.background_color = (0, 0, 0)
+
+
 
     def create_cursor_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -203,10 +206,8 @@ class Game:
         self.displayClock()
 
     def background(self):
-        """
-        Fills the game display with black color.
-        """
-        self.screen.fill((0, 0, 0))
+        # Use the background color attribute to fill the game display
+        self.screen.fill(self.background_color)
 
     def displayFPS(self):
         """

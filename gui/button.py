@@ -123,6 +123,10 @@ class Button:
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
+        elif self.number == -3:
+            self.color = (0, 0, 0)
+
+
         else:
             self.color = (20, 0, 0)
 
@@ -179,6 +183,9 @@ class Button:
                 self.game.run = False
             elif self.number == -2:
                 self.game.mode = 'settings'
+
+            elif self.number == -3:
+                self.game.background_color = (255, 255, 255) if self.game.background_color == (0, 0, 0) else (0, 0, 0)
 
             try:
                 self.game.objects.append(obj)
