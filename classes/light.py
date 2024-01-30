@@ -191,6 +191,16 @@ class Light:
         if self.r<0:
             self.r+=2*math.pi
 
+    def draw_thick_line(self, surface, x1, y1, x2, y2, color, THICC):
+        dx = x2 - x1
+        dy = y2 - y1
+        if abs(dx) > abs(dy):
+            for offset in range(THICC):
+                pygame.gfxdraw.line(surface, x1, y1 + offset, x2, y2 + offset, color)
+        else:
+            for offset in range(THICC):
+                pygame.gfxdraw.line(surface, x1 + offset, y1, x2 + offset, y2, color)
+
     def render(self):
         try:
             ### For RTX Flashlight ###
@@ -198,14 +208,14 @@ class Light:
                 new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
                 new_line_surface.set_alpha(self.alpha)
                 for x in range(0, len(self.points) - 1):
-                    pygame.gfxdraw.line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
-                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x])
+                    self.draw_thick_line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
+                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 10)
                 self.game.screen.blit(new_line_surface, (0, 0))
             ### For Simple Flashlight ###
             else:
                 for x in range(0, len(self.points) - 1):
-                    pygame.gfxdraw.line(self.game.screen, int(self.points[x][0]), int(self.points[x][1]),
-                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x])
+                    self.draw_thick_line(self.game.screen, int(self.points[x][0]), int(self.points[x][1]),
+                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 10)
 
         except (AttributeError, ValueError):
             pass
