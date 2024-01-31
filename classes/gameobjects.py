@@ -1,5 +1,5 @@
 import time
-
+import functions
 import pygame
 from gui import ModifyParameters as mp
 from classes import light, sounds, images
@@ -295,43 +295,101 @@ class ColoredGlass(GameObject):
         super().__init__(game, points, color, angle, reflection_factor, image_path, texture)
 
 class Lens(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, islighting=False, image_path=None):
+    def __init__(self, game, points, color, angle, type, curvature_radius, reflection_factor, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, reflection_factor, image_path)
+        self.curvature_radius = curvature_radius
+        self.type = type
+        self.CONVEX = 0
+        self.CONCAVE = 1
 
-    def calculate_function(self, x1, x2, ymin):
-        c = ymin
-        a = c / (x1*x2)
-        b = (x1 + x2)*(-a)
-        print(f'{a}x2 + {b}x + {c}')
-        return a, b, c
+
+    # def calculate_function(self, x1, x2, ymin):
+    #     c = ymin
+    #     a = c / (x1*x2)
+    #     b = (x1 + x2)*(-a)
+    #     print(f'{a}x2 + {b}x + {c}')
+    #     return a, b, c
+
+    # def generate_points_old(self, rect_points, angle):
+    #     rect_points = self.rotate_points(rect_points, -90)
+    #     x1 = rect_points[0][0]
+    #     x2 = rect_points[2][0]
+    #     x_offset = min(x1, x2) + abs(x1 - x2)/2#
+    #     y_offset = min(rect_points[0][1], rect_points[2][1]) + abs(rect_points[0][1] - rect_points[2][1])#
+    #     width = abs(x1 - x2)
+    #     height = abs(rect_points[0][1] - rect_points[2][1])
+    #     x1 = -width/2
+    #     x2 = width/2
+    #     py = -height/2
+    #     a, b, c = self.calculate_function(x1, x2, py)
+    #     POINTS_NUM = int(width)
+    #     self.parabola_points = []
+    #     self.inverted_parabola_points = []
+    #     for i in range(int(-POINTS_NUM/2), int(POINTS_NUM/2)):
+    #         x = (width/POINTS_NUM)*i
+    #         y = a*x**2 + b*x + c + y_offset
+    #
+    #         inv_y = -a*x**2 + -b*x + c + y_offset + abs(rect_points[0][1] - rect_points[2][1])
+    #         x += x_offset
+    #         self.parabola_points.append((x, y))
+    #         self.inverted_parabola_points.append((x, inv_y))
+    #     center = (x_offset, y_offset)
+    #     self.rect.center = center
+    #     self.parabola_points = self.rotate_points2(self.parabola_points,90 + angle, center)
+    #     self.inverted_parabola_points = self.rotate_points2(self.inverted_parabola_points, 90 + angle, center)
+
+    def generate_arc_points(self, center, radius, start_angle, end_angle, num_points):
+        points = []
+        angle_step = (end_angle - start_angle) / num_points
+        for i in range(num_points + 1):
+            angle = start_angle + i * angle_step
+            x = center[0] + int(radius * math.cos(angle))
+            y = center[1] + int(radius * math.sin(angle))
+            if functions.pointInRect((x, y), self.rect):
+                points.append((x, y))
+        return points
 
     def generate_points(self, rect_points, angle):
-        rect_points = self.rotate_points(rect_points, -90)
-        x1 = rect_points[0][0]
-        x2 = rect_points[2][0]
-        x_offset = min(x1, x2) + abs(x1 - x2)/2#
-        y_offset = min(rect_points[0][1], rect_points[2][1]) + abs(rect_points[0][1] - rect_points[2][1])#
-        width = abs(x1 - x2)
-        height = abs(rect_points[0][1] - rect_points[2][1])
-        x1 = -width/2
-        x2 = width/2
-        py = -height/2
-        a, b, c = self.calculate_function(x1, x2, py)
-        POINTS_NUM = int(width)
-        self.parabola_points = []
-        self.inverted_parabola_points = []
-        for i in range(int(-POINTS_NUM/2), int(POINTS_NUM/2)):
-            x = (width/POINTS_NUM)*i
-            y = a*x**2 + b*x + c + y_offset
+        x1 = rect_points[0][1]
+        x2 = rect_points[2][1]
+        height = abs(x1 - x2)
+        width = abs(rect_points[0][0] - rect_points[2][0])
+        POINTS_NUM = int(height)
+        center = self.rect.center
+        center_x = center[0]
 
-            inv_y = -a*x**2 + -b*x + c + y_offset + abs(rect_points[0][1] - rect_points[2][1])
-            x += x_offset
-            self.parabola_points.append((x, y))
-            self.inverted_parabola_points.append((x, inv_y))
-        center = (x_offset, y_offset)
-        self.rect.center = center
-        self.parabola_points = self.rotate_points2(self.parabola_points,90 + angle, center)
-        self.inverted_parabola_points = self.rotate_points2(self.inverted_parabola_points, 90 + angle, center)
+        #pygame.draw.line(self.game.screen, (255, 255, 0),(rect_points[0][0] + width//2, rect_points[0][1] - 50),(rect_points[2][0] - width//2, rect_points[2][1] + 50), 5)
+
+        self.lens_points = []
+
+        # for i in range(POINTS_NUM):
+        #     angle = 2 * math.pi * i / POINTS_NUM
+        #     x = center[0] + int(self.curvature_radius * math.cos(angle))
+        #     y = center[1] + int(self.curvature_radius * math.sin(angle))
+        #     self.parabola_points.append((x, y))
+        if self.type == self.CONVEX:
+            center1 = (center_x + self.curvature_radius - width // 2, center[1])
+            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
+            center2 = (center_x - self.curvature_radius + width // 2, center[1])
+            self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2, POINTS_NUM)
+        else:
+            center1 = (center_x + self.curvature_radius, center[1])
+            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi / 2, 3 * math.pi / 2,
+                                                        POINTS_NUM)
+            center2 = (center_x - self.curvature_radius, center[1])
+            self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2,
+                                                         POINTS_NUM)
+
+        self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
+        self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
+        center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
+        pygame.draw.circle(self.game.screen, (0, 255, 0),
+                           center1, 2, 0)
+        center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
+        pygame.draw.circle(self.game.screen, (0, 255, 0),
+                          center2, 2, 0)
+
+
 
     def rotate_points2(self, points, angle, center):
         # Rotate points around the center of the object
@@ -363,8 +421,10 @@ class Lens(GameObject):
 
         return rotated_points
 
-
     def draw_convex(self, rect, angle):
+        self.generate_points(rect, angle)
+
+    def draw_concave(self, rect, angle):
         self.generate_points(rect, angle)
 
     def render(self):
@@ -378,9 +438,18 @@ class Lens(GameObject):
             if self.texture:
                 pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
             else:
-                self.draw_convex(self.points, self.angle)
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.parabola_points, self.color)
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.inverted_parabola_points, self.color)
+                if self.type == self.CONVEX:
+                    self.draw_convex(self.points, self.angle)
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                    pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                else:
+                    self.draw_concave(self.points, self.angle)
+                    # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                    # pygame.gfxdraw.filled_polygon(self.game.screen, (
+                    # self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                    # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                    pygame.draw.lines(self.game.screen, self.color, True, self.lens_points + self.lens_points2, 3)
 
         else:
             mousepos = pygame.mouse.get_pos()
@@ -395,9 +464,23 @@ class Lens(GameObject):
 
             else:
                 self.adjust(mousepos[0], mousepos[1], 0)
-            self.draw_convex(self.points, self.angle)
-            pygame.gfxdraw.filled_polygon(self.game.screen, self.parabola_points, self.color)
-            pygame.gfxdraw.filled_polygon(self.game.screen, self.inverted_parabola_points, self.color)
+            if self.type == self.CONVEX:
+                self.draw_convex(self.points, self.angle)
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                pygame.gfxdraw.filled_polygon(self.game.screen, (
+                self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+            else:
+                self.draw_concave(self.points, self.angle)
+                #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                # length = len(self.lens_points)//2
+                # lens_points = []
+                # for point in self.lens_points:
+
+                #pygame.gfxdraw.filled_polygon(self.game.screen, lens_points, self.color)
+                pygame.draw.lines(self.game.screen, self.color, True, self.lens_points + self.lens_points2, 3)
+                #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+
             self.drawoutline()
     def adjust(self, x, y, d_angle):
         # Adjust the object's position and angle

@@ -110,6 +110,11 @@ class Button:
             self.icon = images.lens
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
+        elif self.number == 6:
+            self.color = (64, 137, 189)
+            self.icon = images.object_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
         elif self.number == -1:
             self.color = None
@@ -173,9 +178,14 @@ class Button:
                 # print(classes.game.isDrawingModeOn)
             elif self.number == 5:
                 obj = gameobjects.Lens(self.game,
-                                       [(mousepos[0] - 50, mousepos[1] - 50), (mousepos[0], mousepos[1] - 50),
-                                        (mousepos[0], mousepos[1] + 50), (mousepos[0] - 50, mousepos[1] + 50)],
-                                       (64, 137, 189), 0, 0.4)
+                                       [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                        (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                       (64, 137, 189), 0, 0 ,140, 0)
+            elif self.number == 6:
+                obj = gameobjects.Lens(self.game,
+                                       [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                        (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                       (64, 137, 189), 0, 1, 140, 0)
 
             elif self.number == -1:
                 if len(self.game.objects) > 3:
