@@ -95,7 +95,7 @@ class saveselector:
         for i, button in enumerate(self.buttons):
             self.target_positions[i] = (self.screen_height - self.container_height) // 2 + i * (
                         self.button_height + self.spacing) + self.spacing
-            ButtonAnimation(button, self.target_positions[i]).animate()
+            ButtonAnimation(button, button.rect.x, self.target_positions[i]).animate()
             if button.is_visible(self.container_rect):
                 if i + self.scroll_offset < len(self.saves_files):
                     button.text = self.saves_files[i + self.scroll_offset]
