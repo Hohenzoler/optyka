@@ -532,8 +532,10 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.angle = angle
         self.image = image if image else None
         self.lazer = False
+        self.rays = []
 
     def render(self):
+
         if not self.lazer:
             super().render()
             if self.islighting:
@@ -555,7 +557,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                         self.light = light.Light(self.game,
                                                  [[self.light_start_x, self.light_start_y]],
                                                  self.color, -1 * ray_angle, self.light_width, alpha=40)
-                        self.light.angle = -1 * ray_angle
+                        #self.light.angle = -1 * ray_angle
 
                         self.light.trace_path2()
                         self.placed = True
@@ -598,6 +600,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
 
     def light_adjust(self, center_x, center_y):
+
         if not self.lazer:
             self.light_start_x = center_x
             self.light_start_y = center_y

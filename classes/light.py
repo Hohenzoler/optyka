@@ -4,6 +4,15 @@ from classes import gameobjects, fps
 import time
 import settingsSetup
 import pygame.gfxdraw
+import functions
+
+class Ray:
+    def __init__(self, start_point, end_point, color):
+        self.start_point = start_point
+        self.end_point = end_point
+        self.color = color
+        self.active = True
+
 class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light
@@ -72,7 +81,6 @@ class Light:
             if self.index >= 10:
                 self.mini_run = False
     def check_object(self,object):
-
 
         object.get_slopes()
         self.slopes = object.slopes
@@ -205,12 +213,47 @@ class Light:
         try:
             ### For RTX Flashlight ###
             if self.game.settings['HD_Flashlight'] == 'ON':
-                new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-                new_line_surface.set_alpha(self.alpha)
+                # new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+                # new_line_surface.set_alpha(self.alpha)
                 for x in range(0, len(self.points) - 1):
-                    self.draw_thick_line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
-                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
-                self.game.screen.blit(new_line_surface, (0, 0))
+                    current_ray = Ray(self.points[x], self.points[x+1], self.colors[x])
+                    pointer = current_ray
+                    isAdded = False
+                    collisionless_layer = -1
+                    for surface_num, rays in self.game.surface_rays.items():
+                        collides = False
+                        # if rays == [] and len(self.game.surfaces) >0:
+                        #     self.game.surface_num -= 1
+                        #     #self.game.surface_rays.pop(surface_num)
+                        #     self.game.surfaces.pop()
+                        for ray in rays:
+                            if functions.do_lines_intersect(ray.start_point, ray.end_point, current_ray.start_point, current_ray.end_point):
+                                collides = True
+                            if current_ray.start_point == ray.start_point and current_ray.end_point == ray.end_point:
+                                isAdded = True
+                                if ray.active == False:
+                                    break
+                        if collides is False:
+                            collisionless_layer = surface_num
+                    if isAdded is False:
+                        if collisionless_layer != -1:
+                            self.game.surface_rays[collisionless_layer].append(current_ray)
+                        else:
+                            # More efficient way, but kinda glitchy
+                            self.game.surface_rays[max(self.game.surface_rays.keys())].append(current_ray)
+
+                            # Unfinished optimal method
+
+                            # self.game.surface_rays[max(self.game.surface_rays.keys()) + 1] = [current_ray]
+                            # surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+                            # surface.set_alpha(40)
+                            # self.game.surfaces.append(surface)
+                            # self.game.surface_num += 1
+                            # print("add")
+
+                    # self.draw_thick_line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
+                    #                     int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
+                #self.game.screen.blit(new_line_surface, (0, 0))
             ### For Simple Flashlight ###
             else:
                 for x in range(0, len(self.points) - 1):

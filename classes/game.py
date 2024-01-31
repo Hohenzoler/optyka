@@ -13,6 +13,7 @@ from classes import parkinson as particles
 from classes.font import Font
 import time
 from datetime import datetime
+import functions
 
 isDrawingModeOn = False
 class Game:
@@ -60,6 +61,13 @@ class Game:
         self.cursor_particle_system = particles.UnityParticleSystem()
 
         self.cached_mousepos = None
+
+        self.surface_num = 12 # IMPORTANT lower numbers = higher fps, higher numbers = better quality
+        self.surfaces = [pygame.Surface((self.width, self.height), pygame.SRCALPHA) for _ in range(self.surface_num)]
+        for surface in self.surfaces:
+            surface.set_alpha(40)
+
+        self.surface_rays = {i : [] for i in range(self.surface_num)}
 
         self.save = False
         self.save_title = None
@@ -155,6 +163,21 @@ class Game:
         self.render_particles()
 
         if self.mode == 'default':
+            if self.settings['HD_Flashlight'] == 'ON':
+                for surface in self.surfaces:
+                    surface.fill((0, 0, 0, 0))
+                #self.surfaces = [surface.copy() for surface in self.default_surfaces]
+
+                for surface_num, rays in self.surface_rays.items():
+                    if surface_num > self.surface_num -1:
+                        break
+                    for ray in rays:
+                        functions.draw_thick_line(self.surfaces[surface_num], int(ray.start_point[0]), int(ray.start_point[1]),
+                                             int(ray.end_point[0]), int(ray.end_point[1]), ray.color, 5)
+                    self.screen.blit(self.surfaces[surface_num], (0, 0))
+
+                self.surface_rays = {i: [] for i in range(self.surface_num)}
+
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
             for object in sorted_objects:
                 if type(self.mousepos) is tuple:
