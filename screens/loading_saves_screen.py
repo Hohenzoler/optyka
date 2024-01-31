@@ -3,7 +3,7 @@ from gui import button
 import os
 from classes import parkinson as particles
 import random
-
+from gui.button_animation import ButtonAnimation
 
 class loading_saves_screen:
     def __init__(self, game):
@@ -95,7 +95,7 @@ class saveselector:
         for i, button in enumerate(self.buttons):
             self.target_positions[i] = (self.screen_height - self.container_height) // 2 + i * (
                         self.button_height + self.spacing) + self.spacing
-            button.rect.y += (self.target_positions[i] - button.rect.y) * 0.1
+            ButtonAnimation(button, self.target_positions[i]).animate()
             if button.is_visible(self.container_rect):
                 if i + self.scroll_offset < len(self.saves_files):
                     button.text = self.saves_files[i + self.scroll_offset]
