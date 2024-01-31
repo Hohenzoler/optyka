@@ -5,6 +5,7 @@ from gui import button
 import settingsSetup
 from screens import settings_screen, loading_saves_screen
 from classes import parkinson as particles
+from gui.button_animation import ButtonAnimation
 
 pygame.init()
 
@@ -48,6 +49,8 @@ class StartScreen:
         self.maintextRect.center = (self.width // 2, (self.height // 2) - (3 * self.height // 10))
 
         self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
+
+        self.button_animations = []
 
         pygame.display.set_caption('Optyka')
 
@@ -105,6 +108,8 @@ class StartScreen:
         self.screen.fill('black')
         self.particle_system.update()
         self.particle_system.draw(self.screen)
+        for animation in self.button_animations:
+            animation.animate()
         for object in self.objects:
             object.render()
 
@@ -138,6 +143,7 @@ class StartScreen:
                 self.screen_mode = None
 
             self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
+            self.button_animations = [ButtonAnimation(b, b.rect.x + i * 100) for i, b in enumerate(self.buttons)]
             self.executed_functions = 'default'
 
 
