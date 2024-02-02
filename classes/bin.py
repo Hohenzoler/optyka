@@ -4,7 +4,18 @@ from classes import sounds, parkinson as particles, achievements, color_picker
 import random
 
 class Bin:
+    """
+    This class represents a Bin in the game. It has methods to check collision with game objects,
+    render itself and load settings from the game settings.
+    """
+
     def __init__(self, game):
+        """
+        Initializes the Bin object.
+
+        Args:
+            game (Game): The game object that this Bin is part of.
+        """
         self.particle_system = particles.UnityParticleSystem()
         self.game = game
         self.x = self.game.width - 150
@@ -26,6 +37,12 @@ class Bin:
         self.achievements = game.achievements
 
     def checkCollision(self, obj):
+        """
+        Checks if the Bin has collided with a game object.
+
+        Args:
+            obj (GameObject): The game object to check collision with.
+        """
         if obj.rect.colliderect(self.rect) and isinstance(obj, go.GameObject):
             if obj.color != None:
                 rgb = obj.color
@@ -41,14 +58,23 @@ class Bin:
 
 
     def render(self):
+        """
+        Renders the Bin on the game screen.
+        """
         self.game.screen.blit(self.bin_img, self.rect)
         self.particle_system.update()
         self.particle_system.draw(self.game.screen)
 
     def load_settings(self):
+        """
+        Loads the settings from the game settings.
+        """
         self.load_parameters()
 
     def load_parameters(self):
+        """
+        Loads the parameters from the game settings.
+        """
         settings = self.game.settings
 
         self.x = self.game.width - self.game.width // 10
@@ -72,5 +98,3 @@ class Bin:
 
         self.particle_center_x = self.x + self.rect_w//2
         self.particle_center_y = self.y + self.rect_h//2
-
-

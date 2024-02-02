@@ -4,11 +4,44 @@ from ttkbootstrap import ttk
 from ttkbootstrap import Style
 
 class Save:
+    """
+    A class to represent the save functionality of a game.
+
+    ...
+
+    Attributes
+    ----------
+    root : Tk
+        a toplevel widget of Tk which represents the main window of an application
+    game : obj
+        the game object that is being saved
+    style : Style
+        the style object for the tkinter window
+    entry : Entry
+        the entry widget used to get the save title from the user
+
+    Methods
+    -------
+    dont_save():
+        Destroys the tkinter window and sets the game's save attribute to False.
+    save():
+        Gets the save title from the entry widget, replaces spaces with underscores,
+        sets the game's save attribute to True and the game's save_title attribute to the save title,
+        and then destroys the tkinter window.
+    """
+
     def __init__(self, game):
+        """
+        Constructs all the necessary attributes for the save object.
+
+        Parameters
+        ----------
+            game : obj
+                the game object that is being saved
+        """
+
         self.root = tk.Tk()
-
         self.game = game
-
 
         self.root.grid_columnconfigure(0, weight=1)
         self.root.grid_columnconfigure(1, weight=1)
@@ -36,12 +69,21 @@ class Save:
         self.root.mainloop()
 
     def dont_save(self):
+        """
+        Destroys the tkinter window and sets the game's save attribute to False.
+        """
+
         self.game.save = False
 
         self.root.destroy()
         self.root.quit()
 
     def save(self):
+        """
+        Gets the save title from the entry widget, replaces spaces with underscores,
+        sets the game's save attribute to True and the game's save_title attribute to the save title,
+        and then destroys the tkinter window.
+        """
 
         save_title = self.entry.get().strip()
 
@@ -53,4 +95,3 @@ class Save:
 
             self.root.destroy()
             self.root.quit()
-# a = Save()
