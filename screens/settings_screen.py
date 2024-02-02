@@ -4,6 +4,7 @@ from gui import menu_buttons as dm
 from classes import sounds
 from classes import parkinson as particles
 import random
+from gui.button_animation import ButtonAnimation
 
 class Settings_screen:
     def __init__(self, game):
@@ -53,6 +54,7 @@ class Settings_screen:
 
         self.flashlighttextRect.center = (self.width // 2 - self.width // 10, self.height // 2 + (self.height // 9 + self.height // 47))
         save_n_exit = button.ButtonForgame(71, self)
+        self.save_n_exit_animation = ButtonAnimation(save_n_exit, save_n_exit.rect.x*6+(save_n_exit.width//2), save_n_exit.rect.y)
 
         self.Menu_buttons = []
 
@@ -72,6 +74,7 @@ class Settings_screen:
         self.particle_system.update()
         self.particle_system.draw(self.screen)
 
+        self.save_n_exit_animation.animate()
         for object in self.objects:
             object.render()
 
