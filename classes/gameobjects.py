@@ -8,6 +8,8 @@ from pygame.transform import rotate
 import random
 import settingsSetup
 from pygame import gfxdraw
+from classes import bin
+from gui.gui_main import GUI
 settings = settingsSetup.start()
 
 NUM_RAYS = settings['Flashlight_Rays']
@@ -156,10 +158,10 @@ class GameObject:
 
         pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
 
-        # Check for collisions with other game objects
         for obj in self.game.objects:
-            if obj != self and obj.rect.colliderect(temp_rect):
-                return
+            if obj.rect.colliderect(temp_rect):
+                if obj != self and isinstance(obj, GameObject):
+                    return
 
         # Reset the flag to regenerate triangles
         self.triangles_generated = False
