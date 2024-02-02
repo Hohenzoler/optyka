@@ -148,10 +148,18 @@ class GameObject:
         return rotated_points
 
     def adjust(self, x, y, d_angle):
-        # Adjust the object's position and angle
         self.angle += d_angle
         self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
         self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
+
+        temp_rect = self.rect.move(self.x, self.y)
+
+        pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
+
+        # Check for collisions with other game objects
+        for obj in self.game.objects:
+            if obj != self and obj.rect.colliderect(temp_rect):
+                return
 
         # Reset the flag to regenerate triangles
         self.triangles_generated = False
