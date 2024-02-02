@@ -74,7 +74,6 @@ class Parameters:
         color = f'#{int(red):02X}{int(green):02X}{int(blue):02X}'
         self.color_preview_canvas.config(bg=color)
 
-
     def store_parameters(self):
         new_parameters = {}
 
@@ -91,25 +90,28 @@ class Parameters:
             lazer_on = {'lazer': self.slider_buttons[0].value}
             new_parameters.update(lazer_on)
 
-
         try:
             for param, entry_widget in self.parameters_dict.items():
                 if param == 'lazer' or param == 'red':
                     break
-
                 value = entry_widget.get()
 
                 if param == 'size':
                     value = str(value)
                     value = value.strip("%")
-                    value = float(value)/100
+                    value = float(value) / 100
                     self.object.points = self.change_size(value)
 
-                if param == 'reflection_factor':
-                    self.object.reflection_factor = float(value)
-
-                if param == 'transmittance':
-                    self.object.transmittance = float(value)
+                if param == 'reflection_factor' or param == 'transmittance':
+                    value = float(value)
+                    if value < 0:
+                        value = 0
+                    elif value > 1:
+                        value = 1
+                    if param == 'reflection_factor':
+                        self.object.reflection_factor = value
+                    else:
+                        self.object.transmittance = value
 
                 value = float(value)
                 new_parameters[param] = value
