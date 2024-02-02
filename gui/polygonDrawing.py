@@ -20,5 +20,5 @@ def renderDots():
 def createPolygon():
     if len(currentPolygonPoints) >= 3:
         print(1345)
-        Adam = gameobjects.GameObject(game, currentPolygonPoints, (200, 0, 0), None, None)
+        Adam = gameobjects.GameObject(game, currentPolygonPoints, (200, 0, 0), None, None, 30)
     currentPolygonPoints.clear()

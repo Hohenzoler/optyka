@@ -108,6 +108,9 @@ class Parameters:
                 if param == 'reflection_factor':
                     self.object.reflection_factor = float(value)
 
+                if param == 'transmittance':
+                    self.object.transmittance = float(value)
+
                 value = float(value)
                 new_parameters[param] = value
 

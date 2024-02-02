@@ -19,7 +19,7 @@ DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
 
-    def __init__(self, game, points, color, angle, reflection_factor, image = None, texture =None, textureName=None):
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, image = None, texture =None, textureName=None):
         # Initialize common attributes
         self.game = game
         self.points = points
@@ -38,6 +38,7 @@ class GameObject:
         self.image = image if image else None
 
         self.reflection_factor = reflection_factor
+        self.transmittance = transmittance #przepuszczalność ;-;
 
         if image != None:
             self.image_width = self.image.get_width()
@@ -267,6 +268,8 @@ class GameObject:
 
         self.parameters['reflection_factor'] = self.reflection_factor
 
+        self.parameters['transmittance'] = self.transmittance
+
         if type(self) == Flashlight:
             lazer_on = {'lazer': self.lazer}
             self.parameters.update(lazer_on)
@@ -293,20 +296,20 @@ class GameObject:
 
 
 class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, islighting=False, image_path=None, texture = None, textureName=None):
-        super().__init__(game, points, color, angle, reflection_factor, image_path, texture, textureName)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None, textureName=None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture, textureName)
 
 class Prism(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, islighting=False, image_path=None, texture = None):
-        super().__init__(game, points, color, angle, reflection_factor, image_path, texture)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture)
 
 class ColoredGlass(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, islighting=False, image_path=None, texture = None):
-        super().__init__(game, points, color, angle, reflection_factor, image_path, texture)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture)
 
 class Lens(GameObject):
-    def __init__(self, game, points, color, angle, type, curvature_radius, reflection_factor, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, reflection_factor, image_path)
+    def __init__(self, game, points, color, angle, type, curvature_radius, reflection_factor, transmittance, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
         self.curvature_radius = curvature_radius
         self.type = type
         self.CONVEX = 0
@@ -533,8 +536,8 @@ class Lens(GameObject):
         self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
 
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, points, color, angle, reflection_factor, islighting=True, image=None):
-        super().__init__(game, points, color, angle, reflection_factor, image)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=True, image=None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image)
         self.islighting = bool(islighting)
         self.light = None
         self.light_width = 8
