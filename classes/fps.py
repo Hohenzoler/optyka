@@ -1,5 +1,8 @@
-import win32api
-from win32com.client import GetObject
+try:
+    import win32api
+    from win32com.client import GetObject
+except:
+    pass
 
 try:
     device_info = win32api.EnumDisplayDevices()
@@ -32,4 +35,7 @@ def get_cpu_type():
 # print(f"User's CPU: {get_cpu_type()}")
 
 def return_fps():
-    return refresh_rate(device_info)+1
+    try:
+        return refresh_rate(device_info)+1
+    except:
+        return refresh_rate("amogus")+1
