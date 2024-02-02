@@ -10,6 +10,7 @@ import settingsSetup
 from pygame import gfxdraw
 from classes import bin
 from gui.gui_main import GUI
+from classes.font import Font
 settings = settingsSetup.start()
 
 NUM_RAYS = settings['Flashlight_Rays']
@@ -109,6 +110,16 @@ class GameObject:
                     pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
 
         else:
+            font = pygame.font.Font(Font, self.game.width//40)
+
+            text = font.render('Click P to open parameters window', True, (255, 255, 255))
+
+            text_rect = text.get_rect()
+
+            text_rect.centerx = self.game.screen.get_rect().centerx
+            text_rect.y = 10
+
+            self.game.screen.blit(text, text_rect)
             mousepos = pygame.mouse.get_pos()
             if self.game.r:
 
