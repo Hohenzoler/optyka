@@ -78,7 +78,7 @@ class Light:
             elif self.current_object_type=='glass':
                 self.glass_stuff()
 
-            if self.index >= 10:
+            if self.index >= 100:
                 self.mini_run = False
     def check_object(self,object):
 
