@@ -59,7 +59,10 @@ class Parameters:
             try:
                 entry = ttk.Entry(self.root)
                 if param != 'size':
-                    entry.insert(0, str(self.parameters_dict[param]))# Set default value
+                    if param in ['reflection_factor', 'transmittance']:
+                        entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value in percentage
+                    else:
+                        entry.insert(0, str(self.parameters_dict[param])) # Set default value
                 else:
                     entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
                 entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
@@ -103,7 +106,9 @@ class Parameters:
                     self.object.points = self.change_size(value)
 
                 if param == 'reflection_factor' or param == 'transmittance':
-                    value = float(value)
+                    value = str(value)
+                    value = value.strip("%")
+                    value = float(value) / 100
                     if value < 0:
                         value = 0
                     elif value > 1:
