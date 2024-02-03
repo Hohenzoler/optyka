@@ -77,6 +77,10 @@ class Light:
                 self.mirror_stuff()
             elif self.current_object_type=='glass':
                 self.glass_stuff()
+            elif self.current_object_type == 'lens':
+                self.lens_stuff()
+            elif self.current_object_type=='flashlight':
+                self.flashlight_stuff()
 
             if self.index >= 100:
                 self.mini_run = False
@@ -134,11 +138,7 @@ class Light:
                                 self.current_point = point
                                 self.current_slope = slope
                                 self.current_object = object
-                                if type(object) == gameobjects.Mirror:
-                                    self.current_object_type = 'mirror'
-
-                                elif type(object) == gameobjects.ColoredGlass:
-                                    self.current_object_type = 'glass'
+                                self.object_type_check(object)
 
                             else:
                                 if dist < self.current_distance:
@@ -146,11 +146,17 @@ class Light:
                                     self.current_distance = dist
                                     self.current_point = point
                                     self.current_slope = slope
-                                    if type(object) == gameobjects.Mirror:
-                                        self.current_object_type = 'mirror'
-                                    elif type(object) == gameobjects.ColoredGlass:
-                                        self.current_object_type = 'glass'
+                                    self.object_type_check(object)
+    def object_type_check(self,object):
+        if type(object) == gameobjects.Mirror:
+            self.current_object_type = 'mirror'
 
+        elif type(object) == gameobjects.ColoredGlass:
+            self.current_object_type = 'glass'
+        elif type(object) == gameobjects.Lens:
+            self.current_object_type = 'lens'
+        elif type(object) == gameobjects.Flashlight:
+            self.current_object_type = 'flashlight'
     def glass_stuff(self):
         self.points.append(self.current_point)
         self.RGB.compare(RGB(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
@@ -190,6 +196,11 @@ class Light:
         self.calibrate_r2()
 
         self.current_starting_point = self.current_point
+    def lens_stuff(self):
+        pass
+
+    def flashlight_stuff(self):
+        pass
     def calibrate_r2(self):
         if self.r>2*math.pi:
             self.r-=2*math.pi
