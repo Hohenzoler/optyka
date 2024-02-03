@@ -29,8 +29,8 @@ def destroy_sound():
     pass
 
 def soundtrack():
-    # pygame.mixer.music.load('sounds/AI.mp3')
-    # pygame.mixer.music.play(-1)
+    pygame.mixer.music.load('sounds/mc.mp3')
+    pygame.mixer.music.play(-1)
     pass
 
 if __name__ == '__main__':
