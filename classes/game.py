@@ -134,7 +134,7 @@ class Game:
             elif self.mode == 'settings':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     for object in self.objects:
-                        if type(object) == settings_screen.Settings_screen:
+                        if isinstance(object, settings_screen.Settings_screen):
                             object.checkevent(event.pos)
 
     def update(self):
@@ -183,10 +183,10 @@ class Game:
                 if type(self.mousepos) is tuple:
                     if type(object) is gui.GUI:
                         object.checkifclicked(self.mousepos)
-                    if issubclass(type(object), gameobjects.GameObject):
+                    if isinstance(object, gameobjects.GameObject):
                         object.checkifclicked(self.mousepos)
                 if type(self.rightclickedmousepos) is tuple:
-                    if issubclass(type(object), gameobjects.GameObject):
+                    if isinstance(object, gameobjects.GameObject):
                         object.selected(self.rightclickedmousepos)
 
 
@@ -299,7 +299,7 @@ class Game:
     def load(self):
         save = settingsSetup.load_settings(f"saves/{self.save_to_load}.json")
         for parameters in save:
-            if type(parameters) != dict:
+            if not isinstance(parameters, dict):
                 break
 
             mousepos = (500, 500)
