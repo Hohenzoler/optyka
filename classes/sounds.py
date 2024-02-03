@@ -2,30 +2,30 @@ import pygame
 
 
 def selected_sound():
-    # selected_sound = pygame.mixer.Sound('sounds/goofier.wav')
-    # selected_sound.play()
+    selected_sound = pygame.mixer.Sound('sounds/select.wav')
+    selected_sound.play()
     pass
 
 
 def placed_sound():
-    # placed_sound = pygame.mixer.Sound('sounds/place.wav')
-    # placed_sound.play()
+    placed_sound = pygame.mixer.Sound('sounds/place.wav')
+    placed_sound.play()
     pass
 
 
 def clicked_sound():
-    # clicked_sound = pygame.mixer.Sound('sounds/goofier.wav')
-    # clicked_sound.play()
+    clicked_sound = pygame.mixer.Sound('sounds/select.wav')
+    clicked_sound.play()
     pass
 
 def laser_sound():
-    # laser_sound = pygame.mixer.Sound('sounds/upo_laser.wav')
-    # laser_sound.play()
+    laser_sound = pygame.mixer.Sound('sounds/place.wav')
+    laser_sound.play()
     pass
 
 def destroy_sound():
-    # destroy_sound = pygame.mixer.Sound('sounds/explosion.wav')
-    # destroy_sound.play()
+    destroy_sound = pygame.mixer.Sound('sounds/explosion.wav')
+    destroy_sound.play()
     pass
 
 def soundtrack():
