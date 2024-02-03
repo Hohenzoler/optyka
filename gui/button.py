@@ -204,7 +204,6 @@ class Button:
             except:
                 pass
 
-            sounds.selected_sound()
 
 class ButtonForgame:
     """
