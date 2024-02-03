@@ -162,6 +162,13 @@ class GameObject:
         return rotated_points
 
     def adjust(self, x, y, d_angle):
+        while True:
+            if self.angle >= 360:
+                self.angle -= 360
+            elif self.angle < 0:
+                self.angle += 360
+            else:
+                break
         self.angle += d_angle
         self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
         self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
