@@ -22,6 +22,7 @@ pen = pygame.image.load('images/pen.png')  # Loading the pen image
 water = pygame.image.load('images/materials/water.png')  # Loading the water image
 clouds = pygame.image.load('images/materials/clouds.png')  # Loading the clouds image
 wood = pygame.image.load('images/materials/wood.png')  # Loading the wood image
+glass = pygame.image.load('images/materials/glass_kind_of_idk.png')  # Loading the glass image
 papier = pygame.image.load('images/materials/paper.png')  # Loading the paper image
 lens = pygame.image.load('images/glasses.png')  # Loading the lens image
 glass_icon = pygame.image.load("images/glass_thing_icon.png")  # Loading the glass icon image
