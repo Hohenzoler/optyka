@@ -104,7 +104,11 @@ class StartScreen:
                                 if button1.rect.collidepoint(event.pos):
                                     self.run = False
                                     self.save_to_load = button1.text
-
+                    elif type(object) == loading_saves_screen.saveselector.Slider:
+                        if event.button == 4:
+                            object.slider_pos = max(0, object.slider_pos - 1)
+                        elif event.button == 5:
+                            object.slider_pos = min(object.num_sections - 1, object.slider_pos + 1)
     def render(self):
         self.screen.fill('black')
         self.particle_system.update()
