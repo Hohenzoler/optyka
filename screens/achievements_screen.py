@@ -17,7 +17,16 @@ class AchievementsScreen:
         conn.close()
 
     def render(self):
-        y_offset = 50
+        font = pygame.font.Font(classes.font.Font, self.game.width // 30)
+
+        text = font.render('Achievements', True, (255, 255, 255))
+
+        text_rect = text.get_rect()
+
+        text_rect.centerx = self.game.screen.get_rect().centerx
+        self.game.screen.blit(text, text_rect)
+        text_rect.y = 10
+        y_offset = 100
         for achievement in self.achievements:
             achievement_name, unlocked, rarity = achievement
             color = (0, 255, 0) if unlocked else (255, 0, 0)
