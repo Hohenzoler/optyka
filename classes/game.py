@@ -16,6 +16,7 @@ from datetime import datetime
 import functions
 import gui
 from gui import polygonDrawing
+from screens import achievements_screen
 
 
 isDrawingModeOn = False
@@ -28,7 +29,6 @@ class Game:
         Initializes the game with settings, pygame, objects, and other necessary attributes.
         """
         self.save_to_load = save
-
         self.settings = settingsSetup.load_settings()  # Load game settings
         self.width = self.settings['WIDTH']  # Game width
         self.height = self.settings['HEIGHT']  # Game height
@@ -40,6 +40,7 @@ class Game:
             self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=0)
         else:
             self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
+
         self.run = True  # Game loop control
         self.fps = fps.return_fps()  # Frames per second
         self.tick = int((1 / self.fps) * 1000)  # Time per frame in milliseconds
@@ -77,6 +78,9 @@ class Game:
 
         self.background_color = (0, 0, 0)
 
+    def go_to_achievements_screen(self):
+        self.mode = 'achievements'
+        self.achievements_screen = achievements_screen.AchievementsScreen(self)
 
 
     def create_cursor_particles(self):
@@ -132,6 +136,9 @@ class Game:
                         self.p = True
                     elif event.key == 13 and isDrawingModeOn:
                         gui.polygonDrawing.createPolygon()
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if self.achievements_button.is_clicked(event.pos):
+                        self.achievements_button.action()
 
 
             elif self.mode == 'settings':
@@ -163,6 +170,8 @@ class Game:
         """
         Renders all the game objects and the custom cursor.
         """
+        self.achievements_button = achievements_screen.Button(self, "Achievements", self.width - 150, 300, 150, 40,
+                                                              self.go_to_achievements_screen)
         self.render_particles()
 
         if self.mode == 'default':
@@ -223,6 +232,11 @@ class Game:
                 if type(object) == gui1.GUI or type(object) == bin.Bin:
                     object.load_settings()
             self.executed_command = 'default'
+
+        if self.mode == 'default':
+            self.achievements_button.render()
+        elif self.mode == 'achievements':
+            self.achievements_screen.render()
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
         if isDrawingModeOn:
             self.screen.blit(self.pen_img, self.cursor_img_rect)
@@ -230,6 +244,7 @@ class Game:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
         self.displayFPS()
         self.displayClock()
+
 
     def background(self):
         # Use the background color attribute to fill the game display
