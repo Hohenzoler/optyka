@@ -89,7 +89,8 @@ class saveselector:
 
         self.container_rect = pygame.Rect((self.screen_width - self.container_width) // 2, (self.screen_height - self.container_height) // 2, self.container_width, self.container_height)
 
-        s = self.Slider(self)
+        if len(self.saves_files) > 3:
+            s = self.Slider(self)
 
         self.game.objects.append(self)
 
@@ -131,12 +132,11 @@ class saveselector:
         def __init__(self, loading_save_screen):
             self.display = loading_save_screen
             self.num_sections = len(self.display.saves_files) - 2
-            self.section_height = self.display.container_height // self.num_sections
+            self.section_height = (self.display.button_height * 3 + self.display.spacing * 3) // self.num_sections
             self.slider_height = self.section_height
             self.slider_pos = 0
             self.screen = self.display.game.screen
             self.display.game.objects.append(self)
         def render(self):
-            pygame.draw.rect(self.screen, (255, 255, 255), (0, 0, 20, self.section_height))
-            pygame.draw.rect(self.screen, (0, 0, 255),
-                             (0, self.slider_pos * self.section_height, 20, self.slider_height))
+            pygame.draw.rect(self.screen, (26, 26, 26), (((self.display.screen_width - self.display.button_width) // 2) + self.display.button_width + 20, self.display.target_positions[0] - 5, 20, self.section_height * self.num_sections))
+            pygame.draw.rect(self.screen, (200, 200, 200), (((self.display.screen_width - self.display.button_width) // 2) + self.display.button_width + 20, self.slider_height*self.slider_pos + self.display.target_positions[0] - 5, 20, self.slider_height))
