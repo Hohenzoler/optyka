@@ -89,7 +89,41 @@ class saveselector:
 
         self.container_rect = pygame.Rect((self.screen_width - self.container_width) // 2, (self.screen_height - self.container_height) // 2, self.container_width, self.container_height)
 
+        self.slider_height = int(self.container_height / (len(self.saves_files) + 1))
+        self.slider_rect = pygame.Rect(self.container_rect.right - 15, self.container_rect.top, 15, self.slider_height)
+        self.dragging = False
+        self.drag_start_y = 0
+
+
         self.game.objects.append(self)
+
+    def handle_events(self, events):
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
+                self.scroll_offset = max(0, self.scroll_offset - 1)
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 5:
+                self.scroll_offset = min(len(self.saves_files) - self.num_of_buttons, self.scroll_offset + 1)
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if self.slider_rect.collidepoint(event.pos):
+                    self.dragging = True
+                    self.drag_start_y = event.pos[1]
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                self.dragging = False
+
+            elif event.type == pygame.MOUSEMOTION and self.dragging:
+                delta_y = event.pos[1] - self.drag_start_y
+                self.drag_start_y = event.pos[1]
+                self.scroll_offset = max(0,
+                                         min(len(self.saves_files) - self.num_of_buttons, self.scroll_offset + delta_y))
+
+    def render_slider(self):
+        slider_y = int(
+            ((self.num_of_buttons - 1) / (len(self.saves_files) - 1)) * (self.container_height - self.slider_height) * (
+                        self.scroll_offset / (len(self.saves_files) - self.num_of_buttons)))
+
+        self.slider_rect = pygame.Rect(self.container_rect.right - 15, self.container_rect.top + slider_y, 15,
+                                       self.slider_height)
+        pygame.draw.rect(self.game.screen, (100, 100, 100), self.slider_rect)
 
     def render(self):
         for i, button in enumerate(self.buttons):
@@ -100,6 +134,8 @@ class saveselector:
                 if i + self.scroll_offset < len(self.saves_files):
                     button.text = self.saves_files[i + self.scroll_offset]
                 button.render()
+        if len(self.saves_files) > 3:
+            self.render_slider()
 
     class Button_v2:
         def __init__(self, game, text, x, y, width, height):
