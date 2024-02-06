@@ -14,9 +14,8 @@ from classes.font import Font
 import time
 from datetime import datetime
 import functions
-import optyka
-from optyka import gui
-from optyka.gui import polygonDrawing
+import gui
+from gui import polygonDrawing
 
 
 isDrawingModeOn = False
@@ -132,7 +131,7 @@ class Game:
                     if event.key == pygame.K_p:
                         self.p = True
                     elif event.key == 13 and isDrawingModeOn:
-                        optyka.gui.polygonDrawing.createPolygon()
+                        gui.polygonDrawing.createPolygon()
 
 
             elif self.mode == 'settings':
