@@ -27,7 +27,10 @@ class GUI:
 
         self.bin = bin.Bin(self.game)
 
-        self.buttons = [button.Button(self.game, x) for x in range(-3, 7)] #creates buttons
+        self.button_min = -3
+        self.button_max = 7
+
+        self.buttons = [button.Button(self.game, x) for x in range(self.button_min, self.button_max)] #creates buttons
 
 
     def render(self):
@@ -54,4 +57,4 @@ class GUI:
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
 
-        self.buttons = [button.Button(self.game, x) for x in range(-2, 7)] #creates buttons
+        self.buttons = [button.Button(self.game, x) for x in range(self.button_min, self.button_max)] #creates buttons
