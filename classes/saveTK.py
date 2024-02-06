@@ -73,8 +73,6 @@ class Save:
         Destroys the tkinter window and sets the game's save attribute to False.
         """
 
-        self.game.save = False
-
         self.root.destroy()
         self.root.quit()
 
@@ -88,10 +86,10 @@ class Save:
         save_title = self.entry.get().strip()
 
         if save_title != '':
-
-            self.game.save = True
             save_title = save_title.replace(' ', "_")
             self.game.save_title = save_title
+
+            self.game.save_to_file()
 
             self.root.destroy()
             self.root.quit()

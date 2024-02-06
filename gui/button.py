@@ -1,5 +1,7 @@
 import classes.game
 import pygame
+
+import settingsSetup
 from classes import gameobjects, sounds, images, saveTK
 from classes.font import Font
 
@@ -191,7 +193,16 @@ class Button:
 
             elif self.number == -1:
                 if len(self.game.objects) > 3:
-                    a = saveTK.Save(self.game)
+                    self.game.generate_save()
+                    if self.game.save_title != None:
+                        prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
+                        print(prev_save_data[:-1])
+                        print(self.game.save_obj[:-1])
+                        print(prev_save_data[:-1] == self.game.save_obj[:-1])
+                        if prev_save_data[:-1] != self.game.save_obj[:-1]:
+                            a = saveTK.Save(self.game)
+                    else:
+                        a = saveTK.Save(self.game)
                 self.game.run = False
             elif self.number == -2:
                 self.game.mode = 'settings'

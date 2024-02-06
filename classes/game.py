@@ -278,29 +278,9 @@ class Game:
                 self.load()
                 self.save_to_load = None
 
-        if self.save:
-            save_obj = []
-            for object in self.objects:
-                if issubclass(type(object), gameobjects.GameObject):
-                    object.find_parameters()
-                    object.parameters['class'] = object.__class__.__name__
-                    save_obj.append(object.parameters)
-            if not os.path.exists("saves"):
-                os.makedirs("saves")
-
-            current_time = datetime.now()
-            formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-            save_obj.append(formatted_time)
-
-            if os.path.exists(f'saves/{self.save_title}'):
-                old_save = settingsSetup.load_settings(f'saves/{self.save_title}.json')
-                new_save = old_save.update(save_obj)
-                settingsSetup.writesettingstofile(new_save, 2, f'saves/{self.save_title}.json')
-            else:
-                settingsSetup.writesettingstofile(save_obj, 2, f'saves/{self.save_title}.json')
-
     def load(self):
         save = settingsSetup.load_settings(f"saves/{self.save_to_load}.json")
+        self.save_title = self.save_to_load
         for parameters in save:
             if not isinstance(parameters, dict):
                 break
@@ -311,7 +291,7 @@ class Game:
                 obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, 0.5, image=images.torch)
 
             elif parameters['class'] == "Mirror":
-                obj = gameobjects.Mirror(self, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.4, 0.5, texture=images.wood, textureName='wood')
+                obj = gameobjects.Mirror(self, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.9, 0.5, texture=images.wood, textureName='wood')
 
             elif parameters['class'] == "ColoredGlass":
                 obj = gameobjects.ColoredGlass(self, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0.4, 0.5)
@@ -328,4 +308,25 @@ class Game:
             obj.change_parameters('not')
             self.objects.append(obj)
 
+    def generate_save(self):
+        self.save_obj = []
+        for object in self.objects:
+            if issubclass(type(object), gameobjects.GameObject):
+                object.find_parameters()
+                object.parameters['class'] = object.__class__.__name__
+                self.save_obj.append(object.parameters)
+        if not os.path.exists("saves"):
+            os.makedirs("saves")
 
+        current_time = datetime.now()
+        formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+        self.save_obj.append(formatted_time)
+
+
+    def save_to_file(self):
+        if os.path.exists(f'saves/{self.save_title}'):
+            old_save = settingsSetup.load_settings(f'saves/{self.save_title}.json')
+            new_save = old_save.update(self.save_obj)
+            settingsSetup.writesettingstofile(new_save, 2, f'saves/{self.save_title}.json')
+        else:
+            settingsSetup.writesettingstofile(self.save_obj, 2, f'saves/{self.save_title}.json')
