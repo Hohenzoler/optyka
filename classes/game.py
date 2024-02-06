@@ -2,8 +2,8 @@ import random
 import os
 import pygame
 from pygame import *
-from gui import polygonDrawing
-from gui import gui_main as gui
+from gui import gui_main as gui1
+from gui.gui_main import GUI
 from screens import settings_screen
 import settingsSetup
 from classes import fps
@@ -14,6 +14,10 @@ from classes.font import Font
 import time
 from datetime import datetime
 import functions
+import optyka
+from optyka import gui
+from optyka.gui import polygonDrawing
+
 
 isDrawingModeOn = False
 class Game:
@@ -127,8 +131,8 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.p = True
-                    elif event.key == 13:
-                        gui.polygonDrawing.createPolygon()
+                    elif event.key == 13 and isDrawingModeOn:
+                        optyka.gui.polygonDrawing.createPolygon()
 
 
             elif self.mode == 'settings':
@@ -181,7 +185,7 @@ class Game:
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
             for object in sorted_objects:
                 if type(self.mousepos) is tuple:
-                    if type(object) is gui.GUI:
+                    if type(object) is gui1.GUI:
                         object.checkifclicked(self.mousepos)
                     if isinstance(object, gameobjects.GameObject):
                         object.checkifclicked(self.mousepos)
@@ -217,7 +221,7 @@ class Game:
             else:
                 self.screen = pygame.display.set_mode((self.width, self.height))
             for object in self.objects:
-                if type(object) == gui.GUI or type(object) == bin.Bin:
+                if type(object) == gui1.GUI or type(object) == bin.Bin:
                     object.load_settings()
             self.executed_command = 'default'
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
@@ -303,7 +307,7 @@ class Game:
                 break
 
             mousepos = (500, 500)
-
+            print('as')
             if parameters['class'] == "Flashlight":
                 obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, image=images.torch)
 
@@ -318,6 +322,8 @@ class Game:
 
             elif parameters['class'] == "Lens":
                 obj = gameobjects.Lens(self, [(mousepos[0] - 50, mousepos[1] - 50), (mousepos[0], mousepos[1] - 50), (mousepos[0], mousepos[1] + 50), (mousepos[0] - 50, mousepos[1] + 50)], (64, 137, 189), 0, 0.4)
+
+            # elif parameters['class'] == ""
 
             obj.parameters = parameters
             obj.change_parameters('not')

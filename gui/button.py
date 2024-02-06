@@ -4,7 +4,7 @@ from classes import gameobjects, sounds, images, saveTK
 from classes.font import Font
 
 
-
+spiel = None
 class Button:
     """
     This class represents a Button in the game.
@@ -173,8 +173,10 @@ class Button:
             elif self.number == 4:
                 if classes.game.isDrawingModeOn == True:
                     classes.game.isDrawingModeOn = False
+
                 elif classes.game.isDrawingModeOn == False:
                     classes.game.isDrawingModeOn = True
+                    spiel = self.game
                 # print(classes.game.isDrawingModeOn)
             elif self.number == 5:
                 obj = gameobjects.Lens(self.game,

@@ -1,452 +1,211 @@
-2024-01-26 17:30:46,297 - ERROR - database disk image is malformed
+2024-01-26 17:46:14,555 - ERROR - name 'optyka' is not defined
 Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 34, in main
-    game_instance = game.Game()
-                    ^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 45, in __init__
-    self.achievements = Achievements(self)  # Achievements object
-                        ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 9, in __init__
-    self.cursor.execute("""
-sqlite3.DatabaseError: database disk image is malformed
-2024-01-26 17:30:56,591 - ERROR - database disk image is malformed
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 34, in main
-    game_instance = game.Game()
-                    ^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 45, in __init__
-    self.achievements = Achievements(self)  # Achievements object
-                        ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 9, in __init__
-    self.cursor.execute("""
-sqlite3.DatabaseError: database disk image is malformed
-2024-01-26 17:56:24,785 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
+  File "D:\Python\optyka\main.py", line 38, in main
     game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 17:56:37,775 - ERROR - Library not initialized
+  File "D:\Python\optyka\classes\game.py", line 179, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 68, in events
+    optyka.gui.polygonDrawing.addPoint(self.mousepos)
+NameError: name 'optyka' is not defined
+2024-01-26 17:47:08,043 - ERROR - module 'optyka' has no attribute 'gui'
 Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
+  File "D:\Python\optyka\main.py", line 38, in main
     game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 17:58:08,196 - ERROR - display Surface quit
+  File "D:\Python\optyka\classes\game.py", line 180, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 69, in events
+    optyka.gui.polygonDrawing.addPoint(self.mousepos)
+AttributeError: module 'optyka' has no attribute 'gui'
+2024-01-26 17:47:38,287 - ERROR - module 'optyka.gui' has no attribute 'polygonDrawing'
 Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 30, in main
-    startscreen = ss.StartScreen(width, height)
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\startscreen.py", line 37, in __init__
-    self.mainloop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\startscreen.py", line 52, in mainloop
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 181, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 70, in events
+    optyka.gui.polygonDrawing.addPoint(self.mousepos)
+AttributeError: module 'optyka.gui' has no attribute 'polygonDrawing'
+2024-01-26 17:48:00,478 - ERROR - list index out of range
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 182, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 84, in events
+    optyka.gui.polygonDrawing.createPolygon()
+  File "D:\Python\optyka\gui\polygonDrawing.py", line 24, in createPolygon
+    gameobjects.GameObject.render(Adam)
+  File "D:\Python\optyka\classes\gameobjects.py", line 66, in render
+    self.get_slopes()
+  File "D:\Python\optyka\classes\gameobjects.py", line 58, in get_slopes
+    self.slopes.append((self.points[len(self.points)-1],self.points[0]))
+IndexError: list index out of range
+2024-01-26 17:49:32,520 - ERROR - module 'pygame' has no attribute 'K_ENTER'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 182, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 83, in events
+    elif event.key == pygame.K_ENTER:
+AttributeError: module 'pygame' has no attribute 'K_ENTER'
+2024-01-26 17:49:56,237 - ERROR - module 'pygame' has no attribute 'K_Enter'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 182, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 83, in events
+    elif event.key == pygame.K_Enter:
+AttributeError: module 'pygame' has no attribute 'K_Enter'
+2024-01-26 17:50:07,259 - ERROR - module 'pygame' has no attribute 'K_Enter'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 182, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 83, in events
+    elif event.key == pygame.K_Enter:
+AttributeError: module 'pygame' has no attribute 'K_Enter'
+2024-01-26 17:50:20,868 - ERROR - module 'pygame' has no attribute 'K_enter'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 182, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 83, in events
+    elif event.key == pygame.K_enter:
+AttributeError: module 'pygame' has no attribute 'K_enter'
+2024-01-26 17:50:50,098 - ERROR - module 'pygame' has no attribute 'K_enter'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 183, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 84, in events
+    elif event.key == pygame.K_enter:
+AttributeError: module 'pygame' has no attribute 'K_enter'
+2024-01-26 17:51:29,786 - ERROR - module 'pygame' has no attribute 'K_enter'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 183, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 84, in events
+    elif event.key == pygame.K_enter:
+AttributeError: module 'pygame' has no attribute 'K_enter'
+2024-01-26 18:00:51,211 - ERROR - GameObject.printSelf() missing 1 required positional argument: 'self'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 177, in loop
+    GameObject.printSelf()
+TypeError: GameObject.printSelf() missing 1 required positional argument: 'self'
+2024-01-26 18:08:02,472 - ERROR - non-integer arg 1 for randrange()
+Traceback (most recent call last):
+  File "D:\Python\lib\random.py", line 303, in randrange
+    istart = _index(start)
+TypeError: 'float' object cannot be interpreted as an integer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 177, in loop
     self.render()
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\startscreen.py", line 68, in render
+  File "D:\Python\optyka\classes\game.py", line 117, in render
+    object.render()
+  File "D:\Python\optyka\classes\bin.py", line 38, in render
+    self.particle_system.update()
+  File "D:\Python\optyka\classes\parkinson.py", line 33, in update
+    particle.update()
+  File "D:\Python\optyka\classes\parkinson.py", line 17, in update
+    self.x += random.randint(0.5 * self.vx, 2 * self.vx)
+  File "D:\Python\lib\random.py", line 370, in randint
+    return self.randrange(a, b+1)
+  File "D:\Python\lib\random.py", line 309, in randrange
+    raise ValueError("non-integer arg 1 for randrange()")
+ValueError: non-integer arg 1 for randrange()
+2024-01-26 18:12:30,736 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 183, in loop
+    self.achievements.fps_achievements()
+  File "D:\Python\optyka\classes\achievements.py", line 67, in fps_achievements
+    if int(game.Game.return_fps(self.game)) < 10:
+  File "D:\Python\optyka\classes\game.py", line 56, in return_fps
+    return self.displayFPS()
+  File "D:\Python\optyka\classes\game.py", line 165, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+pygame.error: Library not initialized
+2024-01-26 18:19:33,632 - ERROR - display Surface quit
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 30, in main
+    startscreen = ss.StartScreen(width, height)
+  File "D:\Python\optyka\gui\startscreen.py", line 37, in __init__
+    self.mainloop()
+  File "D:\Python\optyka\gui\startscreen.py", line 52, in mainloop
+    self.render()
+  File "D:\Python\optyka\gui\startscreen.py", line 68, in render
     self.screen.fill('black')
 pygame.error: display Surface quit
-2024-01-26 17:59:31,991 - ERROR - Library not initialized
+2024-01-26 18:23:31,790 - ERROR - name 'Adam' is not defined
 Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
+  File "D:\Python\optyka\main.py", line 38, in main
     game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:00:02,823 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:02:29,551 - ERROR - unknown color name "188 149 26"
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 168, in loop
+  File "D:\Python\optyka\classes\game.py", line 177, in loop
     self.render()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 108, in render
-    object.render()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 332, in render
-    super().render()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 91, in render
-    self.change_parameters()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 237, in change_parameters
-    window = mp.Parameters(self)
-             ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\ModifyParameters.py", line 28, in __init__
-    self.create_element(param, idx+1)
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\ModifyParameters.py", line 51, in create_element
-    toggleswitch = ToggleSwitch(self.root)
-                   ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\ModifyParameters.py", line 109, in __init__
-    self.create_rounded_rectangle()
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\ModifyParameters.py", line 119, in create_rounded_rectangle
-    self.create_oval(2, 2, 28, 28, fill=(188, 149, 26), outline="black", width=2, tags="slider")
-  File "C:\Users\This PC\AppData\Local\Programs\Python\Python311\Lib\tkinter\__init__.py", line 2854, in create_oval
-    return self._create('oval', args, kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\AppData\Local\Programs\Python\Python311\Lib\tkinter\__init__.py", line 2832, in _create
-    return self.tk.getint(self.tk.call(
-                          ^^^^^^^^^^^^^
-_tkinter.TclError: unknown color name "188 149 26"
-2024-01-26 18:05:26,966 - ERROR - Library not initialized
+  File "D:\Python\optyka\classes\game.py", line 116, in render
+    Adam.render()
+NameError: name 'Adam' is not defined
+2024-01-26 18:25:11,895 - ERROR - local variable 'object' referenced before assignment
 Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
+  File "D:\Python\optyka\main.py", line 38, in main
     game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:07:24,663 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:07:39,523 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:07:54,133 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:08:12,496 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:09:59,880 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:10:28,288 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:11:15,501 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:11:28,325 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:12:16,793 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:12:58,017 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:13:20,467 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:13:53,227 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:14:13,588 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:14:32,879 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:15:35,182 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:15:53,762 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:16:11,844 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 18:16:52,914 - ERROR - Library not initialized
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 174, in loop
-    self.achievements.fps_achievements()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\achievements.py", line 67, in fps_achievements
-    if int(game.Game.return_fps(self.game)) < 10:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 53, in return_fps
-    return self.displayFPS()
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 156, in displayFPS
-    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-pygame.error: Library not initialized
-2024-01-26 19:27:44,973 - ERROR - name 'texture' is not defined
-Traceback (most recent call last):
-  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 38, in main
-    game_instance.loop()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 175, in loop
+  File "D:\Python\optyka\classes\game.py", line 178, in loop
     self.render()
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 107, in render
-    object.checkifclicked(self.mousepos)
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\gui_main.py", line 40, in checkifclicked
-    button.checkifclicked(mousepos)
-  File "C:\Users\This PC\Documents\GitHub\optyka\gui\button.py", line 140, in checkifclicked
-    obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, image=images.torch)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 337, in __init__
-    super().__init__(game, points, color, angle, image)
-  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 38, in __init__
-    self.texture = texture if texture else None
-                              ^^^^^^^
-NameError: name 'texture' is not defined
+  File "D:\Python\optyka\classes\game.py", line 106, in render
+    print(object)
+UnboundLocalError: local variable 'object' referenced before assignment
+2024-01-26 18:31:10,090 - ERROR - module 'classes.game' has no attribute 'sorted_objects'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 184, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 84, in events
+    optyka.gui.polygonDrawing.createPolygon()
+  File "D:\Python\optyka\gui\polygonDrawing.py", line 24, in createPolygon
+    print(game.sorted_objects)
+AttributeError: module 'classes.game' has no attribute 'sorted_objects'
+2024-01-26 18:32:43,634 - ERROR - module 'classes.game' has no attribute 'sorted_objects'
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 184, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 84, in events
+    optyka.gui.polygonDrawing.createPolygon()
+  File "D:\Python\optyka\gui\polygonDrawing.py", line 24, in createPolygon
+    print(game.sorted_objects)
+AttributeError: module 'classes.game' has no attribute 'sorted_objects'
+2024-01-26 18:34:16,199 - ERROR - name 'sorted_objects' is not defined
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 184, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 86, in events
+    print(sorted_objects)
+NameError: name 'sorted_objects' is not defined
+2024-01-26 18:36:15,083 - ERROR - name 'objects' is not defined
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 38, in main
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 184, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 86, in events
+    print(objects)
+NameError: name 'objects' is not defined

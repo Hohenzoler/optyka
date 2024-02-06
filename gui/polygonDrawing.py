@@ -1,12 +1,13 @@
 import pygame
 from pygame import draw
 import math
-
+import classes.game
 import classes.gameobjects
 from classes import gameobjects, fps
 import gui
 from gui.button import *
 import time
+
 
 currentPolygonPoints = []
 def addPoint(mousePos):
@@ -20,5 +21,8 @@ def renderDots():
 def createPolygon():
     if len(currentPolygonPoints) >= 3:
         print(1345)
-        Adam = gameobjects.GameObject(game, currentPolygonPoints, (200, 0, 0), None, None, 30)
-    currentPolygonPoints.clear()
+        from optyka.gui.button import spiel
+        Adam = gameobjects.CustomPolygon(spiel, currentPolygonPoints, (200, 0, 0), 0, 40, 60)
+        currentPolygonPoints.clear()
+    else:
+        pass

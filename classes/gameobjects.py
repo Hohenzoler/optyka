@@ -3,13 +3,14 @@ import functions
 import pygame
 from gui import ModifyParameters as mp
 from classes import light, sounds, images
+from gui import polygonDrawing
 import math
 from pygame.transform import rotate
 import random
 import settingsSetup
 from pygame import gfxdraw
 from classes import bin
-from gui.gui_main import GUI
+from gui import gui_main
 from classes.font import Font
 settings = settingsSetup.start()
 
@@ -80,6 +81,9 @@ class GameObject:
 
     def draw_triangle(self,index):
         pygame.gfxdraw.aapolygon(self.game.screen, (255, 255, 255), self.triangles[index])
+
+    def draw_Poly(self):
+        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
     def render(self):
         # print(self.get_triangles())
 
@@ -323,6 +327,9 @@ class Prism(GameObject):
 
 class ColoredGlass(GameObject):
     def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture)
+class CustomPolygon(GameObject):
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None, layer = 5):
         super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture)
 
 class Lens(GameObject):
