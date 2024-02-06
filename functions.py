@@ -1,4 +1,5 @@
 import pygame
+import math
 
 def pointInRect(point,rect):
     x1, y1, w, h = rect
@@ -40,7 +41,31 @@ def do_lines_intersect(line1_start, line1_end, line2_start, line2_end):
         return True  # Collinear and overlapping
 
     return False  # Doesn't intersect
+def is_linear_function_passing_through_point(linear_function, point):
+    a = linear_function.a
+    b = linear_function.b
+    x_point, y_point = point
 
+    return abs(a * x_point + b - y_point) < 1
+
+def calculate_intersection_angle(m1, m2):
+    angle_radians = abs(math.atan((m2 - m1) / (1 + m1 * m2)))
+    angle_degrees = math.degrees(angle_radians)
+
+    return angle_degrees
+def calculate_angle(x1, y1, x2, y2):
+    dy = y2 - y1
+    dx = x2 - x1
+
+    rad = math.atan2(dy, dx)
+    return rad
+
+def calculate_slope(x1, y1, x2, y2):
+    if x2 - x1 == 0:
+        raise ValueError("Vertical line")
+    slope = (y2 - y1) / (x2 - x1)
+
+    return slope
 def draw_thick_line(surface, x1, y1, x2, y2, color, THICC):
     dx = x2 - x1
     dy = y2 - y1

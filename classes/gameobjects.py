@@ -339,6 +339,13 @@ class Lens(GameObject):
         self.type = type
         self.CONVEX = 0
         self.CONCAVE = 1
+        self.SINGLE_VEX = 2
+        self.SINGLE_CAVE = 3
+        self.VEX_CAVE = 4
+        self.CAVE_VEX = 5
+        self.lens_points = []
+        self.refraction_index = 1.5
+        self.layer = 0
 
 
     # def calculate_function(self, x1, x2, ymin):
@@ -392,7 +399,7 @@ class Lens(GameObject):
         x2 = rect_points[2][1]
         height = abs(x1 - x2)
         width = abs(rect_points[0][0] - rect_points[2][0])
-        POINTS_NUM = int(height)
+        POINTS_NUM = int(height) * 2
         center = self.rect.center
         center_x = center[0]
 
@@ -410,6 +417,9 @@ class Lens(GameObject):
             self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
             center2 = (center_x - self.curvature_radius + width // 2, center[1])
             self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2, POINTS_NUM)
+        elif self.type == self.SINGLE_VEX:
+            center1 = (center_x + self.curvature_radius - width // 2, center[1])
+            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
         else:
             center1 = (center_x + self.curvature_radius, center[1])
             self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi / 2, 3 * math.pi / 2,
@@ -417,16 +427,20 @@ class Lens(GameObject):
             center2 = (center_x - self.curvature_radius, center[1])
             self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2,
                                                          POINTS_NUM)
-
-        self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
-        self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
-        center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
-        pygame.draw.circle(self.game.screen, (0, 255, 0),
-                           center1, 2, 0)
-        center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
-        pygame.draw.circle(self.game.screen, (0, 255, 0),
-                          center2, 2, 0)
-
+        if self.type != self.SINGLE_VEX:
+            self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
+            self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
+            self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
+            pygame.draw.circle(self.game.screen, (0, 255, 0),
+                               self.center1, 2, 0)
+            self.center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
+            pygame.draw.circle(self.game.screen, (0, 255, 0),
+                              self.center2, 2, 0)
+        else:
+            self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
+            self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
+            pygame.draw.circle(self.game.screen, (0, 255, 0),
+                               self.center1, 2, 0)
 
 
     def rotate_points2(self, points, angle, center):
@@ -468,19 +482,18 @@ class Lens(GameObject):
     def render(self):
         # print(self.get_triangles())
 
-        self.get_slopes()
-
-
+        # self.get_slopes()
         if not self.selectedtrue:
             # Draw the rotated lines without transparency
             if self.texture:
                 pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
             else:
-                if self.type == self.CONVEX:
-                    self.draw_convex(self.points, self.angle)
+                if self.type != self.CONCAVE:
+                    self.generate_points(self.points, self.angle)
                     pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                    pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                    if self.type != self.SINGLE_VEX:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
                 else:
                     self.draw_concave(self.points, self.angle)
                     # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
@@ -502,12 +515,13 @@ class Lens(GameObject):
 
             else:
                 self.adjust(mousepos[0], mousepos[1], 0)
-            if self.type == self.CONVEX:
-                self.draw_convex(self.points, self.angle)
+            if self.type != self.CONCAVE:
+                self.generate_points(self.points, self.angle)
                 pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                pygame.gfxdraw.filled_polygon(self.game.screen, (
-                self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                if self.type != self.SINGLE_VEX:
+                    pygame.gfxdraw.filled_polygon(self.game.screen, (
+                    self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
             else:
                 self.draw_concave(self.points, self.angle)
                 #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
@@ -569,7 +583,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.color = color
         self.angle = angle
         self.image = image if image else None
-        self.lazer = False
+        self.lazer = True
         self.rays = []
 
     def render(self):

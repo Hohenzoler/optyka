@@ -309,7 +309,7 @@ class Game:
             mousepos = (500, 500)
             print('as')
             if parameters['class'] == "Flashlight":
-                obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, image=images.torch)
+                obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, 0.5, image=images.torch)
 
             elif parameters['class'] == "Mirror":
                 obj = gameobjects.Mirror(self, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.4, texture=images.wood, textureName='wood')
@@ -321,7 +321,7 @@ class Game:
                 obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0, 0.4)
 
             elif parameters['class'] == "Lens":
-                obj = gameobjects.Lens(self, [(mousepos[0] - 50, mousepos[1] - 50), (mousepos[0], mousepos[1] - 50), (mousepos[0], mousepos[1] + 50), (mousepos[0] - 50, mousepos[1] + 50)], (64, 137, 189), 0, 0.4)
+                obj = gameobjects.Lens(self, [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100), (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)], (64, 137, 189), 0, 0, 140, 0)
 
             # elif parameters['class'] == ""
 

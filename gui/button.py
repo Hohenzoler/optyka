@@ -187,7 +187,7 @@ class Button:
                 obj = gameobjects.Lens(self.game,
                                        [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                         (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                       (64, 137, 189), 0, 1, 140, 0, 0.5)
+                                       (64, 137, 189), 0, 2, 140, 0, 0.5)
 
             elif self.number == -1:
                 if len(self.game.objects) > 3:
