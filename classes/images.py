@@ -2,10 +2,8 @@ import pygame  # Importing the pygame module
 import imgtocode  # Importing the imgtocode module
 import os  # Importing the os module
 
-# Checking if the 'images/' directory exists
-if not os.path.exists('images/'):
-    print('a')  # Printing 'a' if the directory does not exist
-    imgtocode.generateImages()  # Generating images if the directory does not exist
+
+imgtocode.generateImages()  # Generating images if the directory does not exist
 
 # Loading various images using the pygame module
 torch_icon = pygame.image.load("images/torch_icon.png")  # Loading the torch icon image
