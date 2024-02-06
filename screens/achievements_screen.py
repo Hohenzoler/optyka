@@ -1,6 +1,7 @@
 import pygame
 import sqlite3
 import classes.font
+from classes import sounds
 
 class AchievementsScreen:
     def __init__(self, game):
@@ -51,4 +52,5 @@ class Button:
         self.game.screen.blit(text_surface, (self.x + 10, self.y + 10))
 
     def is_clicked(self, pos):
+        sounds.clicked_sound()
         return self.x < pos[0] < self.x + self.width and self.y < pos[1] < self.y + self.height
