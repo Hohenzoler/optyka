@@ -16,6 +16,9 @@ class Parameters:
         self.root.title("Parameters")
         self.root.resizable(False, False)
 
+        self.root.grid_columnconfigure(0, weight=1)
+        self.root.grid_columnconfigure(1, weight=1)
+
         self.parameters_dict = self.object.parameters
 
         self.points = self.object.points
