@@ -214,7 +214,7 @@ class Light:
                 self.linear_function.draw(self.game)
                 break
     def lens_stuff(self, lens):
-            if abs(self.angle) not in range(abs(lens.angle) + 90, abs(lens.angle) + 270): # light shining from left to right # unfinished, bug when rotating >180deg
+            if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
                 #print(abs(lens.angle))
                 self.left_lens(lens)
                 if lens.type == lens.CONVEX:
