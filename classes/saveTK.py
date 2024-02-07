@@ -58,6 +58,9 @@ class Save:
         self.entry = ttk.Entry(self.root, justify='center')
         self.entry.grid(row=1, column=0, columnspan=2)
 
+        if self.game.save_title != None:
+            self.entry.insert(0, self.game.save_title)
+
         save_button = tk.Button(self.root, text="Save", command=self.save)
         save_button.grid(row=2, column=0, sticky='e', padx=10, pady=15)
 
