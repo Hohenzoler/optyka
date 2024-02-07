@@ -1,18 +1,17 @@
 import tkinter as tk
-from tkinter import *
-from ttkbootstrap import ttk
-from ttkbootstrap import Style
+# from tkinter import *
+import ttkbootstrap as ttk
 import os
 
 class Parameters:
     def __init__(self, object):
-        self.root = tk.Tk()
+        self.root = ttk.Window(themename='solar')
 
         self.object = object
 
-        # Apply ttkbootstrap theme 'solar'
-        self.style = Style(theme='solar')
-        self.style.master = self.root
+        # # Apply ttkbootstrap theme 'solar'
+        # self.style = Style()
+        # self.style.master = self.root
 
         self.root.title("Parameters")
         self.root.resizable(False, False)
