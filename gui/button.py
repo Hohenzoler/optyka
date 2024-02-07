@@ -280,7 +280,7 @@ class ButtonForgame:
         elif self.number == 72:
             self.text = self.font.render('New Game', True, 'black')
             self.width = self.screen.width // 5
-            self.y = self.screen.height - self.screen.height // 5
+            self.y = (self.screen.height - self.screen.height // 10)
             self.x = (self.screen.width // 2) - self.width - self.width - gap
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
@@ -288,20 +288,20 @@ class ButtonForgame:
             self.text = self.font.render('Load Preset', True, 'black')
             self.width = self.screen.width // 5
             self.x = (self.screen.width // 2) - self.width
-            self.y = self.screen.height - self.screen.height // 5
+            self.y = (self.screen.height - self.screen.height // 10)
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         elif self.number == 74:
             self.text = self.font.render('Back', True, 'black')
             self.width = self.screen.width // 5
-            self.y = self.screen.height - self.screen.height // 5
+            self.y = (self.screen.height - self.screen.height // 10)
             self.x = (self.screen.width // 2) + self.width + gap*2
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         elif self.number == 75:
             self.text = self.font.render('Delete', True, 'black')
             self.width = self.screen.width // 5
-            self.y = self.screen.height - self.screen.height // 5
+            self.y = (self.screen.height - self.screen.height // 10)
             self.x = (self.screen.width // 2) + gap
             print(self.x)
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
