@@ -70,7 +70,7 @@ class Light:
                 if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass:
                     self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
                 if type(object) == gameobjects.Lens:
-                    lenses.append(object)
+                    self.check_object(object)
             for lens in lenses:
                 self.lens_stuff(lens)
             # To do: fix bug causing only one lens to be analyzed
@@ -81,6 +81,8 @@ class Light:
                 self.mirror_stuff()
             elif self.current_object_type=='glass':
                 self.glass_stuff()
+            elif self.current_object_type=='lens':
+                self.lens_stuff(self.current_object)
 
 
             if self.index >= 100:
@@ -144,6 +146,8 @@ class Light:
 
                                 elif type(object) == gameobjects.ColoredGlass:
                                     self.current_object_type = 'glass'
+                                elif type(object) == gameobjects.Lens:
+                                    self.current_object_type = 'lens'
 
                             else:
                                 if dist < self.current_distance:
@@ -155,6 +159,8 @@ class Light:
                                         self.current_object_type = 'mirror'
                                     elif type(object) == gameobjects.ColoredGlass:
                                         self.current_object_type = 'glass'
+                                    elif type(object) == gameobjects.Lens:
+                                        self.current_object_type = 'lens'
 
     def left_lens(self, lens):
         for index, point in enumerate(lens.lens_points):
