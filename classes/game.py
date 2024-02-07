@@ -298,7 +298,7 @@ class Game:
         self.save_title = self.save_to_load
         for parameters in save:
             if not isinstance(parameters, dict):
-                break
+                continue
 
             mousepos = (500, 500)
             print('as')
@@ -325,17 +325,19 @@ class Game:
 
     def generate_save(self):
         self.save_obj = []
+
+        current_time = datetime.now()
+        formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+        self.save_obj.append(formatted_time)
+
         for object in self.objects:
             if issubclass(type(object), gameobjects.GameObject):
                 object.find_parameters()
                 object.parameters['class'] = object.__class__.__name__
                 self.save_obj.append(object.parameters)
+                print(object.parameters)
         if not os.path.exists("saves"):
             os.makedirs("saves")
-
-        current_time = datetime.now()
-        formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-        self.save_obj.append(formatted_time)
 
 
     def save_to_file(self):

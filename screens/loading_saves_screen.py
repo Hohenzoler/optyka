@@ -1,9 +1,11 @@
 import pygame
 from gui import button
-import os
+import os, json
 from classes import parkinson as particles
 import random
 from gui.button_animation import ButtonAnimation
+from datetime import datetime
+from classes.font import Font
 
 class loading_saves_screen:
     def __init__(self, game):
@@ -71,10 +73,20 @@ class saveselector:
         self.screen = self.game.screen
 
         self.dir = "saves"
-        self.saves_files = [file for file in os.listdir(self.dir) if file.endswith('.json')]
+        self.saves_files = [file[:-5] for file in os.listdir(self.dir) if file.endswith('.json')]
 
-        for i, file in enumerate(self.saves_files):
-            self.saves_files[i] = file[:-5]
+        self.dates = self.get_Dates()
+
+        zipped = list(zip(self.dates, self.saves_files))
+
+        sorted_zipped = sorted(zipped, key=lambda x: x[0], reverse=True)
+
+        self.dates, self.saves_files = zip(*sorted_zipped)
+
+        print("Sorted array1:", self.dates)
+        print("Sorted array2:", self.saves_files)
+
+        self.dates = [dt.strftime('%Y-%m-%d %H:%M:%S') for dt in self.dates]
 
         self.scrolling_needed = len(self.saves_files) > self.num_of_buttons
         self.scroll_offset = 0
@@ -82,7 +94,7 @@ class saveselector:
         self.buttons = []
         for i in range(self.num_of_buttons):
             if i < len(self.saves_files):
-                button1 = (self.Button_v2(self.game, self.saves_files[i], (self.screen_width - self.button_width) // 2, (self.screen_height - self.container_height - 150) // 2 + i * (self.button_height + self.spacing) + self.spacing, self.button_width, self.button_height))
+                button1 = (self.Button_v2(self.game, self.saves_files[i], self.dates[i], (self.screen_width - self.button_width) // 2, (self.screen_height - self.container_height - 150) // 2 + i * (self.button_height + self.spacing) + self.spacing, self.button_width, self.button_height))
                 self.buttons.append(button1)
 
         self.target_positions = [button.rect.y for button in self.buttons]
@@ -94,6 +106,23 @@ class saveselector:
 
         self.game.objects.append(self)
 
+    def get_Dates(self):
+        a = []
+        for file in self.saves_files:
+            file_path = f'{self.dir}/{file}.json'
+            first_element = self.extract_first_element_from_json_file(file_path)
+            a.append(first_element)
+        a = [datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S') for date_str in a]
+        return a
+
+    def extract_first_element_from_json_file(self, file_path):
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+            if isinstance(data, list) and len(data) > 0:
+                return data[0]
+            else:
+                return None
+
     def render(self):
         for i, button in enumerate(self.buttons):
             self.target_positions[i] = (self.screen_height - self.container_height) // 2 + i * (
@@ -102,25 +131,36 @@ class saveselector:
             if button.is_visible(self.container_rect):
                 if i + self.scroll_offset < len(self.saves_files):
                     button.text = self.saves_files[i + self.scroll_offset]
+                    button.date = self.dates[i + self.scroll_offset]
                 button.render()
 
     class Button_v2:
-        def __init__(self, game, text, x, y, width, height):
+        def __init__(self, game, text, date, x, y, width, height):
             self.game = game
             self.text = text
+            self.date = date
             self.rect = pygame.Rect(x, y, width, height)
             self.color = (200, 200, 200)
             self.outline_color = (0, 0, 0)
             self.outline_thickness = 2
+
+            self.font = pygame.font.Font(Font, self.game.height//20)
+            self.date_font = pygame.font.Font(Font, self.game.height//40)
 
             self.game.objects.append(self)
 
         def render(self):
             pygame.draw.rect(self.game.screen, self.color, self.rect)
             pygame.draw.rect(self.game.screen, self.outline_color, self.rect, self.outline_thickness)
-            text_surface = self.game.font.render(self.text, True, (0, 0, 0))
-            text_rect = text_surface.get_rect(center=self.rect.center)
+
+            text_surface = self.font.render(self.text, True, (0, 0, 0))
+            text_rect = text_surface.get_rect(center=(self.rect.centerx, self.rect.centery - 20))
+
+            date_surface = self.date_font.render(self.date, True, (0, 0, 0))
+            date_rect = date_surface.get_rect(center=(self.rect.centerx, self.rect.centery + text_rect.height * 0.5))
+
             self.game.screen.blit(text_surface, text_rect)
+            self.game.screen.blit(date_surface, date_rect)
 
         def is_visible(self, container_rect):
             return container_rect.contains(self.rect)

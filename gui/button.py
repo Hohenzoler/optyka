@@ -196,10 +196,10 @@ class Button:
                     self.game.generate_save()
                     if self.game.save_title != None:
                         prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
-                        print(prev_save_data[:-1])
-                        print(self.game.save_obj[:-1])
-                        print(prev_save_data[:-1] == self.game.save_obj[:-1])
-                        if prev_save_data[:-1] != self.game.save_obj[:-1]:
+                        print(prev_save_data[1:])
+                        print(self.game.save_obj[1:])
+                        print(prev_save_data[1:] == self.game.save_obj[1:])
+                        if prev_save_data[1:] != self.game.save_obj[1:]:
                             a = saveTK.Save(self.game)
                     else:
                         a = saveTK.Save(self.game)
