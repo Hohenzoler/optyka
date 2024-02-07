@@ -81,7 +81,13 @@ class saveselector:
 
         sorted_zipped = sorted(zipped, key=lambda x: x[0], reverse=True)
 
-        self.dates, self.saves_files = zip(*sorted_zipped)
+        try:
+            self.dates, self.saves_files = zip(*sorted_zipped)
+        except:
+            self.dates = []
+            self.saves_files = []
+            print("no saves ;(")
+
 
         self.dates = [dt.strftime('%Y-%m-%d %H:%M:%S') for dt in self.dates]
 
