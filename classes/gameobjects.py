@@ -21,13 +21,14 @@ DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
 
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, image = None, texture =None, textureName=None):
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, image = None, textureName=None):
         # Initialize common attributes
         self.game = game
         self.points = points
 
-        self.texture = texture if texture else None
-        self.textureName = textureName if self.texture else None
+        self.textureName = textureName if textureName else None
+
+        self.get_Texture()
 
         self.color = color if not self.texture else None
 
@@ -319,24 +320,39 @@ class GameObject:
         except Exception as e:
             print(e)
 
-        if type(self) == Mirror:
+        try:
             self.textureName = self.parameters['texture']
+            self.get_Texture()
+        except Exception as e:
+            print(e)
+
+    def get_Texture(self):
+        if self.textureName == 'wood':
+            self.texture = images.wood
+        elif self.textureName == 'glass':
+            self.texture = images.glass
+        elif self.textureName == 'water':
+            self.texture = images.water
+        elif self.textureName == 'clouds':
+            self.texture = images.clouds
+        else:
+            self.texture = None
 
 
 class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None, textureName=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture, textureName)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName=None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
 
 class Prism(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
 
 class ColoredGlass(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
 class CustomPolygon(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, texture = None, layer = 5):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, texture)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None, layer = 5):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
 
 class Lens(GameObject):
     def __init__(self, game, points, color, angle, type, curvature_radius, reflection_factor, transmittance, islighting=False, image_path=None):
