@@ -53,6 +53,8 @@ class StartScreen:
 
         pygame.display.set_caption('Optyka')
 
+        self.selected_buttons = {}
+
         self.mainloop()
 
 
@@ -79,6 +81,10 @@ class StartScreen:
 
             self.clock.tick(self.fps)
 
+        for key, value in self.selected_buttons.items():
+            if value == True:
+                self.save_to_load = key
+
     def checkforevents(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -99,11 +105,13 @@ class StartScreen:
                             object.max_offset = max(0, len(object.saves_files) - object.num_of_buttons)
                             if object.scroll_offset < object.max_offset:
                                 object.scroll_offset += 1
-                        elif event.button == 1:
-                            for button1 in object.buttons:
-                                if button1.rect.collidepoint(event.pos):
-                                    self.run = False
-                                    self.save_to_load = button1.text
+                    elif type(object) == loading_saves_screen.saveselector.Button_v2:
+                        if event.button == 1:
+                            if object.rect.collidepoint(event.pos):
+                                for (key, value) in self.selected_buttons.items():
+                                    if value == True and key != object.text:
+                                        self.selected_buttons[key] = False
+                                object.selected_buttons[object.text] = not object.selected_buttons[object.text]
                     elif type(object) == loading_saves_screen.saveselector.Slider:
                         if event.button == 4:
                             object.slider_pos = max(0, object.slider_pos - 1)

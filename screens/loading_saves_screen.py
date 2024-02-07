@@ -26,7 +26,10 @@ class loading_saves_screen:
         back_button = button.ButtonForgame(74, self)
         self.objects.append(back_button)
 
-        saveselector(self.game)
+        del_button = button.ButtonForgame(75, self)
+        self.objects.append(del_button)
+
+        self.savesS = saveselector(self.game)
 
         self.game.objects.append(self)
 
@@ -94,10 +97,14 @@ class saveselector:
         self.scrolling_needed = len(self.saves_files) > self.num_of_buttons
         self.scroll_offset = 0
 
+
+        for file in self.saves_files:
+            self.game.selected_buttons[file] = False
+
         self.buttons = []
         for i in range(self.num_of_buttons):
             if i < len(self.saves_files):
-                button1 = (self.Button_v2(self.game, self.saves_files[i], self.dates[i], (self.screen_width - self.button_width) // 2, (self.screen_height - self.container_height - 150) // 2 + i * (self.button_height + self.spacing) + self.spacing, self.button_width, self.button_height))
+                button1 = (self.Button_v2(self.game, self.saves_files[i], self.dates[i], (self.screen_width - self.button_width) // 2, (self.screen_height - self.container_height - 150) // 2 + i * (self.button_height + self.spacing) + self.spacing, self.button_width, self.button_height, self.game.selected_buttons))
                 self.buttons.append(button1)
 
         self.target_positions = [button.rect.y for button in self.buttons]
@@ -106,6 +113,8 @@ class saveselector:
 
         if len(self.saves_files) > 3:
             s = self.Slider(self)
+
+
 
         self.game.objects.append(self)
 
@@ -137,7 +146,7 @@ class saveselector:
         for i, button in enumerate(self.buttons):
             self.target_positions[i] = (self.screen_height - self.container_height) // 2 + i * (
                         self.button_height + self.spacing) + self.spacing
-            ButtonAnimation(button, button.rect.x, self.target_positions[i]).animate()
+            ButtonAnimation(button, button.rect[0], self.target_positions[i]).animate()
             if button.is_visible(self.container_rect):
                 if i + self.scroll_offset < len(self.saves_files):
                     button.text = self.saves_files[i + self.scroll_offset]
@@ -145,14 +154,16 @@ class saveselector:
                 button.render()
 
     class Button_v2:
-        def __init__(self, game, text, date, x, y, width, height):
+        def __init__(self, game, text, date, x, y, width, height, selected_buttons):
             self.game = game
             self.text = text
             self.date = date
             self.rect = pygame.Rect(x, y, width, height)
             self.color = (200, 200, 200)
-            self.outline_color = (0, 0, 0)
-            self.outline_thickness = 2
+            self.outline_color = (255, 255, 255)
+            self.outline_thickness = 5
+
+            self.selected_buttons = selected_buttons
 
             self.font = pygame.font.Font(Font, self.game.height//20)
             self.date_font = pygame.font.Font(Font, self.game.height//40)
@@ -161,7 +172,8 @@ class saveselector:
 
         def render(self):
             pygame.draw.rect(self.game.screen, self.color, self.rect)
-            pygame.draw.rect(self.game.screen, self.outline_color, self.rect, self.outline_thickness)
+            if self.selected_buttons[self.text] == True:
+                pygame.draw.rect(self.game.screen, self.outline_color, self.rect, self.outline_thickness)
 
             text_surface = self.font.render(self.text, True, (0, 0, 0))
             text_rect = text_surface.get_rect(center=(self.rect.centerx, self.rect.centery - 15))
@@ -174,9 +186,6 @@ class saveselector:
 
         def is_visible(self, container_rect):
             return container_rect.contains(self.rect)
-
-        def is_clicked(self, pos):
-            return self.rect.collidepoint(pos)
 
     class Slider:
         def __init__(self, loading_save_screen):

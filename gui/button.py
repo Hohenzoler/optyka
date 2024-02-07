@@ -279,13 +279,13 @@ class ButtonForgame:
             self.text = self.font.render('New Game', True, 'black')
             self.width = self.screen.width // 5
             self.y = self.screen.height - self.screen.height // 5
-            self.x = (self.screen.width // 2) - self.width - self.width//2 - gap
+            self.x = (self.screen.width // 2) - self.width - self.width - gap
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         elif self.number == 73:
             self.text = self.font.render('Load Preset', True, 'black')
             self.width = self.screen.width // 5
-            self.x = (self.screen.width // 2) - self.width // 2
+            self.x = (self.screen.width // 2) - self.width
             self.y = self.screen.height - self.screen.height // 5
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
@@ -293,7 +293,15 @@ class ButtonForgame:
             self.text = self.font.render('Back', True, 'black')
             self.width = self.screen.width // 5
             self.y = self.screen.height - self.screen.height // 5
-            self.x = (self.screen.width // 2) + self.width//2 + gap
+            self.x = (self.screen.width // 2) + self.width + gap*2
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        elif self.number == 75:
+            self.text = self.font.render('Delete', True, 'black')
+            self.width = self.screen.width // 5
+            self.y = self.screen.height - self.screen.height // 5
+            self.x = (self.screen.width // 2) + gap
+            print(self.x)
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         else:
@@ -325,7 +333,6 @@ class ButtonForgame:
             elif self.number == 72:
                 self.screen.game.mode = 'default'
                 self.screen.game.run = False
-                self.screen.game.action = 'new_game'
                 sounds.clicked_sound()
             elif self.number == 74:
                 self.screen.game.mode = 'default'
@@ -337,5 +344,17 @@ class ButtonForgame:
         """
         Renders the button on the screen.
         """
+        self.update()
+
         pygame.draw.rect(self.screen.screen, (255, 255, 255), self.rect, 0, 4)
         self.screen.screen.blit(self.text, self.textRect)
+
+    def update(self):
+        if self.number == 72:
+            if any(value for value in self.screen.game.selected_buttons.values()) == True:
+                self.text = self.font.render('Load Game', True, 'black')
+            else:
+                self.text = self.font.render('New Game', True, 'black')
+            self.textRect = self.text.get_rect()
+            self.textRect.center = (self.rect[0] + (self.rect[2] // 2), self.rect[1] + (self.rect[3] // 2))
+
