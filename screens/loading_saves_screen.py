@@ -83,9 +83,6 @@ class saveselector:
 
         self.dates, self.saves_files = zip(*sorted_zipped)
 
-        print("Sorted array1:", self.dates)
-        print("Sorted array2:", self.saves_files)
-
         self.dates = [dt.strftime('%Y-%m-%d %H:%M:%S') for dt in self.dates]
 
         self.scrolling_needed = len(self.saves_files) > self.num_of_buttons
@@ -154,7 +151,7 @@ class saveselector:
             pygame.draw.rect(self.game.screen, self.outline_color, self.rect, self.outline_thickness)
 
             text_surface = self.font.render(self.text, True, (0, 0, 0))
-            text_rect = text_surface.get_rect(center=(self.rect.centerx, self.rect.centery - 20))
+            text_rect = text_surface.get_rect(center=(self.rect.centerx, self.rect.centery - 15))
 
             date_surface = self.date_font.render(self.date, True, (0, 0, 0))
             date_rect = date_surface.get_rect(center=(self.rect.centerx, self.rect.centery + text_rect.height * 0.5))
