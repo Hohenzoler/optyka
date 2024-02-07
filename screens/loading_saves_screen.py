@@ -120,11 +120,18 @@ class saveselector:
 
     def extract_first_element_from_json_file(self, file_path):
         with open(file_path, 'r') as f:
-            data = json.load(f)
-            if isinstance(data, list) and len(data) > 0:
-                return data[0]
-            else:
-                return None
+            try:
+                data = json.load(f)
+                if isinstance(data, list) and len(data) > 0:
+                    if type(data[0]) == str:
+                        f.close()
+                        return data[0]
+                else:
+                    return None
+
+            except:
+                f.close()
+                return '1970-1-1 0:0:0'
 
     def render(self):
         for i, button in enumerate(self.buttons):

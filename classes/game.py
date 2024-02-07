@@ -1,3 +1,4 @@
+import json
 import random
 import os
 import pygame
@@ -294,7 +295,12 @@ class Game:
                 self.save_to_load = None
 
     def load(self):
-        save = settingsSetup.load_settings(f"saves/{self.save_to_load}.json")
+        try:
+            with open(f"saves/{self.save_to_load}.json", 'r') as f:
+                save = json.load(f)
+                f.close()
+        except:
+            save = {}
         self.save_title = self.save_to_load
         for parameters in save:
             if not isinstance(parameters, dict):

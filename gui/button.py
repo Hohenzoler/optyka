@@ -192,17 +192,22 @@ class Button:
                                        (64, 137, 189), 0, 2, 140, 0, 0.5)
 
             elif self.number == -1:
+                self.game.generate_save()
                 if len(self.game.objects) > 3:
-                    self.game.generate_save()
                     if self.game.save_title != None:
                         prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
-                        print(prev_save_data[1:])
-                        print(self.game.save_obj[1:])
-                        print(prev_save_data[1:] == self.game.save_obj[1:])
-                        if prev_save_data[1:] != self.game.save_obj[1:]:
+                        if len(prev_save_data) > 1:
+                            if prev_save_data[1:] != self.game.save_obj[1:]:
+                                a = saveTK.Save(self.game)
+                        else:
                             a = saveTK.Save(self.game)
-                    else:
+
+                elif len(self.game.objects) == 3 and self.game.save_title != None:
+                    prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
+                    if len(prev_save_data) != 1:
                         a = saveTK.Save(self.game)
+                else:
+                    a = saveTK.Save(self.game)
                 self.game.run = False
             elif self.number == -2:
                 self.game.mode = 'settings'
