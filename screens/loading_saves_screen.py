@@ -17,6 +17,7 @@ class Loading_saves_screen:
 
         self.particle_system = particles.UnityParticleSystem()
 
+
         new_game_button = button.ButtonForgame(72, self)
         self.objects.append(new_game_button)
 
@@ -28,6 +29,11 @@ class Loading_saves_screen:
 
         del_button = button.ButtonForgame(75, self)
         self.objects.append(del_button)
+
+        self.buttons = [new_game_button, load_game_button, back_button, del_button]
+
+        self.button_animations = [ButtonAnimation(b, b.rect.x, b.rect.y- (b.height *2)) for i, b in
+                                  enumerate(self.buttons)]
 
         self.savesS = saveselector(self.game)
 
@@ -59,6 +65,8 @@ class Loading_saves_screen:
             alpha=100,
             shape='circle'
         )
+        for animation in self.button_animations:
+            animation.animate()
 
 class saveselector:
     def __init__(self, game):
