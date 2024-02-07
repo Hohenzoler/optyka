@@ -60,10 +60,10 @@ class Parameters:
             self.slider_buttons[0].grid(row=row, column=1, padx=25, pady=5, sticky='w')
 
         elif param == 'texture':
-            self.textureOptions = [file[:-4] for file in os.listdir("images/materials") if file.endswith('.png')]
+            self.textureOptions = [file[:-4].capitalize() for file in os.listdir("images/materials") if file.endswith('.png')]
             self.TextureDropdown = ttk.Combobox(self.root, values=self.textureOptions)
             self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
-            self.TextureDropdown.set(self.parameters_dict[param])
+            self.TextureDropdown.set(self.parameters_dict[param].capitalize())
 
         else:
             try:
@@ -104,7 +104,7 @@ class Parameters:
             new_parameters.update(lazer_on)
 
         if self.TextureDropdown != None:
-            new_parameters['texture'] = self.TextureDropdown.get()
+            new_parameters['texture'] = self.TextureDropdown.get().lower()
 
         try:
             for param, entry_widget in self.parameters_dict.items():

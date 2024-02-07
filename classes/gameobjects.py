@@ -335,6 +335,8 @@ class GameObject:
             self.texture = images.water
         elif self.textureName == 'clouds':
             self.texture = images.clouds
+        elif self.textureName == 'paper':
+            self.texture = images.papier
         else:
             self.texture = None
 
