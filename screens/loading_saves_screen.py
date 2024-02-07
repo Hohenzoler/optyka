@@ -7,7 +7,7 @@ from gui.button_animation import ButtonAnimation
 from datetime import datetime
 from classes.font import Font
 
-class loading_saves_screen:
+class Loading_saves_screen:
     def __init__(self, game):
         self.game = game
         self.width = self.game.width
@@ -160,7 +160,7 @@ class saveselector:
             self.date = date
             self.rect = pygame.Rect(x, y, width, height)
             self.color = (200, 200, 200)
-            self.outline_color = (255, 255, 255)
+            self.outline_color = (0, 255, 0)
             self.outline_thickness = 5
 
             self.selected_buttons = selected_buttons

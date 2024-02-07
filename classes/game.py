@@ -307,7 +307,6 @@ class Game:
                 continue
 
             mousepos = (500, 500)
-            print('as')
             if parameters['class'] == "Flashlight":
                 obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, 0.5, image=images.torch)
 
@@ -328,6 +327,7 @@ class Game:
             obj.parameters = parameters
             obj.change_parameters('not')
             self.objects.append(obj)
+            print(obj.parameters)
 
     def generate_save(self):
         self.save_obj = []

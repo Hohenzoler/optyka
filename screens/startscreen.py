@@ -1,3 +1,4 @@
+import os
 import random
 from classes import images
 import pygame
@@ -75,6 +76,9 @@ class StartScreen:
 
             elif self.mode == 'loading':
                 self.load_mode()
+            
+            elif self.mode == 'delete':
+                self.delete()
 
             self.checkforevents()
             self.render()
@@ -95,7 +99,7 @@ class StartScreen:
                 for object in self.objects:
                     if type(object) == button.ButtonForgame:
                         object.checkcollision(event.pos)
-                    elif type(object) == settings_screen.Settings_screen or type(object) == loading_saves_screen.loading_saves_screen:
+                    elif type(object) == settings_screen.Settings_screen or type(object) == loading_saves_screen.Loading_saves_screen:
                         object.checkevent(event.pos)
                     elif type(object) == loading_saves_screen.saveselector:
                         if event.button == 4 and object.scrolling_needed:
@@ -174,7 +178,8 @@ class StartScreen:
 
             self.objects = []
 
-            self.screen_mode = loading_saves_screen.loading_saves_screen(self)
+            self.screen_mode = None
+            self.screen_mode = loading_saves_screen.Loading_saves_screen(self)
 
             self.executed_functions = 'loading'
 
@@ -198,3 +203,12 @@ class StartScreen:
                 self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
 
         self.mode = 'default'
+
+    def delete(self):
+        if self.executed_functions != 'delete':
+            for idx, (key, value) in enumerate(self.selected_buttons.items()):
+                if value == True:
+                    self.screen_mode = None
+                    os.remove(f'saves/{key}.json')
+            self.executed_functions = 'delete'
+            self.mode = 'loading'

@@ -300,6 +300,9 @@ class GameObject:
             colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
             self.parameters.update(colors)
 
+        if self.textureName != None:
+            self.parameters['texture'] = self.textureName
+
 
     def change_parameters(self, placeholder=None):
         if placeholder == None:
@@ -315,6 +318,9 @@ class GameObject:
 
         except Exception as e:
             print(e)
+
+        if type(self) == Mirror:
+            self.textureName = self.parameters['texture']
 
 
 class Mirror(GameObject):

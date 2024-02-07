@@ -201,6 +201,8 @@ class Button:
                                 a = saveTK.Save(self.game)
                         else:
                             a = saveTK.Save(self.game)
+                    else:
+                        a = saveTK.Save(self.game)
 
                 elif len(self.game.objects) == 3 and self.game.save_title != None:
                     prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
@@ -336,6 +338,9 @@ class ButtonForgame:
                 sounds.clicked_sound()
             elif self.number == 74:
                 self.screen.game.mode = 'default'
+                sounds.clicked_sound()
+            elif self.number == 75:
+                self.screen.game.mode = 'delete'
                 sounds.clicked_sound()
             else:
                 raise NotImplementedError('button function not yet added')
