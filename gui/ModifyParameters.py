@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from ttkbootstrap import ttk
 from ttkbootstrap import Style
+import os
 
 class Parameters:
     def __init__(self, object):
@@ -22,6 +23,8 @@ class Parameters:
         self.parameters_dict = self.object.parameters
 
         self.points = self.object.points
+
+        self.TextureDropdown = None
 
         self.sliders = []
         self.slider_buttons = []
@@ -57,6 +60,11 @@ class Parameters:
             self.slider_buttons.append(ToggleSwitch(self.parameters_dict[param], self.root))
             self.slider_buttons[0].grid(row=row, column=1, padx=25, pady=5, sticky='w')
 
+        elif param == 'texture':
+            self.textureOptions = [file[:-4] for file in os.listdir("images/materials") if file.endswith('.png')]
+            self.TextureDropdown = ttk.Combobox(self.root, values=self.textureOptions)
+            self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+            self.TextureDropdown.set(self.parameters_dict[param])
 
         else:
             try:
@@ -96,9 +104,12 @@ class Parameters:
             lazer_on = {'lazer': self.slider_buttons[0].value}
             new_parameters.update(lazer_on)
 
+        if self.TextureDropdown != None:
+            new_parameters['texture'] = self.TextureDropdown.get()
+
         try:
             for param, entry_widget in self.parameters_dict.items():
-                if param == 'lazer' or param == 'red':
+                if param == 'lazer' or param == 'red' or param == 'texture':
                     break
                 value = entry_widget.get()
 
@@ -123,7 +134,7 @@ class Parameters:
 
                 value = float(value)
                 new_parameters[param] = value
-
+            print(new_parameters)
             self.object.parameters.update(new_parameters)
         except Exception as e:
             print(e)
