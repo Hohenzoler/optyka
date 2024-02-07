@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 from ttkbootstrap import ttk
 from ttkbootstrap import Style
+import os
+import tkinter.messagebox as messagebox
 
 class Save:
     """
@@ -90,9 +92,17 @@ class Save:
 
         if save_title != '':
             save_title = save_title.replace(' ', "_")
+            self.old_save_title = self.game.save_title
             self.game.save_title = save_title
 
-            self.game.save_to_file()
+            self.dir = "saves"
+            self.saves_files = [file[:-5] for file in os.listdir(self.dir) if file.endswith('.json')]
 
-            self.root.destroy()
-            self.root.quit()
+            if self.game.save_title in self.saves_files and self.old_save_title != self.game.save_title:
+                messagebox.showinfo("Error", "You can not save your game with the same name as another save file.")
+            else:
+                self.game.save_to_file()
+                self.root.destroy()
+                self.root.quit()
+
+
