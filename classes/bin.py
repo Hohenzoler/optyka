@@ -50,11 +50,11 @@ class Bin:
                 path = f'images/materials/{obj.textureName}.png'
                 rgb = color_picker.get_colors(path)[0]
                 print(rgb)
+            for i in range(random.randint(60, 300)):
+                self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-1.5, 1.5)*obj.scale_factor, random.uniform(-1.5, 1.5)*obj.scale_factor, 220, random.randint(1, 7)*obj.scale_factor, random.randint(rgb[0]//2, rgb[0]), random.randint(rgb[1]//2, rgb[1]), random.randint(rgb[2]//2, rgb[2]), 220, 'square')
             self.game.objects.remove(obj)
             sounds.destroy_sound()
             achievements.Achievements.handle_achievement_unlocked(self.achievements, "BIN")
-            for i in range(random.randint(60, 300)):
-                self.particle_system.add_particle(self.particle_center_x, self.particle_center_y, random.uniform(-1.5, 1.5), random.uniform(-1.5, 1.5), 220, random.randint(1, 7), random.randint(rgb[0]//2, rgb[0]), random.randint(rgb[1]//2, rgb[1]), random.randint(rgb[2]//2, rgb[2]), 220, 'square')
 
 
     def render(self):
