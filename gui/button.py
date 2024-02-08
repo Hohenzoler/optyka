@@ -208,6 +208,8 @@ class Button:
                     prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
                     if len(prev_save_data) != 1:
                         a = saveTK.Save(self.game)
+                elif len(self.game.objects) == 3:
+                    pass
                 else:
                     a = saveTK.Save(self.game)
                 self.game.run = False
