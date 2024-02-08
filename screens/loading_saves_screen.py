@@ -179,9 +179,9 @@ class saveselector:
             self.game.objects.append(self)
 
         def render(self):
-            pygame.draw.rect(self.game.screen, self.color, self.rect)
+            pygame.draw.rect(self.game.screen, self.color, self.rect, 0, 7)
             if self.selected_buttons[self.text] == True:
-                pygame.draw.rect(self.game.screen, self.outline_color, self.rect, self.outline_thickness)
+                pygame.draw.rect(self.game.screen, self.outline_color, self.rect, self.outline_thickness, 7)
 
             text_surface = self.font.render(self.text, True, (0, 0, 0))
             text_rect = text_surface.get_rect(center=(self.rect.centerx, self.rect.centery - 15))
