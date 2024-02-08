@@ -1,16 +1,12 @@
-import time
 import functions
 import pygame
 from gui import ModifyParameters as mp
 from classes import light, sounds, images
-from gui import polygonDrawing
 import math
 from pygame.transform import rotate
 import random
 import settingsSetup
 from pygame import gfxdraw
-from classes import bin
-from gui import gui_main
 from classes.font import Font
 settings = settingsSetup.start()
 
