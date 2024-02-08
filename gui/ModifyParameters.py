@@ -42,42 +42,45 @@ class Parameters:
         self.root.mainloop()
 
     def create_element(self, param, row):
-        label = tk.Label(self.root, text=f"{param.capitalize()}:")
-        label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
-        if param == 'red' or param == 'blue' or param == 'green':
-            slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
-            slider.set(self.parameters_dict[param])
-            slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
-            self.sliders.append(slider)
+        try:
+            label = tk.Label(self.root, text=f"{param.capitalize()}:")
+            label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+            if param == 'red' or param == 'blue' or param == 'green':
+                slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
+                slider.set(self.parameters_dict[param])
+                slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                self.sliders.append(slider)
 
-            self.color_preview_canvas = tk.Canvas(self.root, width=50, height=50)
-            self.color_preview_canvas.grid(row=len(self.parameters_dict) + 1, column=0, columnspan=2, pady=10)
+                self.color_preview_canvas = tk.Canvas(self.root, width=50, height=50)
+                self.color_preview_canvas.grid(row=len(self.parameters_dict) + 1, column=0, columnspan=2, pady=10)
 
 
-        elif param == 'lazer':
-            self.slider_buttons.append(ToggleSwitch(self.parameters_dict[param], self.root))
-            self.slider_buttons[0].grid(row=row, column=1, padx=25, pady=5, sticky='w')
+            elif param == 'lazer':
+                self.slider_buttons.append(ToggleSwitch(self.parameters_dict[param], self.root))
+                self.slider_buttons[0].grid(row=row, column=1, padx=25, pady=5, sticky='w')
 
-        elif param == 'texture':
-            self.textureOptions = [file[:-4].capitalize() for file in os.listdir("images/materials") if file.endswith('.png')]
-            self.TextureDropdown = ttk.Combobox(self.root, values=self.textureOptions)
-            self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
-            self.TextureDropdown.set(self.parameters_dict[param].capitalize())
+            elif param == 'texture':
+                self.textureOptions = [file[:-4].capitalize() for file in os.listdir("images/materials") if file.endswith('.png')]
+                self.TextureDropdown = ttk.Combobox(self.root, values=self.textureOptions)
+                self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                self.TextureDropdown.set(self.parameters_dict[param].capitalize())
 
-        else:
-            try:
-                entry = ttk.Entry(self.root)
-                if param != 'size':
-                    if param in ['reflection_factor', 'transmittance']:
-                        entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value in percentage
+            else:
+                try:
+                    entry = ttk.Entry(self.root)
+                    if param != 'size':
+                        if param in ['reflection_factor', 'transmittance']:
+                            entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value in percentage
+                        else:
+                            entry.insert(0, str(self.parameters_dict[param])) # Set default value
                     else:
-                        entry.insert(0, str(self.parameters_dict[param])) # Set default value
-                else:
-                    entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
-                entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
-                self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
-            except Exception as e:
-                print(e)
+                        entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
+                    entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                    self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
+                except Exception as e:
+                    print(e)
+        except Exception as e:
+            print(e)
 
     def update_color_preview(self, param):
         red = self.sliders[0].get()
