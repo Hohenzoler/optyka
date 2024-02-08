@@ -272,7 +272,7 @@ class Game:
         if current_second < 10:
             current_second = f"0{current_second}"
         time_text = self.font.render(f"{current_hour}:{current_minute}:{current_second}", True, "white")
-        self.screen.blit(time_text, (self.width - 157.5, 10))
+        self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1), 10))
         return time_text
 
 
