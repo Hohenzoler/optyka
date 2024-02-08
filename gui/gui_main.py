@@ -27,7 +27,7 @@ class GUI:
 
         self.bin = bin.Bin(self.game)
 
-        self.button_min = -3
+        self.button_min = -2
         self.button_max = 7
 
         self.buttons = [button.Button(self.game, x) for x in range(self.button_min, self.button_max)] #creates buttons
