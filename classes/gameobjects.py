@@ -20,7 +20,10 @@ class GameObject:
     def __init__(self, game, points, color, angle, reflection_factor, transmittance, image = None, textureName=None):
         # Initialize common attributes
         self.game = game
-        self.points = points
+
+        self.defualt_points = points
+
+        self.points = self.defualt_points
 
         self.textureName = textureName if textureName else None
 
@@ -345,7 +348,7 @@ class GameObject:
 
         new_points = []
 
-        for point in self.points:
+        for point in self.defualt_points:
             new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
             new_y = (point[1] - float(self.parameters['y'])) * percent + float(self.parameters['y'])
 
