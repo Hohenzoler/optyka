@@ -118,7 +118,7 @@ class Parameters:
                     value = str(value)
                     value = value.strip("%")
                     value = float(value) / 100
-                    self.object.points = self.change_size(value)
+                    # self.object.points = self.change_size(value)
 
                 if param == 'reflection_factor' or param == 'transmittance':
                     value = str(value)
@@ -147,16 +147,6 @@ class Parameters:
         return slider.get()
 
 
-    def change_size(self, percent):
-
-        new_points = []
-
-        for point in self.points:
-            new_x = ((point[0] - float(self.parameters_dict['x'].get())) * percent) + float(self.parameters_dict['x'].get())
-            new_y = (point[1] - float(self.parameters_dict['y'].get())) * percent + float(self.parameters_dict['y'].get())
-
-            new_points.append((new_x, new_y))
-        return new_points
 
 
 class ToggleSwitch(tk.Canvas):

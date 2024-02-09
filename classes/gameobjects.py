@@ -306,6 +306,9 @@ class GameObject:
             self.find_parameters()
             mp.Parameters(self)
 
+        self.scale_factor = self.parameters['size']
+        self.change_size()
+
         try:
             d_angle = self.parameters['angle'] - self.angle
             self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
@@ -336,6 +339,18 @@ class GameObject:
         else:
             self.texture = None
 
+    def change_size(self):
+
+        percent = self.scale_factor
+
+        new_points = []
+
+        for point in self.points:
+            new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+            new_y = (point[1] - float(self.parameters['y'])) * percent + float(self.parameters['y'])
+
+            new_points.append((new_x, new_y))
+        self.points = new_points
 
 class Mirror(GameObject):
     def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName=None):
