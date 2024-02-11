@@ -259,8 +259,13 @@ class GameObject:
         # Check if the object is clicked
         mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
         pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
-
-        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+        try:
+            if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+                if self.on == 1:
+                    self.on = 0
+                else:
+                    self.on = 1
+        except IndexError: #pixel index out of range... WTF
             if self.on == 1:
                 self.on = 0
             else:
