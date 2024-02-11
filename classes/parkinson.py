@@ -86,9 +86,9 @@ class Particle:
         """
         self.x += self.vx
         self.y += self.vy
-        self.lifespan -= 2
         if self.alpha > 0 and self.lifespan > 0:
             self.alpha -= self.alpha // (1/2*self.lifespan)
+            self.lifespan -= 2
 
     def draw(self, screen):
         """
