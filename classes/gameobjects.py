@@ -208,9 +208,15 @@ class GameObject:
             self.points = [(x + self.x, y + self.y) for x, y in self.points]
             mousepos = pygame.mouse.get_pos()
             if self.texture:
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+                try:
+                    pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+                except:
+                    pass
             else:
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                try:
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                except:
+                    pass
             self.update_rect()
 
     def move(self):
