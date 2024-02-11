@@ -99,15 +99,16 @@ class Particle:
         screen : pygame.Surface
             The surface on which the particle is to be drawn
         """
-        surface = pygame.Surface((self.size * 2, self.size * 2), pygame.SRCALPHA)
-        if self.shape == 'circle':
-            pygame.draw.circle(surface, (self.red, self.green, self.blue, self.alpha), (self.size, self.size),
-                               self.size)
-        if self.shape == 'square':
-            pygame.draw.rect(surface, (self.red, self.green, self.blue, self.alpha),
-                             pygame.Rect(0, 0, self.size * 2, self.size * 2))
-        screen.blit(surface, (self.x - self.size, self.y - self.size))
-
+        screen_width, screen_height = screen.get_size()  # Get the size of the screen
+        if 0 <= self.x <= screen_width and 0 <= self.y <= screen_height:  # Check if the particle is within the screen
+            surface = pygame.Surface((self.size * 2, self.size * 2), pygame.SRCALPHA)
+            if self.shape == 'circle':
+                pygame.draw.circle(surface, (self.red, self.green, self.blue, self.alpha), (self.size, self.size),
+                                   self.size)
+            if self.shape == 'square':
+                pygame.draw.rect(surface, (self.red, self.green, self.blue, self.alpha),
+                                 pygame.Rect(0, 0, self.size * 2, self.size * 2))
+            screen.blit(surface, (self.x - self.size, self.y - self.size))
 
 class UnityParticleSystem:
     """
