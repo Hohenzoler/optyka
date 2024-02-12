@@ -6,6 +6,9 @@ import settingsSetup
 import pygame.gfxdraw
 import functions
 
+from bigtree import Node
+
+
 class Ray:
     def __init__(self, start_point, end_point, color):
         self.start_point = start_point
@@ -33,11 +36,314 @@ class Light:
         self.count=1
         self.get_r()
         self.alpha = alpha
+        self.root=Node('r',pos=self.starting_point)
 
         # print(self.r,self.linear_function)
     def find_b(self,a,point):
         return point[1]-a*point[0]
 
+    def trace_path_recurrence(self,r,position,parent,parent_slope):
+        self.root.hshow()
+        self.current_starting_point = position
+
+        self.mini_run=True
+        self.index=0
+
+        if self.r < math.pi:
+            self.vertical = 'up'
+        else:
+            self.vertical = 'down'
+        if self.r < 3 / 2 * math.pi and self.r > 1 / 2 * math.pi:
+            self.horizontal = 'left'
+        else:
+            self.horizontal = 'right'
+        self.index += 1
+        self.linear_function = Linear_Function(math.tan(-self.r),
+                                               self.find_b(math.tan(-self.r), self.current_starting_point))
+        self.linear_function.draw(self.game)
+        try:
+            self.slope_before = parent_slope
+        except:
+            self.slope_before = None
+        self.current_point_before = self.current_starting_point
+        self.current_distance = None
+        self.current_point = None
+        self.current_slope = None
+        self.current_object = None
+        self.r = r
+
+        for object in self.game.objects:
+            if type(object) == gameobjects.Mirror or type(object) == gameobjects.ColoredGlass:
+                self.check_object(
+                    object)  # gets the slope closest to the light and on the line of light and some other stuff
+            if type(object) == gameobjects.Lens:
+                self.check_object(object)
+
+        # To do: fix bug causing only one lens to be analyzed
+
+        if self.current_slope == None:
+            self.border_stuff_recurrence(parent)
+        elif self.current_object_type == 'mirror':
+            self.mirror_stuff_recurrence(parent)
+        elif self.current_object_type == 'glass':
+            self.glass_stuff_recurrence(parent)
+        elif self.current_object_type == 'lens':
+            self.lens_stuff_recurrence(self.current_object,parent)
+
+
+
+    def check_object(self,object):
+
+        object.get_slopes()
+        self.slopes = object.slopes
+        # print(slopes)
+        i = 0
+        for slope in self.slopes:
+            if slope == self.slope_before:
+                pass
+            else:
+                if (slope[0][0] - slope[1][0]) == 0:
+                    dx = 0.001
+                else:
+                    dx = (slope[0][0] - slope[1][0])
+                # r=math.atan((slope[0][0]-slope[1][0])/dy)
+
+                lf = Linear_Function((slope[0][1] - slope[1][1]) / dx,
+                                     self.find_b(((slope[0][1] - slope[1][1]) / dx), slope[0]))
+                # lf.draw(self.game)
+                x = lf.intercept(self.linear_function)
+                y = lf.calculate(x)
+                # if i%2==0:
+                #     pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),2)
+                #     pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 2)
+                #     pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 2)
+                #     lf.draw(self.game)
+                # print(slope[0][0],slope[1][0],x)
+                point = (x, self.linear_function.calculate(x))
+                if x <= max(slope[0][0], slope[1][0]) + 1 and x >= min(slope[0][0], slope[1][0]) - 1:
+                    if y <= max(slope[0][1], slope[1][1]) + 1 and y >= min(slope[0][1], slope[1][1]) - 1:
+                        cases = 0
+                        if self.horizontal == 'right':
+                            if x >= self.current_starting_point[0]:
+                                cases += 1
+                                # print('aaaaaaa')
+                        else:
+                            if x <= self.current_starting_point[0]:
+                                cases += 1
+                        if self.vertical == 'up':
+                            if y <= self.current_starting_point[1]:
+                                cases += 1
+                        else:
+                            if y >= self.current_starting_point[1]:
+                                cases += 1
+                        # print(cases)
+                        if cases == 2:
+                            pygame.draw.line(self.game.screen, (0, 255, 0), slope[0], slope[1],
+                                             5)
+                            dist = abs(x - self.current_starting_point[0])
+                            if self.current_distance == None:
+                                self.current_distance = dist
+                                self.current_point = point
+                                self.current_slope = slope
+                                self.current_object = object
+                                if type(object) == gameobjects.Mirror:
+                                    self.current_object_type = 'mirror'
+
+                                elif type(object) == gameobjects.ColoredGlass:
+                                    self.current_object_type = 'glass'
+                                elif type(object) == gameobjects.Lens:
+                                    self.current_object_type = 'lens'
+
+                            else:
+                                if dist < self.current_distance:
+                                    self.current_object = object
+                                    self.current_distance = dist
+                                    self.current_point = point
+                                    self.current_slope = slope
+                                    if type(object) == gameobjects.Mirror:
+                                        self.current_object_type = 'mirror'
+                                    elif type(object) == gameobjects.ColoredGlass:
+                                        self.current_object_type = 'glass'
+                                    elif type(object) == gameobjects.Lens:
+                                        self.current_object_type = 'lens'
+
+    def left_lens(self, lens):
+        for index, point in enumerate(lens.lens_points):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                offset = 0
+                pygame.draw.line(self.game.screen, (255, 255, 80), lens.center1, (point[0] - offset, point[1] - offset))
+                slope1 = self.linear_function.a
+                slope2 = functions.calculate_slope(point[0], point[1], lens.center1[0], lens.center1[1])
+                intersect_angle = int(functions.calculate_intersection_angle(slope1, slope2))
+                ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
+                # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
+                # print(math.degrees(normal_angle))
+                if index < len(lens.lens_points) / 2:
+                    self.r = -normal_angle - ref_angle
+                else:
+                    self.r = -normal_angle + ref_angle
+
+                # print(math.degrees(self.r))
+
+                self.points.append(point)
+                self.colors.append(self.RGB.rgb)
+                self.current_starting_point = point
+                self.linear_function = Linear_Function(math.tan(-self.r),
+                                                       self.find_b(math.tan(-self.r),
+                                                                   self.current_starting_point))
+                # self.linear_function.draw(self.game)
+                break
+    def right_lens(self, lens):
+        try:
+            for index, point in enumerate(lens.lens_points2):
+                if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                    offset = 0
+                    pygame.draw.line(self.game.screen, (255, 255, 80), lens.center2,
+                                     (point[0] - offset, point[1] - offset))
+                    slope1 = self.linear_function.a
+                    slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
+                    intersect_angle = int(functions.calculate_intersection_angle(slope2, slope1))
+                    temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
+                    if temp > 1:
+                        temp -= 1
+                    ref_angle = math.asin(temp)
+                    print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
+                    print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points2) / 2:
+                        self.r = -normal_angle - ref_angle
+                    else:
+                        self.r = -normal_angle + ref_angle
+                    print(math.degrees(self.r))
+
+                    self.points.append(point)
+                    self.colors.append(self.RGB.rgb)
+                    self.current_starting_point = point
+                    self.linear_function = Linear_Function(math.tan(-self.r),
+                                                           self.find_b(math.tan(-self.r),
+                                                                       self.current_starting_point))
+                    self.linear_function.draw(self.game)
+                    break
+        except:
+            pass
+    def lens_stuff_recurrence(self, lens,parent):
+            if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
+                #print(abs(lens.angle))
+                self.left_lens(lens)
+                if lens.type == lens.CONVEX:
+                    self.right_lens(lens)
+            else:
+                print("rotated")
+                self.right_lens(lens)
+                if lens.type == lens.CONVEX:
+                    self.left_lens(lens)
+            newNode = Node('g', pos=self.current_point,color=self.RGB.rgb, parent=parent)
+            self.trace_path_recurrence(self.r, self.current_point, newNode, self.current_slope)
+
+
+
+    def glass_stuff_recurrence(self,parent):
+        self.points.append(self.current_point)
+
+        self.RGB.compare(RGB(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
+        transmittance_factor = self.current_object.transmittance
+        self.RGB = RGB(int(self.RGB.r * transmittance_factor), int(self.RGB.g * transmittance_factor),
+                       int(self.RGB.b * transmittance_factor))
+        self.colors.append(self.RGB.rgb)
+        #print(self.RGB.rgb)
+
+        newNode = Node('g', pos=self.current_point,color=self.RGB.rgb, parent=parent)
+        self.trace_path_recurrence(self.r, self.current_point, newNode, self.current_slope)
+    def border_stuff_recurrence(self,parent):
+        self.current_point=(self.current_point_before[0] + 1000 * math.cos(-self.r),
+                            self.current_point_before[1] + 1000 * math.sin(-self.r))
+        self.points.append(self.current_point)
+        self.colors.append(self.RGB.rgb)
+        newNode = Node('m', pos=self.current_point,color=self.RGB.rgb, parent=parent)
+
+    def mirror_stuff_recurrence(self,parent):
+        pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
+        self.points.append(self.current_point)
+
+        reflection_factor = self.current_object.reflection_factor
+        self.RGB = RGB(int(self.RGB.r * reflection_factor), int(self.RGB.g * reflection_factor),
+                       int(self.RGB.b * reflection_factor))
+        self.colors.append(self.RGB.rgb)
+        if (self.current_slope[0][0] - self.current_slope[1][0]) == 0:
+            self.slope_angle = math.pi / 2
+        else:
+
+            self.slope_angle = math.atan((self.current_slope[0][1] - self.current_slope[1][1]) / (
+                    self.current_slope[0][0] - self.current_slope[1][0]))
+            if self.current_slope[0][0] >= self.current_slope[1][0] and self.current_slope[0][1] > \
+                    self.current_slope[1][1]:
+                self.slope_angle = math.pi - self.slope_angle
+            elif self.current_slope[1][0] >= self.current_slope[0][0] and self.current_slope[1][1] > \
+                    self.current_slope[0][1]:
+                self.slope_angle = math.pi - self.slope_angle
+            else:
+                self.slope_angle = -self.slope_angle
+        self.r = 2 * self.slope_angle - self.r
+        self.calibrate_r2()
+
+
+        newNode = Node('m', pos=self.current_point, color=self.RGB.rgb ,parent=parent)
+        self.trace_path_recurrence(self.r,self.current_point,newNode,self.current_slope)
+    def calibrate_r2(self):
+        if self.r>2*math.pi:
+            self.r-=2*math.pi
+        if self.r<0:
+            self.r+=2*math.pi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #NON - RECURSIVE
     def trace_path2(self):
         self.current_starting_point = self.starting_point
 
@@ -71,8 +377,7 @@ class Light:
                     self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
                 if type(object) == gameobjects.Lens:
                     self.check_object(object)
-            for lens in lenses:
-                self.lens_stuff(lens)
+
             # To do: fix bug causing only one lens to be analyzed
 
             if self.current_slope == None:
