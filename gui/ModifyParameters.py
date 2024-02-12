@@ -6,6 +6,8 @@ class Parameters:
     def __init__(self, object):
         self.root = ttk.Window(themename='solar')
 
+        self.root.protocol('WM_DELETE_WINDOW', self.passed)
+
         self.object = object
 
         # # Apply ttkbootstrap theme 'solar'
@@ -146,6 +148,8 @@ class Parameters:
     def get_slider_value(self, slider):
         return slider.get()
 
+    def passed(self):
+        pass
 
 
 
