@@ -111,7 +111,10 @@ class GameObject:
                 if self.texture:
                     pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
                 else:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                    if self.color:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                    else:
+                        pygame.gfxdraw.polygon(self.game.screen, self.points, (255, 255, 255))
 
         else:
             font = pygame.font.Font(Font, self.game.width//40)
