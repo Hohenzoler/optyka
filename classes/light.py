@@ -19,6 +19,7 @@ class Ray:
 class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light
+        self.in_prism=False
         self.main_light_slope=None
         self.linear_function = None
         self.starting_point=points[0]
@@ -129,7 +130,7 @@ class Light:
             self.current_object=None
             lenses = []
             for object in self.game.objects:
-                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass:
+                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism:
                     self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
                 if type(object) == gameobjects.Lens:
                     self.check_object(object)
@@ -146,7 +147,7 @@ class Light:
                 self.lens_stuff(self.current_object)
             elif self.current_object_type=='prism':
                 self.prism_stuff()
-                print('a')
+
 
 
             if self.index >= 100:
@@ -154,11 +155,12 @@ class Light:
     def check_object(self,object):
 
         object.get_slopes()
+        print(type(object))
         self.slopes = object.slopes
         # print(slopes)
         i = 0
         for slope in self.slopes:
-            print(type(object))
+
             if slope == self.slope_before:
                 pass
             else:
@@ -362,11 +364,19 @@ class Light:
 
 
         self.current_starting_point = self.current_point
-    def difract(self,prism):
+    def first_difract(self,prism):
         n=prism.n
         fi=prism.fi
-        self.r=fi/2+self.r-math.asin((fi/2+self.r)/n)
+        self.r=fi/2+self.r-math.asin(math.sin((fi/2+self.r))/n)
+    def second_difract(self,prism):
+        n = prism.n
+        fi = prism.fi
+        self.r=math.pi-fi*(n-1)
     def prism_stuff(self):
+        if self.in_prism==True:
+            self.in_prism=False
+        else:
+            self.in_prism=True
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         reflection_factor = self.current_object.reflection_factor
@@ -374,8 +384,10 @@ class Light:
                              int(self.RGB.b * reflection_factor))
 
         self.colors.append(self.RGB.rgb)
+        self.first_difract(self.current_object)
 
         self.current_starting_point = self.current_point
+
 
     def calibrate_r2(self):
         if self.r>2*math.pi:
