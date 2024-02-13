@@ -69,7 +69,7 @@ class Parameters:
 
             else:
                 try:
-                    entry = ttk.Entry(self.root)
+                    entry = tk.Entry(self.root)
                     if param != 'size':
                         if param in ['reflection_factor', 'transmittance']:
                             entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value in percentage
