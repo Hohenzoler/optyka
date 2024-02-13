@@ -143,7 +143,7 @@ class Parameters:
             print(e)
 
         self.root.quit()
-        self.root.withdraw()
+        self.root.destroy()
 
     def get_slider_value(self, slider):
         return slider.get()
