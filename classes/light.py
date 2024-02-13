@@ -314,7 +314,7 @@ class Light:
     def glass_stuff_recurrence(self,parent,RGB):
         self.points.append(self.current_point)
 
-        RGB.compare(RGB(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
+        RGB.compare(RGB_Class(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
         transmittance_factor = self.current_object.transmittance
         self.RGB = RGB_Class(int(RGB.r * transmittance_factor), int(RGB.g * transmittance_factor),
                        int(RGB.b * transmittance_factor))

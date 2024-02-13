@@ -687,7 +687,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                     self.light = light.Light(self.game,
                                              [[self.light_start_x, self.light_start_y]],
-                                             (255,0,0), -1 * self.angle, self.light_width, alpha=40)
+                                             self.color, -1 * self.angle, self.light_width, alpha=40)
 
                     # if up arrow clicked, color goes random
 
