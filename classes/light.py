@@ -144,6 +144,9 @@ class Light:
                 self.glass_stuff()
             elif self.current_object_type=='lens':
                 self.lens_stuff(self.current_object)
+            elif self.current_object_type=='prism':
+                self.prism_stuff()
+                print('a')
 
 
             if self.index >= 100:
@@ -155,6 +158,7 @@ class Light:
         # print(slopes)
         i = 0
         for slope in self.slopes:
+            print(type(object))
             if slope == self.slope_before:
                 pass
             else:
@@ -202,6 +206,7 @@ class Light:
                                 self.current_point = point
                                 self.current_slope = slope
                                 self.current_object = object
+
                                 if type(object) == gameobjects.Mirror:
                                     self.current_object_type = 'mirror'
 
@@ -209,6 +214,8 @@ class Light:
                                     self.current_object_type = 'glass'
                                 elif type(object) == gameobjects.Lens:
                                     self.current_object_type = 'lens'
+                                elif type(object) == gameobjects.Prism:
+                                    self.current_object_type = 'prism'
 
                             else:
                                 if dist < self.current_distance:
@@ -216,12 +223,16 @@ class Light:
                                     self.current_distance = dist
                                     self.current_point = point
                                     self.current_slope = slope
+                                    print(type(object))
                                     if type(object) == gameobjects.Mirror:
                                         self.current_object_type = 'mirror'
                                     elif type(object) == gameobjects.ColoredGlass:
                                         self.current_object_type = 'glass'
                                     elif type(object) == gameobjects.Lens:
                                         self.current_object_type = 'lens'
+                                    elif type(object) == gameobjects.Prism:
+
+                                        self.current_object_type = 'prism'
 
     def left_lens(self, lens):
         for index, point in enumerate(lens.lens_points):
@@ -351,11 +362,27 @@ class Light:
 
 
         self.current_starting_point = self.current_point
+    def difract(self,prism):
+        n=prism.n
+        fi=prism.fi
+        self.r=fi/2+self.r-math.asin((fi/2+self.r)/n)
+    def prism_stuff(self):
+        pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
+        self.points.append(self.current_point)
+        reflection_factor = self.current_object.reflection_factor
+        self.RGB = RGB_Class(int(self.RGB.r * reflection_factor), int(self.RGB.g * reflection_factor),
+                             int(self.RGB.b * reflection_factor))
+
+        self.colors.append(self.RGB.rgb)
+
+        self.current_starting_point = self.current_point
+
     def calibrate_r2(self):
         if self.r>2*math.pi:
             self.r-=2*math.pi
         if self.r<0:
             self.r+=2*math.pi
+
     def get_r(self):
         self.r=self.angle/360*2*math.pi
         if self.r>2*math.pi:
