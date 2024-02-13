@@ -29,21 +29,89 @@ class Light:
         self.layer = 0  # Assign a layer value to control rendering order
         #self.game.objects.insert(-1, self)
         self.colors=[]
-        self.RGB = RGB(self.color[0], self.color[1], self.color[2])
+        self.RGB = RGB_Class(self.color[0], self.color[1], self.color[2])
         self.colors.append(self.RGB.rgb)
         self.x=self.points[0][0]
         self.y=self.points[0][1]
         self.count=1
         self.get_r()
         self.alpha = alpha
-        self.root=Node('r',pos=self.starting_point)
+        self.root=Node('r',pos=self.starting_point,color=self.color)
 
         # print(self.r,self.linear_function)
     def find_b(self,a,point):
         return point[1]-a*point[0]
 
-    def trace_path_recurrence(self,r,position,parent,parent_slope):
-        self.root.hshow()
+    def render(self):
+        try:
+            ### For RTX Flashlight ###
+            if self.game.settings['HD_Flashlight'] == 'ON':
+                #### Original ####
+                # new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+                # new_line_surface.set_alpha(self.alpha)
+                for x in range(0, len(self.points) - 1):
+                    #### Beta testing stuff ####
+                    current_ray = Ray(self.points[x], self.points[x+1], self.colors[x])
+                    pointer = current_ray
+                    isAdded = False
+                    collisionless_layer = -1
+                    for surface_num, rays in self.game.surface_rays.items():
+                        collides = False
+                        # if rays == [] and len(self.game.surfaces) >0:
+                        #     self.game.surface_num -= 1
+                        #     #self.game.surface_rays.pop(surface_num)
+                        #     self.game.surfaces.pop()
+                        for ray in rays:
+                            if functions.do_lines_intersect(ray.start_point, ray.end_point, current_ray.start_point, current_ray.end_point):
+                                collides = True
+                            if current_ray.start_point == ray.start_point and current_ray.end_point == ray.end_point:
+                                isAdded = True
+                                if ray.active == False:
+                                    break
+                        if collides is False:
+                            collisionless_layer = surface_num
+                    if isAdded is False:
+                        if collisionless_layer != -1:
+                            self.game.surface_rays[collisionless_layer].append(current_ray)
+                        else:
+                            # More efficient way, but kinda glitchy
+                            self.game.surface_rays[max(self.game.surface_rays.keys())].append(current_ray)
+
+                            # Unfinished optimal method
+
+                            # self.game.surface_rays[max(self.game.surface_rays.keys()) + 1] = [current_ray]
+                            # surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+                            # surface.set_alpha(40)
+                            # self.game.surfaces.append(surface)
+                            # self.game.surface_num += 1
+                            # print("add")
+
+                    #### Original ####
+
+                #     self.draw_thick_line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
+                #                         int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
+                # self.game.screen.blit(new_line_surface, (0, 0))
+            ### For Simple Flashlight ###
+            else:
+                for x in range(0, len(self.points) - 1):
+                    self.draw_thick_line(self.game.screen, int(self.points[x][0]), int(self.points[x][1]),
+                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
+
+        except (AttributeError, ValueError):
+            pass
+    def search(self,parent,node):
+        print(type(Node('s',pos=[0,0])),node)
+        if not parent==None:
+            pygame.draw.line(self.game.screen,parent.color,parent.pos,node.pos,4)
+        for n in node.children:
+            print(n,type(n))
+            self.search(node,n)
+
+    def render(self):
+        self.search(None,self.root)
+
+    def trace_path_recurrence(self,r,position,parent,parent_slope,RGB):
+        self.root.show(attr_list=['color','pos'])
         self.current_starting_point = position
 
         self.mini_run=True
@@ -82,13 +150,13 @@ class Light:
         # To do: fix bug causing only one lens to be analyzed
 
         if self.current_slope == None:
-            self.border_stuff_recurrence(parent)
+            self.border_stuff_recurrence(parent,RGB)
         elif self.current_object_type == 'mirror':
-            self.mirror_stuff_recurrence(parent)
+            self.mirror_stuff_recurrence(parent,RGB)
         elif self.current_object_type == 'glass':
-            self.glass_stuff_recurrence(parent)
+            self.glass_stuff_recurrence(parent,RGB)
         elif self.current_object_type == 'lens':
-            self.lens_stuff_recurrence(self.current_object,parent)
+            self.lens_stuff_recurrence(self.current_object,parent,RGB)
 
 
 
@@ -227,7 +295,7 @@ class Light:
                     break
         except:
             pass
-    def lens_stuff_recurrence(self, lens,parent):
+    def lens_stuff_recurrence(self, lens,parent,RGB):
             if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
                 #print(abs(lens.angle))
                 self.left_lens(lens)
@@ -238,38 +306,38 @@ class Light:
                 self.right_lens(lens)
                 if lens.type == lens.CONVEX:
                     self.left_lens(lens)
-            newNode = Node('g', pos=self.current_point,color=self.RGB.rgb, parent=parent)
-            self.trace_path_recurrence(self.r, self.current_point, newNode, self.current_slope)
+            newNode = Node('g', pos=self.current_point,color=RGB.rgb, parent=parent)
+            self.trace_path_recurrence(self.r, self.current_point, newNode, self.current_slope,RGB)
 
 
 
-    def glass_stuff_recurrence(self,parent):
+    def glass_stuff_recurrence(self,parent,RGB):
         self.points.append(self.current_point)
 
-        self.RGB.compare(RGB(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
+        RGB.compare(RGB(self.current_object.color[0],self.current_object.color[1],self.current_object.color[2]))
         transmittance_factor = self.current_object.transmittance
-        self.RGB = RGB(int(self.RGB.r * transmittance_factor), int(self.RGB.g * transmittance_factor),
-                       int(self.RGB.b * transmittance_factor))
+        self.RGB = RGB_Class(int(RGB.r * transmittance_factor), int(RGB.g * transmittance_factor),
+                       int(RGB.b * transmittance_factor))
         self.colors.append(self.RGB.rgb)
         #print(self.RGB.rgb)
 
         newNode = Node('g', pos=self.current_point,color=self.RGB.rgb, parent=parent)
-        self.trace_path_recurrence(self.r, self.current_point, newNode, self.current_slope)
-    def border_stuff_recurrence(self,parent):
+        self.trace_path_recurrence(self.r, self.current_point, newNode, self.current_slope,self.RGB)
+    def border_stuff_recurrence(self,parent,RGB):
         self.current_point=(self.current_point_before[0] + 1000 * math.cos(-self.r),
                             self.current_point_before[1] + 1000 * math.sin(-self.r))
         self.points.append(self.current_point)
-        self.colors.append(self.RGB.rgb)
-        newNode = Node('m', pos=self.current_point,color=self.RGB.rgb, parent=parent)
+        self.colors.append(RGB.rgb)
+        newNode = Node('m', pos=self.current_point,color=RGB.rgb, parent=parent)
 
-    def mirror_stuff_recurrence(self,parent):
+    def mirror_stuff_recurrence(self,parent,RGB):
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
 
         reflection_factor = self.current_object.reflection_factor
-        self.RGB = RGB(int(self.RGB.r * reflection_factor), int(self.RGB.g * reflection_factor),
-                       int(self.RGB.b * reflection_factor))
-        self.colors.append(self.RGB.rgb)
+        self.RGB = RGB_Class(int(RGB.r * reflection_factor), int(RGB.g * reflection_factor),
+                       int(RGB.b * reflection_factor))
+        self.colors.append(RGB.rgb)
         if (self.current_slope[0][0] - self.current_slope[1][0]) == 0:
             self.slope_angle = math.pi / 2
         else:
@@ -289,12 +357,13 @@ class Light:
 
 
         newNode = Node('m', pos=self.current_point, color=self.RGB.rgb ,parent=parent)
-        self.trace_path_recurrence(self.r,self.current_point,newNode,self.current_slope)
+        self.trace_path_recurrence(self.r,self.current_point,newNode,self.current_slope,self.RGB)
     def calibrate_r2(self):
         if self.r>2*math.pi:
             self.r-=2*math.pi
         if self.r<0:
             self.r+=2*math.pi
+
 
 
 
@@ -602,63 +671,7 @@ class Light:
             for offset in range(THICC):
                 pygame.gfxdraw.line(surface, x1 + offset, y1, x2 + offset, y2, color)
 
-    def render(self):
-        try:
-            ### For RTX Flashlight ###
-            if self.game.settings['HD_Flashlight'] == 'ON':
-                #### Original ####
-                # new_line_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-                # new_line_surface.set_alpha(self.alpha)
-                for x in range(0, len(self.points) - 1):
-                    #### Beta testing stuff ####
-                    current_ray = Ray(self.points[x], self.points[x+1], self.colors[x])
-                    pointer = current_ray
-                    isAdded = False
-                    collisionless_layer = -1
-                    for surface_num, rays in self.game.surface_rays.items():
-                        collides = False
-                        # if rays == [] and len(self.game.surfaces) >0:
-                        #     self.game.surface_num -= 1
-                        #     #self.game.surface_rays.pop(surface_num)
-                        #     self.game.surfaces.pop()
-                        for ray in rays:
-                            if functions.do_lines_intersect(ray.start_point, ray.end_point, current_ray.start_point, current_ray.end_point):
-                                collides = True
-                            if current_ray.start_point == ray.start_point and current_ray.end_point == ray.end_point:
-                                isAdded = True
-                                if ray.active == False:
-                                    break
-                        if collides is False:
-                            collisionless_layer = surface_num
-                    if isAdded is False:
-                        if collisionless_layer != -1:
-                            self.game.surface_rays[collisionless_layer].append(current_ray)
-                        else:
-                            # More efficient way, but kinda glitchy
-                            self.game.surface_rays[max(self.game.surface_rays.keys())].append(current_ray)
 
-                            # Unfinished optimal method
-
-                            # self.game.surface_rays[max(self.game.surface_rays.keys()) + 1] = [current_ray]
-                            # surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-                            # surface.set_alpha(40)
-                            # self.game.surfaces.append(surface)
-                            # self.game.surface_num += 1
-                            # print("add")
-
-                    #### Original ####
-
-                #     self.draw_thick_line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
-                #                         int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
-                # self.game.screen.blit(new_line_surface, (0, 0))
-            ### For Simple Flashlight ###
-            else:
-                for x in range(0, len(self.points) - 1):
-                    self.draw_thick_line(self.game.screen, int(self.points[x][0]), int(self.points[x][1]),
-                                        int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
-
-        except (AttributeError, ValueError):
-            pass
 
 
 
@@ -774,7 +787,7 @@ class Light:
         # print(self.vx,self.vy)
 
 
-class RGB():
+class RGB_Class():
     def __init__(self,r,g,b):
         self.r=r
         self.g=g

@@ -687,11 +687,11 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                     self.light = light.Light(self.game,
                                              [[self.light_start_x, self.light_start_y]],
-                                             self.color, -1 * self.angle, self.light_width, alpha=40)
+                                             (255,0,0), -1 * self.angle, self.light_width, alpha=40)
 
                     # if up arrow clicked, color goes random
 
-                    self.light.trace_path_recurrence(self.light.r,self.light.starting_point,self.light.root,None)
+                    self.light.trace_path_recurrence(self.light.r,self.light.starting_point,self.light.root,None,self.light.RGB)
                     # self.light.trace_path2()
                     self.placed = True
                     light.Light.render(self.light)
