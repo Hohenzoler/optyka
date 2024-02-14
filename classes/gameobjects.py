@@ -265,40 +265,42 @@ class GameObject:
             pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
 
     def checkifclicked(self, mousepos):
-        # Check if the object is clicked
-        mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-        pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
-        try:
-            if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+        if self.game.isDrawingModeOn != True:
+            # Check if the object is clicked
+            mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+            pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
+            try:
+                if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+                    if self.on == 1:
+                        self.on = 0
+                    else:
+                        self.on = 1
+            except IndexError: #pixel index out of range... WTF
                 if self.on == 1:
                     self.on = 0
                 else:
                     self.on = 1
-        except IndexError: #pixel index out of range... WTF
-            if self.on == 1:
-                self.on = 0
-            else:
-                self.on = 1
 
     def selected(self, mousepos):
-        mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-        pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
+        if self.game.isDrawingModeOn != True:
+            mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+            pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
 
-        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
-            if self.game.selected_object is not None and self.game.selected_object != self:
-                self.game.selected_object.selectedtrue = False  # Deselect the currently selected object
+            if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+                if self.game.selected_object is not None and self.game.selected_object != self:
+                    self.game.selected_object.selectedtrue = False  # Deselect the currently selected object
 
-            if not self.selectedtrue:
-                self.selectedtrue = True
-                self.game.selected_object = self  # Set this object as the currently selected object
-                sounds.selected_sound()
-            else:
-                self.selectedtrue = False
-                self.game.selected_object = None  # No object is selected now
-                if type(self) == Flashlight:
-                    sounds.laser_sound()
+                if not self.selectedtrue:
+                    self.selectedtrue = True
+                    self.game.selected_object = self  # Set this object as the currently selected object
+                    sounds.selected_sound()
                 else:
-                    sounds.placed_sound()
+                    self.selectedtrue = False
+                    self.game.selected_object = None  # No object is selected now
+                    if type(self) == Flashlight:
+                        sounds.laser_sound()
+                    else:
+                        sounds.placed_sound()
 
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)
