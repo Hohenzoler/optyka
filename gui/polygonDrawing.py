@@ -16,14 +16,12 @@ def addPoint(mousePos):
 # def renderDots():
 #     for i in currentPolygonPoints:
 #         pygame.draw.circle(screen, (200, 200, 200), i, 10)
-
+def clearPoints():
+    currentPolygonPoints = []
 def createPolygon(game):
+    global currentPolygonPoints
     if len(currentPolygonPoints) >= 3:
-        print(1345)
-        thisOnesPoints = currentPolygonPoints
-        Adam = gameobjects.Mirror(game, thisOnesPoints, (200, 0, 0), 0, 0.4, 0.6)
+        Adam = gameobjects.Mirror(game, currentPolygonPoints, (200, 0, 0), 0, 0.4, 0.6)
         game.objects.append(Adam)
-        # currentPolygonPoints.clear()
+        clearPoints()
 
-    else:
-        pass

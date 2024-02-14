@@ -124,6 +124,7 @@ class Game:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
                     if self.isDrawingModeOn:
                         polygonDrawing.addPoint(self.mousepos)
+                        print(self.isDrawingModeOn)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.create_clicked_particles()
                     if event.button == 3:
@@ -139,7 +140,8 @@ class Game:
                     elif event.key == 13 and self.isDrawingModeOn:
                         gui.polygonDrawing.createPolygon(self)
                         self.isDrawingModeOn = False
-                        polygonDrawing.currentPolygonPoints = []
+                        isDrawingModeOn = False
+                        polygonDrawing.clearPoints()
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if self.achievements_button.is_clicked(event.pos):
                         self.achievements_button.action()
@@ -246,7 +248,7 @@ class Game:
         elif self.mode == 'achievements':
             self.achievements_screen.render()
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
-        if self.isDrawingModeOn:
+        if isDrawingModeOn:
             self.screen.blit(self.pen_img, self.cursor_img_rect)
         else:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
