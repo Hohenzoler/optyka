@@ -105,9 +105,12 @@ class Particle:
             if self.shape == 'circle':
                 pygame.draw.circle(surface, (self.red, self.green, self.blue, self.alpha), (self.size, self.size),
                                    self.size)
-            if self.shape == 'square':
+            elif self.shape == 'square':
                 pygame.draw.rect(surface, (self.red, self.green, self.blue, self.alpha),
                                  pygame.Rect(0, 0, self.size * 2, self.size * 2))
+            elif self.shape == 'triangle':
+                pygame.draw.polygon(surface, (self.red, self.green, self.blue, self.alpha),
+                                    [(self.size, 0), (0, self.size * 2), (self.size * 2, self.size * 2)])
             screen.blit(surface, (self.x - self.size, self.y - self.size))
 
 class UnityParticleSystem:
