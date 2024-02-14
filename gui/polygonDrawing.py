@@ -17,6 +17,7 @@ def addPoint(mousePos):
 #     for i in currentPolygonPoints:
 #         pygame.draw.circle(screen, (200, 200, 200), i, 10)
 def clearPoints():
+    global currentPolygonPoints
     currentPolygonPoints = []
 def createPolygon(game):
     global currentPolygonPoints
