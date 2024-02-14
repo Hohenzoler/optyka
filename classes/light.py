@@ -155,7 +155,7 @@ class Light:
     def check_object(self,object):
 
         object.get_slopes()
-        print(type(object))
+
         self.slopes = object.slopes
         # print(slopes)
         i = 0
@@ -225,7 +225,7 @@ class Light:
                                     self.current_distance = dist
                                     self.current_point = point
                                     self.current_slope = slope
-                                    print(type(object))
+
                                     if type(object) == gameobjects.Mirror:
                                         self.current_object_type = 'mirror'
                                     elif type(object) == gameobjects.ColoredGlass:
@@ -336,6 +336,10 @@ class Light:
         self.mini_run = False
 
     def reflect(self):
+        self.callibrate_slope_angle()
+        self.r = 2 * self.slope_angle - self.r
+        self.calibrate_r2()
+    def callibrate_slope_angle(self):
         if (self.current_slope[0][0] - self.current_slope[1][0]) == 0:
             self.slope_angle = math.pi / 2
         else:
@@ -350,8 +354,6 @@ class Light:
                 self.slope_angle = math.pi - self.slope_angle
             else:
                 self.slope_angle = -self.slope_angle
-        self.r = 2 * self.slope_angle - self.r
-        self.calibrate_r2()
     def mirror_stuff(self):
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
@@ -365,18 +367,42 @@ class Light:
 
         self.current_starting_point = self.current_point
     def first_difract(self,prism):
+        # n=prism.n
+        # fi=prism.fi
+        # self.callibrate_slope_angle()
+        # prism_r=self.slope_angle
+        # alpha=fi/2-prism_r+self.r
+        # # lf_angle=math.pi/2+(math.pi/2-fi/2+prism_r)
+        # # lf=Linear_Function(math.tan(math.pi-lf_angle),self.find_b(math.tan(math.pi-lf_angle),self.current_point))
+        # # lf.draw(self.game)
+        # delta=math.asin(math.sin(alpha)/n)
+        # self.r=self.r-alpha+delta
+        self.callibrate_slope_angle()
         n=prism.n
-        fi=prism.fi
-        self.r=fi/2+self.r-math.asin(math.sin((fi/2+self.r))/n)
+        alpha=self.r+self.slope_angle-math.pi/2
+        delta = math.asin(math.sin(alpha) / n)
+        x=self.r-delta
+        self.r=self.r-x
+
     def second_difract(self,prism):
         n = prism.n
         fi = prism.fi
-        self.r=math.pi-fi*(n-1)
+        prism_r = prism.angle / 180 * math.pi
+        x=math.pi/2-fi/2+prism_r-self.r
+        epsilon=x+fi-math.pi/2
+
+        lf_angle=prism_r+fi/2
+
+        lf = Linear_Function(math.tan(lf_angle),
+                             self.find_b(math.tan(lf_angle), self.current_point))
+        lf.draw(self.game)
+
+        beta=math.asin(math.sin(epsilon)/n)
+        self.r=math.pi-beta+fi/2+prism_r
+        self.r=3*math.pi-self.r
+        print('a')
     def prism_stuff(self):
-        if self.in_prism==True:
-            self.in_prism=False
-        else:
-            self.in_prism=True
+
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         reflection_factor = self.current_object.reflection_factor
@@ -384,9 +410,16 @@ class Light:
                              int(self.RGB.b * reflection_factor))
 
         self.colors.append(self.RGB.rgb)
-        self.first_difract(self.current_object)
+        if self.in_prism==False:
+            self.first_difract(self.current_object)
+        else:
+            self.first_difract(self.current_object)
 
         self.current_starting_point = self.current_point
+        if self.in_prism==True:
+            self.in_prism=False
+        else:
+            self.in_prism=True
 
 
     def calibrate_r2(self):
