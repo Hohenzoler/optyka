@@ -176,7 +176,6 @@ class Button:
 
                 elif classes.game.isDrawingModeOn == False:
                     classes.game.isDrawingModeOn = True
-                    spiel = self.game
                 # print(classes.game.isDrawingModeOn)
             elif self.number == 5:
                 obj = gameobjects.Lens(self.game,

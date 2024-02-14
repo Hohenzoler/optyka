@@ -87,7 +87,7 @@ class GameObject:
     def render(self):
         # print(self.get_triangles())
 
-        self.get_slopes()
+        # self.get_slopes()
 
 
         if not self.selectedtrue:
@@ -112,7 +112,12 @@ class GameObject:
                     pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
                 else:
                     if self.color:
-                        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                        try:
+                            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                        except Exception as e:
+
+                            print(self.points)
+                            print(e)
                     else:
                         pygame.gfxdraw.polygon(self.game.screen, self.points, (255, 255, 255))
 

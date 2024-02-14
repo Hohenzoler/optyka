@@ -19,8 +19,8 @@ import gui
 from gui import polygonDrawing
 from screens import achievements_screen
 
-
 isDrawingModeOn = False
+
 class Game:
     """
     The main game class that handles the game loop, events, rendering and settings.
@@ -41,6 +41,7 @@ class Game:
             self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=0)
         else:
             self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
+        self.isDrawingModeOn = False
 
         self.run = True  # Game loop control
         self.fps = fps.return_fps()  # Frames per second
@@ -121,7 +122,7 @@ class Game:
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
-                    if isDrawingModeOn:
+                    if self.isDrawingModeOn:
                         polygonDrawing.addPoint(self.mousepos)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.create_clicked_particles()
@@ -135,8 +136,10 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.p = True
-                    elif event.key == 13 and isDrawingModeOn:
-                        gui.polygonDrawing.createPolygon()
+                    elif event.key == 13 and self.isDrawingModeOn:
+                        gui.polygonDrawing.createPolygon(self)
+                        self.isDrawingModeOn = False
+                        isDrawingModeOn = False
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if self.achievements_button.is_clicked(event.pos):
                         self.achievements_button.action()
@@ -154,6 +157,10 @@ class Game:
         """
         pygame.display.update()
         self.clock.tick(self.fps)
+        if isDrawingModeOn:
+            self.isDrawingModeOn = True
+        else:
+            self.isDrawingModeOn = False
 
     def render_particles(self):
         """
@@ -209,7 +216,7 @@ class Game:
                         if type(bin_2) == bin.Bin:
                             bin_2.checkCollision(object)
                             break
-            # if isDrawingModeOn:
+            # if self.isDrawingModeOn:
             #     optyka.gui.polygonDrawing.renderDots()
         elif self.mode == 'settings':
             if self.executed_command != 'settings':
@@ -239,7 +246,7 @@ class Game:
         elif self.mode == 'achievements':
             self.achievements_screen.render()
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
-        if isDrawingModeOn:
+        if self.isDrawingModeOn:
             self.screen.blit(self.pen_img, self.cursor_img_rect)
         else:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
