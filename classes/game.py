@@ -80,6 +80,8 @@ class Game:
 
         self.background_color = (0, 0, 0)
 
+        self.last_scroll_time = time.time()
+
     def go_to_achievements_screen(self):
         self.mode = 'achievements'
         self.achievements_screen = achievements_screen.AchievementsScreen(self)
@@ -87,14 +89,13 @@ class Game:
 
     def create_cursor_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        for i in range(1):
-            self.cursor_particle_system.add_particle(
-                mouse_x, mouse_y,
-                random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5),
-                150, random.randint(1, 2),
-                random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
-                250, 'square'
-            )
+        self.cursor_particle_system.add_particle(
+            mouse_x, mouse_y,
+            random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5),
+            200, random.randint(1, 2),
+            random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
+            150, 'square'
+        )
 
     def create_clicked_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -109,6 +110,22 @@ class Game:
 
     def return_fps(self):
         return self.displayFPS()
+
+    def scrolling(self, eventos):
+        current_time = time.time()
+        time_difference = current_time - self.last_scroll_time
+        self.last_scroll_time = current_time
+        if round(time_difference, 2) != 0:
+            if eventos.y > 0:
+                if time_difference > 1:
+                    self.r = 1
+                else:
+                    self.r = 1 / (time_difference * 9)
+            if eventos.y < 0:
+                if time_difference > 1:
+                    self.r = -1
+                else:
+                    self.r = -1 / (time_difference * 9)
 
     def events(self):
         """
@@ -130,10 +147,7 @@ class Game:
                     if event.button == 3:
                         self.rightclickedmousepos = event.pos
                 if event.type == pygame.MOUSEWHEEL:
-                    if event.y > 0:
-                        self.r = 5
-                    if event.y < 0:
-                        self.r = -5
+                    self.scrolling(event)
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.p = True
