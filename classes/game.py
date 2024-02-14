@@ -139,6 +139,7 @@ class Game:
                     elif event.key == 13 and self.isDrawingModeOn:
                         gui.polygonDrawing.createPolygon(self)
                         self.isDrawingModeOn = False
+                        polygonDrawing.currentPolygonPoints = []
                         isDrawingModeOn = False
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if self.achievements_button.is_clicked(event.pos):
