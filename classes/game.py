@@ -120,12 +120,12 @@ class Game:
                 if time_difference > 1:
                     self.r = 1
                 else:
-                    self.r = 1 / (time_difference * 9)
+                    self.r = int(1 / (time_difference * 9))
             if eventos.y < 0:
                 if time_difference > 1:
                     self.r = -1
                 else:
-                    self.r = -1 / (time_difference * 9)
+                    self.r = int(-1 / (time_difference * 9))
 
     def events(self):
         """
