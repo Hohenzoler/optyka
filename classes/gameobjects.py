@@ -181,51 +181,52 @@ class GameObject:
                 self.angle += 360
             else:
                 break
-        self.angle += d_angle
-        self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
-        self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
+        if self.game.isDrawingModeOn != True:
+            self.angle += d_angle
+            self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
+            self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
 
-        temp_rect = self.rect.move(self.x, self.y)
+            temp_rect = self.rect.move(self.x, self.y)
 
-        pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
+            pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
 
-        for obj in self.game.objects:
-            if obj.rect.colliderect(temp_rect):
-                if obj != self and isinstance(obj, GameObject):
-                    return
+            for obj in self.game.objects:
+                if obj.rect.colliderect(temp_rect):
+                    if obj != self and isinstance(obj, GameObject):
+                        return
 
-        # Reset the flag to regenerate triangles
-        self.triangles_generated = False
+            # Reset the flag to regenerate triangles
+            self.triangles_generated = False
 
-        # Update the points based on the new position and angle
-        self.points = self.rotate_points(self.points, d_angle)
+            # Update the points based on the new position and angle
+            self.points = self.rotate_points(self.points, d_angle)
 
-        # Assuming self.transparent_surface is a surface with transparency
-        # Blit the rotated image with transparency
-        if self.image:
-            rotated_image = pygame.transform.rotate(self.image, -self.angle)
-            image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
-                                                        (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
-            self.game.screen.blit(rotated_image, image_rect.topleft)
-            # Draw the rotated lines without transparency
-            #rotated_points = self.rotate_points(self.points, self.angle)
-            self.points = [(x + self.x, y + self.y) for x, y in self.points]
-            self.update_rect()
+            # Assuming self.transparent_surface is a surface with transparency
+            # Blit the rotated image with transparency
+            if self.image:
+                rotated_image = pygame.transform.rotate(self.image, -self.angle)
+                image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
+                                                            (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
+                self.game.screen.blit(rotated_image, image_rect.topleft)
+                # Draw the rotated lines without transparency
+                #rotated_points = self.rotate_points(self.points, self.angle)
+                self.points = [(x + self.x, y + self.y) for x, y in self.points]
+                self.update_rect()
 
-        else:
-            self.points = [(x + self.x, y + self.y) for x, y in self.points]
-            mousepos = pygame.mouse.get_pos()
-            if self.texture:
-                try:
-                    pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
-                except:
-                    pass
             else:
-                try:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
-                except:
-                    pass
-            self.update_rect()
+                self.points = [(x + self.x, y + self.y) for x, y in self.points]
+                mousepos = pygame.mouse.get_pos()
+                if self.texture:
+                    try:
+                        pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+                    except:
+                        pass
+                else:
+                    try:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                    except:
+                        pass
+                self.update_rect()
 
     def move(self):
         # code for moving object with mouse
