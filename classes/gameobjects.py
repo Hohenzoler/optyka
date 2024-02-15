@@ -335,7 +335,8 @@ class GameObject:
         self.change_size()
 
         try:
-            d_angle = self.parameters['angle'] - self.angle
+            d_angle = self.parameters['angle']
+            self.angle = 0
             self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
             self.scale_factor = self.parameters['size']
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
