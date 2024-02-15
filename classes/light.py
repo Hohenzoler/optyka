@@ -367,16 +367,14 @@ class Light:
     def first_difract(self,prism):
         n=prism.n
         fi=prism.fi
-        self.r=fi/2+self.r-math.asin(math.sin((fi/2+self.r))/n)
+        self.r=fi/2+self.r+prism.angle/180*math.pi-math.asin(math.sin((fi/2+self.r))/n)
+
     def second_difract(self,prism):
         n = prism.n
         fi = prism.fi
-        self.r=math.pi-fi*(n-1)
+        self.r=math.pi-math.asin(math.sin(1/2*prism.angle+fi-self.r)/n)
     def prism_stuff(self):
-        if self.in_prism==True:
-            self.in_prism=False
-        else:
-            self.in_prism=True
+
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         reflection_factor = self.current_object.reflection_factor
@@ -384,9 +382,36 @@ class Light:
                              int(self.RGB.b * reflection_factor))
 
         self.colors.append(self.RGB.rgb)
-        self.first_difract(self.current_object)
+        if self.in_prism:
+            self.first_difract(self.current_object)
+        else:
+            self.first_difract(self.current_object)
+
+        if not self.in_prism:
+            angle=math.pi/18
+            da=math.pi/63
+            colors=[(194, 14, 26),(220, 145, 26),(247, 234, 59),(106, 169, 65),(69, 112, 180),(90, 40, 127),(128, 33, 125)]
+            for x in range(0,7):
+                self.make_prism_light(colors[x],angle)
+                angle-=da
+            self.mini_run = False
+
 
         self.current_starting_point = self.current_point
+        if self.in_prism==True:
+            self.in_prism=False
+        else:
+            self.in_prism=True
+
+    def make_prism_light(self,color,angle):
+        light = Light(self.game, [self.current_point], color, (self.r + angle) * 180 / math.pi,
+                         self.light_width)
+        light.current_slope = self.current_slope
+        light.in_prism = True
+        light.trace_path2()
+        light.render()
+
+
 
 
     def calibrate_r2(self):

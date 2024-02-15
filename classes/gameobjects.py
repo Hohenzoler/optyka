@@ -375,6 +375,7 @@ class Prism(GameObject):
         super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
         self.n=1.4
         self.fi=math.pi/3
+        self.dispersion_angle=math.pi/3
 
 class ColoredGlass(GameObject):
     def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None):
