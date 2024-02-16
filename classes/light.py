@@ -19,6 +19,7 @@ class Ray:
 class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light
+        self.prism_light=False
         self.in_prism=False
         self.main_light_slope=None
         self.linear_function = None
@@ -103,7 +104,10 @@ class Light:
     #NON - RECURSIVE
     def trace_path2(self):
         self.current_starting_point = self.starting_point
-
+        if self.r==math.pi/2:
+            self.r=math.pi/2+0.001
+        elif self.r==3*math.pi/2:
+            self.r=3*math.pi/2+0.001
         self.mini_run=True
         self.index=0
         while self.mini_run:
@@ -175,12 +179,13 @@ class Light:
                 # lf.draw(self.game)
                 x = lf.intercept(self.linear_function)
                 y = lf.calculate(x)
-                # if i%2==0:
-                #     pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),2)
-                #     pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 2)
-                #     pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 2)
-                #     lf.draw(self.game)
-                # print(slope[0][0],slope[1][0],x)
+                lf.draw(self.game)
+                self.linear_function.draw(self.game)
+
+                pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
+                # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 5)
+                # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
+                lf.draw(self.game)
                 point = (x, self.linear_function.calculate(x))
                 if x <= max(slope[0][0], slope[1][0]) + 1 and x >= min(slope[0][0], slope[1][0]) - 1:
                     if y <= max(slope[0][1], slope[1][1]) + 1 and y >= min(slope[0][1], slope[1][1]) - 1:
@@ -336,6 +341,8 @@ class Light:
         self.mini_run = False
 
     def reflect(self):
+
+
         if (self.current_slope[0][0] - self.current_slope[1][0]) == 0:
             self.slope_angle = math.pi / 2
         else:
@@ -387,7 +394,7 @@ class Light:
         else:
             self.first_difract(self.current_object)
 
-        if not self.in_prism:
+        if not self.in_prism and self.prism_light==False:
             angle=math.pi/18
             da=math.pi/63
             colors=[(194, 14, 26),(220, 145, 26),(247, 234, 59),(106, 169, 65),(69, 112, 180),(90, 40, 127),(128, 33, 125)]
@@ -408,6 +415,7 @@ class Light:
                          self.light_width)
         light.current_slope = self.current_slope
         light.in_prism = True
+        light.prism_light=True
         light.trace_path2()
         light.render()
 
