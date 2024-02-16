@@ -155,77 +155,74 @@ class Button:
             mousepos (tuple): The position of the mouse.
         """
         if self.rect.collidepoint(mousepos[0], mousepos[1]):
-            if self.number == 0:
-                obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, 0.5, image=images.torch)
-                self.game.current_flashlight = obj
-                self.game.achievements.handle_achievement_unlocked("first_flashlight_placed")
+            if self.game.isDrawingModeOn != True:
+                if self.number == 0:
+                    obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, 0.5, image=images.torch)
+                    self.game.current_flashlight = obj
+                    self.game.achievements.handle_achievement_unlocked("first_flashlight_placed")
 
-            elif self.number == 1:
-                obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.9, 0.5, textureName='glass')
-                self.game.achievements.handle_achievement_unlocked("first_mirror_placed")
+                elif self.number == 1:
+                    obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.9, 0.5, textureName='glass')
+                    self.game.achievements.handle_achievement_unlocked("first_mirror_placed")
 
-            elif self.number == 2:
-                obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0.4, 1)
+                elif self.number == 2:
+                    obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0.4, 1)
 
-            elif self.number == 3:
-                obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0, 0.4, 0.5)
-
-            elif self.number == 4:
-                if classes.game.isDrawingModeOn == True:
-                    classes.game.isDrawingModeOn = False
-
-                elif classes.game.isDrawingModeOn == False:
-                    classes.game.isDrawingModeOn = True
-                    spiel = self.game
-                # print(classes.game.isDrawingModeOn)
-            elif self.number == 5:
-                obj = gameobjects.Lens(self.game,
-                                       [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
-                                        (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                       (64, 137, 189), 0, 0 ,140, 0, 0.5)
-            elif self.number == 6:
-                obj = gameobjects.Lens(self.game,
-                                       [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
-                                        (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                       (64, 137, 189), 0, 2, 140, 0, 0.5)
-
-            elif self.number == -1:
-                self.game.generate_save()
-                if len(self.game.objects) > 3:
-                    if self.game.save_title != None:
-                        prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
-                        if len(prev_save_data) > 1:
-                            if prev_save_data[1:] != self.game.save_obj[1:]:
+                elif self.number == 3:
+                    obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 0.4, 0.5)
+                elif self.number == 5:
+                    obj = gameobjects.Lens(self.game,
+                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                           (64, 137, 189), 0, 0, 140, 0, 0.5)
+                elif self.number == 6:
+                    obj = gameobjects.Lens(self.game,
+                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                           (64, 137, 189), 0, 2, 140, 0, 0.5)
+                elif self.number == -1:
+                    self.game.generate_save()
+                    if len(self.game.objects) > 3:
+                        if self.game.save_title != None:
+                            prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
+                            if len(prev_save_data) > 1:
+                                if prev_save_data[1:] != self.game.save_obj[1:]:
+                                    pygame.mouse.set_visible(True)
+                                    a = saveTK.Save(self.game)
+                            else:
                                 pygame.mouse.set_visible(True)
                                 a = saveTK.Save(self.game)
                         else:
                             pygame.mouse.set_visible(True)
                             a = saveTK.Save(self.game)
+
+                    elif len(self.game.objects) == 3 and self.game.save_title != None:
+                        prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
+                        if len(prev_save_data) != 1:
+                            pygame.mouse.set_visible(True)
+                            a = saveTK.Save(self.game)
+                    elif len(self.game.objects) == 3:
+                        pass
                     else:
                         pygame.mouse.set_visible(True)
                         a = saveTK.Save(self.game)
+                    self.game.run = False
+                elif self.number == -2:
+                    self.game.mode = 'settings'
+                try:
+                    self.game.objects.append(obj)
+                    obj.selected(mousepos)
 
-                elif len(self.game.objects) == 3 and self.game.save_title != None:
-                    prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
-                    if len(prev_save_data) != 1:
-                        pygame.mouse.set_visible(True)
-                        a = saveTK.Save(self.game)
-                elif len(self.game.objects) == 3:
+                except:
                     pass
-                else:
-                    pygame.mouse.set_visible(True)
-                    a = saveTK.Save(self.game)
-                self.game.run = False
-            elif self.number == -2:
-                self.game.mode = 'settings'
+            if self.number == 4:
+                if classes.game.isDrawingModeOn == True:
+                    classes.game.isDrawingModeOn = False
+
+                elif classes.game.isDrawingModeOn == False:
+                    classes.game.isDrawingModeOn = True
 
 
-            try:
-                self.game.objects.append(obj)
-                obj.selected(mousepos)
-
-            except:
-                pass
 
 
 class ButtonForgame:

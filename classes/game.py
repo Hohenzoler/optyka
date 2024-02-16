@@ -19,8 +19,8 @@ import gui
 from gui import polygonDrawing
 from screens import achievements_screen
 
-
 isDrawingModeOn = False
+
 class Game:
     """
     The main game class that handles the game loop, events, rendering and settings.
@@ -41,6 +41,7 @@ class Game:
             self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=0)
         else:
             self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
+        self.isDrawingModeOn = False
 
         self.run = True  # Game loop control
         self.fps = fps.return_fps()  # Frames per second
@@ -79,6 +80,8 @@ class Game:
 
         self.background_color = (0, 0, 0)
 
+        self.last_scroll_time = time.time()
+
     def go_to_achievements_screen(self):
         self.mode = 'achievements'
         self.achievements_screen = achievements_screen.AchievementsScreen(self)
@@ -86,14 +89,13 @@ class Game:
 
     def create_cursor_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        for i in range(1):
-            self.cursor_particle_system.add_particle(
-                mouse_x, mouse_y,
-                random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5),
-                150, random.randint(1, 2),
-                random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
-                250, 'square'
-            )
+        self.cursor_particle_system.add_particle(
+            mouse_x, mouse_y,
+            random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5),
+            200, random.randint(1, 2),
+            random.randint(200, 255), random.randint(200, 255), random.randint(200, 255),
+            150, 'square'
+        )
 
     def create_clicked_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -109,6 +111,22 @@ class Game:
     def return_fps(self):
         return self.displayFPS()
 
+    def scrolling(self, eventos):
+        current_time = time.time()
+        time_difference = current_time - self.last_scroll_time
+        self.last_scroll_time = current_time
+        if round(time_difference, 2) != 0:
+            if eventos.y > 0:
+                if time_difference > 1:
+                    self.r = 1
+                else:
+                    self.r = round(1 / (time_difference * 9), 2)
+            if eventos.y < 0:
+                if time_difference > 1:
+                    self.r = -1
+                else:
+                    self.r = round(-1 / (time_difference * 9), 2)
+
     def events(self):
         """
         Handles all the pygame events.
@@ -121,22 +139,23 @@ class Game:
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
-                    if isDrawingModeOn:
+                    if self.isDrawingModeOn:
                         polygonDrawing.addPoint(self.mousepos)
+                        print(self.isDrawingModeOn)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.create_clicked_particles()
                     if event.button == 3:
                         self.rightclickedmousepos = event.pos
                 if event.type == pygame.MOUSEWHEEL:
-                    if event.y > 0:
-                        self.r = 5
-                    if event.y < 0:
-                        self.r = -5
+                    self.scrolling(event)
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.p = True
-                    elif event.key == 13 and isDrawingModeOn:
-                        gui.polygonDrawing.createPolygon()
+                    elif event.key == 13 and self.isDrawingModeOn:
+                        gui.polygonDrawing.createPolygon(self)
+                        self.isDrawingModeOn = False
+                        isDrawingModeOn = False
+                        polygonDrawing.clearPoints()
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if self.achievements_button.is_clicked(event.pos):
                         self.achievements_button.action()
@@ -154,6 +173,10 @@ class Game:
         """
         pygame.display.update()
         self.clock.tick(self.fps)
+        if isDrawingModeOn:
+            self.isDrawingModeOn = True
+        else:
+            self.isDrawingModeOn = False
 
     def render_particles(self):
         """
@@ -209,7 +232,7 @@ class Game:
                         if type(bin_2) == bin.Bin:
                             bin_2.checkCollision(object)
                             break
-            # if isDrawingModeOn:
+            # if self.isDrawingModeOn:
             #     optyka.gui.polygonDrawing.renderDots()
         elif self.mode == 'settings':
             if self.executed_command != 'settings':

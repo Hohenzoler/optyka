@@ -155,7 +155,7 @@ class Light:
     def check_object(self,object):
 
         object.get_slopes()
-        print(type(object))
+
         self.slopes = object.slopes
         # print(slopes)
         i = 0
@@ -225,7 +225,7 @@ class Light:
                                     self.current_distance = dist
                                     self.current_point = point
                                     self.current_slope = slope
-                                    print(type(object))
+
                                     if type(object) == gameobjects.Mirror:
                                         self.current_object_type = 'mirror'
                                     elif type(object) == gameobjects.ColoredGlass:

@@ -87,7 +87,7 @@ class GameObject:
     def render(self):
         # print(self.get_triangles())
 
-        self.get_slopes()
+        # self.get_slopes()
 
 
         if not self.selectedtrue:
@@ -111,7 +111,15 @@ class GameObject:
                 if self.texture:
                     pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
                 else:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                    if self.color:
+                        try:
+                            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                        except Exception as e:
+
+                            print(self.points)
+                            print(e)
+                    else:
+                        pygame.gfxdraw.polygon(self.game.screen, self.points, (255, 255, 255))
 
         else:
             font = pygame.font.Font(Font, self.game.width//40)
@@ -173,51 +181,52 @@ class GameObject:
                 self.angle += 360
             else:
                 break
-        self.angle += d_angle
-        self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
-        self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
+        if self.game.isDrawingModeOn != True:
+            self.angle += d_angle
+            self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
+            self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
 
-        temp_rect = self.rect.move(self.x, self.y)
+            temp_rect = self.rect.move(self.x, self.y)
 
-        pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
+            pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
 
-        for obj in self.game.objects:
-            if obj.rect.colliderect(temp_rect):
-                if obj != self and isinstance(obj, GameObject):
-                    return
+            for obj in self.game.objects:
+                if obj.rect.colliderect(temp_rect):
+                    if obj != self and isinstance(obj, GameObject):
+                        return
 
-        # Reset the flag to regenerate triangles
-        self.triangles_generated = False
+            # Reset the flag to regenerate triangles
+            self.triangles_generated = False
 
-        # Update the points based on the new position and angle
-        self.points = self.rotate_points(self.points, d_angle)
+            # Update the points based on the new position and angle
+            self.points = self.rotate_points(self.points, d_angle)
 
-        # Assuming self.transparent_surface is a surface with transparency
-        # Blit the rotated image with transparency
-        if self.image:
-            rotated_image = pygame.transform.rotate(self.image, -self.angle)
-            image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
-                                                        (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
-            self.game.screen.blit(rotated_image, image_rect.topleft)
-            # Draw the rotated lines without transparency
-            #rotated_points = self.rotate_points(self.points, self.angle)
-            self.points = [(x + self.x, y + self.y) for x, y in self.points]
-            self.update_rect()
+            # Assuming self.transparent_surface is a surface with transparency
+            # Blit the rotated image with transparency
+            if self.image:
+                rotated_image = pygame.transform.rotate(self.image, -self.angle)
+                image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
+                                                            (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
+                self.game.screen.blit(rotated_image, image_rect.topleft)
+                # Draw the rotated lines without transparency
+                #rotated_points = self.rotate_points(self.points, self.angle)
+                self.points = [(x + self.x, y + self.y) for x, y in self.points]
+                self.update_rect()
 
-        else:
-            self.points = [(x + self.x, y + self.y) for x, y in self.points]
-            mousepos = pygame.mouse.get_pos()
-            if self.texture:
-                try:
-                    pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
-                except:
-                    pass
             else:
-                try:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
-                except:
-                    pass
-            self.update_rect()
+                self.points = [(x + self.x, y + self.y) for x, y in self.points]
+                mousepos = pygame.mouse.get_pos()
+                if self.texture:
+                    try:
+                        pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+                    except:
+                        pass
+                else:
+                    try:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                    except:
+                        pass
+                self.update_rect()
 
     def move(self):
         # code for moving object with mouse
@@ -256,40 +265,42 @@ class GameObject:
             pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
 
     def checkifclicked(self, mousepos):
-        # Check if the object is clicked
-        mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-        pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
-        try:
-            if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+        if self.game.isDrawingModeOn != True:
+            # Check if the object is clicked
+            mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+            pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
+            try:
+                if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+                    if self.on == 1:
+                        self.on = 0
+                    else:
+                        self.on = 1
+            except IndexError: #pixel index out of range... WTF
                 if self.on == 1:
                     self.on = 0
                 else:
                     self.on = 1
-        except IndexError: #pixel index out of range... WTF
-            if self.on == 1:
-                self.on = 0
-            else:
-                self.on = 1
 
     def selected(self, mousepos):
-        mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-        pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
+        if self.game.isDrawingModeOn != True:
+            mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
+            pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
 
-        if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
-            if self.game.selected_object is not None and self.game.selected_object != self:
-                self.game.selected_object.selectedtrue = False  # Deselect the currently selected object
+            if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
+                if self.game.selected_object is not None and self.game.selected_object != self:
+                    self.game.selected_object.selectedtrue = False  # Deselect the currently selected object
 
-            if not self.selectedtrue:
-                self.selectedtrue = True
-                self.game.selected_object = self  # Set this object as the currently selected object
-                sounds.selected_sound()
-            else:
-                self.selectedtrue = False
-                self.game.selected_object = None  # No object is selected now
-                if type(self) == Flashlight:
-                    sounds.laser_sound()
+                if not self.selectedtrue:
+                    self.selectedtrue = True
+                    self.game.selected_object = self  # Set this object as the currently selected object
+                    sounds.selected_sound()
                 else:
-                    sounds.placed_sound()
+                    self.selectedtrue = False
+                    self.game.selected_object = None  # No object is selected now
+                    if type(self) == Flashlight:
+                        sounds.laser_sound()
+                    else:
+                        sounds.placed_sound()
 
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)
@@ -324,7 +335,8 @@ class GameObject:
         self.change_size()
 
         try:
-            d_angle = self.parameters['angle'] - self.angle
+            d_angle = self.parameters['angle']
+            self.angle = 0
             self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
             self.scale_factor = self.parameters['size']
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
