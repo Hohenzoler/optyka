@@ -181,31 +181,32 @@ class Button:
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
                                            (64, 137, 189), 0, 2, 140, 0, 1, 1)
                 elif self.number == -1:
-                    self.game.generate_save()
-                    if len(self.game.objects) > 3:
-                        if self.game.save_title != None:
-                            prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
-                            if len(prev_save_data) > 1:
-                                if prev_save_data[1:] != self.game.save_obj[1:]:
+                    if not self.game.preset:
+                        self.game.generate_save()
+                        if len(self.game.objects) > 3:
+                            if self.game.save_title != None:
+                                prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
+                                if len(prev_save_data) > 1:
+                                    if prev_save_data[1:] != self.game.save_obj[1:]:
+                                        pygame.mouse.set_visible(True)
+                                        a = saveTK.Save(self.game)
+                                else:
                                     pygame.mouse.set_visible(True)
                                     a = saveTK.Save(self.game)
                             else:
                                 pygame.mouse.set_visible(True)
                                 a = saveTK.Save(self.game)
+
+                        elif len(self.game.objects) == 3 and self.game.save_title != None:
+                            prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
+                            if len(prev_save_data) != 1:
+                                pygame.mouse.set_visible(True)
+                                a = saveTK.Save(self.game)
+                        elif len(self.game.objects) == 3:
+                            pass
                         else:
                             pygame.mouse.set_visible(True)
                             a = saveTK.Save(self.game)
-
-                    elif len(self.game.objects) == 3 and self.game.save_title != None:
-                        prev_save_data = settingsSetup.load_settings(f'saves/{self.game.save_title}.json')
-                        if len(prev_save_data) != 1:
-                            pygame.mouse.set_visible(True)
-                            a = saveTK.Save(self.game)
-                    elif len(self.game.objects) == 3:
-                        pass
-                    else:
-                        pygame.mouse.set_visible(True)
-                        a = saveTK.Save(self.game)
                     self.game.run = False
                 elif self.number == -2:
                     self.game.mode = 'settings'

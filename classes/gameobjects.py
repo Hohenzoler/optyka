@@ -333,14 +333,15 @@ class GameObject:
 
         self.scale_factor = self.parameters['size']
         self.change_size()
+        d_angle = self.parameters['angle']
+        self.angle = 0
+        self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
+        self.scale_factor = self.parameters['size']
+        self.transmittance = self.parameters['transmittance']
+        self.reflection_factor = self.parameters['reflection_factor']
 
         try:
-            d_angle = self.parameters['angle']
-            self.angle = 0
-            self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
-            self.scale_factor = self.parameters['size']
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
-            self.lazer = self.parameters["lazer"]
 
         except Exception as e:
             print(e)
@@ -348,6 +349,11 @@ class GameObject:
         try:
             self.textureName = self.parameters['texture']
             self.get_Texture()
+        except Exception as e:
+            print(e)
+
+        try:
+            self.lazer = self.parameters["lazer"]
         except Exception as e:
             print(e)
 

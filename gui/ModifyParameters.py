@@ -130,10 +130,7 @@ class Parameters:
                         value = 0
                     elif value > 1:
                         value = 1
-                    if param == 'reflection_factor':
-                        self.object.reflection_factor = value
-                    else:
-                        self.object.transmittance = value
+                    new_parameters[param] = value
 
                 value = float(value)
                 new_parameters[param] = value
