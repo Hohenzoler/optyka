@@ -349,7 +349,7 @@ class Game:
                 obj = gameobjects.ColoredGlass(self, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0.4, 0.5)
 
             elif parameters['class'] == "Prism":
-                obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], (0, 0, 255), 0, 0.4, 0.5)
+                obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 1, 1)
 
             elif parameters['class'] == "Lens":
                 obj = gameobjects.Lens(self, [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100), (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)], (64, 137, 189), 0, 0, 140, 0, 0.5)
@@ -358,7 +358,10 @@ class Game:
 
             obj.parameters = parameters
             obj.change_parameters('not')
-            self.objects.append(obj)
+            if parameters['class'] == "Prism":
+                self.objects.insert(3, obj)
+            else:
+                self.objects.append(obj)
     def generate_save(self):
         self.save_obj = []
 

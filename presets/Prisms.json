@@ -1,0 +1,47 @@
+[
+  "Having fun with Prisms!",
+  {
+    "x": 114.0,
+    "y": 255.0,
+    "angle": 14.540000000000168,
+    "size": 1,
+    "reflection_factor": 1,
+    "transmittance": 1,
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 297.0,
+    "y": 298.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 1,
+    "transmittance": 1,
+    "class": "Prism"
+  },
+  {
+    "x": 581.0,
+    "y": 194.0,
+    "angle": 24.679999999999996,
+    "size": 1.0,
+    "reflection_factor": 1.0,
+    "transmittance": 1.0,
+    "texture": "glass",
+    "class": "Mirror"
+  },
+  {
+    "x": 699.0,
+    "y": 485.0,
+    "angle": 58.43,
+    "size": 1,
+    "reflection_factor": 1,
+    "transmittance": 1,
+    "red": 0,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  }
+]
