@@ -56,6 +56,8 @@ class StartScreen:
 
         self.selected_buttons = {}
 
+        self.preset = False
+
         self.mainloop()
 
 
@@ -106,7 +108,10 @@ class StartScreen:
                             if object.scroll_offset > 0:
                                 object.scroll_offset -= 1
                         elif event.button == 5 and object.scrolling_needed:
-                            object.max_offset = max(0, len(object.saves_files) - object.num_of_buttons)
+                            if self.screen_mode.state == 'default':
+                                object.max_offset = max(0, len(object.saves_files) - object.num_of_buttons)
+                            elif self.screen_mode.state == 'presets':
+                                object.max_offset = max(0, len(object.presets) - object.num_of_buttons)
                             if object.scroll_offset < object.max_offset:
                                 object.scroll_offset += 1
                     elif type(object) == loading_saves_screen.saveselector.Button_v2:
@@ -208,7 +213,6 @@ class StartScreen:
         if self.executed_functions != 'delete':
             for idx, (key, value) in enumerate(self.selected_buttons.items()):
                 if value == True:
-                    self.screen_mode = None
                     os.remove(f'saves/{key}.json')
             self.executed_functions = 'delete'
             self.mode = 'loading'

@@ -20,7 +20,7 @@ if not os.path.exists("saves"):
 log_file = f"logs/{datetime.now().strftime('%Y-%m-%d')}.log"
 logging.basicConfig(filename=log_file, level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
-def new_game(save):
+def new_game(save, preset):
     try:
         settings = settingsSetup.start()
         width = settings['WIDTH']
@@ -31,7 +31,7 @@ def new_game(save):
         programIcon = pygame.image.load('images/torch_icon.png')
         pygame.display.set_icon(programIcon)
 
-        game_instance = game.Game(save)
+        game_instance = game.Game(save, preset)
         GUI = gui.GUI(game_instance)
         game_instance.loop()
 
@@ -44,6 +44,6 @@ if __name__ == "__main__":
     while True:
         sounds.soundtrack()
         startscreen = ss.StartScreen()
-        new_game(startscreen.save_to_load)
+        new_game(startscreen.save_to_load, startscreen.preset)
     
 

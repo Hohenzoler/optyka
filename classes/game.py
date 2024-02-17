@@ -25,7 +25,7 @@ class Game:
     """
     The main game class that handles the game loop, events, rendering and settings.
     """
-    def __init__(self, save):
+    def __init__(self, save, preset):
         """
         Initializes the game with settings, pygame, objects, and other necessary attributes.
         """
@@ -77,6 +77,7 @@ class Game:
 
         self.save = False
         self.save_title = None
+        self.preset = preset
 
         self.background_color = (0, 0, 0)
 
@@ -318,12 +319,20 @@ class Game:
                 self.save_to_load = None
 
     def load(self):
-        try:
-            with open(f"saves/{self.save_to_load}.json", 'r') as f:
-                save = json.load(f)
-                f.close()
-        except:
-            save = {}
+        if not self.preset:
+            try:
+                with open(f"saves/{self.save_to_load}.json", 'r') as f:
+                    save = json.load(f)
+                    f.close()
+            except:
+                save = {}
+        else:
+            try:
+                with open(f"presets/{self.save_to_load}.json", 'r') as f:
+                    save = json.load(f)
+                    f.close()
+            except:
+                save = {}
         self.save_title = self.save_to_load
         for parameters in save:
             if not isinstance(parameters, dict):

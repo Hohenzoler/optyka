@@ -87,7 +87,7 @@ class GameObject:
     def render(self):
         # print(self.get_triangles())
 
-        # self.get_slopes()
+        self.get_slopes()
 
 
         if not self.selectedtrue:

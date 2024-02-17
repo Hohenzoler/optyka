@@ -334,10 +334,17 @@ class ButtonForgame:
                 sounds.clicked_sound()
             elif self.number == 72:
                 self.screen.game.mode = 'default'
+                if self.screen.state == 'presets':
+                    self.screen.game.preset = True
                 self.screen.game.run = False
                 sounds.clicked_sound()
+            elif self.number == 73:
+                self.screen.state = 'presets'
             elif self.number == 74:
-                self.screen.game.mode = 'default'
+                if self.screen.state == 'default' and self.screen.action == 'default':
+                    self.screen.game.mode = 'default'
+                else:
+                    self.screen.state = 'default'
                 sounds.clicked_sound()
             elif self.number == 75:
                 self.screen.game.mode = 'delete'
@@ -357,7 +364,10 @@ class ButtonForgame:
     def update(self):
         if self.number == 72:
             if any(value for value in self.screen.game.selected_buttons.values()) == True:
-                self.text = self.font.render('Load Game', True, 'black')
+                if self.screen.state == 'default':
+                    self.text = self.font.render('Load Game', True, 'black')
+                elif self.screen.state == 'presets':
+                    self.text = self.font.render('Load Preset', True, 'black')
             else:
                 self.text = self.font.render('New Game', True, 'black')
             self.textRect = self.text.get_rect()
