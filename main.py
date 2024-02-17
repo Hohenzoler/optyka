@@ -15,6 +15,8 @@ if not os.path.exists("logs"):
 if not os.path.exists("saves"):
     os.makedirs("saves")
 
+if not os.path.exists("presets"):
+    os.makedirs("presets")
 
 # Set up the logging configuration
 log_file = f"logs/{datetime.now().strftime('%Y-%m-%d')}.log"
