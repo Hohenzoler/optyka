@@ -1,5 +1,6 @@
 import cProfile
 import logging
+import tkinter
 from datetime import datetime
 from classes import game, sounds
 from gui import gui_main as gui
@@ -51,5 +52,6 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)
             logging.error(e, exc_info=True)
+            tkinter.messagebox.showerror("Error", "An error occurred. Please check the logs for more information.")
             raise
 
