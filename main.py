@@ -48,7 +48,8 @@ if __name__ == "__main__":
             sounds.soundtrack()
             startscreen = ss.StartScreen()
             new_game(startscreen.save_to_load, startscreen.preset)
-        except:
-            break
-    
+        except Exception as e:
+            print(e)
+            logging.error(e, exc_info=True)
+            raise
 
