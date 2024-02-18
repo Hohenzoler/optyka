@@ -22,7 +22,7 @@ def clearPoints():
 def createPolygon(game):
     global currentPolygonPoints
     if len(currentPolygonPoints) >= 3:
-        Adam = gameobjects.Mirror(game, currentPolygonPoints, (200, 0, 0), 0, 0.4, 0.6)
+        Adam = gameobjects.Mirror(game, currentPolygonPoints, (200, 0, 0), 0, 1, 1)
         game.objects.append(Adam)
         clearPoints()
 

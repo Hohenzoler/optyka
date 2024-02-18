@@ -18,6 +18,7 @@ import functions
 import gui
 from gui import polygonDrawing
 from screens import achievements_screen
+from classes import saveTK
 
 isDrawingModeOn = False
 
@@ -53,7 +54,6 @@ class Game:
         self.mode = 'default'  # Current game mode
         self.executed_command = 'default'  # Last executed command
         self.clock = pygame.time.Clock()  # Pygame clock for controlling FPS
-        pygame.mouse.set_visible(False)  # Hide the default mouse cursor
         self.cursor_img = images.bad_coursor  # Custom cursor image
         self.cursor_img_rect = self.cursor_img.get_rect()  # Rectangle for the custom cursor image
         self.pen_img = images.pen
@@ -78,6 +78,7 @@ class Game:
         self.save = False
         self.save_title = None
         self.preset = preset
+        self.cancel = False
 
         self.background_color = (0, 0, 0)
 
@@ -134,15 +135,16 @@ class Game:
         """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                self.run = False
-                quit()
+                self.save_game()
+                if self.cancel == False:
+                    pygame.quit()
+                    quit()
+
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
                     if self.isDrawingModeOn:
                         polygonDrawing.addPoint(self.mousepos)
-                        print(self.isDrawingModeOn)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.create_clicked_particles()
                     if event.button == 3:
@@ -154,9 +156,9 @@ class Game:
                         self.p = True
                     elif event.key == 13 and self.isDrawingModeOn:
                         gui.polygonDrawing.createPolygon(self)
-                        self.isDrawingModeOn = False
-                        isDrawingModeOn = False
                         polygonDrawing.clearPoints()
+                        global isDrawingModeOn
+                        isDrawingModeOn = False
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if self.achievements_button.is_clicked(event.pos):
                         self.achievements_button.action()
@@ -195,6 +197,9 @@ class Game:
         """
         Renders all the game objects and the custom cursor.
         """
+
+        pygame.mouse.set_visible(False)  # Hide the default mouse cursor
+
         self.achievements_button = achievements_screen.Button(self, "Achievements", self.width - 150, 300, 150, 40,
                                                               self.go_to_achievements_screen)
         self.render_particles()
@@ -269,6 +274,7 @@ class Game:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
         self.displayFPS()
         self.displayClock()
+
 
 
     def background(self):
@@ -386,3 +392,36 @@ class Game:
             settingsSetup.writesettingstofile(new_save, 2, f'saves/{self.save_title}.json')
         else:
             settingsSetup.writesettingstofile(self.save_obj, 2, f'saves/{self.save_title}.json')
+
+    def save_game(self):
+        if not self.preset:
+            self.generate_save()
+            if len(self.objects) > 3:
+                if self.save_title != None:
+                    prev_save_data = settingsSetup.load_settings(f'saves/{self.save_title}.json')
+                    if len(prev_save_data) > 1:
+                        if prev_save_data[1:] != self.save_obj[1:]:
+                            pygame.mouse.set_visible(True)
+                            a = saveTK.Save(self)
+                    else:
+                        pygame.mouse.set_visible(True)
+                        a = saveTK.Save(self)
+                else:
+                    pygame.mouse.set_visible(True)
+                    a = saveTK.Save(self)
+
+            elif len(self.objects) == 3 and self.save_title != None:
+                prev_save_data = settingsSetup.load_settings(f'saves/{self.save_title}.json')
+                if len(prev_save_data) != 1:
+                    pygame.mouse.set_visible(True)
+                    a = saveTK.Save(self)
+            elif len(self.objects) == 3:
+                pass
+            else:
+                pygame.mouse.set_visible(True)
+                a = saveTK.Save(self)
+        if self.cancel == False:
+            self.run = False
+        self.cancel = False
+
+

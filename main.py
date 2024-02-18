@@ -44,8 +44,11 @@ def new_game(save, preset):
 
 if __name__ == "__main__":
     while True:
-        sounds.soundtrack()
-        startscreen = ss.StartScreen()
-        new_game(startscreen.save_to_load, startscreen.preset)
+        try:
+            sounds.soundtrack()
+            startscreen = ss.StartScreen()
+            new_game(startscreen.save_to_load, startscreen.preset)
+        except:
+            break
     
 
