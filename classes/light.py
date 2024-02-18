@@ -432,7 +432,7 @@ class Light:
         light1.current_slope = self.current_slope
         light1.in_prism = True
         light1.prism_light=True
-        light1.debug=True
+        light1.debug=False
         light1.trace_path2()
         light1.render()
 
