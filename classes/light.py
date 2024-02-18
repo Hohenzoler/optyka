@@ -19,6 +19,7 @@ class Ray:
 class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light
+        self.debug=False
         self.prism_light=False
         self.in_prism=False
         self.main_light_slope=None
@@ -102,12 +103,19 @@ class Light:
         except (AttributeError, ValueError):
             pass
     #NON - RECURSIVE
+
+    def special_case_adjust(self):
+        if self.r==math.pi/2:
+            self.r=math.pi/2+0.00001
+        elif self.r==3*math.pi/2:
+            self.r=3*math.pi/2+0.00001
+        elif self.r==0:
+            self.r=0.00001
+        elif self.r==math.pi:
+            self.r=math.pi+0.00001
     def trace_path2(self):
         self.current_starting_point = self.starting_point
-        if self.r==math.pi/2:
-            self.r=math.pi/2+0.001
-        elif self.r==3*math.pi/2:
-            self.r=3*math.pi/2+0.001
+        self.special_case_adjust()
         self.mini_run=True
         self.index=0
         while self.mini_run:
@@ -122,7 +130,8 @@ class Light:
             self.index+=1
             self.linear_function = Linear_Function(math.tan(-self.r),
                                                    self.find_b(math.tan(-self.r), self.current_starting_point))
-            # self.linear_function.draw(self.game)
+            if self.debug==True:
+                self.linear_function.draw(self.game)
             try:
                 self.slope_before=self.current_slope
             except:
@@ -179,13 +188,13 @@ class Light:
                 # lf.draw(self.game)
                 x = lf.intercept(self.linear_function)
                 y = lf.calculate(x)
-                lf.draw(self.game)
-                self.linear_function.draw(self.game)
-
-                pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
-                # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 5)
-                # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
-                lf.draw(self.game)
+                # lf.draw(self.game)
+                # self.linear_function.draw(self.game)
+                #
+                # pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
+                # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 5)
+                # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
+                # lf.draw(self.game)
                 point = (x, self.linear_function.calculate(x))
                 if x <= max(slope[0][0], slope[1][0]) + 1 and x >= min(slope[0][0], slope[1][0]) - 1:
                     if y <= max(slope[0][1], slope[1][1]) + 1 and y >= min(slope[0][1], slope[1][1]) - 1:
@@ -262,11 +271,11 @@ class Light:
 
                 self.points.append(point)
                 self.colors.append(self.RGB.rgb)
-                self.current_starting_point = point
+                self.current_starting_point = self.current_point #point
                 self.linear_function = Linear_Function(math.tan(-self.r),
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
-                # self.linear_function.draw(self.game)
+                self.linear_function.draw(self.game)
                 break
     def right_lens(self, lens):
         try:
@@ -293,11 +302,11 @@ class Light:
 
                     self.points.append(point)
                     self.colors.append(self.RGB.rgb)
-                    self.current_starting_point = point
+                    self.current_starting_point = self.current_point #point
                     self.linear_function = Linear_Function(math.tan(-self.r),
                                                            self.find_b(math.tan(-self.r),
                                                                        self.current_starting_point))
-                    # self.linear_function.draw(self.game)
+                    self.linear_function.draw(self.game)
                     break
         except:
             pass
@@ -307,11 +316,14 @@ class Light:
                 self.left_lens(lens)
                 if lens.type == lens.CONVEX:
                     self.right_lens(lens)
+
             else:
                 print("rotated")
                 self.right_lens(lens)
                 if lens.type == lens.CONVEX:
                     self.left_lens(lens)
+            self.current_starting_point = self.current_point
+            self.calibrate_r2()
 
 
 
@@ -335,8 +347,8 @@ class Light:
         self.r=r
 
     def border_stuff(self):
-        self.points.append((self.current_point_before[0] + 1000 * math.cos(-self.r),
-                            self.current_point_before[1] + 1000 * math.sin(-self.r)))
+        self.points.append((self.current_point_before[0] + 10000 * math.cos(-self.r),
+                            self.current_point_before[1] + 10000 * math.sin(-self.r)))
         self.colors.append(self.RGB.rgb)
         self.mini_run = False
 
@@ -374,7 +386,7 @@ class Light:
     def first_difract(self,prism):
         n=prism.n
         fi=prism.fi
-        self.r=fi/2+self.r+prism.angle/180*math.pi-math.asin(math.sin((fi/2+self.r))/n)
+        self.r=fi/2+self.r+(round(prism.angle))/180*math.pi-math.asin(math.sin((fi/2+self.r))/n)
 
     def second_difract(self,prism):
         n = prism.n
@@ -398,8 +410,12 @@ class Light:
             angle=math.pi/18
             da=math.pi/63
             colors=[(194, 14, 26),(220, 145, 26),(247, 234, 59),(106, 169, 65),(69, 112, 180),(90, 40, 127),(128, 33, 125)]
+            red=self.RGB.rgb[0]/255
+            green=self.RGB.rgb[1]/255
+            blue=self.RGB.rgb[2] / 255
+            weights=[red,2/3*red+1/3*green,1/3*red+2/3*green,green,2/3*green+1/3*blue,1/3*green+2/3*blue,blue,2/3*blue+1/3*red,1/3*blue+2/3*red]
             for x in range(0,7):
-                self.make_prism_light(colors[x],angle)
+                self.make_prism_light((colors[x][0]*weights[x],colors[x][1]*weights[x],colors[x][2]*weights[x]),angle)
                 angle-=da
             self.mini_run = False
 
@@ -411,13 +427,14 @@ class Light:
             self.in_prism=True
 
     def make_prism_light(self,color,angle):
-        light = Light(self.game, [self.current_point], color, (self.r + angle) * 180 / math.pi,
+        light1 = Light(self.game, [self.current_point], color, (self.r + angle) * 180 / math.pi,
                          self.light_width)
-        light.current_slope = self.current_slope
-        light.in_prism = True
-        light.prism_light=True
-        light.trace_path2()
-        light.render()
+        light1.current_slope = self.current_slope
+        light1.in_prism = True
+        light1.prism_light=True
+        light1.debug=False
+        light1.trace_path2()
+        light1.render()
 
 
 
