@@ -1,4 +1,5 @@
 import classes.game
+import gui.polygonDrawing
 import pygame
 
 import settingsSetup
@@ -193,6 +194,7 @@ class Button:
             if self.number == 4:
                 if classes.game.isDrawingModeOn == True:
                     classes.game.isDrawingModeOn = False
+                    gui.polygonDrawing.clearPoints()
 
                 elif classes.game.isDrawingModeOn == False:
                     classes.game.isDrawingModeOn = True
