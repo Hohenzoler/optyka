@@ -137,7 +137,7 @@ class Parameters:
                 value = float(value)
                 new_parameters[param] = value
 
-            if new_parameters.get('reflection_factor', 0) + new_parameters.get('transmittance', 0) > 1:
+            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') > 1:
                 messagebox.showerror("Error", "The sum of reflection factor and transmittance cannot exceed 100%.")
                 return
 
