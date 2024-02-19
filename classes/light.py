@@ -182,6 +182,8 @@ class Light:
                 pass
             elif object == self.ignore_object:
                 self.ignore_object = None
+                if self.in_mirror:
+                    self.in_mirror=False
                 return
             else:
                 if (slope[0][0] - slope[1][0]) == 0:
