@@ -169,8 +169,7 @@ class Light:
                 self.mini_run = False
     def check_object(self,object):
 
-        if object == self.ignore_object:
-            return
+
 
         object.get_slopes()
 
@@ -181,6 +180,9 @@ class Light:
 
             if slope == self.slope_before:
                 pass
+            elif object == self.ignore_object:
+                self.ignore_object = None
+                return
             else:
                 if (slope[0][0] - slope[1][0]) == 0:
                     dx = 0.001
