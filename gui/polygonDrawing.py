@@ -10,6 +10,7 @@ import time
 
 currentPolygonPoints = []
 def addPoint(mousePos):
+    global currentPolygonPoints
     currentPolygonPoints.append(mousePos)
 
     print(currentPolygonPoints)
