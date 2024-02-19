@@ -414,9 +414,9 @@ class Light:
 
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
-        reflection_factor = self.current_object.reflection_factor
-        self.RGB = RGB_Class(int(self.RGB.r * reflection_factor), int(self.RGB.g * reflection_factor),
-                             int(self.RGB.b * reflection_factor))
+        transmittance = self.current_object.transmittance
+        self.RGB = RGB_Class(int(self.RGB.r * transmittance), int(self.RGB.g * transmittance),
+                             int(self.RGB.b * transmittance))
 
         self.colors.append(self.RGB.rgb)
         if self.in_prism:
