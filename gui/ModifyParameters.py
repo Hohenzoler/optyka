@@ -122,6 +122,9 @@ class Parameters:
                     value = str(value)
                     value = value.strip("%")
                     value = float(value) / 100
+                    if value <= 0:
+                        messagebox.showwarning("Error", "Size cannot be below or equal to 0%.")
+                        return
                     # self.object.points = self.change_size(value)
 
                 if param == 'reflection_factor' or param == 'transmittance':
