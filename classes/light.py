@@ -380,13 +380,16 @@ class Light:
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         reflection_factor = self.current_object.reflection_factor
+        transmittance_factor = self.current_object.transmittance
         self.RGB = RGB_Class(int(self.RGB.r * reflection_factor), int(self.RGB.g * reflection_factor),
                        int(self.RGB.b * reflection_factor))
 
         self.colors.append(self.RGB.rgb)
 
         if not self.in_mirror:
-            self.make_mirror_light(self.angle)
+            self.angle = 0
+            self.make_mirror_light(self.angle, RGB_Class(int(self.RGB.r * transmittance_factor), int(self.RGB.g * transmittance_factor),
+                       int(self.RGB.b * transmittance_factor)).rgb)
 
         self.reflect()
 
@@ -435,8 +438,8 @@ class Light:
         else:
             self.in_prism=True
 
-    def make_mirror_light(self, angle):
-        light1 = Light(self.game, [self.current_point], self.color, (self.r + angle) * 180 / math.pi,
+    def make_mirror_light(self, angle, color):
+        light1 = Light(self.game, [self.current_point], color, (self.r + angle) * 180 / math.pi,
                        self.light_width)
         light1.current_slope = self.current_slope
         light1.in_mirror = True
