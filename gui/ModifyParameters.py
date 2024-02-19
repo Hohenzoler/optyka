@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import messagebox
+
 import ttkbootstrap as ttk
 import os
 
@@ -134,6 +136,11 @@ class Parameters:
 
                 value = float(value)
                 new_parameters[param] = value
+
+            if new_parameters.get('reflection_factor', 0) + new_parameters.get('transmittance', 0) > 1:
+                messagebox.showerror("Error", "The sum of reflection factor and transmittance cannot exceed 100%.")
+                return
+
             print(new_parameters)
             self.object.parameters.update(new_parameters)
         except Exception as e:
