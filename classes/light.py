@@ -390,6 +390,8 @@ class Light:
             self.angle = 0
             self.make_mirror_light(self.angle, RGB_Class(int(self.RGB.r * transmittance_factor), int(self.RGB.g * transmittance_factor),
                        int(self.RGB.b * transmittance_factor)).rgb)
+        else:
+            self.in_mirror=False
 
         self.reflect()
 
