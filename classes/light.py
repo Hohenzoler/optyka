@@ -22,6 +22,7 @@ class Light:
         self.debug=False
         self.prism_light=False
         self.in_prism=False
+        self.in_mirror=False
         self.main_light_slope=None
         self.linear_function = None
         self.starting_point=points[0]
@@ -40,6 +41,7 @@ class Light:
         self.count=1
         self.get_r()
         self.alpha = alpha
+        self.ignore_object = None
 
         # print(self.r,self.linear_function)
     def find_b(self,a,point):
@@ -166,6 +168,9 @@ class Light:
             if self.index >= 100:
                 self.mini_run = False
     def check_object(self,object):
+
+        if object == self.ignore_object:
+            return
 
         object.get_slopes()
 
@@ -379,6 +384,10 @@ class Light:
                        int(self.RGB.b * reflection_factor))
 
         self.colors.append(self.RGB.rgb)
+
+        if not self.in_mirror:
+            self.make_mirror_light(self.angle)
+
         self.reflect()
 
 
@@ -425,6 +434,16 @@ class Light:
             self.in_prism=False
         else:
             self.in_prism=True
+
+    def make_mirror_light(self, angle):
+        light1 = Light(self.game, [self.current_point], self.color, (self.r + angle) * 180 / math.pi,
+                       self.light_width)
+        light1.current_slope = self.current_slope
+        light1.in_mirror = True
+        light1.ignore_object = self.current_object
+        light1.debug = False
+        light1.trace_path2()
+        light1.render()
 
     def make_prism_light(self,color,angle):
         light1 = Light(self.game, [self.current_point], color, (self.r + angle) * 180 / math.pi,
