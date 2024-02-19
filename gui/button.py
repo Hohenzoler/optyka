@@ -158,19 +158,19 @@ class Button:
         if self.rect.collidepoint(mousepos[0], mousepos[1]):
             if self.game.isDrawingModeOn != True:
                 if self.number == 0:
-                    obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 1, 1, image=images.torch)
+                    obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0, 1, image=images.torch)
                     self.game.current_flashlight = obj
                     self.game.achievements.handle_achievement_unlocked("first_flashlight_placed")
 
                 elif self.number == 1:
-                    obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 1, 1, textureName='glass')
+                    obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 1, 0, textureName='glass')
                     self.game.achievements.handle_achievement_unlocked("first_mirror_placed")
 
                 elif self.number == 2:
-                    obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 1, 1)
+                    obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0, 1)
 
                 elif self.number == 3:
-                    obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 1, 1)
+                    obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 0, 1)
                 elif self.number == 5:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
