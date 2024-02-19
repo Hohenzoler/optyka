@@ -385,17 +385,18 @@ class Light:
         self.points.append(self.current_point)
         reflection_factor = self.current_object.reflection_factor
         transmittance_factor = self.current_object.transmittance
-        self.RGB = RGB_Class(int(self.RGB.r * reflection_factor), int(self.RGB.g * reflection_factor),
-                       int(self.RGB.b * reflection_factor))
-
-        self.colors.append(self.RGB.rgb)
 
         if not self.in_mirror:
             self.angle = 0
-            self.make_mirror_light(self.angle, RGB_Class(int(self.RGB.r / reflection_factor * transmittance_factor), int(self.RGB.g / reflection_factor * transmittance_factor),
-                       int(self.RGB.b / reflection_factor * transmittance_factor)).rgb)
+            self.make_mirror_light(self.angle, RGB_Class(int(self.RGB.r  * transmittance_factor), int(self.RGB.g * transmittance_factor),
+                       int(self.RGB.b * transmittance_factor)).rgb)
         else:
             self.in_mirror=False
+
+        self.RGB = RGB_Class(int(self.RGB.r * reflection_factor), int(self.RGB.g * reflection_factor),
+                             int(self.RGB.b * reflection_factor))
+
+        self.colors.append(self.RGB.rgb)
 
         self.reflect()
 
