@@ -64,17 +64,17 @@ There are two ways to install the project: download exe file, or run the project
 graph TD;
     main_menu-->start;
     main_menu-->settings;
+    settings-->resolution;
+    settings-->fullscreen;
+    settings-->hotbar;
+    settings-->pretty_flashlight;
+    settings-->main_menu;
     main_menu-->quit;
     start-->new_game;
     start-->load_preset;
     start-->main_menu;
     load_preset-->new_game;
     load_preset-->start;
-    settings-->resolution;
-    settings-->fullscreen;
-    settings-->hotbar;
-    settings-->pretty_flashlight;
-    settings-->main_menu;
     new_game-->settings;
     new_game-->main_menu;
 ```
