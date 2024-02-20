@@ -269,7 +269,11 @@ class Game:
             self.achievements_screen.render()
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
         if isDrawingModeOn:
+
+            from gui.polygonDrawing import currentPolygonPoints as points
             self.screen.blit(self.pen_img, self.cursor_img_rect)
+            for i in range(len(points)):
+                pygame.draw.circle(self.screen, (200, 0, 0), points[i], 5)
         else:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
         self.displayFPS()
