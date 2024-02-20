@@ -46,6 +46,7 @@ class Achievements:
             INSERT OR REPLACE INTO achievements VALUES (?, ?, ?)
         """, (achievement_name, 1, rarity))
         self.conn.commit()
+        self.game.achievement_popup()
         print(f"Achievement Unlocked: {achievement_name}, Rarity: {rarity}")
 
     def is_achievement_unlocked(self, achievement_name):
@@ -65,7 +66,7 @@ class Achievements:
     def handle_achievement_unlocked(self, achievement_name):
         if self.is_achievement_unlocked(achievement_name):
             print(f"Achievement already unlocked: {achievement_name}")
-            self.game.achievement_popup()
+
             return
 
         self.unlock_achievement(achievement_name)
