@@ -1,5 +1,4 @@
 import sqlite3
-from classes import game
 import time
 
 class Achievements:
@@ -58,12 +57,12 @@ class Achievements:
     def handle_achievement_unlocked(self, achievement_name):
         if self.is_achievement_unlocked(achievement_name):
             print(f"Achievement already unlocked: {achievement_name}")
-            game.Game.achievement_popup(game.Game)
+            self.game.achievement_popup()
             return
 
         self.unlock_achievement(achievement_name)
 
     def fps_achievements(self):
         if time.time()>self.start_time+5:
-            if int(game.Game.return_fps(self.game)) < 10:
+            if int(self.game.return_fps(self.game)) < 10:
                 self.handle_achievement_unlocked("need for nasa")
