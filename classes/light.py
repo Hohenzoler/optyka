@@ -206,8 +206,8 @@ class Light:
                 # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
                 # lf.draw(self.game)
                 point = (x, self.linear_function.calculate(x))
-                if x <= max(slope[0][0], slope[1][0]) + 1 and x >= min(slope[0][0], slope[1][0]) - 1:
-                    if y <= max(slope[0][1], slope[1][1]) + 1 and y >= min(slope[0][1], slope[1][1]) - 1:
+                if x <= max(slope[0][0], slope[1][0]) and x >= min(slope[0][0], slope[1][0]):
+                    if y <= max(slope[0][1], slope[1][1]) and y >= min(slope[0][1], slope[1][1]):
                         cases = 0
                         if self.horizontal == 'right':
                             if x >= self.current_starting_point[0]:
@@ -263,6 +263,7 @@ class Light:
                                         self.current_object_type = 'prism'
         # if self.object_counter>1:
         #     self.ignore_object=object
+
 
     def left_lens(self, lens):
         for index, point in enumerate(lens.lens_points):
