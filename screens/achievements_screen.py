@@ -70,7 +70,7 @@ class AchievementsScreen:
             if rarity == 'common':
                 color = (200, 200, 200)
             elif rarity == 'uncommon':
-                color = (30, 150, 26)
+                color = (100, 200, 0)
             elif rarity == 'rare':
                 color = (25, 65, 120)
             elif rarity == 'epic':
