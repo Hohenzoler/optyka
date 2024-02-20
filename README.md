@@ -69,7 +69,6 @@ graph TD;
     start-->load_preset;
     start-->delete;
     start-->main_menu;
-    back-->main_menu;
     load_preset-->new_game;
     load_preset-->start;
     settings-->resolution;
