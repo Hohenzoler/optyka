@@ -69,7 +69,6 @@ graph TD;
     Start-->Load preset
     Start-->Delete
     Start-->Back
-    Back-->optyka.exe
 ```
 
 ## Objects and Features:
