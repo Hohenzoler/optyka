@@ -29,11 +29,14 @@ class AchievementsScreen:
             object.checkcollision(pos)
 
     def load_achievements(self):
-        conn = sqlite3.connect('achievements.db')
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM achievements")
-        self.achievements = cursor.fetchall()
-        conn.close()
+        try:
+            conn = sqlite3.connect('achievements.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM achievements")
+            self.achievements = cursor.fetchall()
+            conn.close()
+        except:
+            print("Error: Could not load achievements from the database.")
 
     def generate_particles(self):
         # Adjust the parameters as needed
