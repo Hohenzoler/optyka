@@ -311,7 +311,8 @@ class Game:
         self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1), 10))
         return time_text
 
-
+    def achievement_popup(self):
+        self.screen.blit(images.torch, (0,0))
 
     def loop(self):
         """
