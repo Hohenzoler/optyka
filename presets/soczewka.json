@@ -1,0 +1,38 @@
+[
+  "Not having fun with soczewka",
+  {
+    "x": 57.0,
+    "y": 186.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "lazer": false,
+    "red": 168,
+    "green": 105,
+    "blue": 182,
+    "class": "Flashlight"
+  },
+  {
+    "x": 966.0,
+    "y": 246.0,
+    "angle": 61.13999999999999,
+    "size": 1.0,
+    "reflection_factor": 0.8,
+    "transmittance": 0.0,
+    "texture": "glass",
+    "class": "Mirror"
+  },
+  {
+    "x": 409.0,
+    "y": 211.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "red": 64,
+    "green": 137,
+    "blue": 189,
+    "class": "Lens"
+  }
+]
