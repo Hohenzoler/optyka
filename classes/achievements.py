@@ -64,5 +64,5 @@ class Achievements:
 
     def fps_achievements(self):
         if time.time()>self.start_time+5:
-            if int(self.game.return_fps(self.game)) < 10:
+            if int(self.game.return_fps()) < 10:
                 self.handle_achievement_unlocked("need for nasa")
