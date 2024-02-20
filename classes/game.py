@@ -86,6 +86,7 @@ class Game:
 
         self.last_scroll_time = time.time()
         self.popup = False
+        self.currentAchievementName = None
 
     def go_to_achievements_screen(self):
         self.mode = 'achievements'
@@ -286,6 +287,7 @@ class Game:
         self.displayClock()
         if self.popup == True:
             self.screen.blit(images.torch, (0, 70))
+            print(self.currentAchievementName)
 
 
 
@@ -317,8 +319,9 @@ class Game:
         self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1), 10))
         return time_text
 
-    def achievement_popup(self):
+    def achievement_popup(self, achname):
         self.popup = True
+        self.currentAchievementName = achname
 
     def loop(self):
         screen = self.screen
