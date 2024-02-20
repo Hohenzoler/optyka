@@ -19,6 +19,7 @@ class Achievements:
 
         # Define the dictionary of achievements
         self.achievements_dict = {
+            "here is your first achievement ;)": "common",
             "first_flashlight_placed": "common",
             "first_mirror_placed": "common",
             "first_colored_glass_placed": "common",

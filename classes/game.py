@@ -60,6 +60,8 @@ class Game:
         self.pen_img_rect = self.pen_img.get_rect()
         self.achievements = Achievements(self)  # Achievements object
 
+        self.achievements.handle_achievement_unlocked("here is your first achievement ;)")
+
         self.p = False #used for properties windows for gameobjects
 
         self.selected_object = None
