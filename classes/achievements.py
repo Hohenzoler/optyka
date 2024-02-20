@@ -29,8 +29,9 @@ class Achievements:
             "topopisy": "uncommon",
             "parameters": "rare",
             "U are weird...": "rare",
+            "need for nasa": "rare",
             "back and forth": "epic",
-            "need for nasa": "epic",
+            "get a new computer": "epic",
             "so you've chosen death": "epic",
             "back and forth 2.0": "legendary",
         }
@@ -71,5 +72,8 @@ class Achievements:
 
     def fps_achievements(self):
         if time.time()>self.start_time+5:
-            if int(self.game.return_fps()) < 10:
+            if int(self.game.return_fps()) < 20:
                 self.handle_achievement_unlocked("need for nasa")
+            if time.time() < self.start_time+30:
+                if int(self.game.return_fps()) < 20:
+                    self.handle_achievement_unlocked("get a new computer")
