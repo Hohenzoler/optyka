@@ -1,14 +1,20 @@
 import pygame
 import sqlite3
 import classes.font
+from classes import parkinson as particles
 from classes import sounds
+import random
 
 class AchievementsScreen:
     def __init__(self, game):
         self.game = game
+        self.width = self.game.width
+        self.height = self.game.height
+        self.screen = self.game.screen
         self.font = pygame.font.Font(None, 24)  # Adjust the font size as needed
         self.achievements = []
         self.load_achievements()
+        self.particle_system = particles.UnityParticleSystem()
         self.game.objects.append(self)
 
     def load_achievements(self):
@@ -18,7 +24,26 @@ class AchievementsScreen:
         self.achievements = cursor.fetchall()
         conn.close()
 
+    def generate_particles(self):
+        # Adjust the parameters as needed
+        self.particle_system.add_particle(
+            x=random.randint(0, self.width),
+            y=random.randint(0, self.height),
+            vx=random.uniform(-0.1, 0.1),
+            vy=random.uniform(-0.1, 0.1),
+            lifespan=1000,
+            size=random.randint(1, 2),
+            red=random.randint(150, 255),
+            green=random.randint(150, 255),
+            blue=random.randint(150, 255),
+            alpha=100,
+            shape='circle'
+        )
+
     def render(self):
+        self.generate_particles()
+        self.particle_system.update()
+        self.particle_system.draw(self.screen)
         font = pygame.font.Font(classes.font.Font, self.game.width // 30)
 
         text = font.render('Achievements', True, (255, 255, 255))
