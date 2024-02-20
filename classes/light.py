@@ -195,7 +195,7 @@ class Light:
 
                 lf = Linear_Function((slope[0][1] - slope[1][1]) / dx,
                                      self.find_b(((slope[0][1] - slope[1][1]) / dx), slope[0]))
-                lf.draw(self.game)
+                # lf.draw(self.game)
                 x = lf.intercept(self.linear_function)
                 y = lf.calculate(x)
                 # lf.draw(self.game)
