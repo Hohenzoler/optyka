@@ -16,6 +16,15 @@ class AchievementsScreen:
         self.objects = []
         self.font = pygame.font.Font(None, 24)  # Adjust the font size as needed
         self.achievements = []
+
+        self.rarity_values = {
+            'common': 1,
+            'uncommon': 2,
+            'rare': 3,
+            'epic': 4,
+            'legendary': 5
+        }
+
         self.load_achievements()
         self.particle_system = particles.UnityParticleSystem()
 
@@ -35,8 +44,13 @@ class AchievementsScreen:
             cursor.execute("SELECT * FROM achievements")
             self.achievements = cursor.fetchall()
             conn.close()
+            self.achievements = sorted(self.achievements, key=lambda achievement: self.rarity_values.get(achievement[2], 0),
+                                       reverse=True)
         except:
             print("Error: Could not load achievements from the database.")
+
+    def sort_achievements(self):
+        self.achievements = sorted(self.achievements, key=lambda achievement: self.rarity_values.get(achievement[2], 0))
 
     def generate_particles(self):
         # Adjust the parameters as needed
