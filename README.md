@@ -71,6 +71,12 @@ graph TD;
     start-->back;
     back-->main_menu;
     load_preset-->new_game;
+    load_preset-->back;
+    settings-->resolution;
+    settings-->fullscreen;
+    settings-->hotbar;
+    settings-->pretty_flashlight;
+    settings-->back;
 ```
 
 ## Objects and Features:
