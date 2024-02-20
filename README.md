@@ -105,3 +105,4 @@ This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [Malys
 
 All images used in the app were made by our team.
 We have permission to use the font as stated here: https://www.dafont.com/junegull.font
+We also have permission to use the background music, made by C418: https://www.youtube.com/watch?v=XuZDeT8zI5c&ab_channel=C418-Topic
