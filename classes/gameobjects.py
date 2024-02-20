@@ -293,7 +293,7 @@ class GameObject:
                 self.selectedtrue = True
                 self.game.selected_object = self  # Set this object as the currently selected object
                 sounds.selected_sound()
-            else:
+            elif self.selectedtrue:
                 self.selectedtrue = False
                 self.game.selected_object = None  # No object is selected now
                 if type(self) == Flashlight:
