@@ -83,7 +83,7 @@ There are two ways to install the project: download exe file, or run the project
 14. **Calm music** - makes the experience much more pleasant
 
 ## Credits
-This project is developed by Hohenzoler, V8Enthusiast, rutra8002, lolekszcz and MalyszekTobias.
+This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [V8Enthusiast](https://github.com/V8Enthusiast), [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [MalyszekTobias](https://github.com/MalyszekTobias).
 
 All images used in the app were made by our team.
 We have permission to use the font as stated here: https://www.dafont.com/junegull.font
