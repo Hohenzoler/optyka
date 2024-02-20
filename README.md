@@ -45,8 +45,8 @@ There are two ways to install the project: download exe file, or run the project
    - load preset (a premade project made by the developers)
    - one of your saves (if you have any)
 3. Now you can place objects and see how they interact with each other.
-4. `Right click` an object to pick it up and later to release it.
-5. When an object is picked up, click `P` to open its parameters window.
+4. `Right click` an object to pick it up or release it.
+5. When holding an object, click `P` to open its parameters window.
 6. Parameters include:
    - position
    - angle relative to horizontal position
@@ -65,11 +65,11 @@ There are two ways to install the project: download exe file, or run the project
 
 ## Objects and Features:
 ### The app includes various objects:
-1. **Flashlight** - produces light that other objects interact with.
+1. **Flashlight** - produces light that other objects can interact with.
 2. **Mirror** - a rectangular object that reflects light.
 3. **Colored glass** - if a beam of light passes through it, the light changes color accordingly to the color of the glass.
 4. **Prism** - a triangular object that disperses and redirects light that enters it.
-5. **Custom-shaped mirror** - it's a regular mirror, but you can draw it so it has the desired shape.
+5. **Custom-shaped mirror** - it's a regular mirror, but you can draw it so it assumes the desired shape.
 6. **Lens** - magnifies or demagnifies light that enters it.
 
 ### The app also includes the following features:
