@@ -85,27 +85,7 @@ class AchievementsScreen:
             text_rect.topleft = (50, y_offset)
             pygame.draw.rect(self.game.screen, color, text_rect.inflate(10, 10), 0, 5)
             self.game.screen.blit(text_surface, (50, y_offset))
-            y_offset += 30
+            y_offset += 40
         self.back_animation.animate()
         for object in self.objects:
             object.render()
-
-class Button:
-    def __init__(self, game, text, x, y, width, height, action):
-        self.game = game
-        self.text = text
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.action = action
-        self.font = pygame.font.Font(None, 24)
-
-    def render(self):
-        pygame.draw.rect(self.game.screen, (0, 0, 0), (self.x, self.y, self.width, self.height))
-        text_surface = self.font.render(self.text, True, (0, 200, 0))
-        self.game.screen.blit(text_surface, (self.x + 10, self.y + 10))
-
-    def is_clicked(self, pos):
-        sounds.clicked_sound()
-        return self.x < pos[0] < self.x + self.width and self.y < pos[1] < self.y + self.height
