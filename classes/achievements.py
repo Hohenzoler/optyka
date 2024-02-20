@@ -31,6 +31,7 @@ class Achievements:
             "U are weird...": "rare",
             "back and forth": "epic",
             "need for nasa": "epic",
+            "so you've chosen death": "epic",
             "complex_numbers": "legendary",
         }
 

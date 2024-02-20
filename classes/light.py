@@ -91,7 +91,7 @@ class Light:
                             # self.game.surfaces.append(surface)
                             # self.game.surface_num += 1
                             # print("add")
-
+                self.game.achievements.handle_achievement_unlocked("so you've chosen death")
                     #### Original ####
 
                 #     self.draw_thick_line(new_line_surface, int(self.points[x][0]), int(self.points[x][1]),
