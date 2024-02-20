@@ -87,11 +87,11 @@ class AchievementsScreen:
         y_offset1 = 100
         y_offset2 = 100
 
-        for achievement in self.achievements[:midpoint]:
-            y_offset1 = self.render_achievement(achievement, 50, y_offset1)
-
-        for achievement in self.achievements[midpoint:]:
-            y_offset2 = self.render_achievement(achievement, self.width  - (self.width -100)// 2, y_offset2)
+        for i, achievement in enumerate(self.achievements):
+            if i % 2 == 0:
+                y_offset1 = self.render_achievement(achievement, 50, y_offset1)
+            else:
+                y_offset2 = self.render_achievement(achievement, self.width - (self.width - 100) // 2, y_offset2)
 
         self.back_animation.animate()
         for object in self.objects:
