@@ -62,10 +62,10 @@ There are two ways to install the project: download exe file, or run the project
 
 ```mermaid
 graph TD;
-    main_menu-->B;
-    main_menu-->C;
+    main_menu-->start;
+    main_menu-->options;
+    main_menu-->quit;
     B-->D;
-    C-->D;
 ```
 
 ## Objects and Features:
