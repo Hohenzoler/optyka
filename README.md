@@ -63,7 +63,7 @@ There are two ways to install the project: download exe file, or run the project
 ```mermaid
 graph TD;
     main_menu-->start;
-    main_menu-->options;
+    main_menu-->settings;
     main_menu-->quit;
     start-->new_game;
     start-->load_preset;
