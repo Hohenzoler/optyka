@@ -67,7 +67,18 @@ class AchievementsScreen:
         y_offset = 100
         for achievement in self.achievements:
             achievement_name, unlocked, rarity = achievement
-            color = (0, 255, 0) if unlocked else (255, 0, 0)
+            if rarity == 'common':
+                color = (200, 200, 200)
+            elif rarity == 'uncommon':
+                color = (30, 150, 26)
+            elif rarity == 'rare':
+                color = (25, 65, 120)
+            elif rarity == 'epic':
+                color = (83, 0, 135)
+            elif rarity == 'legendary':
+                color = (247, 247, 2)
+            else:
+                color = (50, 50, 50)
             text_surface = self.font.render(f"{achievement_name} - {rarity}", True, color)
             self.game.screen.blit(text_surface, (50, y_offset))
             y_offset += 30
