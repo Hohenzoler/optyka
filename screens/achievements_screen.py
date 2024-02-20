@@ -77,7 +77,7 @@ class AchievementsScreen:
             y_offset1 = self.render_achievement(achievement, 50, y_offset1)
 
         for achievement in self.achievements[midpoint:]:
-            y_offset2 = self.render_achievement(achievement, self.game.width // 2, y_offset2)
+            y_offset2 = self.render_achievement(achievement, self.width  - (self.width -100)// 2, y_offset2)
 
         self.back_animation.animate()
         for object in self.objects:
