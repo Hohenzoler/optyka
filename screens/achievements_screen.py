@@ -79,7 +79,11 @@ class AchievementsScreen:
                 color = (247, 247, 2)
             else:
                 color = (50, 50, 50)
-            text_surface = self.font.render(f"{achievement_name} - {rarity}", True, color)
+            text_color = tuple(255 - c for c in color)  # Negative color for the text
+            text_surface = self.font.render(f"{achievement_name} - {rarity}", True, text_color)
+            text_rect = text_surface.get_rect()
+            text_rect.topleft = (50, y_offset)
+            pygame.draw.rect(self.game.screen, color, text_rect.inflate(10, 10), 0, 5)
             self.game.screen.blit(text_surface, (50, y_offset))
             y_offset += 30
         self.back_animation.animate()
