@@ -65,7 +65,10 @@ graph TD;
     main_menu-->start;
     main_menu-->options;
     main_menu-->quit;
-    B-->D;
+    start-->new_game;
+    start-->load_preset;
+    start-->delete;
+    start-->back;
 ```
 
 ## Objects and Features:
