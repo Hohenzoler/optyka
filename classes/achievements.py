@@ -65,7 +65,7 @@ class Achievements:
     def handle_achievement_unlocked(self, achievement_name):
         if self.is_achievement_unlocked(achievement_name):
             print(f"Achievement already unlocked: {achievement_name}")
-            # self.game.achievement_popup()
+            self.game.achievement_popup()
             return
 
         self.unlock_achievement(achievement_name)

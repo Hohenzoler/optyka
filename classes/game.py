@@ -85,6 +85,7 @@ class Game:
         self.background_color = (0, 0, 0)
 
         self.last_scroll_time = time.time()
+        self.popup = False
 
     def go_to_achievements_screen(self):
         self.mode = 'achievements'
@@ -283,6 +284,8 @@ class Game:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
         self.displayFPS()
         self.displayClock()
+        if self.popup == True:
+            self.screen.blit(images.torch, (0, 70))
 
 
 
@@ -315,7 +318,7 @@ class Game:
         return time_text
 
     def achievement_popup(self):
-        pass
+        self.popup = True
 
     def loop(self):
         screen = self.screen
@@ -334,6 +337,8 @@ class Game:
             if self.save_to_load != None:
                 self.load()
                 self.save_to_load = None
+
+
 
     def load(self):
         if not self.preset:
