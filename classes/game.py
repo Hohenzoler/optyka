@@ -159,6 +159,7 @@ class Game:
                         polygonDrawing.clearPoints()
                         global isDrawingModeOn
                         isDrawingModeOn = False
+                        self.achievements.handle_achievement_unlocked("topopisy")
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if self.achievements_button.is_clicked(event.pos):
                         self.achievements_button.action()
