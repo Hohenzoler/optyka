@@ -28,6 +28,7 @@ class Achievements:
             "BIN": "uncommon",
             "topopisy": "uncommon",
             "parameters": "rare",
+            "U are weird...": "rare",
             "back and forth": "epic",
             "need for nasa": "epic",
             "complex_numbers": "legendary",

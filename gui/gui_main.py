@@ -2,7 +2,6 @@ import pygame
 from gui import button
 from classes import bin
 
-
 class GUI:
     def __init__(self, game):
         self.game = game
@@ -14,10 +13,13 @@ class GUI:
             self.rect = pygame.Rect(0, self.height*10 - self.height, self.width, self.height)
         elif self.position == 'left':
             self.rect = pygame.Rect(0, 0, self.width//10, self.height*10)
+            self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'right':
             self.rect = pygame.Rect(self.width - self.width//10, 0, self.width//10, self.height*10)
+            self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
+            self.game.achievements.handle_achievement_unlocked("U are weird...")
 
 
         self.layer = 2  # Assign a higher layer value to GUI to ensure it's rendered on top
