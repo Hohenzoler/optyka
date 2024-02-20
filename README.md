@@ -62,8 +62,8 @@ There are two ways to install the project: download exe file, or run the project
 
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
+    main_menu-->B;
+    main_menu-->C;
     B-->D;
     C-->D;
 ```
