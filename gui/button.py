@@ -168,19 +168,23 @@ class Button:
 
                 elif self.number == 2:
                     obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0, 1)
+                    self.game.achievements.handle_achievement_unlocked("first_colored_glass_placed")
 
                 elif self.number == 3:
                     obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 0, 1)
+                    self.game.achievements.handle_achievement_unlocked("first_prism_placed")
                 elif self.number == 5:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
                                            (64, 137, 189), 0, 0, 140, 0, 1, 1)
+                    self.game.achievements.handle_achievement_unlocked("first_lens_placed")
                 elif self.number == 6:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
                                            (64, 137, 189), 0, 2, 140, 0, 1, 1)
+                    self.game.achievements.handle_achievement_unlocked("first_lens_placed")
                 elif self.number == -1:
                     self.game.save_game()
                 elif self.number == -2:

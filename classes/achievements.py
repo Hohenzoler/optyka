@@ -21,6 +21,9 @@ class Achievements:
         self.achievements_dict = {
             "first_flashlight_placed": "common",
             "first_mirror_placed": "common",
+            "first_colored_glass_placed": "common",
+            "first_lens_placed": "common",
+            "first_prism_placed": "common",
             "BIN": "uncommon",
             "back and forth": "epic",
             "need for nasa": "epic",
