@@ -3,6 +3,9 @@
 ## Description
 Optyka is a Python-based game project. It uses the Pygame library for app development and includes various sound effects and GUI elements.
 
+> [!TIP]
+> Don't use this.
+
 ## Installation
 To install and run the project, follow these steps:
 
@@ -15,4 +18,4 @@ To install and run the project, follow these steps:
 After running the `main.py` script, the app will start. The app includes various sound effects and GUI elements.
 
 ## Credits
-This project is developed by Hohenzoler, V8Enthusiast, rutra8002, lolekszcz and MalyszekTobias.
+This project is developed by @Hohenzoler, V8Enthusiast, rutra8002, lolekszcz and MalyszekTobias.
