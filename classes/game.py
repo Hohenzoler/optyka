@@ -84,6 +84,8 @@ class Game:
         self.background_color = (0, 0, 0)
 
         self.last_scroll_time = time.time()
+
+        self.popup_start_time = None
         self.popup = False
         self.currentAchievementName = None
 
@@ -273,8 +275,13 @@ class Game:
         self.displayFPS()
         self.displayClock()
         if self.popup == True:
-            self.screen.blit(images.torch, (0, 70))
-            print(self.currentAchievementName)
+            if time.time() - self.popup_start_time >= 5:
+                self.popup = False
+                self.popup_start_time = None
+                self.currentAchievementName = None
+            else:
+                self.screen.blit(images.torch, (0, 70))
+                print(self.currentAchievementName)
 
 
 
@@ -309,6 +316,7 @@ class Game:
     def achievement_popup(self, achname):
         self.popup = True
         self.currentAchievementName = achname
+        self.popup_start_time = time.time()
 
     def loop(self):
         screen = self.screen
