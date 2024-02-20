@@ -42,6 +42,7 @@ class Light:
         self.get_r()
         self.alpha = alpha
         self.ignore_object = None
+        self.counter = 0
 
         # print(self.r,self.linear_function)
     def find_b(self,a,point):
@@ -381,6 +382,9 @@ class Light:
         self.r = 2 * self.slope_angle - self.r
         self.calibrate_r2()
     def mirror_stuff(self):
+        self.counter += 1
+        if self.counter > 50:
+            self.game.achievements.handle_achievement_unlocked("back and forth")
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         reflection_factor = self.current_object.reflection_factor
