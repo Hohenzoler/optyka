@@ -65,6 +65,8 @@ graph TD;
     main_menu-->start;
     main_menu-->settings;
     main_menu-->quit;
+    start -- settings;
+    settings-- quit;
     start-->new_game;
     start-->load_preset;
     start-->main_menu;
