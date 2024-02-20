@@ -90,8 +90,12 @@ There are two ways to install the project: download exe file, or run the project
 ## Opinions
 > "I think it's a great app. It's very educational and fun to play with. I would recommend it to anyone who wants to learn about optics." - *Jeff*
 
+Picture of Jeff:
+
 ![Jeff](images/Jeff.png)
 > "I don't think it's a great app. It's not very educational and fun to play with. I would not recommend it to anyone who wants to learn about optics." - *also Jeff*
+
+Another picture of Jeff:
 
 ![another picture of Jeff](images/Jeff.png)
 ## Credits
