@@ -21,17 +21,21 @@ Optyka is a Python-based game project. It uses the Pygame library for app develo
 
 ## Installation
 There are two ways to install the project: download exe file, or run the project from source.
-### Method 1
-1. Clone the repository: `git clone https://github.com/Hohenzoler/optyka.git`
-2. Navigate to the project directory: `cd optyka`
-3. Install the required packages: `pip install -r requirements.txt`
-4. Run the main script: `python main.py`
 
-### Method 2
+> [!NOTE]
+> If you don't want to modify the project, we highly recommend using the first method.
+
+### Method 1
 1. Go to the ***Releases*** page on GitHub
 2. Download ***1.0 - zip***
 3. Extract all the files
 4. Run ***optyka.exe***
+
+### Method 2
+1. Clone the repository: `git clone https://github.com/Hohenzoler/optyka.git`
+2. Navigate to the project directory: `cd optyka`
+3. Install the required packages: `pip install -r requirements.txt`
+4. Run the main script: `python main.py`
 
 
 ## Usage
