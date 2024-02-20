@@ -8,9 +8,6 @@ import pygame
 import settingsSetup
 from screens import startscreen as ss
 import os
-import sys
-
-sys.setrecursionlimit(99999999)
 
 # Create a "logs" folder if it doesn't exist
 if not os.path.exists("logs"):
