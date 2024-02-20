@@ -261,8 +261,8 @@ class Light:
                                     elif type(object) == gameobjects.Prism:
 
                                         self.current_object_type = 'prism'
-        if self.object_counter>1:
-            self.ignore_object=object
+        # if self.object_counter>1:
+        #     self.ignore_object=object
 
     def left_lens(self, lens):
         for index, point in enumerate(lens.lens_points):
