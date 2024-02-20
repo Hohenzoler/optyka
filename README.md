@@ -74,12 +74,12 @@ There are two ways to install the project: download exe file, or run the project
 ### The app also includes the following features:
 1. **Parameters** - Every object has parameters that change the way they interact with the environment.
 2. **Saving and loading** - you can save your loadout when quitting and come back to it later. You can also delete your saves.
-3. **Presets** - you can load a premade project(preset) as if you had made it yourself.
-4. **Intersection prevention** - objects cannot intersect with each other(just like in real life).
+3. **Presets** - you can load a premade project (preset) as if you had made it yourself.
+4. **Intersection prevention** - objects cannot intersect with each other (just like in real life).
 5. **Adjustable resolution** - you can change the resolution of the window.
 6. **Togglable fullscreen** - you can toggle fullscreen on and off.
 7. **Adjustable hotbar location** - you can change the location of the hotbar.
-8. **Pretty flashlight toggle** - you can turn pretty flashlight on and off(Works best on high-end machines).
+8. **Pretty flashlight toggle** - you can turn pretty flashlight on and off (Works best on high-end machines).
 9. **Bin** - you can delete objects you don't need anymore.
 10. **Achievements** - you can measure how much of the application you have discovered.
 11. **FPS meter** - measures frames per second.
