@@ -250,10 +250,10 @@ class ButtonForgame:
         elif self.number == 1:
             self.text = self.font.render('Settings', True, 'black')
 
-        elif self.number == 2:
+        elif self.number == 3:
             self.text = self.font.render('Quit', True, 'black')
 
-        elif self.number == 3:
+        elif self.number == 2:
             self.text = self.font.render('Achievements', True, 'black')
 
         elif self.number == 71:
@@ -323,10 +323,10 @@ class ButtonForgame:
             elif self.number == 1:
                 self.screen.mode = 'settings'
                 sounds.clicked_sound()
-            elif self.number == 2:
+            elif self.number == 3:
                 sounds.clicked_sound()
                 exit()
-            elif self.number == 3:
+            elif self.number == 2:
                 self.screen.mode = 'achievements'
                 sounds.clicked_sound()
             elif self.number == 71:
