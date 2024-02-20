@@ -103,7 +103,7 @@ class AchievementsScreen:
         rect_width = self.width // 2 - 100
         rect_height = 50
 
-        text_rect = pygame.Rect(x_offset, y_offset, rect_width, rect_height)
+        textRect = pygame.Rect(x_offset, y_offset, rect_width, rect_height)
 
         # Calculate the center of the rectangle
         center_x = x_offset + rect_width // 2
@@ -111,6 +111,6 @@ class AchievementsScreen:
 
         text_surface_rect = text_surface.get_rect(center=(center_x, center_y))
 
-        pygame.draw.rect(self.game.screen, color, text_rect.inflate(10, 10), 0, 5)
+        pygame.draw.rect(self.game.screen, color, textRect.inflate(10, 10), 0, 5)
         self.game.screen.blit(text_surface, text_surface_rect)
         return y_offset + rect_height + 20
