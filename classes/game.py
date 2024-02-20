@@ -312,9 +312,10 @@ class Game:
         return time_text
 
     def achievement_popup(self):
-        self.screen.blit(images.torch, (0,0))
+        self.screen.blit(images.torch, (0, 0))
 
     def loop(self):
+        screen = self.screen
         """
         The main game loop.
         """
