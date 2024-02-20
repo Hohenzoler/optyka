@@ -62,13 +62,10 @@ There are two ways to install the project: download exe file, or run the project
 
 ```mermaid
 graph TD;
-    optyka-->Start;
-    optyka-->Options;
-    optyka-->Quit;
-    Start-->New game;
-    Start-->Load preset;
-    Start-->Delete;
-    Start-->Back;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
 ```
 
 ## Objects and Features:
