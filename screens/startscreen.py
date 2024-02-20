@@ -104,7 +104,7 @@ class StartScreen:
                 for object in self.objects:
                     if type(object) == button.ButtonForgame:
                         object.checkcollision(event.pos)
-                    elif type(object) == settings_screen.Settings_screen or type(object) == loading_saves_screen.Loading_saves_screen:
+                    elif type(object) == settings_screen.Settings_screen or type(object) == loading_saves_screen.Loading_saves_screen or type(object) == achievements_screen.AchievementsScreen:
                         object.checkevent(event.pos)
                     elif type(object) == loading_saves_screen.saveselector:
                         if event.button == 4 and object.scrolling_needed:
