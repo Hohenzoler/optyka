@@ -69,6 +69,7 @@ graph TD;
     start-->load_preset;
     start-->delete;
     start-->back;
+    back-->main_menu;
 ```
 
 ## Objects and Features:
