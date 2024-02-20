@@ -165,7 +165,7 @@ class StartScreen:
                 self.objects = []
                 self.screen_mode = None
 
-            self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
+            self.buttons = [button.ButtonForgame(x, self) for x in range(4)]
             self.button_animations = [ButtonAnimation(b, b.rect.x*6+(b.width//2), b.rect.y) for i, b in enumerate(self.buttons)]
             self.executed_functions = 'default'
 
