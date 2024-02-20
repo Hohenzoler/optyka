@@ -17,7 +17,6 @@ from datetime import datetime
 import functions
 import gui
 from gui import polygonDrawing
-from screens import achievements_screen
 from classes import saveTK
 
 isDrawingModeOn = False
@@ -87,10 +86,6 @@ class Game:
         self.last_scroll_time = time.time()
         self.popup = False
         self.currentAchievementName = None
-
-    def go_to_achievements_screen(self):
-        self.mode = 'achievements'
-        self.achievements_screen = achievements_screen.AchievementsScreen(self)
 
 
     def create_cursor_particles(self):
@@ -164,9 +159,7 @@ class Game:
                         global isDrawingModeOn
                         isDrawingModeOn = False
                         self.achievements.handle_achievement_unlocked("topopisy")
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if self.achievements_button.is_clicked(event.pos):
-                        self.achievements_button.action()
+
 
 
             elif self.mode == 'settings':
@@ -205,8 +198,6 @@ class Game:
 
         pygame.mouse.set_visible(False)  # Hide the default mouse cursor
 
-        self.achievements_button = achievements_screen.Button(self, "Achievements", self.width - 150, 300, 150, 40,
-                                                              self.go_to_achievements_screen)
         self.render_particles()
 
         if self.mode == 'default':
@@ -268,10 +259,6 @@ class Game:
                     object.load_settings()
             self.executed_command = 'default'
 
-        if self.mode == 'default':
-            self.achievements_button.render()
-        elif self.mode == 'achievements':
-            self.achievements_screen.render()
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
         if isDrawingModeOn:
 
