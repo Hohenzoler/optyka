@@ -25,6 +25,7 @@ class Achievements:
             "first_lens_placed": "common",
             "first_prism_placed": "common",
             "BIN": "uncommon",
+            "parameters": "rare",
             "back and forth": "epic",
             "need for nasa": "epic",
             "complex_numbers": "legendary",

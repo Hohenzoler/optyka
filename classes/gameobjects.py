@@ -140,6 +140,7 @@ class GameObject:
 
             elif self.game.p:
                 self.change_parameters()
+                self.game.achievements.handle_achievement_unlocked("parameters")
                 self.selectedtrue = False
 
             else:
