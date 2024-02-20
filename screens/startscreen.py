@@ -4,7 +4,7 @@ from classes import images
 import pygame
 from gui import button
 import settingsSetup
-from screens import settings_screen, loading_saves_screen
+from screens import settings_screen, loading_saves_screen, achievements_screen
 from classes import parkinson as particles
 from gui.button_animation import ButtonAnimation
 
@@ -49,7 +49,7 @@ class StartScreen:
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width // 2, (self.height // 2) - (3 * self.height // 10))
 
-        self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
+        self.buttons = [button.ButtonForgame(x, self) for x in range(4)]
         self.button_animations = [ButtonAnimation(b, b.rect.x*6+(b.width//2), b.rect.y) for i, b in enumerate(self.buttons)]
 
         pygame.display.set_caption('Optyka')
@@ -72,6 +72,9 @@ class StartScreen:
 
             elif self.mode == 'settings':
                 self.settings_mode()
+
+            elif self.mode == 'achievements':
+                self.achievements_mode()
 
             elif self.mode == 'load_new_settings':
                 self.load_new_settings()
@@ -165,6 +168,14 @@ class StartScreen:
             self.buttons = [button.ButtonForgame(x, self) for x in range(3)]
             self.button_animations = [ButtonAnimation(b, b.rect.x*6+(b.width//2), b.rect.y) for i, b in enumerate(self.buttons)]
             self.executed_functions = 'default'
+
+    def achievements_mode(self):
+        if self.executed_functions != 'achievements':
+            self.buttons = []
+            self.objects = []
+            self.screen_mode = achievements_screen.AchievementsScreen(self)
+            self.screen_mode.render()
+            self.executed_functions = 'achievements'
 
 
     def settings_mode(self):

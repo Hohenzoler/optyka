@@ -9,6 +9,7 @@ class AchievementsScreen:
         self.font = pygame.font.Font(None, 24)  # Adjust the font size as needed
         self.achievements = []
         self.load_achievements()
+        self.game.objects.append(self)
 
     def load_achievements(self):
         conn = sqlite3.connect('achievements.db')
