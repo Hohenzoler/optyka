@@ -87,6 +87,11 @@ There are two ways to install the project: download exe file, or run the project
 13. **Sound effects** - helps to immerse in the world of optics.
 14. **Calm music** - makes the experience much more pleasant
 
+## Opinions
+> "I think it's a great app. It's very educational and fun to play with. I would recommend it to anyone who wants to learn about optics." - *Jeff*
+
+> "I don't think it's a great app. It's not very educational and fun to play with. I would not recommend it to anyone who wants to learn about optics." - *also Jeff*
+
 ## Credits
 This project is developed by [Hohenzoler](https://github.com/Hohenzoler),[MalyszekTobias](https://github.com/MalyszekTobias) , [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [V8Enthusiast](https://github.com/V8Enthusiast).
 
