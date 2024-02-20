@@ -64,28 +64,50 @@ class AchievementsScreen:
         text_rect.centerx = self.game.screen.get_rect().centerx
         self.game.screen.blit(text, text_rect)
         text_rect.y = 10
-        y_offset = 100
-        for achievement in self.achievements:
-            achievement_name, unlocked, rarity = achievement
-            if rarity == 'common':
-                color = (200, 200, 200)
-            elif rarity == 'uncommon':
-                color = (100, 200, 0)
-            elif rarity == 'rare':
-                color = (25, 65, 120)
-            elif rarity == 'epic':
-                color = (83, 0, 135)
-            elif rarity == 'legendary':
-                color = (247, 247, 2)
-            else:
-                color = (50, 50, 50)
-            text_color = tuple(255 - c for c in color)  # Negative color for the text
-            text_surface = self.font.render(f"{achievement_name} - {rarity}", True, text_color)
-            text_rect = text_surface.get_rect()
-            text_rect.topleft = (50, y_offset)
-            pygame.draw.rect(self.game.screen, color, text_rect.inflate(10, 10), 0, 5)
-            self.game.screen.blit(text_surface, (50, y_offset))
-            y_offset += 40
+
+        midpoint = len(self.achievements) // 2
+
+        y_offset1 = 100
+        y_offset2 = 100
+
+        for achievement in self.achievements[:midpoint]:
+            y_offset1 = self.render_achievement(achievement, 50, y_offset1)
+
+        for achievement in self.achievements[midpoint:]:
+            y_offset2 = self.render_achievement(achievement, self.game.width // 2, y_offset2)
+
         self.back_animation.animate()
         for object in self.objects:
             object.render()
+
+    def render_achievement(self, achievement, x_offset, y_offset):
+        achievement_name, unlocked, rarity = achievement
+        if rarity == 'common':
+            color = (200, 200, 200)
+        elif rarity == 'uncommon':
+            color = (100, 200, 0)
+        elif rarity == 'rare':
+            color = (25, 65, 120)
+        elif rarity == 'epic':
+            color = (83, 0, 135)
+        elif rarity == 'legendary':
+            color = (247, 247, 2)
+        else:
+            color = (50, 50, 50)
+        text_color = tuple(255 - c for c in color)
+        text_surface = self.font.render(f"{achievement_name} - {rarity}", True, text_color)
+
+        rect_width = self.width // 2 - 100
+        rect_height = 50
+
+        text_rect = pygame.Rect(x_offset, y_offset, rect_width, rect_height)
+
+        # Calculate the center of the rectangle
+        center_x = x_offset + rect_width // 2
+        center_y = y_offset + rect_height // 2
+
+        text_surface_rect = text_surface.get_rect(center=(center_x, center_y))
+
+        pygame.draw.rect(self.game.screen, color, text_rect.inflate(10, 10), 0, 5)
+        self.game.screen.blit(text_surface, text_surface_rect)
+        return y_offset + rect_height + 20
