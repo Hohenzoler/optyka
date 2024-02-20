@@ -60,6 +60,13 @@ There are two ways to install the project: download exe file, or run the project
 8. While in the _drawing mode_ you can draw a new object by clicking in different places on screen.
 9. Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
 
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
 
 ## Objects and Features:
 ### The app includes various objects:
