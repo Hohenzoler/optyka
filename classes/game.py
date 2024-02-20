@@ -315,7 +315,7 @@ class Game:
         return time_text
 
     def achievement_popup(self):
-
+        pass
 
     def loop(self):
         screen = self.screen

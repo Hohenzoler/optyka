@@ -357,8 +357,8 @@ class Light:
         self.r=r
 
     def border_stuff(self):
-        self.points.append((self.current_point_before[0] + 10000 * math.cos(-self.r),
-                            self.current_point_before[1] + 10000 * math.sin(-self.r)))
+        self.points.append((self.current_point_before[0] + 30000 * math.cos(-self.r),
+                            self.current_point_before[1] + 30000 * math.sin(-self.r)))
         self.colors.append(self.RGB.rgb)
         self.mini_run = False
 
@@ -383,7 +383,9 @@ class Light:
         self.calibrate_r2()
     def mirror_stuff(self):
         self.counter += 1
-        if self.counter > 50:
+        if self.counter > 99:
+            self.game.achievements.handle_achievement_unlocked("back and forth 2.0")
+        elif self.counter > 49:
             self.game.achievements.handle_achievement_unlocked("back and forth")
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)

@@ -32,7 +32,7 @@ class Achievements:
             "back and forth": "epic",
             "need for nasa": "epic",
             "so you've chosen death": "epic",
-            "complex_numbers": "legendary",
+            "back and forth 2.0": "legendary",
         }
 
     def unlock_achievement(self, achievement_name):
