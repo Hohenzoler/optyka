@@ -274,6 +274,8 @@ class Game:
             self.screen.blit(self.pen_img, self.cursor_img_rect)
             for i in range(len(points)):
                 pygame.draw.circle(self.screen, (200, 0, 0), points[i], 5)
+                if i < len(points) - 1:
+                    pygame.draw.line(self.screen, (255, 255, 255), points[i], points[i + 1])
         else:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
         self.displayFPS()
