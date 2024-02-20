@@ -86,6 +86,7 @@ There are two ways to install the project: download exe file, or run the project
 12. **Clock** - Lets you know what time it is.
 13. **Sound effects** - helps to immerse in the world of optics.
 14. **Calm music** - makes the experience much more pleasant
+15. **Color randomizer** - activated by pressing `up`, there isn't any particular reason for its existence
 
 ## Opinions
 > "I think it's a great app. It's very educational and fun to play with. I would recommend it to anyone who wants to learn about optics." - *Jeff*
@@ -99,7 +100,7 @@ Another picture of Jeff:
 
 ![another picture of Jeff](images/Jeff.png)
 ## Credits
-This project is developed by [Hohenzoler](https://github.com/Hohenzoler),[MalyszekTobias](https://github.com/MalyszekTobias) , [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [V8Enthusiast](https://github.com/V8Enthusiast).
+This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [MalyszekTobias](https://github.com/MalyszekTobias), [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [V8Enthusiast](https://github.com/V8Enthusiast).
 
 All images used in the app were made by our team.
 We have permission to use the font as stated here: https://www.dafont.com/junegull.font
