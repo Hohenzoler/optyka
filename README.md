@@ -7,17 +7,17 @@ Optyka is a Python-based game project. It uses the Pygame library for app develo
 > Don't use this.
 
 ## Status
-| Feature              | Status            |
-|----------------------|-------------------|
-| Flashlight           | ✅                |
-| Mirror               | ✅                |
-| Lens                 | ✅❌              |
-| Prism                | ✅                |
-| Zwierciadlo          | ❌                |
-| Transmittance factor | ✅                |
-| Reflection factor    | ✅                |
-| color                | ✅                |
-| refractive index     | ❌                |
+| Feature              | Status |
+|----------------------|--------|
+| Flashlight           | ✅      |
+| Mirror               | ✅      |
+| Lens                 | ✅❌     |
+| Prism                | ✅      |
+| Zwierciadlo          | ❌      |
+| Transmittance factor | ✅      |
+| Reflection factor    | ✅      |
+| color                | ✅      |
+| refractive index     | ❌      |
 
 ## Installation
 To install and run the project, follow these steps:
