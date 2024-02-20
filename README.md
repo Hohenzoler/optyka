@@ -77,6 +77,8 @@ graph TD;
     settings-->hotbar;
     settings-->pretty_flashlight;
     settings-->back;
+    new_game-->settings;
+    new_game-->back;
 ```
 
 ## Objects and Features:
