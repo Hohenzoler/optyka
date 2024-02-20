@@ -171,7 +171,7 @@ class Light:
     def check_object(self,object):
 
 
-
+        self.object_counter=0
         object.get_slopes()
 
         self.slopes = object.slopes
@@ -228,6 +228,7 @@ class Light:
                                              5)
                             dist = abs(x - self.current_starting_point[0])
                             if self.current_distance == None:
+                                self.object_counter+=1
                                 self.current_distance = dist
                                 self.current_point = point
                                 self.current_slope = slope
@@ -249,6 +250,7 @@ class Light:
                                     self.current_distance = dist
                                     self.current_point = point
                                     self.current_slope = slope
+                                    self.object_counter += 1
 
                                     if type(object) == gameobjects.Mirror:
                                         self.current_object_type = 'mirror'
@@ -259,6 +261,8 @@ class Light:
                                     elif type(object) == gameobjects.Prism:
 
                                         self.current_object_type = 'prism'
+        if self.object_counter>1:
+            self.ignore_object=object
 
     def left_lens(self, lens):
         for index, point in enumerate(lens.lens_points):
