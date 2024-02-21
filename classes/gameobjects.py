@@ -1,766 +1,375 @@
-import functions
+import classes.game
+import gui.polygonDrawing
 import pygame
-from gui import ModifyParameters as mp
-from classes import light, sounds, images
-import math
-from pygame.transform import rotate
-import random
+
 import settingsSetup
-from pygame import gfxdraw
+from classes import gameobjects, sounds, images
 from classes.font import Font
-settings = settingsSetup.start()
 
-NUM_RAYS = settings['Flashlight_Rays']
-FOV = settings['Flashlight_FOV']
-HALF_FOV = FOV / 2
-DELTA_ANGLE = FOV / NUM_RAYS
 
-class GameObject:
+spiel = None
+class Button:
+    """
+    This class represents a Button in the game.
 
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, image = None, textureName=None):
-        # Initialize common attributes
+    Attributes:
+        game (object): The game object that this button is a part of.
+        number (int): The number that identifies this button.
+        screenheight (int): The height of the game screen.
+        screenwidth (int): The width of the game screen.
+        position (str): The position of the button on the screen.
+        gap (int): The gap between buttons.
+        y (int): The y-coordinate of the button.
+        rect (pygame.Rect): The rectangle that represents the button.
+        color (tuple): The color of the button.
+        icon (pygame.Surface): The icon of the button.
+        icon_rect (pygame.Rect): The rectangle that represents the icon.
+    """
+
+    def __init__(self, game, number):
+        """
+        The constructor for the Button class.
+
+        Parameters:
+            game (object): The game object that this button is a part of.
+            number (int): The number that identifies this button.
+        """
         self.game = game
+        self.number = number
+        self.screenheight = self.game.height
+        self.screenwidth = self.game.settings['WIDTH']
+        self.position = self.game.settings['HOTBAR_POSITION']
+        self.gap = self.game.settings['HEIGHT'] // 10
 
-        self.defualt_points = points
+        self.y = self.screenheight // 10
 
-        self.points = self.defualt_points
+        button_width = self.y - 20
+        button_height = self.y - 20
 
-        self.textureName = textureName if textureName else None
+        if self.number < 0:
+            if self.position == 'bottom':
+                x = self.screenwidth - self.gap * (-self.number - 1) - button_width - 10
+                y = (self.screenheight - self.y) + (
+                        (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
+            elif self.position == 'left':
+                x = (self.screenwidth // 10 - button_width) // 2
+                y = self.screenheight - self.gap * (-self.number - 1) - button_height - 10
+            elif self.position == 'right':
+                x = (self.screenwidth - self.screenwidth // 10) + (
+                        (self.screenwidth - (self.screenwidth - self.screenwidth // 10) - button_width) // 2)
+                y = self.screenheight - self.gap * (-self.number - 1) - button_height - 10
+            elif self.position == 'top':
+                x = self.screenwidth - self.gap * (-self.number - 1) - button_width - 10
+                y = (self.y - button_height) // 2
+        else:
+            if self.position == 'bottom':
+                x = self.gap * self.number + 10
+                y = (self.screenheight - self.y) + (
+                            (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
+            elif self.position == 'left':
+                x = (self.screenwidth // 10 - button_width) // 2
+                y = self.gap * self.number + 10
+            elif self.position == 'right':
+                x = (self.screenwidth - self.screenwidth // 10) + (
+                            (self.screenwidth - (self.screenwidth - self.screenwidth // 10) - button_width) // 2)
+                y = self.gap * self.number + 10
+            elif self.position == 'top':
+                x = self.gap * self.number + 10
+                y = (self.y - button_height) // 2
 
-        self.get_Texture()
+        self.rect = pygame.Rect(x, y, button_width, button_height)
 
-        self.color = color if not self.texture else None
+        if self.number == 0:
+            self.color = (255, 0, 0)
+            self.icon = images.torch_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
-        self.on = True
-        self.selectedtrue = False
-        self.mousepos = None
-        self.layer = 1
-        self.placed = False
-        self.angle = angle
-        self.image = image if image else None
+        elif self.number == 1:
+            self.color = (0, 0, 255)
+            self.icon = images.object_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
-        self.reflection_factor = reflection_factor
-        self.transmittance = transmittance #przepuszczalność ;-;
+        elif self.number == 2:
+            self.color = (0, 150, 0)
+            self.icon = images.glass_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
-        if image != None:
-            self.image_width = self.image.get_width()
-            self.image_height = self.image.get_height()
+        elif self.number == 3:
+            self.color = (0, 200, 100)
+            self.icon = images.prism_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
-        self.rect = pygame.Rect(0, 0, 0, 0)
-        self.triangles_generated = False
-        self.update_rect()
+        elif self.number == 4:
+            self.color = (5, 75, 60)
+            self.icon = images.topopisy
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+        elif self.number == 5:
+            self.color = (64, 137, 189)
+            self.icon = images.lens
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+        elif self.number == 6:
+            self.color = (64, 137, 189)
+            self.icon = images.object_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
-        self.scale_factor = 1
-        self.lazer = False
-        self.parameters_counters = 0
+        elif self.number == -1:
+            self.color = None
+            self.icon = images.exit_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
-        self.find_parameters()
-
-    def update_rect(self):
-        # Update the rect based on the points
-        min_x = min(pt[0] for pt in self.points)
-        min_y = min(pt[1] for pt in self.points)
-        max_x = max(pt[0] for pt in self.points)
-        max_y = max(pt[1] for pt in self.points)
-        self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
-    def get_triangles(self):
-        # Check if triangles have already been generated
-        if not self.triangles_generated:
-            center_x = sum(x for x, _ in self.points) / len(self.points)
-            center_y = sum(y for _, y in self.points) / len(self.points)
-            self.triangles = [((center_x, center_y), (self.points[i][0], self.points[i][1]),(self.points[i + 1][0], self.points[i + 1][1])) for i in range(len(self.points) - 1)]
-            self.triangles.append(((center_x, center_y), (self.points[len(self.points) - 1][0],self.points[len(self.points) - 1][1]),(self.points[0][0], self.points[0][1])))
-            self.triangles_generated = True  # Set the flag to True after generating triangles
-
-        return self.triangles
-    def get_slopes(self):
-        self.slopes=[(self.points[i],self.points[i+1]) for i in range(len(self.points)-1)]
-        self.slopes.append((self.points[len(self.points)-1],self.points[0]))
-
+        elif self.number == -2:
+            self.color = None
+            self.icon = images.settings_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
 
-    def draw_triangle(self,index):
-        pygame.gfxdraw.aapolygon(self.game.screen, (255, 255, 255), self.triangles[index])
 
-    def draw_Poly(self):
-        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+        else:
+            self.color = (20, 0, 0)
+
     def render(self):
-        # print(self.get_triangles())
-
-        self.get_slopes()
-
-
-        if not self.selectedtrue:
-
-            # Render the image if available
-            if self.image:
-                center_x = sum(x for x, _ in self.points) / len(self.points)
-                center_y = sum(y for _, y in self.points) / len(self.points)
-
-                self.image = pygame.transform.scale(self.image, (self.image_width*self.scale_factor, self.image_height*self.scale_factor))
-
-                rotated_image = rotate(self.image, -self.angle)
-                image_rect = rotated_image.get_rect(center=(center_x, center_y))
-
-                image_rect = pygame.Rect(image_rect[0], image_rect[1], image_rect[2]*self.scale_factor, image_rect[3]*self.scale_factor)
-
-                # Blit the rotated image without transparency
-                self.game.screen.blit(rotated_image, image_rect.topleft)
-            else:
-                # Draw the rotated lines without transparency
-                if self.texture:
-                    pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
-                else:
-                    if self.color:
-                        try:
-                            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
-                        except Exception as e:
-
-                            print(self.points)
-                            print(e)
-                    else:
-                        pygame.gfxdraw.polygon(self.game.screen, self.points, (255, 255, 255))
-
-        else:
-            font = pygame.font.Font(Font, self.game.width//40)
-
-            text = font.render('Click P to open parameters window', True, (255, 255, 255))
-
-            text_rect = text.get_rect()
-
-            text_rect.centerx = self.game.screen.get_rect().centerx
-            text_rect.y = 10
-
-            self.game.screen.blit(text, text_rect)
-            mousepos = pygame.mouse.get_pos()
-            if self.game.r:
-
-                self.adjust(mousepos[0], mousepos[1], self.game.r)
-                self.game.r = False
-
-            elif self.game.p:
-                self.change_parameters()
-                self.game.achievements.handle_achievement_unlocked("parameters")
-                self.selectedtrue = False
-
-            else:
-                self.adjust(mousepos[0], mousepos[1], 0)
-            self.drawoutline()
-
-    def rotate_points(self, points, angle):
-        # Rotate points around the center of the object
-        center_x = sum(x for x, _ in points) / len(points)
-        center_y = sum(y for _, y in points) / len(points)
-
-        # Create a new list to store the rotated points
-        rotated_points = []
-
-        # Rotate each point around the center
-        for x, y in points:
-            # Translate the point to the origin
-            translated_x = x - center_x
-            translated_y = y - center_y
-
-            # Rotate the translated point
-            rotated_x = translated_x * math.cos(math.radians(angle)) - translated_y * math.sin(math.radians(angle))
-            rotated_y = translated_x * math.sin(math.radians(angle)) + translated_y * math.cos(math.radians(angle))
-
-            # Translate the rotated point back to the original position
-            final_x = rotated_x + center_x
-            final_y = rotated_y + center_y
-
-            # Add the rotated point to the list
-            rotated_points.append((final_x, final_y))
-
-        return rotated_points
-
-    def adjust(self, x, y, d_angle):
-        while True:
-            if self.angle >= 360:
-                self.angle -= 360
-            elif self.angle < 0:
-                self.angle += 360
-            else:
-                break
-        if self.game.isDrawingModeOn != True:
-            self.angle += d_angle
-            self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
-            self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
-
-            temp_rect = self.rect.move(self.x, self.y)
-
-            pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
-
-            for obj in self.game.objects:
-                if obj.rect.colliderect(temp_rect):
-                    if obj != self and isinstance(obj, GameObject):
-                        return
-
-            # Reset the flag to regenerate triangles
-            self.triangles_generated = False
-
-            # Update the points based on the new position and angle
-            self.points = self.rotate_points(self.points, d_angle)
-
-            # Assuming self.transparent_surface is a surface with transparency
-            # Blit the rotated image with transparency
-            if self.image:
-                rotated_image = pygame.transform.rotate(self.image, -self.angle)
-                image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
-                                                            (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
-                self.game.screen.blit(rotated_image, image_rect.topleft)
-                # Draw the rotated lines without transparency
-                #rotated_points = self.rotate_points(self.points, self.angle)
-                self.points = [(x + self.x, y + self.y) for x, y in self.points]
-                self.update_rect()
-
-            else:
-                self.points = [(x + self.x, y + self.y) for x, y in self.points]
-                mousepos = pygame.mouse.get_pos()
-                if self.texture:
-                    try:
-                        pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
-                    except:
-                        pass
-                else:
-                    try:
-                        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
-                    except:
-                        pass
-                self.update_rect()
-
-    def move(self):
-        # code for moving object with mouse
-        self.mousepos = pygame.mouse.get_pos()
-
-        # Calculate the average position of the object's vertices
-        center_x = sum(x for x, _ in self.points) / len(self.points)
-        center_y = sum(y for _, y in self.points) / len(self.points)
-
-        # Update the position based on the mouse cursor
-        self.x = self.mousepos[0] - center_x
-        self.y = self.mousepos[1] - center_y
-
-
-        # Assuming self.transparent_surface is a surface with transparency
-        # Blit the rotated image with transparency
-        if self.image:
-            rotated_image = rotate(self.image, -self.angle)
-            image_rect = rotated_image.get_rect(center=(self.x + center_x, self.y + center_y))
-            self.game.screen.blit(rotated_image, image_rect.topleft)
-            # Draw the rotated lines without transparency
-            rotated_points = self.rotate_points(self.points, self.angle)
-            self.points = [(x + self.x, y + self.y) for x, y in rotated_points]
-            self.update_rect()
-        else:
-
-            mousepos = pygame.mouse.get_pos()
-            if self.texture:
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
-            else:
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
-    def drawoutline(self):
-        # Draw an outline around the object
-        pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))
-        if settings['DEBUG'] == "True":
-            pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
-
-    def checkifclicked(self, mousepos):
-        if self.game.isDrawingModeOn != True:
-            # Check if the object is clicked
-            mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-            pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
-            try:
-                if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0:
-                    if self.on == 1:
-                        self.on = 0
-                    else:
-                        self.on = 1
-            except IndexError: #pixel index out of range... WTF
-                if self.on == 1:
-                    self.on = 0
-                else:
-                    self.on = 1
-
-    def selected(self, mousepos):
-        if self.game.isDrawingModeOn != True:
-            mask_surface = pygame.Surface((self.game.width, self.game.height), pygame.SRCALPHA)
-            pygame.gfxdraw.filled_polygon(mask_surface, self.points, (255, 255, 255))
-
-            if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and self.game.selected_object is not None and self.game.selected_object != self:
-                self.game.selected_object.selectedtrue = False  # Deselect the currently selected object
-
-            if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
-                self.selectedtrue = True
-                self.game.selected_object = self  # Set this object as the currently selected object
-                sounds.selected_sound()
-            elif self.selectedtrue:
-                self.selectedtrue = False
-                self.game.selected_object = None  # No object is selected now
-                if type(self) == Flashlight:
-                    sounds.laser_sound()
-                else:
-                    sounds.placed_sound()
-
-    def find_parameters(self):
-        centerx = sum(x[0] for x in self.points) / len(self.points)
-        centery = sum(y[1] for y in self.points) / len(self.points)
-
-        self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
-
-        self.parameters['size'] = self.scale_factor
-
-        self.parameters['reflection_factor'] = self.reflection_factor
-
-        self.parameters['transmittance'] = self.transmittance
-
-        if type(self) == Flashlight:
-            lazer_on = {'lazer': self.lazer}
-            self.parameters.update(lazer_on)
-
+        """
+        Renders the button on the screen.
+        """
         if self.color != None:
-            colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
-            self.parameters.update(colors)
-
-        if self.textureName != None:
-            self.parameters['texture'] = self.textureName
-
-
-    def change_parameters(self, placeholder=None):
-        if placeholder == None:
-            self.find_parameters()
-            mp.Parameters(self)
-
-        self.scale_factor = self.parameters['size']
-        self.change_size()
-        d_angle = self.parameters['angle']
-        self.angle = 0
-        self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
-        self.scale_factor = self.parameters['size']
-        self.transmittance = self.parameters['transmittance']
-        self.reflection_factor = self.parameters['reflection_factor']
+            pygame.draw.rect(self.game.screen, self.color, self.rect)
 
         try:
-            self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
+            self.game.screen.blit(self.icon, self.icon_rect)
 
-        except Exception as e:
-            print(e)
+        except:
+            pass
+    def checkifclicked(self, mousepos):
+        """
+        Checks if the button was clicked and performs the corresponding action.
 
-        try:
-            self.textureName = self.parameters['texture']
-            self.get_Texture()
-        except Exception as e:
-            print(e)
+        Parameters:
+            mousepos (tuple): The position of the mouse.
+        """
+        if self.rect.collidepoint(mousepos[0], mousepos[1]):
+            if self.game.isDrawingModeOn != True:
+                if self.number == 0:
+                    obj = gameobjects.Flashlight(self.game, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0, 1, image=images.torch)
+                    self.game.current_flashlight = obj
+                    self.game.achievements.handle_achievement_unlocked("let there be light")
 
-        try:
-            self.lazer = self.parameters["lazer"]
-        except Exception as e:
-            print(e)
+                elif self.number == 1:
+                    obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 1, 0, textureName='glass')
+                    self.game.achievements.handle_achievement_unlocked("is it... me?")
 
-    def get_Texture(self):
-        if self.textureName == 'wood':
-            self.texture = images.wood
-        elif self.textureName == 'glass':
-            self.texture = images.glass
-        elif self.textureName == 'water':
-            self.texture = images.water
-        elif self.textureName == 'clouds':
-            self.texture = images.clouds
-        elif self.textureName == 'paper':
-            self.texture = images.papier
-        else:
-            self.texture = None
+                elif self.number == 2:
+                    obj = gameobjects.ColoredGlass(self.game, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0, 1)
+                    self.game.achievements.handle_achievement_unlocked("some color in this black and white world")
 
-    def change_size(self):
+                elif self.number == 3:
+                    obj = gameobjects.Prism(self.game, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 0, 1)
+                    self.game.achievements.handle_achievement_unlocked("a whole new world")
+                elif self.number == 5:
+                    obj = gameobjects.Lens(self.game,
+                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                           (64, 137, 189), 0, 0, 140, 0, 1, 1)
+                    self.game.achievements.handle_achievement_unlocked("first step to... glasses")
+                elif self.number == 6:
+                    obj = gameobjects.Lens(self.game,
+                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                           (64, 137, 189), 0, 2, 140, 0, 1, 1)
+                    self.game.achievements.handle_achievement_unlocked("first step to... glasses")
+                elif self.number == -1:
+                    self.game.save_game()
+                elif self.number == -2:
+                    self.game.mode = 'settings'
+                try:
+                    self.game.objects.append(obj)
+                    obj.selected(mousepos)
 
-        percent = self.scale_factor
+                except:
+                    pass
+            if self.number == 4:
+                if classes.game.isDrawingModeOn == True:
+                    classes.game.isDrawingModeOn = False
+                    gui.polygonDrawing.clearPoints()
 
-        new_points = []
-
-        for point in self.defualt_points:
-            new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
-            new_y = (point[1] - float(self.parameters['y'])) * percent + float(self.parameters['y'])
-
-            new_points.append((new_x, new_y))
-        self.points = new_points
-
-class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
-
-class Prism(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
-        self.n=1.4
-        self.fi=math.pi/3
-        self.dispersion_angle=math.pi/3
-
-class ColoredGlass(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
-class CustomPolygon(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None, layer = 5):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
-
-class Lens(GameObject):
-    def __init__(self, game, points, color, angle, type, curvature_radius, reflection_factor, transmittance, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
-        self.curvature_radius = curvature_radius
-        self.type = type
-        self.CONVEX = 0
-        self.CONCAVE = 1
-        self.SINGLE_VEX = 2
-        self.SINGLE_CAVE = 3
-        self.VEX_CAVE = 4
-        self.CAVE_VEX = 5
-        self.lens_points = []
-        self.refraction_index = 1.5
-        self.layer = 0
+                elif classes.game.isDrawingModeOn == False:
+                    classes.game.isDrawingModeOn = True
 
 
-    # def calculate_function(self, x1, x2, ymin):
-    #     c = ymin
-    #     a = c / (x1*x2)
-    #     b = (x1 + x2)*(-a)
-    #     print(f'{a}x2 + {b}x + {c}')
-    #     return a, b, c
-
-    # def generate_points_old(self, rect_points, angle):
-    #     rect_points = self.rotate_points(rect_points, -90)
-    #     x1 = rect_points[0][0]
-    #     x2 = rect_points[2][0]
-    #     x_offset = min(x1, x2) + abs(x1 - x2)/2#
-    #     y_offset = min(rect_points[0][1], rect_points[2][1]) + abs(rect_points[0][1] - rect_points[2][1])#
-    #     width = abs(x1 - x2)
-    #     height = abs(rect_points[0][1] - rect_points[2][1])
-    #     x1 = -width/2
-    #     x2 = width/2
-    #     py = -height/2
-    #     a, b, c = self.calculate_function(x1, x2, py)
-    #     POINTS_NUM = int(width)
-    #     self.parabola_points = []
-    #     self.inverted_parabola_points = []
-    #     for i in range(int(-POINTS_NUM/2), int(POINTS_NUM/2)):
-    #         x = (width/POINTS_NUM)*i
-    #         y = a*x**2 + b*x + c + y_offset
-    #
-    #         inv_y = -a*x**2 + -b*x + c + y_offset + abs(rect_points[0][1] - rect_points[2][1])
-    #         x += x_offset
-    #         self.parabola_points.append((x, y))
-    #         self.inverted_parabola_points.append((x, inv_y))
-    #     center = (x_offset, y_offset)
-    #     self.rect.center = center
-    #     self.parabola_points = self.rotate_points2(self.parabola_points,90 + angle, center)
-    #     self.inverted_parabola_points = self.rotate_points2(self.inverted_parabola_points, 90 + angle, center)
-
-    def generate_arc_points(self, center, radius, start_angle, end_angle, num_points):
-        points = []
-        angle_step = (end_angle - start_angle) / num_points
-        for i in range(num_points + 1):
-            angle = start_angle + i * angle_step
-            x = center[0] + int(radius * math.cos(angle))
-            y = center[1] + int(radius * math.sin(angle))
-            if functions.pointInRect((x, y), self.rect):
-                points.append((x, y))
-        return points
-
-    def generate_points(self, rect_points, angle):
-        x1 = rect_points[0][1]
-        x2 = rect_points[2][1]
-        height = abs(x1 - x2)
-        width = abs(rect_points[0][0] - rect_points[2][0])
-        POINTS_NUM = int(height) * 2
-        center = self.rect.center
-        center_x = center[0]
-
-        #pygame.draw.line(self.game.screen, (255, 255, 0),(rect_points[0][0] + width//2, rect_points[0][1] - 50),(rect_points[2][0] - width//2, rect_points[2][1] + 50), 5)
-
-        self.lens_points = []
-
-        # for i in range(POINTS_NUM):
-        #     angle = 2 * math.pi * i / POINTS_NUM
-        #     x = center[0] + int(self.curvature_radius * math.cos(angle))
-        #     y = center[1] + int(self.curvature_radius * math.sin(angle))
-        #     self.parabola_points.append((x, y))
-        if self.type == self.CONVEX:
-            center1 = (center_x + self.curvature_radius - width // 2, center[1])
-            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
-            center2 = (center_x - self.curvature_radius + width // 2, center[1])
-            self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2, POINTS_NUM)
-        elif self.type == self.SINGLE_VEX:
-            center1 = (center_x + self.curvature_radius - width // 2, center[1])
-            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
-        else:
-            center1 = (center_x + self.curvature_radius, center[1])
-            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi / 2, 3 * math.pi / 2,
-                                                        POINTS_NUM)
-            center2 = (center_x - self.curvature_radius, center[1])
-            self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2,
-                                                         POINTS_NUM)
-        if self.type != self.SINGLE_VEX:
-            self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
-            self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
-            self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
-            pygame.draw.circle(self.game.screen, (0, 255, 0),
-                               self.center1, 2, 0)
-            self.center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
-            pygame.draw.circle(self.game.screen, (0, 255, 0),
-                              self.center2, 2, 0)
-        else:
-            self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
-            self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
-            pygame.draw.circle(self.game.screen, (0, 255, 0),
-                               self.center1, 2, 0)
 
 
-    def rotate_points2(self, points, angle, center):
-        # Rotate points around the center of the object
-        # center_x = sum(x for x, _ in points) / len(points)
-        # center_y = sum(y for _, y in points) / len(points)
+class ButtonForgame:
+    """
+    This class represents a Button for the game menu.
 
-        center_x = center[0]
-        center_y = center[1]
+    Attributes:
+        number (int): The number that identifies this button.
+        screen (object): The screen object that this button is a part of.
+        font (pygame.font.Font): The font used for the button text.
+        width (int): The width of the button.
+        height (int): The height of the button.
+        y (int): The y-coordinate of the button.
+        x (int): The x-coordinate of the button.
+        rect (pygame.Rect): The rectangle that represents the button.
+        text (pygame.Surface): The text of the button.
+        textRect (pygame.Rect): The rectangle that represents the text.
+    """
+    def __init__(self, number, screen):
+        """
+        The constructor for the ButtonForgame class.
 
-        # Create a new list to store the rotated points
-        rotated_points = []
+        Parameters:
+            number (int): The number that identifies this button.
+            screen (object): The screen object that this button is a part of.
+        """
+        self.number = number
+        self.screen = screen
+        self.screen.objects.append(self)
+        self.font = pygame.font.Font(Font, self.screen.height // 35)
 
-        # Rotate each point around the center
-        for x, y in points:
-            # Translate the point to the origin
-            translated_x = x - center_x
-            translated_y = y - center_y
+        self.width = self.screen.width // 3
+        self.height = self.screen.height // 10
 
-            # Rotate the translated point
-            rotated_x = translated_x * math.cos(math.radians(angle)) - translated_y * math.sin(math.radians(angle))
-            rotated_y = translated_x * math.sin(math.radians(angle)) + translated_y * math.cos(math.radians(angle))
+        # adjust y based on the number
+        gap = 15
+        self.y = (self.screen.height // 2) - self.height // 2 + (self.height + gap) * number
+        self.x = (self.screen.width // 12) - self.width // 6
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-            # Translate the rotated point back to the original position
-            final_x = rotated_x + center_x
-            final_y = rotated_y + center_y
+        if self.number == 0:
+            self.text = self.font.render('Start', True, 'black')
 
-            # Add the rotated point to the list
-            rotated_points.append((final_x, final_y))
+        elif self.number == 1:
+            self.text = self.font.render('Settings', True, 'black')
 
-        return rotated_points
+        elif self.number == 3:
+            self.text = self.font.render('Quit', True, 'black')
 
-    def draw_convex(self, rect, angle):
-        self.generate_points(rect, angle)
+        elif self.number == 2:
+            self.text = self.font.render('Achievements', True, 'black')
 
-    def draw_concave(self, rect, angle):
-        self.generate_points(rect, angle)
+        elif self.number == 71:
+            self.text = self.font.render('Back', True, 'black')
+            self.y = self.screen.height - self.screen.height // 5
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-    def render(self):
-        # print(self.get_triangles())
-
-        # self.get_slopes()
-        if not self.selectedtrue:
-            # Draw the rotated lines without transparency
-            if self.texture:
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
+        elif self.number == 72:
+            self.text = self.font.render('New Game', True, 'black')
+            if self.screen.state == 'presets':
+                self.width = self.screen.width // 3
+                self.y = (self.screen.height - self.screen.height // 10)
+                self.x = (self.screen.width // 2) - self.width - gap
+                self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
             else:
-                if self.type != self.CONCAVE:
-                    self.generate_points(self.points, self.angle)
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                    if self.type != self.SINGLE_VEX:
-                        pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                self.width = self.screen.width // 5
+                self.y = (self.screen.height - self.screen.height // 10)
+                self.x = (self.screen.width // 2) - self.width - self.width - gap
+                self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        elif self.number == 73:
+            self.text = self.font.render('Load Preset', True, 'black')
+            self.width = self.screen.width // 5
+            self.x = (self.screen.width // 2) - self.width
+            self.y = (self.screen.height - self.screen.height // 10)
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        elif self.number == 74:
+            self.text = self.font.render('Back', True, 'black')
+            if self.screen.state == 'presets':
+                self.width = self.screen.width // 3
+                self.y = (self.screen.height - self.screen.height // 10)
+                self.x = (self.screen.width // 2) + gap
+                self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+            else:
+                self.width = self.screen.width // 5
+                self.y = (self.screen.height - self.screen.height // 10)
+                self.x = (self.screen.width // 2) + self.width + gap*2
+                self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+
+        elif self.number == 75:
+            self.text = self.font.render('Delete', True, 'black')
+            self.width = self.screen.width // 5
+            self.y = (self.screen.height - self.screen.height // 10)
+            self.x = (self.screen.width // 2) + gap
+            print(self.x)
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        else:
+            self.text = self.font.render('@', True, 'black')
+
+        self.textRect = self.text.get_rect()
+        self.textRect.center = (self.rect[0] + (self.rect[2] // 2), self.rect[1] + (self.rect[3] // 2))
+
+    def checkcollision(self, pos):
+        """
+        Checks if the button was clicked and performs the corresponding action.
+
+        Parameters:
+            pos (tuple): The position of the mouse.
+        """
+        if self.rect.collidepoint(pos[0], pos[1]):
+            if self.number == 0:
+                self.screen.mode = 'loading'
+                sounds.clicked_sound()
+            elif self.number == 1:
+                self.screen.mode = 'settings'
+                sounds.clicked_sound()
+            elif self.number == 3:
+                sounds.clicked_sound()
+                exit()
+            elif self.number == 2:
+                self.screen.mode = 'achievements'
+                sounds.clicked_sound()
+            elif self.number == 71:
+                self.screen.game.mode = 'load_new_settings'
+                sounds.clicked_sound()
+            elif self.number == 72:
+                self.screen.game.mode = 'default'
+                if self.screen.state == 'presets' and any(value for value in self.screen.game.selected_buttons.values()):
+                    self.screen.game.preset = True
+                self.screen.game.run = False
+                sounds.clicked_sound()
+            elif self.number == 73:
+                self.screen.state = 'presets'
+            elif self.number == 74:
+                if self.screen.state == 'default' and self.screen.action == 'default':
+                    self.screen.game.mode = 'default'
                 else:
-                    self.draw_concave(self.points, self.angle)
-                    # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                    # pygame.gfxdraw.filled_polygon(self.game.screen, (
-                    # self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                    # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-                    pygame.draw.lines(self.game.screen, self.color, True, self.lens_points + self.lens_points2, 3)
-
-        else:
-            mousepos = pygame.mouse.get_pos()
-            if self.game.r:
-
-                self.adjust(mousepos[0], mousepos[1], self.game.r)
-                self.game.r = False
-
-            elif self.game.p:
-                self.change_parameters()
-                self.selectedtrue = False
-
+                    self.screen.state = 'default'
+                sounds.clicked_sound()
+            elif self.number == 75:
+                self.screen.game.mode = 'delete'
+                sounds.clicked_sound()
             else:
-                self.adjust(mousepos[0], mousepos[1], 0)
-            if self.type != self.CONCAVE:
-                self.generate_points(self.points, self.angle)
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                if self.type != self.SINGLE_VEX:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, (
-                    self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-            else:
-                self.draw_concave(self.points, self.angle)
-                #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                # length = len(self.lens_points)//2
-                # lens_points = []
-                # for point in self.lens_points:
-
-                #pygame.gfxdraw.filled_polygon(self.game.screen, lens_points, self.color)
-                pygame.draw.lines(self.game.screen, self.color, True, self.lens_points + self.lens_points2, 3)
-                #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-
-            self.drawoutline()
-    def adjust(self, x, y, d_angle):
-        # Adjust the object's position and angle
-        self.angle += d_angle
-        self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
-        self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
-
-        # Reset the flag to regenerate triangles
-        self.triangles_generated = False
-
-        # Update the points based on the new position and angle
-        #self.points = self.rotate_points(self.points, d_angle)
-
-        # Assuming self.transparent_surface is a surface with transparency
-        # Blit the rotated image with transparency
-        if self.image:
-            rotated_image = pygame.transform.rotate(self.image, -self.angle)
-            image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
-                                                        (self.y + sum(pt[1] for pt in self.points) / len(self.points))))
-            self.game.screen.blit(rotated_image, image_rect.topleft)
-            # Draw the rotated lines without transparency
-            #rotated_points = self.rotate_points(self.points, self.angle)
-            self.points = [(x + self.x, y + self.y) for x, y in self.points]
-            #self.update_rect()
-
-        else:
-            self.points = [(x + self.x, y + self.y) for x, y in self.points]
-            mousepos = pygame.mouse.get_pos()
-            if self.texture:
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
-            # else:
-                # pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
-            self.update_rect()
-    def update_rect(self):
-        # Update the rect based on the points
-        min_x = min(pt[0] for pt in self.points)
-        min_y = min(pt[1] for pt in self.points)
-        max_x = max(pt[0] for pt in self.points)
-        max_y = max(pt[1] for pt in self.points)
-        self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
-
-class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=True, image=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image)
-        self.islighting = bool(islighting)
-        self.light = None
-        self.light_width = 8
-        self.color = color
-        self.angle = angle
-        self.image = image if image else None
-        self.lazer = True
-        self.rays = []
+                raise NotImplementedError('button function not yet added')
 
     def render(self):
+        """
+        Renders the button on the screen.
+        """
+        self.update()
 
-        if not self.lazer:
-            super().render()
-            if self.islighting:
-                #surface = pygame.surface.Surface(self.game.screen.get_size()).convert_alpha()
-                #surface.fill([0, 0, 0, 0])
-                if self.on:
-                    ray_angle = self.angle - HALF_FOV + 0.0001
-                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                    center_x = sum(x for x, _ in self.points) / len(self.points)
-                    center_y = sum(y for _, y in self.points) / len(self.points)
-                    self.light_adjust(center_x, center_y)
-                    # if up arrow clicked, color goes random
-                    if pygame.key.get_pressed()[pygame.K_UP]:
-                        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-                    for ray in range(NUM_RAYS):
-                        # self.light = light.Light(self.game,
-                        #                          [[self.light_start_x, self.light_start_y]],
-                        #                          self.color, -1*self.angle, self.light_width)
-                        self.light = light.Light(self.game,
-                                                 [[self.light_start_x, self.light_start_y]],
-                                                 self.color, -1 * ray_angle, self.light_width, alpha=40)
-                        #self.light.angle = -1 * ray_angle
+        pygame.draw.rect(self.screen.screen, (255, 255, 255), self.rect, 0, 4)
+        self.screen.screen.blit(self.text, self.textRect)
 
-                        self.light.trace_path2()
-                        self.placed = True
-                        # self.light = light.Light(self.game, ((self.light_start_x, self.light_start_y), (self.light_end_x, self.light_end_y)),"white", self.angle, self.light_width)
+    def update(self):
+        if self.number == 72:
+            if any(value for value in self.screen.game.selected_buttons.values()):
+                if self.screen.state == 'default':
+                    self.text = self.font.render('Load Game', True, 'black')
+                elif self.screen.state == 'presets':
+                    self.text = self.font.render('Load Preset', True, 'black')
+            else:
+                self.text = self.font.render('New Game', True, 'black')
+            self.textRect = self.text.get_rect()
+            self.textRect.center = (self.rect[0] + (self.rect[2] // 2), self.rect[1] + (self.rect[3] // 2))
 
-                        # Render the light before blitting the rotated surface
-                        #light.Light.render(self.light, surface)
-                        light.Light.render(self.light)
-                        #self.game.objects.remove(self.light)
-                        ray_angle += DELTA_ANGLE
-                    super().render()
-                    #self.game.screen.blit(surface, (0, 0))
-
-                elif not self.on:
-                    self.light = None
-        else:
-            super().render()
-            if self.islighting:
-                if self.on:
-                    # Calculate the starting point of the light from the center of the rotated rectangle/surface
-                    center_x = sum(x for x, _ in self.points) / len(self.points)
-                    center_y = sum(y for _, y in self.points) / len(self.points)
-                    self.light_adjust(center_x, center_y)
-                    if pygame.key.get_pressed()[pygame.K_UP]:
-                        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
-                    self.light = light.Light(self.game,
-                                             [[self.light_start_x, self.light_start_y]],
-                                             self.color, -1 * self.angle, self.light_width, alpha=40)
-
-                    # if up arrow clicked, color goes random
-
-                    self.light.trace_path2()
-                    # self.light.trace_path2()
-                    self.placed = True
-                    light.Light.render(self.light)
-                    super().render()
-
-                elif not self.on:
-                    self.light = None
-
-
-    def light_adjust(self, center_x, center_y):
-
-        if not self.lazer:
-            self.light_start_x = center_x
-            self.light_start_y = center_y
-            # Adjust the flashlight light position and direction
-            direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
-
-            # Calculate the length of the direction vector
-            length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
-
-            # Check if the length is not zero before normalizing
-            if length != 0:
-                # Normalize the direction vector
-                normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
-
-                # Calculate the end point of the light
-                self.light_end_x = center_x + normalized_direction[0] * 1000
-                self.light_end_y = center_y + normalized_direction[1] * 1000
-
-                # Calculate the angle between the normalized direction and the x-axis
-                # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
-        else:
-            self.light_start_x = center_x
-            self.light_start_y = center_y
-            # Adjust the flashlight light position and direction
-            direction_vector = (self.points[0][0] - center_x, self.points[0][1] - center_y)
-
-            # Calculate the length of the direction vector
-            length = math.sqrt(direction_vector[0] ** 2 + direction_vector[1] ** 2)
-
-            # Check if the length is not zero before normalizing
-            if length != 0:
-                # Normalize the direction vector
-                normalized_direction = (direction_vector[0] / length, direction_vector[1] / length)
-
-                # Calculate the end point of the light
-                self.light_end_x = center_x + normalized_direction[0] * 1000
-                self.light_end_y = center_y + normalized_direction[1] * 1000
-
-                # Calculate the angle between the normalized direction and the x-axis
-                # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))

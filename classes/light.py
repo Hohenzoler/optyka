@@ -149,9 +149,8 @@ class Light:
                 if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism:
                     self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
                 if type(object) == gameobjects.Lens:
-                    lenses.append(object)
-            for lens in lenses:
-                self.lens_stuff(lens)
+                    self.check_object(object)
+
             # To do: fix bug causing only one lens to be analyzed
 
             if self.current_slope == None:
@@ -262,8 +261,8 @@ class Light:
                                         self.current_object_type = 'mirror'
                                     elif type(object) == gameobjects.ColoredGlass:
                                         self.current_object_type = 'glass'
-                                    # elif type(object) == gameobjects.Lens:
-                                    #     self.current_object_type = 'lens'
+                                    elif type(object) == gameobjects.Lens:
+                                        self.current_object_type = 'lens'
                                     elif type(object) == gameobjects.Prism:
 
                                         self.current_object_type = 'prism'
@@ -292,53 +291,59 @@ class Light:
 
                 self.points.append(point)
                 self.colors.append(self.RGB.rgb)
-                self.current_starting_point = point
-                self.linear_function = Linear_Function(math.tan(-self.r),
-                                                       self.find_b(math.tan(-self.r),
-                                                                   self.current_starting_point))
-                # self.linear_function.draw(self.game)
-                break
-    def right_lens(self, lens):
-        for index, point in enumerate(lens.lens_points2):
-            if functions.is_linear_function_passing_through_point(self.linear_function, point):
-                offset = 0
-                pygame.draw.line(self.game.screen, (255, 255, 80), lens.center2,
-                                 (point[0] - offset, point[1] - offset))
-                slope1 = self.linear_function.a
-                slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
-                intersect_angle = int(functions.calculate_intersection_angle(slope2, slope1))
-                temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
-                if temp > 1:
-                    temp -= 1
-                ref_angle = math.asin(temp)
-                print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
-                normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
-                print(math.degrees(normal_angle))
-                if index < len(lens.lens_points2) / 2:
-                    self.r = -normal_angle - ref_angle
-                else:
-                    self.r = -normal_angle + ref_angle
-                print(math.degrees(self.r))
-
-                self.points.append(point)
-                self.colors.append(self.RGB.rgb)
-                self.current_starting_point = point
+                self.current_starting_point = self.current_point #point
                 self.linear_function = Linear_Function(math.tan(-self.r),
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
                 self.linear_function.draw(self.game)
                 break
+    def right_lens(self, lens):
+        try:
+            for index, point in enumerate(lens.lens_points2):
+                if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                    offset = 0
+                    pygame.draw.line(self.game.screen, (255, 255, 80), lens.center2,
+                                     (point[0] - offset, point[1] - offset))
+                    slope1 = self.linear_function.a
+                    slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
+                    intersect_angle = int(functions.calculate_intersection_angle(slope2, slope1))
+                    temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
+                    if temp > 1:
+                        temp -= 1
+                    ref_angle = math.asin(temp)
+                    print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
+                    print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points2) / 2:
+                        self.r = -normal_angle - ref_angle
+                    else:
+                        self.r = -normal_angle + ref_angle
+                    print(math.degrees(self.r))
+
+                    self.points.append(point)
+                    self.colors.append(self.RGB.rgb)
+                    self.current_starting_point = self.current_point #point
+                    self.linear_function = Linear_Function(math.tan(-self.r),
+                                                           self.find_b(math.tan(-self.r),
+                                                                       self.current_starting_point))
+                    self.linear_function.draw(self.game)
+                    break
+        except:
+            pass
     def lens_stuff(self, lens):
             if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
                 #print(abs(lens.angle))
                 self.left_lens(lens)
                 if lens.type == lens.CONVEX:
                     self.right_lens(lens)
+
             else:
                 print("rotated")
                 self.right_lens(lens)
                 if lens.type == lens.CONVEX:
                     self.left_lens(lens)
+            self.current_starting_point = self.current_point
+            self.calibrate_r2()
 
 
 
@@ -389,9 +394,9 @@ class Light:
     def mirror_stuff(self):
         self.counter += 1
         if self.counter > 99:
-            self.game.achievements.handle_achievement_unlocked("back and forth 2.0")
+            self.game.achievements.handle_achievement_unlocked("white mode")
         elif self.counter > 49:
-            self.game.achievements.handle_achievement_unlocked("back and forth")
+            self.game.achievements.handle_achievement_unlocked("epilepsy")
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         reflection_factor = self.current_object.reflection_factor
