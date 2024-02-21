@@ -51,7 +51,8 @@ if __name__ == "__main__":
             new_game(startscreen.save_to_load, startscreen.preset)
         except Exception as e:
             print(e)
-            logging.error(e, exc_info=True)
-            tkinter.messagebox.showerror("Error", "An error occurred. Please check the logs for more information.")
-            raise
-
+            # logging.error(e, exc_info=True)
+            # tkinter.messagebox.showerror("Error", "An error occurred. Please check the logs for more information.")
+            # raise
+            break
+#

@@ -17,6 +17,7 @@ from datetime import datetime
 import functions
 import gui
 from gui import polygonDrawing
+from classes import popup
 from classes import saveTK
 
 isDrawingModeOn = False
@@ -279,8 +280,9 @@ class Game:
                 self.popup = False
                 self.popup_start_time = None
                 self.currentAchievementName = None
+                self.currentAchievementRarity = None
             else:
-                self.screen.blit(images.torch, (0, 70))
+                popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName, self.currentAchievementRarity, 50, 100)
                 print(self.currentAchievementName)
 
 
@@ -313,9 +315,10 @@ class Game:
         self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1), 10))
         return time_text
 
-    def achievement_popup(self, achname):
+    def achievement_popup(self, achname, rarity):
         self.popup = True
         self.currentAchievementName = achname
+        self.currentAchievementRarity = rarity
         self.popup_start_time = time.time()
 
     def loop(self):

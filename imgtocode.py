@@ -1,7 +1,7 @@
 import base64
 import json
 import os
-from fontTools.ttLib import TTFont
+#from fontTools.ttLib import TTFont
 
 
 code = codes_of_images = {

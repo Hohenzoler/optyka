@@ -20,20 +20,20 @@ class Achievements:
         # Define the dictionary of achievements
         self.achievements_dict = {
             "here is your first achievement ;)": "common",
-            "first_flashlight_placed": "common",
-            "first_mirror_placed": "common",
-            "first_colored_glass_placed": "common",
-            "first_lens_placed": "common",
-            "first_prism_placed": "common",
-            "BIN": "uncommon",
+            "let there be light": "common",
+            "is it... me?": "common",
+            "some color in this black and white world": "common",
+            "first step to... glasses": "common",
+            "a whole new world": "common",
+            "kaboom": "uncommon",
             "topopisy": "uncommon",
-            "parameters": "rare",
+            "you just found more options": "rare",
             "U are weird...": "rare",
-            "need for nasa": "rare",
-            "back and forth": "epic",
+            "not much time left to live": "rare",
+            "epilepsy": "epic",
             "get a new computer": "epic",
             "so you've chosen death": "epic",
-            "back and forth 2.0": "legendary",
+            "white mode": "legendary",
         }
 
     def unlock_achievement(self, achievement_name):
@@ -67,13 +67,14 @@ class Achievements:
         if self.is_achievement_unlocked(achievement_name):
             print(f"Achievement already unlocked: {achievement_name}")
             return
-        self.game.achievement_popup(achievement_name)
+        self.rarity = self.achievements_dict[achievement_name]
+        self.game.achievement_popup(achievement_name, self.rarity)
         self.unlock_achievement(achievement_name)
 
     def fps_achievements(self):
         if time.time()>self.start_time+5:
             if int(self.game.return_fps()) < 20:
-                self.handle_achievement_unlocked("need for nasa")
+                self.handle_achievement_unlocked("not much time left to live")
             if time.time() < self.start_time+30:
                 if int(self.game.return_fps()) < 20:
                     self.handle_achievement_unlocked("get a new computer")

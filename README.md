@@ -53,8 +53,8 @@ There are two ways to install the project: download exe file, or run the project
    - laser (only for flashlights, if on, they only emit one beam)
    - color 
    - texture (only for mirrors)
-7. Click the icon that looks like this ![topopisy](images/topopisy.png) to enter _drawing mode_
-8. While in the _drawing mode_ you can draw a new object by clicking in different places on screen.
+7. Click the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="https://github.com/Hohenzoler/optyka/blob/main/images/topopisy.png"></p>to enter _drawing mode_
+8. While in the _drawing mode_ you can draw a new object by clicking in different places on screen, or delete the last point placed by pressing backspace.
 9. Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
 10. Press `up` to randomize colors of all flashlights
 
@@ -73,18 +73,20 @@ There are two ways to install the project: download exe file, or run the project
 1. **Parameters** - Every object has parameters that change the way they interact with the environment.
 2. **Saving and loading** - you can save your loadout when quitting and come back to it later. You can also delete your saves.
 3. **Presets** - you can load a premade project (preset) as if you had made it yourself.
-4. **Intersection prevention** - objects cannot intersect with each other (just like in real life).
-5. **Adjustable resolution** - you can change the resolution of the window.
-6. **Togglable fullscreen** - you can toggle fullscreen on and off.
-7. **Adjustable hotbar location** - you can change the location of the hotbar.
-8. **Pretty flashlight toggle** - you can turn pretty flashlight on and off (Works best on high-end machines).
-9. **Bin** - you can delete objects you don't need anymore.
-10. **Achievements** - you can measure how much of the application you have discovered.
-11. **FPS meter** - measures frames per second.
-12. **Clock** - Lets you know what time it is.
-13. **Sound effects** - helps to immerse in the world of optics.
-14. **Calm music** - makes the experience much more pleasant
-15. **Color randomizer** - activated by pressing `up`, there isn't any particular reason for its existence
+4. **Picking up objects** - you can right click an object to pick it up or put it down.
+4. **Rotating objects** - you can rotate held objects using scroll.
+5. **Intersection prevention** - objects cannot intersect with each other (just like in real life).
+6. **Adjustable resolution** - you can change the resolution of the window.
+7. **Togglable fullscreen** - you can toggle fullscreen on and off.
+8. **Adjustable hotbar location** - you can change the location of the hotbar.
+9. **Pretty flashlight toggle** - you can turn pretty flashlight on and off (Works best on high-end machines).
+10. **Bin** - you can delete objects you don't need anymore.
+11. **Achievements** - you can measure how much of the application you have discovered.
+12. **FPS meter** - measures frames per second.
+13. **Clock** - Lets you know what time it is.
+14. **Sound effects** - helps to immerse in the world of optics.
+15. **Calm music** - makes the experience much more pleasant
+16. **Color randomizer** - activated by pressing `up`, there isn't any particular reason for its existence
 
 ## Opinions
 > "I think it's a great app. It's very educational and fun to play with. I would recommend it to anyone who wants to learn about optics." - *Jeff*
@@ -92,11 +94,7 @@ There are two ways to install the project: download exe file, or run the project
 Picture of Jeff:
 
 ![Jeff](images/Jeff.png)
-> "I don't think it's a great app. It's not very educational and fun to play with. I would not recommend it to anyone who wants to learn about optics." - *also Jeff*
 
-Another picture of also Jeff:
-
-![another picture of Jeff](images/Jeff.png)
 ## Credits
 This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [MalyszekTobias](https://github.com/MalyszekTobias), [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [V8Enthusiast](https://github.com/V8Enthusiast).
 
