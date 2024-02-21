@@ -6,8 +6,6 @@ import settingsSetup
 import pygame.gfxdraw
 import functions
 
-from bigtree import Node
-
 
 class Ray:
     def __init__(self, start_point, end_point, color):

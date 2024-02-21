@@ -240,7 +240,7 @@ class ButtonForgame:
 
         # adjust y based on the number
         gap = 15
-        self.y = (self.screen.height // 2) - self.height // 2 + (self.height + gap) * number
+        self.y = (self.screen.height // 2) - self.height*1.2 + (self.height + gap) * number
         self.x = (self.screen.width // 12) - self.width // 6
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
