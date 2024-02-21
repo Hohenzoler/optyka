@@ -114,8 +114,18 @@ class Button:
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
         elif self.number == 6:
-            self.color = (64, 137, 189)
-            self.icon = images.object_icon
+            self.color = (155, 155, 155)
+            self.icon = images.oneconvex
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+        elif self.number == 7:
+            self.color = (155, 155, 155)
+            self.icon = images.concave
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+        elif self.number == 8:
+            self.color = (155, 155, 155)
+            self.icon = images.oneconcave
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
@@ -191,15 +201,27 @@ class Button:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189), 0, 0, 140, 0, 1, 1)
+                                           (64, 137, 189), 0, 140, 0, 1, 140)
                     self.game.achievements.handle_achievement_unlocked("first step to... glasses")
                 elif self.number == 6:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189), 0, 2, 140, 0, 1, 1)
+                                           (64, 137, 189), 0, 140, 0, 1)
                     self.game.achievements.handle_achievement_unlocked("first step to... glasses")
                 elif self.number == 7:
+                    obj = gameobjects.Lens(self.game,
+                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                           (64, 137, 189),  0, -140, 0, 1, -140)
+                    self.game.achievements.handle_achievement_unlocked("first step to... glasses")
+                elif self.number == 8:
+                    obj = gameobjects.Lens(self.game,
+                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                           (64, 137, 189), 0, -140, 0, 1)
+                    self.game.achievements.handle_achievement_unlocked("first step to... glasses")
+                elif self.number == 9:
                     print(123)
                 elif self.number == -1:
                     self.game.save_game()
