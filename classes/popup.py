@@ -1,5 +1,5 @@
 import pygame
-
+from classes import font
 
 class Popup:
     def __init__(self, game):
@@ -7,16 +7,8 @@ class Popup:
         self.width = self.game.width
         self.height = self.game.height
         self.screen = self.game.screen
-        self.font = self.game.font
 
-
-    def render_achievement(self, achievement, rarity, x_offset, y_offset):
-        self.font = self.game.font
-        self.rarity = rarity
-        achievement_name = achievement
-        text_color = (255, 255, 255)
-        text_surface = self.font.render(f"{achievement_name}", True, text_color)
-
+    def rarity_color(self, rarity):
         if rarity == 'common':
             color = (163, 163, 163)
         elif rarity == 'uncommon':
@@ -29,6 +21,16 @@ class Popup:
             color = (222, 182, 24)
         else:
             color = (50, 50, 50)
+        return color
+
+    def render_achievement(self, achievement, rarity, x_offset, y_offset):
+        self.font = self.game.font
+        self.rarity = rarity
+        achievement_name = achievement
+        text_color = (255, 255, 255)
+        text_surface = self.font.render(f"{achievement_name}", True, text_color)
+
+        color = self.rarity_color(self.rarity)
 
         rect_width = self.width - 100
         rect_height = 50
