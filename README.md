@@ -94,7 +94,7 @@ Picture of Jeff:
 ![Jeff](images/Jeff.png)
 > "I don't think it's a great app. It's not very educational and fun to play with. I would not recommend it to anyone who wants to learn about optics." - *also Jeff*
 
-Another picture of Jeff:
+Another picture of also Jeff:
 
 ![another picture of Jeff](images/Jeff.png)
 ## Credits
