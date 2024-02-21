@@ -236,7 +236,7 @@ class Button:
             if self.number == 4:
                 if classes.game.isDrawingModeOn == True:
                     classes.game.isDrawingModeOn = False
-                    gui.polygonDrawing.clearPoints()
+                    classes.game.polygonDrawing.clearPoints(classes.game.polygonDrawing())
 
                 elif classes.game.isDrawingModeOn == False:
                     classes.game.isDrawingModeOn = True
