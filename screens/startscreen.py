@@ -11,8 +11,11 @@ from gui.button_animation import ButtonAnimation
 pygame.init()
 
 class StartScreen:
-    def __init__(self):
+    def __init__(self, version):
         self.save_to_load = None
+
+        self.version = version
+
         settings = settingsSetup.load_settings()
         self.particle_system = particles.UnityParticleSystem()
         self.width = settings['WIDTH']
@@ -35,6 +38,7 @@ class StartScreen:
         self.objects = []
         from classes.font import Font
         self.font = pygame.font.Font(Font, self.width//20)
+        self.version_font = pygame.font.Font(Font, self.width // 50)
 
         from classes import fps
         self.fps = fps.return_fps()
@@ -45,14 +49,18 @@ class StartScreen:
 
         self.executed_functions = 'default'
 
-        self.maintext = self.font.render('Optyka', True, 'white')
+        self.maintext = self.font.render('Optics', True, 'white')
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width // 2, (self.height // 2) - (3 * self.height // 10))
+
+        self.versiontext = self.version_font.render(f"Optics {self.version}", True, 'white')
+        self.versiontextRect = self.versiontext.get_rect()
+        self.versiontextRect.center = ((self.versiontextRect[2]//2) + self.versiontextRect[3], self.height - self.versiontextRect[3])
 
         self.buttons = [button.ButtonForgame(x, self) for x in range(4)]
         self.button_animations = [ButtonAnimation(b, b.rect.x*6+(b.width//2), b.rect.y) for i, b in enumerate(self.buttons)]
 
-        pygame.display.set_caption('Optyka')
+        pygame.display.set_caption('Optics')
 
         self.selected_buttons = {}
 
@@ -138,6 +146,7 @@ class StartScreen:
 
         if self.mode == 'default':
             self.screen.blit(self.maintext, self.maintextRect)
+            self.screen.blit(self.versiontext, self.versiontextRect)
 
         self.cursor_img_rect.center = pygame.mouse.get_pos()
         self.screen.blit(self.cursor_img, self.cursor_img_rect)
@@ -209,9 +218,14 @@ class StartScreen:
         from classes.font import Font
         self.font = pygame.font.Font(Font, self.width // 20)
 
-        self.maintext = self.font.render('Optyka', True, 'white')
+        self.maintext = self.font.render('Optics', True, 'white')
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
+
+        self.versiontext = self.version_font.render(f"Optics {self.version}", True, 'white')
+        self.versiontextRect = self.versiontext.get_rect()
+        self.versiontextRect.center = (
+        (self.versiontextRect[2] // 2) + self.versiontextRect[3], self.height - self.versiontextRect[3])
 
         if settings['FULLSCREEN'] == 'ON':
                 self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN, vsync=0)
