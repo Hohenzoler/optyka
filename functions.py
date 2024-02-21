@@ -48,6 +48,8 @@ def is_linear_function_passing_through_point(linear_function, point):
 
     return abs(a * x_point + b - y_point) < 1
 
+
+
 def calculate_intersection_angle(m1, m2):
     angle_radians = abs(math.atan((m2 - m1) / (1 + m1 * m2)))
     angle_degrees = math.degrees(angle_radians)
