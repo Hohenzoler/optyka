@@ -140,7 +140,7 @@ class GameObject:
 
             elif self.game.p:
                 self.change_parameters()
-                self.game.achievements.handle_achievement_unlocked("parameters")
+                self.game.achievements.handle_achievement_unlocked("you just found more options")
                 self.selectedtrue = False
 
             else:
