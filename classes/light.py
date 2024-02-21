@@ -149,8 +149,9 @@ class Light:
                 if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism:
                     self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
                 if type(object) == gameobjects.Lens:
-                    self.check_object(object)
-
+                    lenses.append(object)
+            for lens in lenses:
+                self.lens_stuff(lens)
             # To do: fix bug causing only one lens to be analyzed
 
             if self.current_slope == None:
@@ -261,8 +262,8 @@ class Light:
                                         self.current_object_type = 'mirror'
                                     elif type(object) == gameobjects.ColoredGlass:
                                         self.current_object_type = 'glass'
-                                    elif type(object) == gameobjects.Lens:
-                                        self.current_object_type = 'lens'
+                                    # elif type(object) == gameobjects.Lens:
+                                    #     self.current_object_type = 'lens'
                                     elif type(object) == gameobjects.Prism:
 
                                         self.current_object_type = 'prism'
