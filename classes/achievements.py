@@ -67,7 +67,8 @@ class Achievements:
         if self.is_achievement_unlocked(achievement_name):
             print(f"Achievement already unlocked: {achievement_name}")
             return
-        self.game.achievement_popup(achievement_name)
+        self.rarity = self.achievements_dict[achievement_name]
+        self.game.achievement_popup(achievement_name, self.rarity)
         self.unlock_achievement(achievement_name)
 
     def fps_achievements(self):
