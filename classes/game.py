@@ -162,6 +162,8 @@ class Game:
                         global isDrawingModeOn
                         isDrawingModeOn = False
                         self.achievements.handle_achievement_unlocked("topopisy")
+                    elif event.key == pygame.K_BACKSPACE and isDrawingModeOn and len(polygonDrawing.currentPolygonPoints) > 0:
+                        polygonDrawing.currentPolygonPoints.pop()
 
 
 

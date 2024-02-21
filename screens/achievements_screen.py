@@ -100,18 +100,18 @@ class AchievementsScreen:
     def render_achievement(self, achievement, x_offset, y_offset):
         achievement_name, unlocked, rarity = achievement
         if rarity == 'common':
-            color = (200, 200, 200)
+            color = (163, 163, 163)
         elif rarity == 'uncommon':
-            color = (100, 200, 0)
+            color = (10, 145, 6)
         elif rarity == 'rare':
-            color = (25, 65, 120)
+            color = (15, 109, 163)
         elif rarity == 'epic':
-            color = (83, 0, 135)
+            color = (97, 37, 143)
         elif rarity == 'legendary':
-            color = (247, 247, 2)
+            color = (222, 182, 24)
         else:
             color = (50, 50, 50)
-        text_color = tuple(255 - c for c in color)
+        text_color = (255, 255, 255)
         text_surface = self.font.render(f"{achievement_name} - {rarity}", True, text_color)
 
         rect_width = self.width // 2 - 100
