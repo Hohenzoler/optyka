@@ -347,7 +347,18 @@ class Game:
         if current_second < 10:
             current_second = f"0{current_second}"
         time_text = self.font.render(f"{current_hour}:{current_minute}:{current_second}", True, "white")
-        self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1), 10))
+
+        if self.settings['HOTBAR_POSITION'] != 'top':
+            self.y = 12.5
+        else:
+            self.y = 75
+
+        if self.settings['HOTBAR_POSITION'] != 'right':
+            self.x = 0
+        else:
+            self.x = 125
+
+        self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1)-self.x, self.y))
         return time_text
 
     def achievement_popup(self, achname, rarity):
