@@ -321,9 +321,18 @@ class Game:
         """
         Displays the current FPS on the game display.
         """
+        if self.settings['HOTBAR_POSITION'] != 'top':
+            self.y = 10
+        else:
+            self.y = 75
+
+        if self.settings['HOTBAR_POSITION'] != 'left':
+            self.x = 12.5
+        else:
+            self.x = 125
         fps = self.clock.get_fps()
         fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
-        self.screen.blit(fps_text, (12.5, 10))
+        self.screen.blit(fps_text, (self.x, self.y))
         return fps
 
     def displayClock(self):
