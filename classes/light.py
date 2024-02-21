@@ -316,7 +316,7 @@ class Light:
                 pygame.draw.line(self.game.screen, (255, 255, 80), lens.center1, (point[0] - offset, point[1] - offset))
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(point[0], point[1], lens.center1[0], lens.center1[1])
-                intersect_angle = int(functions.calculate_intersection_angle(slope1, slope2))
+                intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                 # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                 normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
@@ -335,7 +335,7 @@ class Light:
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
 
-                self.linear_function.draw(self.game)
+                #self.linear_function.draw(self.game)
                 break
     def right_lens(self, lens):
         for index, point in enumerate(lens.lens_points2):
@@ -345,11 +345,15 @@ class Light:
                                  (point[0] - offset, point[1] - offset))
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
-                intersect_angle = int(functions.calculate_intersection_angle(slope2, slope1))
+                intersect_angle = functions.calculate_intersection_angle(slope2, slope1)
                 temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
+                #print(math.degrees(math.asin(temp)))
                 if temp > 1:
+                    print("sdsdsd")
                     temp -= 1
-                ref_angle = math.asin(temp)
+                    ref_angle = math.asin(temp) + math.pi/2
+                else:
+                    ref_angle = math.asin(temp)
                 print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                 normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
                 print(math.degrees(normal_angle))
@@ -365,7 +369,7 @@ class Light:
                 self.linear_function = Linear_Function(math.tan(-self.r),
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
-                self.linear_function.draw(self.game)
+                #self.linear_function.draw(self.game)
                 break
     def lens_stuff(self, lens):
             print('a')

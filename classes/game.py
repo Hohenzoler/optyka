@@ -63,6 +63,7 @@ class Game:
         self.achievements.handle_achievement_unlocked("here is your first achievement ;)")
 
         self.p = False #used for properties windows for gameobjects
+        self.r_key = False # used for resizing objects
 
         self.selected_object = None
 
@@ -145,6 +146,26 @@ class Game:
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
+                    for object in self.objects:
+                        if type(object) in (gameobjects.GameObject, gameobjects.Mirror, gameobjects.Lens, gameobjects.Flashlight, gameobjects.Prism, gameobjects.CustomPolygon, gameobjects.ColoredGlass) and object.resizing:
+                            if object.resize_on is False:
+                                for idx, rect in enumerate(object.resize_rects):
+                                    if rect.collidepoint(self.mousepos):
+                                        object.resize_on = True
+                                        object.resize_point_index = idx
+                                        resize_point = object.points[idx]
+                                        for index, point in enumerate(object.points):
+                                            if point[0] == resize_point[0] and point != resize_point:
+                                                object.x_resize_index = index
+
+                                            elif point[1] == resize_point[1] and point != resize_point:
+                                                object.y_resize_index = index
+                                                pygame.draw.circle(self.screen, (0, 255, 0), point, 5)
+                                            elif point != resize_point:
+                                                object.static_point_index = index
+                                                pygame.draw.circle(self.screen, (255, 0, 0), point, 5)
+                            else:
+                                object.resize_on = False
                     if self.isDrawingModeOn:
                         polygonDrawing.addPoint(self.mousepos)
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -156,6 +177,9 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.p = True
+                    if event.key == pygame.K_r and self.selected_object is not None:
+                        self.r_key = True
+                        self.selected_object.selected(pygame.mouse.get_pos())
                     elif event.key == 13 and self.isDrawingModeOn:
                         gui.polygonDrawing.createPolygon(self)
                         polygonDrawing.clearPoints()
@@ -333,6 +357,7 @@ class Game:
             self.mousepos = None  # resets self.mouspos
             self.rightclickedmousepos = None
             self.p = False
+            self.r_key = False
             self.events()
             self.achievements.fps_achievements()
             if self.save_to_load != None:
