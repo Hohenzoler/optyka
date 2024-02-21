@@ -162,8 +162,6 @@ class Game:
                         global isDrawingModeOn
                         isDrawingModeOn = False
                         self.achievements.handle_achievement_unlocked("topopisy")
-                    elif event.key == pygame.K_BACKSPACE and isDrawingModeOn and len(polygonDrawing.currentPolygonPoints) > 0:
-                        polygonDrawing.currentPolygonPoints.pop()
 
 
 
@@ -282,8 +280,9 @@ class Game:
                 self.popup = False
                 self.popup_start_time = None
                 self.currentAchievementName = None
+                self.currentAchievementRarity = None
             else:
-                popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName, 100, 100)
+                popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName, self.currentAchievementRarity, 50, 100)
                 print(self.currentAchievementName)
 
 
@@ -316,9 +315,10 @@ class Game:
         self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1), 10))
         return time_text
 
-    def achievement_popup(self, achname):
+    def achievement_popup(self, achname, rarity):
         self.popup = True
         self.currentAchievementName = achname
+        self.currentAchievementRarity = rarity
         self.popup_start_time = time.time()
 
     def loop(self):
