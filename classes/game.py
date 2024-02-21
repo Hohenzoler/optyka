@@ -16,7 +16,7 @@ import time
 from datetime import datetime
 import functions
 import gui
-from gui import polygonDrawing
+from gui.polygonDrawing import polygonDrawing
 from classes import popup
 from classes import saveTK
 
@@ -90,6 +90,8 @@ class Game:
         self.popup_start_time = None
         self.popup = False
         self.currentAchievementName = None
+
+        self.polygonDrawing = polygonDrawing()
 
 
     def create_cursor_particles(self):
@@ -167,7 +169,7 @@ class Game:
                             else:
                                 object.resize_on = False
                     if self.isDrawingModeOn:
-                        polygonDrawing.addPoint(self.mousepos)
+                        polygonDrawing.addPoint(self.polygonDrawing, self.mousepos)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.create_clicked_particles()
                     if event.button == 3:
@@ -181,8 +183,8 @@ class Game:
                         self.r_key = True
                         self.selected_object.selected(pygame.mouse.get_pos())
                     elif event.key == 13 and self.isDrawingModeOn:
-                        gui.polygonDrawing.createPolygon(self)
-                        polygonDrawing.clearPoints()
+                        polygonDrawing.createPolygon(self.polygonDrawing, self)
+                        polygonDrawing.clearPoints(self.polygonDrawing)
                         global isDrawingModeOn
                         isDrawingModeOn = False
                         self.achievements.handle_achievement_unlocked("topopisy")
@@ -289,7 +291,7 @@ class Game:
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
         if isDrawingModeOn:
 
-            from gui.polygonDrawing import currentPolygonPoints as points
+            points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
             self.screen.blit(self.pen_img, self.cursor_img_rect)
             for i in range(len(points)):
                 pygame.draw.circle(self.screen, (200, 0, 0), points[i], 5)
