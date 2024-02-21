@@ -322,9 +322,9 @@ class Game:
         Displays the current FPS on the game display.
         """
         if self.settings['HOTBAR_POSITION'] != 'top':
-            self.y = 10
+            self.y = 12.5
         else:
-            self.y = 75
+            self.y = self.height // 7
 
         if self.settings['HOTBAR_POSITION'] != 'left':
             self.x = 12.5
@@ -351,7 +351,7 @@ class Game:
         if self.settings['HOTBAR_POSITION'] != 'top':
             self.y = 12.5
         else:
-            self.y = 75
+            self.y = self.height // 7
 
         if self.settings['HOTBAR_POSITION'] != 'right':
             self.x = 0
