@@ -53,7 +53,7 @@ There are two ways to install the project: download exe file, or run the project
    - laser (only for flashlights, if on, they only emit one beam)
    - color 
    - texture (only for mirrors)
-7. Click the icon that looks like this <p align="center"><img width="46" height="46" src="https://github.com/Hohenzoler/optyka/blob/main/images/topopisy.png"></p>to enter _drawing mode_
+7. Click the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="https://github.com/Hohenzoler/optyka/blob/main/images/topopisy.png"></p>to enter _drawing mode_
 8. While in the _drawing mode_ you can draw a new object by clicking in different places on screen.
 9. Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
 10. Press `up` to randomize colors of all flashlights
