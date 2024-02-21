@@ -329,7 +329,7 @@ class Game:
         if self.settings['HOTBAR_POSITION'] != 'left':
             self.x = 12.5
         else:
-            self.x = 125
+            self.x = self.width // 9
         fps = self.clock.get_fps()
         fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
         self.screen.blit(fps_text, (self.x, self.y))
@@ -356,7 +356,7 @@ class Game:
         if self.settings['HOTBAR_POSITION'] != 'right':
             self.x = 0
         else:
-            self.x = 125
+            self.x = self.width // 10
 
         self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1)-self.x, self.y))
         return time_text
