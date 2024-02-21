@@ -144,32 +144,42 @@ class Light:
             self.current_point = None
             self.current_slope = None
             self.current_object=None
+            self.current_object_type=None
             lenses = []
             for object in self.game.objects:
                 if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism:
                     self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
+
                 if type(object) == gameobjects.Lens:
-                    lenses.append(object)
-            for lens in lenses:
-                self.lens_stuff(lens)
+
+                    self.check_lens(object)
+
+            # for lens in lenses:
+            #     self.lens_stuff(lens)
+
+            print(self.current_object_type)
+            if type(self.current_object) == gameobjects.Lens:
+                self.ignore_object = self.current_object
             # To do: fix bug causing only one lens to be analyzed
 
-            if self.current_slope == None:
+            if self.current_object_type == None:
                 self.border_stuff()
             elif self.current_object_type=='mirror':
                 self.mirror_stuff()
             elif self.current_object_type=='glass':
                 self.glass_stuff()
-            elif self.current_object_type=='lens':
-                self.lens_stuff(self.current_object)
+
             elif self.current_object_type=='prism':
                 self.prism_stuff()
+            elif self.current_object_type=='lens':
+                self.lens_stuff(self.current_object)
 
 
 
             if self.index >= 100:
                 self.mini_run = False
     def check_object(self,object):
+        self.linear_function.draw(self.game)
 
 
         self.object_counter=0
@@ -198,6 +208,7 @@ class Light:
                                      self.find_b(((slope[0][1] - slope[1][1]) / dx), slope[0]))
                 # lf.draw(self.game)
                 x = lf.intercept(self.linear_function)
+
                 y = lf.calculate(x)
                 # lf.draw(self.game)
                 # self.linear_function.draw(self.game)
@@ -262,14 +273,41 @@ class Light:
                                         self.current_object_type = 'mirror'
                                     elif type(object) == gameobjects.ColoredGlass:
                                         self.current_object_type = 'glass'
-                                    # elif type(object) == gameobjects.Lens:
-                                    #     self.current_object_type = 'lens'
+                                    elif type(object) == gameobjects.Lens:
+                                        self.current_object_type = 'lens'
                                     elif type(object) == gameobjects.Prism:
 
                                         self.current_object_type = 'prism'
+
         # if self.object_counter>1:
         #     self.ignore_object=object
 
+
+    def check_lens(self,lens):
+        if lens == self.ignore_object:
+            self.ignore_object = None
+            return
+        for index, point in enumerate(lens.lens_points):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                x=point[0]
+                dist = abs(x - self.current_starting_point[0])
+                if self.current_distance == None:
+
+                    self.current_distance = dist
+                    self.current_point = point
+                    self.current_slope = None
+                    self.current_object =lens
+                    self.current_object_type = 'lens'
+
+
+                else:
+                    if dist < self.current_distance:
+
+                        self.current_distance = dist
+                        self.current_point = point
+                        self.current_slope = None
+                        self.current_object = lens
+                        self.current_object_type = 'lens'
 
     def left_lens(self, lens):
         for index, point in enumerate(lens.lens_points):
@@ -296,7 +334,8 @@ class Light:
                 self.linear_function = Linear_Function(math.tan(-self.r),
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
-                # self.linear_function.draw(self.game)
+
+                self.linear_function.draw(self.game)
                 break
     def right_lens(self, lens):
         for index, point in enumerate(lens.lens_points2):
@@ -329,6 +368,7 @@ class Light:
                 self.linear_function.draw(self.game)
                 break
     def lens_stuff(self, lens):
+            print('a')
             if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
                 #print(abs(lens.angle))
                 self.left_lens(lens)
@@ -362,6 +402,7 @@ class Light:
         self.r=r
 
     def border_stuff(self):
+
         self.points.append((self.current_point_before[0] + 30000 * math.cos(-self.r),
                             self.current_point_before[1] + 30000 * math.sin(-self.r)))
         self.colors.append(self.RGB.rgb)
