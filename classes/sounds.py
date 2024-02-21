@@ -28,6 +28,11 @@ def destroy_sound():
     destroy_sound.play()
     pass
 
+def achievement_sound():
+    achievement_sound = pygame.mixer.Sound('sounds/metsej/metsej_3.wav')
+    achievement_sound.play()
+    pass
+
 def soundtrack():
     pygame.mixer.music.load('sounds/mc.mp3')
     pygame.mixer.music.play(-1)

@@ -1,5 +1,6 @@
 import sqlite3
 import time
+from classes import sounds
 
 class Achievements:
     def __init__(self, game):
@@ -47,6 +48,7 @@ class Achievements:
             INSERT OR REPLACE INTO achievements VALUES (?, ?, ?)
         """, (achievement_name, 1, rarity))
         self.conn.commit()
+        sounds.achievement_sound()
         print(f"Achievement Unlocked: {achievement_name}, Rarity: {rarity}")
 
     def is_achievement_unlocked(self, achievement_name):
