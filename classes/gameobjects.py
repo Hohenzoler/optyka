@@ -38,6 +38,10 @@ class GameObject:
         self.placed = False
         self.angle = angle
         self.image = image if image else None
+        self.resizing = False
+        self.resize_rects = []
+        self.resize_on = False
+        self.resize_point = None
 
         self.reflection_factor = reflection_factor
         self.transmittance = transmittance #przepuszczalność ;-;
@@ -91,7 +95,8 @@ class GameObject:
 
 
         if not self.selectedtrue:
-
+            if self.resizing:
+                self.drawResizeOutline()
             # Render the image if available
             if self.image:
                 center_x = sum(x for x, _ in self.points) / len(self.points)
@@ -140,7 +145,7 @@ class GameObject:
 
             elif self.game.p:
                 self.change_parameters()
-                self.game.achievements.handle_achievement_unlocked("parameters")
+                self.game.achievements.handle_achievement_unlocked("you just found more options")
                 self.selectedtrue = False
 
             else:
@@ -265,6 +270,26 @@ class GameObject:
         if settings['DEBUG'] == "True":
             pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
 
+    def drawResizeOutline(self):
+        # Draw an outline around the object
+        pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 0, 255))
+        self.resize_rects = []
+        for point in self.points:
+            rect = pygame.Rect(point[0] - 10, point[1] - 10, 20, 20)
+            pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=10)
+            self.resize_rects.append(rect)
+        if self.resize_on:
+            self.points[self.x_resize_index] = (pygame.mouse.get_pos()[0], self.points[self.x_resize_index][1])
+            #pygame.draw.circle(self.game.screen, (255, 0, 0), self.points[self.x_resize_index], 5)
+            self.points[self.y_resize_index] = (self.points[self.y_resize_index][0], pygame.mouse.get_pos()[1])
+            #pygame.draw.circle(self.game.screen, (0, 255, 0), self.points[self.y_resize_index], 5)
+            self.points[self.resize_point_index] = pygame.mouse.get_pos()
+            #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
+
+
+        if settings['DEBUG'] == "True":
+            pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
+
     def checkifclicked(self, mousepos):
         if self.game.isDrawingModeOn != True:
             # Check if the object is clicked
@@ -295,6 +320,11 @@ class GameObject:
                 self.game.selected_object = self  # Set this object as the currently selected object
                 sounds.selected_sound()
             elif self.selectedtrue:
+                if self.game.r_key:
+                    if self.resizing is False:
+                        self.resizing = True
+                    else:
+                        self.resizing = False
                 self.selectedtrue = False
                 self.game.selected_object = None  # No object is selected now
                 if type(self) == Flashlight:
@@ -403,10 +433,9 @@ class CustomPolygon(GameObject):
         super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
 
 class Lens(GameObject):
-    def __init__(self, game, points, color, angle, type, curvature_radius, reflection_factor, transmittance, islighting=False, image_path=None):
+    def __init__(self, game, points, color, angle, curvature_radius, reflection_factor, transmittance, curvature_radius2=None, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
         self.curvature_radius = curvature_radius
-        self.type = type
         self.CONVEX = 0
         self.CONCAVE = 1
         self.SINGLE_VEX = 2
@@ -416,6 +445,27 @@ class Lens(GameObject):
         self.lens_points = []
         self.refraction_index = 1.5
         self.layer = 0
+
+        if curvature_radius2 is not None:
+            self.curvature_radius2 = curvature_radius2
+            if curvature_radius2 > 0 and curvature_radius > 0:
+                self.type = self.CONVEX
+            elif curvature_radius < 0 and curvature_radius2 < 0:
+                self.type = self.CONCAVE
+                self.curvature_radius = -self.curvature_radius
+                self.curvature_radius2 = -curvature_radius2
+            elif curvature_radius < 0 and curvature_radius2 > 0:
+                self.type = self.CAVE_VEX
+                self.curvature_radius = -self.curvature_radius
+            elif curvature_radius > 0 and curvature_radius2 < 0:
+                self.type = self.VEX_CAVE
+                self.curvature_radius2 = -curvature_radius2
+        elif curvature_radius > 0:
+            self.type = self.SINGLE_VEX
+        elif curvature_radius < 0:
+            self.type = self.SINGLE_CAVE
+
+
 
 
     # def calculate_function(self, x1, x2, ymin):
@@ -467,9 +517,9 @@ class Lens(GameObject):
     def generate_points(self, rect_points, angle):
         x1 = rect_points[0][1]
         x2 = rect_points[2][1]
-        height = abs(x1 - x2)
-        width = abs(rect_points[0][0] - rect_points[2][0])
-        POINTS_NUM = int(height) * 2
+        self.width = abs(x1 - x2)
+        self.height = abs(rect_points[0][0] - rect_points[2][0])
+        POINTS_NUM = int(self.width) * 2
         center = self.rect.center
         center_x = center[0]
 
@@ -483,13 +533,25 @@ class Lens(GameObject):
         #     y = center[1] + int(self.curvature_radius * math.sin(angle))
         #     self.parabola_points.append((x, y))
         if self.type == self.CONVEX:
-            center1 = (center_x + self.curvature_radius - width // 2, center[1])
+            center1 = (center_x + self.curvature_radius - self.height // 2, center[1])
             self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
-            center2 = (center_x - self.curvature_radius + width // 2, center[1])
+            center2 = (center_x - self.curvature_radius + self.height // 2, center[1])
             self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2, POINTS_NUM)
         elif self.type == self.SINGLE_VEX:
-            center1 = (center_x + self.curvature_radius - width // 2, center[1])
+            center1 = (center_x + self.curvature_radius - self.height // 2, center[1])
+            center2 = (center_x - self.curvature_radius, center[1])
             self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
+            self.lens_points2 = []
+            for i in range(POINTS_NUM):
+                self.lens_points2.append((center_x, center[1] - self.height + i * 2 * (self.height / POINTS_NUM)))
+        elif self.type == self.SINGLE_CAVE:
+            center1 = (center_x + self.curvature_radius, center[1])
+            center2 = (center_x - self.curvature_radius, center[1])
+            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi / 2, 3 * math.pi / 2,
+                                                        POINTS_NUM)
+            self.lens_points2 = []
+            for i in range(POINTS_NUM):
+                self.lens_points2.append((center_x, center[1] - self.height + i*2*(self.height / POINTS_NUM)))
         else:
             center1 = (center_x + self.curvature_radius, center[1])
             self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi / 2, 3 * math.pi / 2,
@@ -497,20 +559,14 @@ class Lens(GameObject):
             center2 = (center_x - self.curvature_radius, center[1])
             self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2,
                                                          POINTS_NUM)
-        if self.type != self.SINGLE_VEX:
-            self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
-            self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
-            self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
-            pygame.draw.circle(self.game.screen, (0, 255, 0),
-                               self.center1, 2, 0)
-            self.center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
-            pygame.draw.circle(self.game.screen, (0, 255, 0),
-                              self.center2, 2, 0)
-        else:
-            self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
-            self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
-            pygame.draw.circle(self.game.screen, (0, 255, 0),
-                               self.center1, 2, 0)
+        self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
+        self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
+        self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
+        pygame.draw.circle(self.game.screen, (0, 255, 0),
+                           self.center1, 2, 0)
+        self.center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
+        pygame.draw.circle(self.game.screen, (0, 255, 0),
+                          self.center2, 2, 0)
 
 
     def rotate_points2(self, points, angle, center):
@@ -543,34 +599,33 @@ class Lens(GameObject):
 
         return rotated_points
 
-    def draw_convex(self, rect, angle):
-        self.generate_points(rect, angle)
-
-    def draw_concave(self, rect, angle):
-        self.generate_points(rect, angle)
-
     def render(self):
         # print(self.get_triangles())
 
         # self.get_slopes()
         if not self.selectedtrue:
             # Draw the rotated lines without transparency
+            if self.resizing:
+                self.drawResizeOutline()
             if self.texture:
                 pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
             else:
-                if self.type != self.CONCAVE:
+                if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE:
                     self.generate_points(self.points, self.angle)
                     pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
                     if self.type != self.SINGLE_VEX:
                         pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
                         pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
                 else:
-                    self.draw_concave(self.points, self.angle)
+                    self.generate_points(self.points, self.angle)
                     # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
                     # pygame.gfxdraw.filled_polygon(self.game.screen, (
                     # self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
                     # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-                    pygame.draw.lines(self.game.screen, self.color, True, self.lens_points + self.lens_points2, 3)
+                    if self.type == self.SINGLE_CAVE:
+                        self.lens_points.reverse()
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
+                                                  self.color)
 
         else:
             mousepos = pygame.mouse.get_pos()
@@ -585,7 +640,7 @@ class Lens(GameObject):
 
             else:
                 self.adjust(mousepos[0], mousepos[1], 0)
-            if self.type != self.CONCAVE:
+            if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE:
                 self.generate_points(self.points, self.angle)
                 pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
                 if self.type != self.SINGLE_VEX:
@@ -593,15 +648,15 @@ class Lens(GameObject):
                     self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
                     pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
             else:
-                self.draw_concave(self.points, self.angle)
+                self.generate_points(self.points, self.angle)
                 #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
                 # length = len(self.lens_points)//2
                 # lens_points = []
                 # for point in self.lens_points:
-
-                #pygame.gfxdraw.filled_polygon(self.game.screen, lens_points, self.color)
-                pygame.draw.lines(self.game.screen, self.color, True, self.lens_points + self.lens_points2, 3)
-                #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                if self.type == self.SINGLE_CAVE:
+                    self.lens_points.reverse()
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
+                                              self.color)
 
             self.drawoutline()
     def adjust(self, x, y, d_angle):

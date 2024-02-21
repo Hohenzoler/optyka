@@ -16,7 +16,8 @@ import time
 from datetime import datetime
 import functions
 import gui
-from gui import polygonDrawing
+from gui.polygonDrawing import polygonDrawing
+from classes import popup
 from classes import saveTK
 
 isDrawingModeOn = False
@@ -62,6 +63,7 @@ class Game:
         self.achievements.handle_achievement_unlocked("here is your first achievement ;)")
 
         self.p = False #used for properties windows for gameobjects
+        self.r_key = False # used for resizing objects
 
         self.selected_object = None
 
@@ -88,6 +90,8 @@ class Game:
         self.popup_start_time = None
         self.popup = False
         self.currentAchievementName = None
+
+        self.polygonDrawing = polygonDrawing()
 
 
     def create_cursor_particles(self):
@@ -144,8 +148,28 @@ class Game:
             if self.mode == 'default':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
+                    for object in self.objects:
+                        if type(object) in (gameobjects.GameObject, gameobjects.Mirror, gameobjects.Lens, gameobjects.Flashlight, gameobjects.Prism, gameobjects.CustomPolygon, gameobjects.ColoredGlass) and object.resizing:
+                            if object.resize_on is False:
+                                for idx, rect in enumerate(object.resize_rects):
+                                    if rect.collidepoint(self.mousepos):
+                                        object.resize_on = True
+                                        object.resize_point_index = idx
+                                        resize_point = object.points[idx]
+                                        for index, point in enumerate(object.points):
+                                            if point[0] == resize_point[0] and point != resize_point:
+                                                object.x_resize_index = index
+
+                                            elif point[1] == resize_point[1] and point != resize_point:
+                                                object.y_resize_index = index
+                                                pygame.draw.circle(self.screen, (0, 255, 0), point, 5)
+                                            elif point != resize_point:
+                                                object.static_point_index = index
+                                                pygame.draw.circle(self.screen, (255, 0, 0), point, 5)
+                            else:
+                                object.resize_on = False
                     if self.isDrawingModeOn:
-                        polygonDrawing.addPoint(self.mousepos)
+                        polygonDrawing.addPoint(self.polygonDrawing, self.mousepos)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.create_clicked_particles()
                     if event.button == 3:
@@ -155,9 +179,12 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.p = True
+                    if event.key == pygame.K_r and self.selected_object is not None:
+                        self.r_key = True
+                        self.selected_object.selected(pygame.mouse.get_pos())
                     elif event.key == 13 and self.isDrawingModeOn:
-                        gui.polygonDrawing.createPolygon(self)
-                        polygonDrawing.clearPoints()
+                        polygonDrawing.createPolygon(self.polygonDrawing, self)
+                        polygonDrawing.clearPoints(self.polygonDrawing)
                         global isDrawingModeOn
                         isDrawingModeOn = False
                         self.achievements.handle_achievement_unlocked("topopisy")
@@ -264,7 +291,7 @@ class Game:
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
         if isDrawingModeOn:
 
-            from gui.polygonDrawing import currentPolygonPoints as points
+            points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
             self.screen.blit(self.pen_img, self.cursor_img_rect)
             for i in range(len(points)):
                 pygame.draw.circle(self.screen, (200, 0, 0), points[i], 5)
@@ -279,8 +306,9 @@ class Game:
                 self.popup = False
                 self.popup_start_time = None
                 self.currentAchievementName = None
+                self.currentAchievementRarity = None
             else:
-                self.screen.blit(images.torch, (0, 70))
+                popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName, self.currentAchievementRarity, 50, 100)
                 print(self.currentAchievementName)
 
 
@@ -313,9 +341,10 @@ class Game:
         self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1), 10))
         return time_text
 
-    def achievement_popup(self, achname):
+    def achievement_popup(self, achname, rarity):
         self.popup = True
         self.currentAchievementName = achname
+        self.currentAchievementRarity = rarity
         self.popup_start_time = time.time()
 
     def loop(self):
@@ -330,6 +359,7 @@ class Game:
             self.mousepos = None  # resets self.mouspos
             self.rightclickedmousepos = None
             self.p = False
+            self.r_key = False
             self.events()
             self.achievements.fps_achievements()
             if self.save_to_load != None:

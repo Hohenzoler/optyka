@@ -8,22 +8,27 @@ import gui
 from gui.button import *
 import time
 
-currentPolygonPoints = []
-def addPoint(mousePos):
-    global currentPolygonPoints
-    currentPolygonPoints.append(mousePos)
+class polygonDrawing:
 
-    print(currentPolygonPoints)
-# def renderDots():
-#     for i in currentPolygonPoints:
-#         pygame.draw.circle(screen, (200, 200, 200), i, 10)
-def clearPoints():
-    global currentPolygonPoints
-    currentPolygonPoints = []
-def createPolygon(game):
-    global currentPolygonPoints
-    if len(currentPolygonPoints) >= 3:
-        Adam = gameobjects.Mirror(game, currentPolygonPoints, (200, 0, 0), 0, 1, 0)
-        game.objects.append(Adam)
-        clearPoints()
+    def __init__(self):
+        self.currentPolygonPoints = []
+
+
+    def addPoint(self, mousePos):
+        self.currentPolygonPoints.append(mousePos)
+
+        print(self.currentPolygonPoints)
+    # def renderDots():
+    #     for i in currentPolygonPoints:
+    #         pygame.draw.circle(screen, (200, 200, 200), i, 10)
+    def clearPoints(self):
+        self.currentPolygonPoints = []
+    def createPolygon(self, game):
+        if len(self.currentPolygonPoints) >= 3:
+            Adam = gameobjects.Mirror(game, self.currentPolygonPoints, (200, 0, 0), 0, 1, 0)
+            game.objects.append(Adam)
+            self.clearPoints()
+
+    def returnPolygonPoints(self):
+        return self.currentPolygonPoints
 

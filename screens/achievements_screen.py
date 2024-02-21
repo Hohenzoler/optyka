@@ -16,6 +16,15 @@ class AchievementsScreen:
         self.objects = []
         self.font = pygame.font.Font(None, 24)  # Adjust the font size as needed
         self.achievements = []
+
+        self.rarity_values = {
+            'common': 1,
+            'uncommon': 2,
+            'rare': 3,
+            'epic': 4,
+            'legendary': 5
+        }
+
         self.load_achievements()
         self.particle_system = particles.UnityParticleSystem()
 
@@ -35,8 +44,13 @@ class AchievementsScreen:
             cursor.execute("SELECT * FROM achievements")
             self.achievements = cursor.fetchall()
             conn.close()
+            self.achievements = sorted(self.achievements, key=lambda achievement: self.rarity_values.get(achievement[2], 0),
+                                       reverse=True)
         except:
             print("Error: Could not load achievements from the database.")
+
+    def sort_achievements(self):
+        self.achievements = sorted(self.achievements, key=lambda achievement: self.rarity_values.get(achievement[2], 0))
 
     def generate_particles(self):
         # Adjust the parameters as needed
@@ -73,11 +87,11 @@ class AchievementsScreen:
         y_offset1 = 100
         y_offset2 = 100
 
-        for achievement in self.achievements[:midpoint]:
-            y_offset1 = self.render_achievement(achievement, 50, y_offset1)
-
-        for achievement in self.achievements[midpoint:]:
-            y_offset2 = self.render_achievement(achievement, self.width  - (self.width -100)// 2, y_offset2)
+        for i, achievement in enumerate(self.achievements):
+            if i % 2 == 0:
+                y_offset1 = self.render_achievement(achievement, 50, y_offset1)
+            else:
+                y_offset2 = self.render_achievement(achievement, self.width - (self.width - 100) // 2, y_offset2)
 
         self.back_animation.animate()
         for object in self.objects:
@@ -86,18 +100,18 @@ class AchievementsScreen:
     def render_achievement(self, achievement, x_offset, y_offset):
         achievement_name, unlocked, rarity = achievement
         if rarity == 'common':
-            color = (200, 200, 200)
+            color = (163, 163, 163)
         elif rarity == 'uncommon':
-            color = (100, 200, 0)
+            color = (10, 145, 6)
         elif rarity == 'rare':
-            color = (25, 65, 120)
+            color = (15, 109, 163)
         elif rarity == 'epic':
-            color = (83, 0, 135)
+            color = (97, 37, 143)
         elif rarity == 'legendary':
-            color = (247, 247, 2)
+            color = (222, 182, 24)
         else:
             color = (50, 50, 50)
-        text_color = tuple(255 - c for c in color)
+        text_color = (255, 255, 255)
         text_surface = self.font.render(f"{achievement_name} - {rarity}", True, text_color)
 
         rect_width = self.width // 2 - 100

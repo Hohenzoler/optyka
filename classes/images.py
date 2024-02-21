@@ -24,3 +24,6 @@ glass = pygame.image.load('images/materials/glass.png')  # Loading the glass ima
 papier = pygame.image.load('images/materials/paper.png')  # Loading the paper image
 lens = pygame.image.load('images/glasses.png')  # Loading the lens image
 glass_icon = pygame.image.load("images/glass_thing_icon.png")  # Loading the glass icon image
+concave = pygame.image.load("images/concave.png")  # Loading the concave icon image
+oneconcave = pygame.image.load("images/oneconcave.png")  # Loading the one concave icon image
+oneconvex = pygame.image.load("images/oneconvex.png")  # Loading the oneconvex icon image
