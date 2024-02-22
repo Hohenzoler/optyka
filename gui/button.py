@@ -167,11 +167,13 @@ class Button:
             self.show_tooltip()
 
     def show_tooltip(self):
-        text_surface = self.tooltip_font.render(self.tooltip_text, True, (0, 0, 0))
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (self.rect.centerx, self.rect.top - 10)
+        text_surface = self.tooltip_font.render(self.tooltip_text, True, (255, 255, 255))
+        mouse_pos = pygame.mouse.get_pos()
 
-        pygame.draw.rect(self.game.screen, (255, 255, 255), text_rect.inflate(10, 10))
+        text_rect = text_surface.get_rect()
+        text_rect.bottomright = (mouse_pos[0]-5, mouse_pos[1]-5)
+
+        pygame.draw.rect(self.game.screen, (0, 0, 0), text_rect.inflate(10, 10))
 
         self.game.screen.blit(text_surface, text_rect)
 
