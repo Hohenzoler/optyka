@@ -26,7 +26,7 @@ class Button:
         icon_rect (pygame.Rect): The rectangle that represents the icon.
     """
 
-    def __init__(self, game, number):
+    def __init__(self, game, number, tooltip_text):
         """
         The constructor for the Button class.
 
@@ -146,6 +146,9 @@ class Button:
         else:
             self.color = (20, 0, 0)
 
+        self.tooltip_text = tooltip_text
+        self.tooltip_font = pygame.font.Font(None, 24)
+
     def render(self):
         """
         Renders the button on the screen.
@@ -158,6 +161,22 @@ class Button:
 
         except:
             pass
+
+        mouse_pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(mouse_pos):
+            self.show_tooltip()
+
+    def show_tooltip(self):
+        text_surface = self.tooltip_font.render(self.tooltip_text, True, (255, 255, 255))
+        mouse_pos = pygame.mouse.get_pos()
+
+        text_rect = text_surface.get_rect()
+        text_rect.bottomright = (mouse_pos[0]-5, mouse_pos[1]-5)
+
+        pygame.draw.rect(self.game.screen, (0, 0, 0), text_rect.inflate(10, 10))
+
+        self.game.screen.blit(text_surface, text_rect)
+
     def checkifclicked(self, mousepos):
         """
         Checks if the button was clicked and performs the corresponding action.
@@ -240,6 +259,8 @@ class Button:
 
                 elif classes.game.isDrawingModeOn == False:
                     classes.game.isDrawingModeOn = True
+        if self.rect.collidepoint(mousepos[0], mousepos[1]) and not pygame.mouse.get_pressed()[0]:
+            self.show_tooltip()
 
 
 

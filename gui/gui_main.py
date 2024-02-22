@@ -32,7 +32,8 @@ class GUI:
         self.button_min = -2
         self.button_max = 10
 
-        self.buttons = [button.Button(self.game, x) for x in range(self.button_min, self.button_max)] #creates buttons
+        self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
+                        range(self.button_min, self.button_max)]  # creates buttons
 
 
     def render(self):
@@ -44,6 +45,32 @@ class GUI:
         for button in self.buttons:
             button.checkifclicked(mousepos)
 
+
+    def tooltip_list(self, id):
+        if id == -2:
+            return "Settings"
+        elif id == -1:
+            return "Quit"
+        elif id == 0:
+            return "Flashlight"
+        elif id == 1:
+            return "Mirror"
+        elif id == 2:
+            return "Colored Glass"
+        elif id == 3:
+            return "Prism"
+        elif id == 4:
+            return "Topopisy"
+        elif id == 5:
+            return "Lens"
+        elif id == 6:
+            return "Lens"
+        elif id == 7:
+            return "Lens"
+        elif id == 8:
+            return "Lens"
+        elif id == 9:
+            return "idk"
 
     def load_settings(self):
         self.width = self.game.width
@@ -59,4 +86,4 @@ class GUI:
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
 
-        self.buttons = [button.Button(self.game, x) for x in range(self.button_min, self.button_max)] #creates buttons
+        self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in range(self.button_min, self.button_max)] #creates buttons

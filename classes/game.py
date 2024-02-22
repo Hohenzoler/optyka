@@ -2,6 +2,8 @@ import json
 import random
 import os
 import pygame
+import math
+# from math import *
 from pygame import *
 from gui import gui_main as gui1
 from gui.gui_main import GUI
@@ -145,7 +147,9 @@ class Game:
                     pygame.quit()
                     quit()
 
+
             if self.mode == 'default':
+                points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
                     for object in self.objects:
@@ -174,6 +178,12 @@ class Game:
                     self.create_clicked_particles()
                     if event.button == 3:
                         self.rightclickedmousepos = event.pos
+                        if self.isDrawingModeOn:
+                            for i in range(len(points)):
+                                distance = ((points[i][0] - 5 - self.rightclickedmousepos[0]) ** 2 + (points[i][1] - self.rightclickedmousepos[1]) ** 2 ) ** 0.5
+                                if distance < 10:
+                                    pass
+                                print(distance)
                 if event.type == pygame.MOUSEWHEEL:
                     self.scrolling(event)
                 if event.type == pygame.KEYDOWN:
@@ -188,6 +198,8 @@ class Game:
                         global isDrawingModeOn
                         isDrawingModeOn = False
                         self.achievements.handle_achievement_unlocked("topopisy")
+                    elif event.key == pygame.K_BACKSPACE and len(points) > 0:
+                        polygonDrawing.popapoint(self.polygonDrawing)
 
 
 
@@ -322,14 +334,14 @@ class Game:
         Displays the current FPS on the game display.
         """
         if self.settings['HOTBAR_POSITION'] != 'top':
-            self.y = 10
+            self.y = 12.5
         else:
-            self.y = 75
+            self.y = self.height // 7
 
         if self.settings['HOTBAR_POSITION'] != 'left':
             self.x = 12.5
         else:
-            self.x = 125
+            self.x = self.width // 9
         fps = self.clock.get_fps()
         fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
         self.screen.blit(fps_text, (self.x, self.y))
@@ -351,12 +363,12 @@ class Game:
         if self.settings['HOTBAR_POSITION'] != 'top':
             self.y = 12.5
         else:
-            self.y = 75
+            self.y = self.height // 7
 
         if self.settings['HOTBAR_POSITION'] != 'right':
             self.x = 0
         else:
-            self.x = 125
+            self.x = self.width // 10
 
         self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1)-self.x, self.y))
         return time_text
