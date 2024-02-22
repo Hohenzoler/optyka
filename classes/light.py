@@ -210,13 +210,13 @@ class Light:
                 x = lf.intercept(self.linear_function)
 
                 y = lf.calculate(x)
-                # lf.draw(self.game)
-                # self.linear_function.draw(self.game)
-                #
-                # pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
-                # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 5)
-                # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
-                # lf.draw(self.game)
+                lf.draw(self.game)
+                self.linear_function.draw(self.game)
+
+                pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
+                # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 5)
+                # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
+                lf.draw(self.game)
                 point = (x, self.linear_function.calculate(x))
 
                 if (slope[0][0] - slope[1][0]) == 0: #checking 'special case slope': |
@@ -239,7 +239,8 @@ class Light:
                         else:
                             if y >= self.current_starting_point[1]:
                                 cases += 1
-                        # print(cases)
+                        print(self.vertical,self.horizontal,self.r)
+                        print(cases,'aaaaaaaaaaaaaaaaaaaaaa')
                         if cases == 2:
                             pygame.draw.line(self.game.screen, (0, 255, 0), slope[0], slope[1],
                                              5)
@@ -334,7 +335,7 @@ class Light:
                 self.linear_function = Linear_Function(math.tan(-self.r),
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
-
+                self.calibrate_r2()
                 #self.linear_function.draw(self.game)
                 break
     def right_lens(self, lens):
@@ -369,6 +370,7 @@ class Light:
                 self.linear_function = Linear_Function(math.tan(-self.r),
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
+                self.calibrate_r2()
                 #self.linear_function.draw(self.game)
                 break
     def lens_stuff(self, lens):
