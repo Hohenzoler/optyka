@@ -32,3 +32,6 @@ class polygonDrawing:
     def returnPolygonPoints(self):
         return self.currentPolygonPoints
 
+    def popapoint(self):
+        self.currentPolygonPoints.pop()
+
