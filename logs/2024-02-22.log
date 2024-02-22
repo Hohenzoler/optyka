@@ -4183,3 +4183,241 @@ Traceback (most recent call last):
     self.mixer = mixer.Mixer(self.settings)
                  ^^^^^^^^^^^
 AttributeError: module 'pygame.mixer' has no attribute 'Mixer'
+2024-02-22 19:53:38,586 - ERROR - 'Lens' object has no attribute 'type'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 619, in render
+    if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE:
+       ^^^^^^^^^
+AttributeError: 'Lens' object has no attribute 'type'
+2024-02-22 19:59:13,426 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 762, in render
+    super().render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 367, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 413, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:00:05,684 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 762, in render
+    super().render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 367, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 413, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:00:41,676 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 367, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 413, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:01:23,180 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 369, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 415, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:02:42,342 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 369, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 415, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:03:11,194 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 369, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 415, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:03:47,663 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 764, in render
+    super().render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 369, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 415, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:05:13,772 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 369, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 415, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:05:27,677 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 369, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 415, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:05:41,869 - ERROR - float() argument must be a string or a real number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 394, in loop
+    self.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 276, in render
+    object.render()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 147, in render
+    self.change_parameters()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 369, in change_parameters
+    self.change_size()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 415, in change_size
+    new_x = ((point[0] - float(self.parameters['x'])) * percent) + float(self.parameters['x'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'Entry'
+2024-02-22 20:06:55,740 - DEBUG - STREAM b'IHDR' 16 13
+2024-02-22 20:06:55,740 - DEBUG - STREAM b'iCCP' 41 388
+2024-02-22 20:06:55,740 - DEBUG - iCCP profile name b'ICC profile'
+2024-02-22 20:06:55,740 - DEBUG - Compression method 0
+2024-02-22 20:06:55,740 - DEBUG - STREAM b'pHYs' 441 9
+2024-02-22 20:06:55,740 - DEBUG - STREAM b'tIME' 462 7
+2024-02-22 20:06:55,741 - DEBUG - b'tIME' 462 7 (unknown)
+2024-02-22 20:06:55,741 - DEBUG - STREAM b'tEXt' 481 25
+2024-02-22 20:06:55,741 - DEBUG - STREAM b'IDAT' 518 8192
+2024-02-22 20:07:43,678 - ERROR - 'points'
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 403, in loop
+    self.load()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 449, in load
+    obj.change_parameters('not')
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\gameobjects.py", line 374, in change_parameters
+    self.defualt_points = self.parameters['points']
+                          ~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'points'
+2024-02-22 20:08:55,188 - DEBUG - STREAM b'IHDR' 16 13
+2024-02-22 20:08:55,188 - DEBUG - STREAM b'iCCP' 41 388
+2024-02-22 20:08:55,188 - DEBUG - iCCP profile name b'ICC profile'
+2024-02-22 20:08:55,188 - DEBUG - Compression method 0
+2024-02-22 20:08:55,188 - DEBUG - STREAM b'pHYs' 441 9
+2024-02-22 20:08:55,188 - DEBUG - STREAM b'tIME' 462 7
+2024-02-22 20:08:55,188 - DEBUG - b'tIME' 462 7 (unknown)
+2024-02-22 20:08:55,188 - DEBUG - STREAM b'tEXt' 481 25
+2024-02-22 20:08:55,188 - DEBUG - STREAM b'IDAT' 518 8192
+2024-02-22 20:09:38,223 - DEBUG - STREAM b'IHDR' 16 13
+2024-02-22 20:09:38,223 - DEBUG - STREAM b'iCCP' 41 388
+2024-02-22 20:09:38,223 - DEBUG - iCCP profile name b'ICC profile'
+2024-02-22 20:09:38,223 - DEBUG - Compression method 0
+2024-02-22 20:09:38,223 - DEBUG - STREAM b'pHYs' 441 9
+2024-02-22 20:09:38,223 - DEBUG - STREAM b'tIME' 462 7
+2024-02-22 20:09:38,223 - DEBUG - b'tIME' 462 7 (unknown)
+2024-02-22 20:09:38,223 - DEBUG - STREAM b'tEXt' 481 25
+2024-02-22 20:09:38,223 - DEBUG - STREAM b'IDAT' 518 8192
+2024-02-22 20:09:55,899 - ERROR - video system not initialized
+Traceback (most recent call last):
+  File "C:\Users\This PC\Documents\GitHub\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 400, in loop
+    self.events()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 182, in events
+    self.create_clicked_particles()
+  File "C:\Users\This PC\Documents\GitHub\optyka\classes\game.py", line 114, in create_clicked_particles
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+                       ^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: video system not initialized
+2024-02-22 20:11:32,299 - DEBUG - STREAM b'IHDR' 16 13
+2024-02-22 20:11:32,300 - DEBUG - STREAM b'iCCP' 41 388
+2024-02-22 20:11:32,300 - DEBUG - iCCP profile name b'ICC profile'
+2024-02-22 20:11:32,300 - DEBUG - Compression method 0
+2024-02-22 20:11:32,300 - DEBUG - STREAM b'pHYs' 441 9
+2024-02-22 20:11:32,300 - DEBUG - STREAM b'tIME' 462 7
+2024-02-22 20:11:32,300 - DEBUG - b'tIME' 462 7 (unknown)
+2024-02-22 20:11:32,300 - DEBUG - STREAM b'tEXt' 481 25
+2024-02-22 20:11:32,300 - DEBUG - STREAM b'IDAT' 518 8192

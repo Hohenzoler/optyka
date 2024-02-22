@@ -344,6 +344,9 @@ class GameObject:
 
         self.parameters['transmittance'] = self.transmittance
 
+        self.parameters['points'] = self.defualt_points
+        print(self.defualt_points)
+
         if type(self) == Flashlight:
             lazer_on = {'lazer': self.lazer}
             self.parameters.update(lazer_on)
@@ -361,6 +364,8 @@ class GameObject:
             self.find_parameters()
             mp.Parameters(self)
 
+        print(self.parameters)
+
         self.scale_factor = self.parameters['size']
         self.change_size()
         d_angle = self.parameters['angle']
@@ -369,18 +374,17 @@ class GameObject:
         self.scale_factor = self.parameters['size']
         self.transmittance = self.parameters['transmittance']
         self.reflection_factor = self.parameters['reflection_factor']
+        self.defualt_points = self.parameters['points']
+        self.points = self.defualt_points
 
         try:
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
+            self.textureName = None
+            self.get_Texture()
 
         except Exception as e:
-            print(e)
-
-        try:
             self.textureName = self.parameters['texture']
             self.get_Texture()
-        except Exception as e:
-            print(e)
 
         try:
             self.lazer = self.parameters["lazer"]

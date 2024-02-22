@@ -439,8 +439,10 @@ class Game:
                 obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 1, 1)
 
             elif parameters['class'] == "Lens":
-                obj = gameobjects.Lens(self, [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100), (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)], (64, 137, 189), 0, 0, 140, 0, 0.5)
-
+                obj = gameobjects.Lens(self,
+                                       [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                        (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                       (64, 137, 189), 0, 140, 0, 1)
             # elif parameters['class'] == ""
 
             obj.parameters = parameters
