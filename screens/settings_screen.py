@@ -41,27 +41,27 @@ class Settings_screen:
         self.resolutiontext = self.font2.render('Resolution:', True, 'white')
         self.resolutiontextRect = self.resolutiontext.get_rect()
         self.resolutiontextRect.center = (
-        self.width // 2 - self.width // 10, self.height // 4 + gapsize)
+        self.width // 2 - self.width // 7, self.height // 4 + gapsize)
 
         self.FStext = self.font2.render('Fullscreen:', True, 'white')
         self.FStextRect = self.FStext.get_rect()
         self.FStextRect.center = (
-        self.width // 2 - self.width // 10, self.height // 4 + (self.width // 20 + self.height // 47) + gapsize)
+        self.width // 2 - self.width // 7, self.height // 4 + (self.width // 20 + self.height // 47) + gapsize)
 
         self.hottext = self.font2.render('Hotbar location:', True, 'white')
         self.hottextRect = self.hottext.get_rect()
 
-        self.hottextRect.center = (self.width // 2 - self.width // 10,  self.height // 4 + 2 * (self.width // 20 + self.height // 47) + gapsize)
+        self.hottextRect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 2 * (self.width // 20 + self.height // 47) + gapsize)
 
         self.flashlighttext = self.font2.render('HD Flashlight:', True, 'white')
         self.flashlighttextRect = self.flashlighttext.get_rect()
 
-        self.flashlighttextRect.center = (self.width // 2 - self.width // 10,  self.height // 4 + 3 * (self.width // 20 + self.height // 47) + gapsize)
+        self.flashlighttextRect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 3 * (self.width // 20 + self.height // 47) + gapsize)
 
         self.musictext = self.font2.render('Music Settings:', True, 'white')
         self.musictextrect = self.musictext.get_rect()
 
-        self.musictextrect.center = (self.width // 2 - self.width // 10,  self.height // 4 + 4 * (self.width // 20 + self.height // 47) + gapsize)
+        self.musictextrect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 4 * (self.width // 20 + self.height // 47) + gapsize)
 
         save_n_exit = button.ButtonForgame(71, self)
         self.save_n_exit_animation = ButtonAnimation(save_n_exit, save_n_exit.rect.x*6+(save_n_exit.width//2), save_n_exit.rect.y)

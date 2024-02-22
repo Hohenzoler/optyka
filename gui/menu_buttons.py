@@ -11,7 +11,7 @@ class ButtonMenus:
         self.width = self.ss.width // 5
         self.height = self.ss.width // 20
         gap_size = self.ss.height//47
-        self.x = self.ss.width // 2 + self.width // 2
+        self.x = self.ss.width // 2 + self.width // 3
         self.y = self.ss.height // 4 + number * (self.height + gap_size)
         from classes.font import Font
         self.font = pygame.font.Font(Font, self.height // 3)
