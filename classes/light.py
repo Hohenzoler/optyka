@@ -211,12 +211,12 @@ class Light:
 
                 y = lf.calculate(x)
                 lf.draw(self.game)
-                self.linear_function.draw(self.game)
+                # self.linear_function.draw(self.game)
 
-                pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
-                # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 5)
-                # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
-                lf.draw(self.game)
+                # pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
+                # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 5)
+                # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
+                # lf.draw(self.game)
                 point = (x, self.linear_function.calculate(x))
 
                 if (slope[0][0] - slope[1][0]) == 0: #checking 'special case slope': |
