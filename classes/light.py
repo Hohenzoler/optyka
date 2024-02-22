@@ -261,6 +261,8 @@ class Light:
                                     self.current_object_type = 'lens'
                                 elif type(object) == gameobjects.Prism:
                                     self.current_object_type = 'prism'
+                                elif type(object) == gameobjects.Corridor:
+                                    self.current_object_type = 'mirror'
 
                             else:
                                 if dist < self.current_distance:
@@ -279,6 +281,8 @@ class Light:
                                     elif type(object) == gameobjects.Prism:
 
                                         self.current_object_type = 'prism'
+                                    elif type(object) == gameobjects.Corridor:
+                                        self.current_object_type = 'mirror'
 
         # if self.object_counter>1:
         #     self.ignore_object=object
