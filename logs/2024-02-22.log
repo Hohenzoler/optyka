@@ -4421,3 +4421,62 @@ pygame.error: video system not initialized
 2024-02-22 20:11:32,300 - DEBUG - b'tIME' 462 7 (unknown)
 2024-02-22 20:11:32,300 - DEBUG - STREAM b'tEXt' 481 25
 2024-02-22 20:11:32,300 - DEBUG - STREAM b'IDAT' 518 8192
+2024-02-22 20:24:03,332 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 402, in loop
+    self.achievements.fps_achievements()
+  File "D:\Python\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+  File "D:\Python\optyka\classes\game.py", line 125, in return_fps
+    return self.displayFPS()
+  File "D:\Python\optyka\classes\game.py", line 352, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+pygame.error: Library not initialized
+2024-02-22 20:25:54,065 - ERROR - video system not initialized
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 401, in loop
+    self.events()
+  File "D:\Python\optyka\classes\game.py", line 149, in events
+    self.save_game()
+  File "D:\Python\optyka\classes\game.py", line 494, in save_game
+    pygame.mouse.set_visible(True)
+pygame.error: video system not initialized
+2024-02-22 20:32:05,911 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 406, in loop
+    self.achievements.fps_achievements()
+  File "D:\Python\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+  File "D:\Python\optyka\classes\game.py", line 126, in return_fps
+    return self.displayFPS()
+  File "D:\Python\optyka\classes\game.py", line 356, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+pygame.error: Library not initialized
+2024-02-22 20:36:34,047 - ERROR - center argument must be a pair of numbers
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 401, in loop
+    self.render()
+  File "D:\Python\optyka\classes\game.py", line 321, in render
+    pygame.draw.circle(self.screen, (200, 0, 0), points[i], 8)
+TypeError: center argument must be a pair of numbers
+2024-02-22 20:41:01,084 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\Python\optyka\main.py", line 42, in new_game
+    game_instance.loop()
+  File "D:\Python\optyka\classes\game.py", line 408, in loop
+    self.achievements.fps_achievements()
+  File "D:\Python\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+  File "D:\Python\optyka\classes\game.py", line 126, in return_fps
+    return self.displayFPS()
+  File "D:\Python\optyka\classes\game.py", line 358, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+pygame.error: Library not initialized

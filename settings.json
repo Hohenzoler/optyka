@@ -8,5 +8,10 @@
  "Flashlight_FOV": 60,
  "Flashlight_Rays": 600,
  "Flashlight_Depth": 500,
- "HD_Flashlight": "OFF"
+ "HD_Flashlight": "OFF",
+ "MASTER_VOLUME": 1,
+ "SOUNDTRACK_VOLUME": 1,
+ "OBJECT_VOLUME": 1,
+ "ACTION_VOLUME": 1,
+ "ACHIEVEMENT_VOLUME": 1
 }

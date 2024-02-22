@@ -98,6 +98,7 @@ class Game:
         self.currentAchievementName = None
 
         self.polygonDrawing = polygonDrawing()
+        self.isDotHeld = -1
 
 
     def create_cursor_particles(self):
@@ -183,11 +184,14 @@ class Game:
                     if event.button == 3:
                         self.rightclickedmousepos = event.pos
                         if self.isDrawingModeOn:
-                            for i in range(len(points)):
-                                distance = ((points[i][0] - 5 - self.rightclickedmousepos[0]) ** 2 + (points[i][1] - self.rightclickedmousepos[1]) ** 2 ) ** 0.5
-                                if distance < 10:
-                                    pass
-                                print(distance)
+                            if self.isDotHeld != -1:
+                                points[self.isDotHeld] = event.pos
+                                self.isDotHeld = -1
+                            else:
+                                for i in range(len(points)):
+                                    distance = ((points[i][0] - self.rightclickedmousepos[0]) ** 2 + (points[i][1] - self.rightclickedmousepos[1]) ** 2 ) ** 0.5
+                                    if distance < 8 and self.isDotHeld == -1:
+                                        self.isDotHeld = i
                 if event.type == pygame.MOUSEWHEEL:
                     self.scrolling(event)
                 if event.type == pygame.KEYDOWN:
@@ -307,11 +311,14 @@ class Game:
 
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
         if isDrawingModeOn:
-
+            self.cursor_img_rect[0] += 10
+            self.cursor_img_rect[1] -= 10
             points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
             self.screen.blit(self.pen_img, self.cursor_img_rect)
             for i in range(len(points)):
-                pygame.draw.circle(self.screen, (200, 0, 0), points[i], 5)
+                if self.isDotHeld != -1 and self.isDotHeld == i:
+                    points[i] = (self.cursor_img_rect[0] + 10, self.cursor_img_rect[1] + 20)
+                pygame.draw.circle(self.screen, (200, 0, 0), points[i], 8)
             if len(points) >= 2:
                 pygame.draw.lines(self.screen, (255, 255, 255), True, points)
         else:
