@@ -179,7 +179,7 @@ class Light:
             if self.index >= 100:
                 self.mini_run = False
     def check_object(self,object):
-        self.linear_function.draw(self.game)
+        # self.linear_function.draw(self.game)
 
 
         self.object_counter=0
@@ -210,7 +210,7 @@ class Light:
                 x = lf.intercept(self.linear_function)
 
                 y = lf.calculate(x)
-                lf.draw(self.game)
+                # lf.draw(self.game)
                 # self.linear_function.draw(self.game)
 
                 # pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
@@ -291,24 +291,39 @@ class Light:
         for index, point in enumerate(lens.lens_points):
             if functions.is_linear_function_passing_through_point(self.linear_function, point):
                 x=point[0]
-                dist = abs(x - self.current_starting_point[0])
-                if self.current_distance == None:
-
-                    self.current_distance = dist
-                    self.current_point = point
-                    self.current_slope = None
-                    self.current_object =lens
-                    self.current_object_type = 'lens'
-
-
+                y=point[1]
+                cases=0
+                if self.horizontal == 'right':
+                    if x >= self.current_starting_point[0]:
+                        cases += 1
+                        # print('aaaaaaa')
                 else:
-                    if dist < self.current_distance:
+                    if x <= self.current_starting_point[0]:
+                        cases += 1
+                if self.vertical == 'up':
+                    if y <= self.current_starting_point[1]:
+                        cases += 1
+                else:
+                    if y >= self.current_starting_point[1]:
+                        cases += 1
+                if cases==2:
+                    dist = abs(x - self.current_starting_point[0])
+                    if self.current_distance == None:
 
                         self.current_distance = dist
                         self.current_point = point
                         self.current_slope = None
                         self.current_object = lens
                         self.current_object_type = 'lens'
+
+
+                    else:
+                        if dist < self.current_distance:
+                            self.current_distance = dist
+                            self.current_point = point
+                            self.current_slope = None
+                            self.current_object = lens
+                            self.current_object_type = 'lens'
 
     def left_lens(self, lens):
         for index, point in enumerate(lens.lens_points):
@@ -346,23 +361,24 @@ class Light:
                                  (point[0] - offset, point[1] - offset))
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
+
                 intersect_angle = functions.calculate_intersection_angle(slope2, slope1)
                 temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                 #print(math.degrees(math.asin(temp)))
                 if temp > 1:
-                    print("sdsdsd")
+                    # print("sdsdsd")
                     temp -= 1
                     ref_angle = math.asin(temp) + math.pi/2
                 else:
                     ref_angle = math.asin(temp)
                 print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                 normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
-                print(math.degrees(normal_angle))
+                # print(math.degrees(normal_angle))
                 if index < len(lens.lens_points2) / 2:
                     self.r = -normal_angle - ref_angle
                 else:
                     self.r = -normal_angle + ref_angle
-                print(math.degrees(self.r))
+                # print(math.degrees(self.r))
 
                 self.points.append(point)
                 self.colors.append(self.RGB.rgb)
