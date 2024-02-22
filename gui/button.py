@@ -1,10 +1,8 @@
 import classes.game
-import gui.polygonDrawing
 import pygame
-
-import settingsSetup
-from classes import gameobjects, sounds, images
+from classes import gameobjects, images
 from classes.font import Font
+from screens import music_settings
 
 
 spiel = None
@@ -378,25 +376,28 @@ class ButtonForgame:
         if self.rect.collidepoint(pos[0], pos[1]):
             if self.number == 0:
                 self.screen.mode = 'loading'
-                sounds.clicked_sound()
+                self.screen.mixer.clicked_sound()
             elif self.number == 1:
                 self.screen.mode = 'settings'
-                sounds.clicked_sound()
+                self.screen.mixer.clicked_sound()
             elif self.number == 3:
-                sounds.clicked_sound()
+                self.screen.mixer.clicked_sound()
                 exit()
             elif self.number == 2:
                 self.screen.mode = 'achievements'
-                sounds.clicked_sound()
+                self.screen.mixer.clicked_sound()
             elif self.number == 71:
-                self.screen.game.mode = 'load_new_settings'
-                sounds.clicked_sound()
+                if type(self.screen) != music_settings.Music_settings_screen:
+                    self.screen.game.mode = 'load_new_settings'
+                else:
+                    self.screen.game.mode = 'settings'
+                self.screen.mixer.clicked_sound()
             elif self.number == 72:
                 self.screen.game.mode = 'default'
                 if self.screen.state == 'presets' and any(value for value in self.screen.game.selected_buttons.values()):
                     self.screen.game.preset = True
                 self.screen.game.run = False
-                sounds.clicked_sound()
+                self.screen.mixer.clicked_sound()
             elif self.number == 73:
                 self.screen.state = 'presets'
             elif self.number == 74:
@@ -404,10 +405,10 @@ class ButtonForgame:
                     self.screen.game.mode = 'default'
                 else:
                     self.screen.state = 'default'
-                sounds.clicked_sound()
+                self.screen.mixer.clicked_sound()
             elif self.number == 75:
                 self.screen.game.mode = 'delete'
-                sounds.clicked_sound()
+                self.screen.mixer.clicked_sound()
             else:
                 raise NotImplementedError('button function not yet added')
 

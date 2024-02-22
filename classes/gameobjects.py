@@ -1,7 +1,7 @@
 import functions
 import pygame
 from gui import ModifyParameters as mp
-from classes import light, sounds, images
+from classes import light, mixer_c, images
 import math
 from pygame.transform import rotate
 import random
@@ -318,7 +318,7 @@ class GameObject:
             if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
                 self.selectedtrue = True
                 self.game.selected_object = self  # Set this object as the currently selected object
-                sounds.selected_sound()
+                self.game.mixer.selected_sound()
             elif self.selectedtrue:
                 if self.game.r_key:
                     if self.resizing is False:
@@ -328,9 +328,9 @@ class GameObject:
                 self.selectedtrue = False
                 self.game.selected_object = None  # No object is selected now
                 if type(self) == Flashlight:
-                    sounds.laser_sound()
+                    self.game.mixer.laser_sound()
                 else:
-                    sounds.placed_sound()
+                    self.game.mixer.placed_sound()
 
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)

@@ -20,7 +20,8 @@ import functions
 import gui
 from gui.polygonDrawing import polygonDrawing
 from classes import popup
-from classes import saveTK
+from classes import saveTK, mixer_c
+
 
 isDrawingModeOn = False
 
@@ -46,6 +47,7 @@ class Game:
             self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
         self.isDrawingModeOn = False
 
+
         self.run = True  # Game loop control
         self.fps = fps.return_fps()  # Frames per second
         self.tick = int((1 / self.fps) * 1000)  # Time per frame in milliseconds
@@ -61,6 +63,8 @@ class Game:
         self.pen_img = images.pen
         self.pen_img_rect = self.pen_img.get_rect()
         self.achievements = Achievements(self)  # Achievements object
+
+        self.mixer = mixer_c.Mixer(self.settings)
 
         self.achievements.handle_achievement_unlocked("here is your first achievement ;)")
 
@@ -291,6 +295,7 @@ class Game:
             self.settings = settingsSetup.load_settings()
             self.width = self.settings['WIDTH']
             self.height = self.settings['HEIGHT']
+            self.mixer = mixer_c.Mixer(self.settings)
             if self.settings['FULLSCREEN'] == 'ON':
                 self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
             else:

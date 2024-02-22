@@ -4,9 +4,10 @@ from classes import images
 import pygame
 from gui import button
 import settingsSetup
-from screens import settings_screen, loading_saves_screen, achievements_screen
+from screens import settings_screen, loading_saves_screen, achievements_screen, music_settings
 from classes import parkinson as particles
 from gui.button_animation import ButtonAnimation
+from classes import mixer_c
 
 pygame.init()
 
@@ -17,6 +18,10 @@ class StartScreen:
         self.version = version
 
         settings = settingsSetup.load_settings()
+
+        self.mixer = mixer_c.Mixer(settings)
+        self.mixer.soundtrack()
+
         self.particle_system = particles.UnityParticleSystem()
         self.width = settings['WIDTH']
         self.height = settings['HEIGHT']
@@ -93,6 +98,10 @@ class StartScreen:
             elif self.mode == 'delete':
                 self.delete()
 
+            elif self.mode == 'music':
+                self.music()
+
+
             self.checkforevents()
             self.render()
 
@@ -108,11 +117,11 @@ class StartScreen:
                 pygame.quit()
                 self.run = False
 
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 for object in self.objects:
                     if type(object) == button.ButtonForgame:
                         object.checkcollision(event.pos)
-                    elif type(object) == settings_screen.Settings_screen or type(object) == loading_saves_screen.Loading_saves_screen or type(object) == achievements_screen.AchievementsScreen:
+                    elif type(object) == settings_screen.Settings_screen or type(object) == loading_saves_screen.Loading_saves_screen or type(object) == achievements_screen.AchievementsScreen or type(object) == music_settings.Music_settings_screen:
                         object.checkevent(event.pos)
                     elif type(object) == loading_saves_screen.saveselector:
                         if event.button == 4 and object.scrolling_needed:
@@ -215,12 +224,17 @@ class StartScreen:
         self.width = settings['WIDTH']
         self.height = settings['HEIGHT']
 
+        self.mixer = mixer_c.Mixer(settings)
+        self.mixer.soundtrack()
+
         from classes.font import Font
         self.font = pygame.font.Font(Font, self.width // 20)
 
         self.maintext = self.font.render('Optics', True, 'white')
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
+
+        self.version_font = pygame.font.Font(Font, self.width // 50)
 
         self.versiontext = self.version_font.render(f"Optics {self.version}", True, 'white')
         self.versiontextRect = self.versiontext.get_rect()
@@ -241,3 +255,13 @@ class StartScreen:
                     os.remove(f'saves/{key}.json')
             self.executed_functions = 'delete'
             self.mode = 'loading'
+
+    def music(self):
+        if self.executed_functions != 'music':
+            self.buttons = []
+
+            self.objects = []
+
+            self.screen_mode = music_settings.Music_settings_screen(self)
+
+            self.executed_functions = 'music'
