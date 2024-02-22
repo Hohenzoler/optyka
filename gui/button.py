@@ -26,7 +26,7 @@ class Button:
         icon_rect (pygame.Rect): The rectangle that represents the icon.
     """
 
-    def __init__(self, game, number):
+    def __init__(self, game, number, tooltip_text="Hello World"):
         """
         The constructor for the Button class.
 
@@ -146,7 +146,7 @@ class Button:
         else:
             self.color = (20, 0, 0)
 
-        self.tooltip_text = "Hello World"
+        self.tooltip_text = tooltip_text
         self.tooltip_font = pygame.font.Font(None, 24)
 
     def render(self):
