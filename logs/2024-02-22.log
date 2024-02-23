@@ -1,0 +1,60 @@
+2024-02-22 06:41:08,630 - ERROR - 'Button' object has no attribute 'font'
+Traceback (most recent call last):
+  File "/home/admin/PycharmProjects/optyka/main.py", line 39, in new_game
+    game_instance.loop()
+  File "/home/admin/PycharmProjects/optyka/classes/game.py", line 377, in loop
+    self.render()
+  File "/home/admin/PycharmProjects/optyka/classes/game.py", line 260, in render
+    object.render()
+  File "/home/admin/PycharmProjects/optyka/gui/gui_main.py", line 41, in render
+    button.render()
+  File "/home/admin/PycharmProjects/optyka/gui/button.py", line 167, in render
+    self.show_tooltip()
+  File "/home/admin/PycharmProjects/optyka/gui/button.py", line 170, in show_tooltip
+    text_surface = self.font.render(self.tooltip_text, True, (0, 0, 0))
+                   ^^^^^^^^^
+AttributeError: 'Button' object has no attribute 'font'
+2024-02-22 06:42:07,805 - ERROR - 'Button' object has no attribute 'screen'
+Traceback (most recent call last):
+  File "/home/admin/PycharmProjects/optyka/main.py", line 39, in new_game
+    game_instance.loop()
+  File "/home/admin/PycharmProjects/optyka/classes/game.py", line 377, in loop
+    self.render()
+  File "/home/admin/PycharmProjects/optyka/classes/game.py", line 260, in render
+    object.render()
+  File "/home/admin/PycharmProjects/optyka/gui/gui_main.py", line 41, in render
+    button.render()
+  File "/home/admin/PycharmProjects/optyka/gui/button.py", line 167, in render
+    self.show_tooltip()
+  File "/home/admin/PycharmProjects/optyka/gui/button.py", line 173, in show_tooltip
+    self.screen.blit(text_surface, text_rect)
+    ^^^^^^^^^^^
+AttributeError: 'Button' object has no attribute 'screen'
+2024-02-22 06:57:28,656 - ERROR - Button.__init__() missing 1 required positional argument: 'tooltip_text'
+Traceback (most recent call last):
+  File "/home/admin/PycharmProjects/optyka/main.py", line 38, in new_game
+    GUI = gui.GUI(game_instance)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/admin/PycharmProjects/optyka/gui/gui_main.py", line 35, in __init__
+    self.buttons = [button.Button(self.game, x) for x in range(self.button_min, self.button_max)] #creates buttons
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/admin/PycharmProjects/optyka/gui/gui_main.py", line 35, in <listcomp>
+    self.buttons = [button.Button(self.game, x) for x in range(self.button_min, self.button_max)] #creates buttons
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Button.__init__() missing 1 required positional argument: 'tooltip_text'
+2024-02-22 06:59:56,316 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "/home/admin/PycharmProjects/optyka/main.py", line 39, in new_game
+    game_instance.loop()
+  File "/home/admin/PycharmProjects/optyka/classes/game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "/home/admin/PycharmProjects/optyka/classes/achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/admin/PycharmProjects/optyka/classes/game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/admin/PycharmProjects/optyka/classes/game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
