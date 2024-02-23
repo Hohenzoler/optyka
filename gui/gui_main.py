@@ -47,7 +47,9 @@ class GUI:
 
 
     def tooltip_list(self, id):
-        if id == -2:
+        if id == -3:
+            return "Achievements"
+        elif id == -2:
             return "Settings"
         elif id == -1:
             return "Quit"
@@ -70,7 +72,7 @@ class GUI:
         elif id == 8:
             return "Lens"
         elif id == 9:
-            return "idk"
+            return "random button"
 
     def load_settings(self):
         self.width = self.game.width
