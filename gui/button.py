@@ -139,6 +139,12 @@ class Button:
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
+        elif self.number == -3:
+            self.color = None
+            self.icon = images.puchar
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
 
 
         else:
@@ -244,6 +250,8 @@ class Button:
                     self.game.save_game()
                 elif self.number == -2:
                     self.game.mode = 'settings'
+                elif self.number == -3:
+                    self.game.mode = 'achievements'
                 try:
                     self.game.objects.append(obj)
                     obj.selected(mousepos)

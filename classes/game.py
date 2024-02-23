@@ -8,6 +8,7 @@ from pygame import *
 from gui import gui_main as gui1
 from gui.gui_main import GUI
 from screens import settings_screen
+from screens import achievements_screen
 import settingsSetup
 from classes import fps
 from classes import bin, images, gameobjects
@@ -217,6 +218,11 @@ class Game:
                         if isinstance(object, settings_screen.Settings_screen):
                             object.checkevent(event.pos)
 
+            elif self.mode == 'achievements':
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    for object in self.objects:
+                        if isinstance(object, achievements_screen.AchievementsScreen):
+                            object.checkevent(event.pos)
     def update(self):
         """
         Updates the game display and controls the game FPS.
@@ -278,7 +284,7 @@ class Game:
 
 
                 object.render()
-                if type(object) != bin.Bin:
+                if type(object) != bin.Bin and type(object) != achievements_screen.AchievementsScreen and type(object) != settings_screen.Settings_screen:
                     for bin_2 in self.objects:
                         if type(bin_2) == bin.Bin:
                             bin_2.checkCollision(object)
@@ -292,9 +298,24 @@ class Game:
                 self.executed_command = 'settings'
             else:
                 self.settings_screen.render()
+        elif self.mode == 'achievements':
+            if self.executed_command != 'achievements':
+                self.achievements_screen = achievements_screen.AchievementsScreen(self)
+                self.achievements_screen.render()
+                self.executed_command = 'achievements'
+            else:
+                self.achievements_screen.render()
         elif self.mode == 'load_new_settings':
-            self.objects.remove(self.settings_screen)
+            try:
+                self.objects.remove(self.settings_screen)
+            except:
+                pass
+            try:
+                self.objects.remove(self.achievements_screen)
+            except:
+                pass
             self.settings_screen = None
+            self.achievements_screen = None
             self.mode = 'default'
             self.settings = settingsSetup.load_settings()
             self.width = self.settings['WIDTH']
