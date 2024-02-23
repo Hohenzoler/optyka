@@ -414,6 +414,7 @@ class ButtonForgame:
                 self.screen.mixer.clicked_sound()
             elif self.number == 73:
                 self.screen.state = 'presets'
+                self.screen.mixer.clicked_sound()
             elif self.number == 74:
                 if self.screen.state == 'default' and self.screen.action == 'default':
                     self.screen.game.mode = 'default'
