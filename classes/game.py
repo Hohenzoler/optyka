@@ -199,6 +199,8 @@ class Game:
                     if event.key == pygame.K_p:
                         self.p = True
                     if event.key == pygame.K_r and self.selected_object is not None:
+                        if isinstance(self.selected_object, gameobjects.Mirror):
+                            print(self.selected_object.points)
                         self.r_key = True
                         self.selected_object.selected(pygame.mouse.get_pos())
                     elif event.key == 13 and self.isDrawingModeOn:
