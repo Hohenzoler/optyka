@@ -8,7 +8,7 @@ Optyka is a Python-based project. It uses the Pygame library for app development
 |----------------------|--------|
 | Flashlight           | ✅      |
 | Mirror               | ✅      |
-| Lens                 | ✅❌     |
+| Lens                 | ✅      |
 | Prism                | ✅      |
 | Zwierciadlo          | ❌      |
 | Transmittance factor | ✅      |
