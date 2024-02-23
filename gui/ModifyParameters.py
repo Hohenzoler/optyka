@@ -46,45 +46,46 @@ class Parameters:
         self.root.mainloop()
 
     def create_element(self, param, row):
-        try:
-            label = tk.Label(self.root, text=f"{param.capitalize()}:")
-            label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
-            if param == 'red' or param == 'blue' or param == 'green':
-                slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
-                slider.set(self.parameters_dict[param])
-                slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
-                self.sliders.append(slider)
+        if param != 'points':
+            try:
+                label = tk.Label(self.root, text=f"{param.capitalize()}:")
+                label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+                if param == 'red' or param == 'blue' or param == 'green':
+                    slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
+                    slider.set(self.parameters_dict[param])
+                    slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                    self.sliders.append(slider)
 
-                self.color_preview_canvas = tk.Canvas(self.root, width=50, height=50)
-                self.color_preview_canvas.grid(row=len(self.parameters_dict) + 1, column=0, columnspan=2, pady=10)
+                    self.color_preview_canvas = tk.Canvas(self.root, width=50, height=50)
+                    self.color_preview_canvas.grid(row=len(self.parameters_dict) + 1, column=0, columnspan=2, pady=10)
 
 
-            elif param == 'lazer':
-                self.slider_buttons.append(ToggleSwitch(self.parameters_dict[param], self.root))
-                self.slider_buttons[0].grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                elif param == 'lazer':
+                    self.slider_buttons.append(ToggleSwitch(self.parameters_dict[param], self.root))
+                    self.slider_buttons[0].grid(row=row, column=1, padx=25, pady=5, sticky='w')
 
-            elif param == 'texture':
-                self.textureOptions = [file[:-4].capitalize() for file in os.listdir("images/materials") if file.endswith('.png')]
-                self.TextureDropdown = ttk.Combobox(self.root, values=self.textureOptions)
-                self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
-                self.TextureDropdown.set(self.parameters_dict[param].capitalize())
+                elif param == 'texture':
+                    self.textureOptions = [file[:-4].capitalize() for file in os.listdir("images/materials") if file.endswith('.png')]
+                    self.TextureDropdown = ttk.Combobox(self.root, values=self.textureOptions)
+                    self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                    self.TextureDropdown.set(self.parameters_dict[param].capitalize())
 
-            else:
-                try:
-                    entry = tk.Entry(self.root)
-                    if param != 'size':
-                        if param in ['reflection_factor', 'transmittance']:
-                            entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value in percentage
+                else:
+                    try:
+                        entry = tk.Entry(self.root)
+                        if param != 'size':
+                            if param in ['reflection_factor', 'transmittance']:
+                                entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value in percentage
+                            else:
+                                entry.insert(0, str(self.parameters_dict[param])) # Set default value
                         else:
-                            entry.insert(0, str(self.parameters_dict[param])) # Set default value
-                    else:
-                        entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
-                    entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
-                    self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
-                except Exception as e:
-                    print(e)
-        except Exception as e:
-            print(e)
+                            entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
+                        entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                        self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
+                    except Exception as e:
+                        print(e)
+            except Exception as e:
+                print(e)
 
     def update_color_preview(self, param):
         red = self.sliders[0].get()
@@ -112,11 +113,16 @@ class Parameters:
         if self.TextureDropdown != None:
             new_parameters['texture'] = self.TextureDropdown.get().lower()
 
+        if self.parameters_dict['points'] != None:
+            new_parameters['points'] = self.parameters_dict['points']
+
         try:
             for param, entry_widget in self.parameters_dict.items():
-                if param == 'lazer' or param == 'red' or param == 'texture':
+                if param == 'lazer' or param == 'red' or param == 'texture' or param == 'points':
                     break
                 value = entry_widget.get()
+
+                print(param, value)
 
                 if param == 'size':
                     value = str(value)
@@ -127,7 +133,7 @@ class Parameters:
                         return
                     # self.object.points = self.change_size(value)
 
-                if param == 'reflection_factor' or param == 'transmittance':
+                elif param == 'reflection_factor' or param == 'transmittance':
                     value = str(value)
                     value = value.strip("%")
                     value = float(value) / 100
@@ -139,10 +145,9 @@ class Parameters:
                         messagebox.showwarning("Error",
                                              "The sum of reflection factor and transmittance cannot exceed 100%.")
                         return
-
-                    new_parameters[param] = value
-
-                value = float(value)
+                else:
+                    value = float(value)
+                print(new_parameters)
                 new_parameters[param] = value
 
             if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') > 1:

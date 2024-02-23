@@ -1,6 +1,5 @@
 import pygame
 import sys
-from classes import sounds
 import settingsSetup
 
 
@@ -12,11 +11,8 @@ class ButtonMenus:
         self.width = self.ss.width // 5
         self.height = self.ss.width // 20
         gap_size = self.ss.height//47
-        self.x = self.ss.width // 2 + self.width // 2
-        if number >= 3:
-            self.y = self.ss.height // 2 + (self.height + gap_size)
-        else:
-            self.y = self.ss.height // 2 - number * (self.height + gap_size)  # Adjusted y based on the number and gap size
+        self.x = self.ss.width // 2 + self.width // 3
+        self.y = self.ss.height // 4 + number * (self.height + gap_size)
         from classes.font import Font
         self.font = pygame.font.Font(Font, self.height // 3)
         self.text_color = 'white'
@@ -27,7 +23,7 @@ class ButtonMenus:
 
         self.ss.objects.append(self)
 
-        if self.number == 2:
+        if self.number == 0:
 
             self.dimention_width = self.ss.width
             self.dimention_height = self.ss.height
@@ -45,7 +41,7 @@ class ButtonMenus:
 
 
 
-        elif self.number == 0:
+        elif self.number == 2:
             for positon in self.ss.HotbarPositions:
                 self.options.append(positon)
             s = settingsSetup.load_settings()
@@ -64,6 +60,10 @@ class ButtonMenus:
             s = settingsSetup.load_settings()
 
             self.selected_option_2 = s['HD_Flashlight']
+
+        elif self.number == 4:
+            self.options.append('Change')
+            self.selected_option_2 = 'Change'
 
         self.current_index = 0
 
@@ -85,8 +85,8 @@ class ButtonMenus:
             self.handle_button_click(self.options[(self.current_index + 1) % len(self.options)])
 
     def handle_button_click(self, option):
-        sounds.clicked_sound()
-        if self.number == 2:
+        self.ss.mixer.clicked_sound()
+        if self.number == 0:
             self.selected_option_2 = option
             width, height = option.split('x')
 
@@ -98,7 +98,7 @@ class ButtonMenus:
             settingsSetup.writesettingstofile(s)
 
 
-        elif self.number == 0:
+        elif self.number == 2:
             position = option.lower()
             self.selected_option_2 = option
 
@@ -126,5 +126,8 @@ class ButtonMenus:
 
             settingsSetup.writesettingstofile(s)
             settingsSetup.settings['HD_Flashlight'] = option
+
+        elif self.number == 4:
+            self.ss.game.mode = 'music'
 
         self.current_index += 1

@@ -1,7 +1,7 @@
 # Optyka
 
 ## Description
-Optyka is a Python-based game project. It uses the Pygame library for app development and includes various sound effects and GUI elements.
+Optyka is a Python-based project. It uses the Pygame library for app development and includes various sound effects and GUI elements.
 
 ## Status
 | Feature              | Status |
@@ -38,7 +38,7 @@ There are two ways to install the project: download exe file, or run the project
 ## Usage
 1. Click Start.
 2. You can choose:
-   - new game (nothing is placed)
+   - new save (nothing is placed)
    - load preset (a premade project made by the developers)
    - one of your saves (if you have any)
 3. Now you can place objects and see how they interact with each other.
@@ -53,10 +53,13 @@ There are two ways to install the project: download exe file, or run the project
    - laser (only for flashlights, if on, they only emit one beam)
    - color 
    - texture (only for mirrors)
-7. Click the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="https://github.com/Hohenzoler/optyka/blob/main/images/topopisy.png"></p>to enter _drawing mode_
-8. While in the _drawing mode_ you can draw a new object by clicking in different places on screen, or delete the last point placed by pressing backspace.
-9. Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
-10. Press `up` to randomize colors of all flashlights
+7. Click the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="https://github.com/Hohenzoler/optyka/blob/main/images/topopisy.png"></p>to enter _drawing mode_.
+
+
+   - While in the _drawing mode_ you can draw a new object by clicking in different places on screen.
+   - You can also delete the last point placed by pressing `backspace` or move a point by `right clicking`.
+   - Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
+8. Press `up` to randomize colors of all flashlights
 
 
 
@@ -73,7 +76,7 @@ There are two ways to install the project: download exe file, or run the project
 1. **Parameters** - Every object has parameters that change the way they interact with the environment.
 2. **Saving and loading** - you can save your loadout when quitting and come back to it later. You can also delete your saves.
 3. **Presets** - you can load a premade project (preset) as if you had made it yourself.
-4. **Picking up objects** - you can right click an object to pick it up or put it down.
+4. **Picking up objects** - you can `right click` an object to pick it up or put it down.
 4. **Rotating objects** - you can rotate held objects using scroll.
 5. **Intersection prevention** - objects cannot intersect with each other (just like in real life).
 6. **Adjustable resolution** - you can change the resolution of the window.
@@ -98,7 +101,7 @@ Picture of Jeff:
 ## Credits
 This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [MalyszekTobias](https://github.com/MalyszekTobias), [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [V8Enthusiast](https://github.com/V8Enthusiast).
 
-All images used in the app were made by our team.
+Large majority of the assets used in the app were made by our team.
 We have permission to use the font as stated [here](https://www.dafont.com/junegull.font).
 
 We also have permission to use the background music, made by [C418](https://www.youtube.com/watch?v=XuZDeT8zI5c&ab_channel=C418-Topic)

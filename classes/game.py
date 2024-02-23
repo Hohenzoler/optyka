@@ -2,10 +2,13 @@ import json
 import random
 import os
 import pygame
+import math
+# from math import *
 from pygame import *
 from gui import gui_main as gui1
 from gui.gui_main import GUI
 from screens import settings_screen
+from screens import achievements_screen
 import settingsSetup
 from classes import fps
 from classes import bin, images, gameobjects
@@ -18,7 +21,8 @@ import functions
 import gui
 from gui.polygonDrawing import polygonDrawing
 from classes import popup
-from classes import saveTK
+from classes import saveTK, mixer_c
+
 
 isDrawingModeOn = False
 
@@ -44,6 +48,7 @@ class Game:
             self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
         self.isDrawingModeOn = False
 
+
         self.run = True  # Game loop control
         self.fps = fps.return_fps()  # Frames per second
         self.tick = int((1 / self.fps) * 1000)  # Time per frame in milliseconds
@@ -59,6 +64,8 @@ class Game:
         self.pen_img = images.pen
         self.pen_img_rect = self.pen_img.get_rect()
         self.achievements = Achievements(self)  # Achievements object
+
+        self.mixer = mixer_c.Mixer(self.settings)
 
         self.achievements.handle_achievement_unlocked("here is your first achievement ;)")
 
@@ -92,6 +99,7 @@ class Game:
         self.currentAchievementName = None
 
         self.polygonDrawing = polygonDrawing()
+        self.isDotHeld = -1
 
 
     def create_cursor_particles(self):
@@ -145,7 +153,9 @@ class Game:
                     pygame.quit()
                     quit()
 
+
             if self.mode == 'default':
+                points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
                     for object in self.objects:
@@ -174,12 +184,23 @@ class Game:
                     self.create_clicked_particles()
                     if event.button == 3:
                         self.rightclickedmousepos = event.pos
+                        if self.isDrawingModeOn:
+                            if self.isDotHeld != -1:
+                                points[self.isDotHeld] = event.pos
+                                self.isDotHeld = -1
+                            else:
+                                for i in range(len(points)):
+                                    distance = ((points[i][0] - self.rightclickedmousepos[0]) ** 2 + (points[i][1] - self.rightclickedmousepos[1]) ** 2 ) ** 0.5
+                                    if distance < 8 and self.isDotHeld == -1:
+                                        self.isDotHeld = i
                 if event.type == pygame.MOUSEWHEEL:
                     self.scrolling(event)
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.p = True
                     if event.key == pygame.K_r and self.selected_object is not None:
+                        if isinstance(self.selected_object, gameobjects.Mirror):
+                            print(self.selected_object.points)
                         self.r_key = True
                         self.selected_object.selected(pygame.mouse.get_pos())
                     elif event.key == 13 and self.isDrawingModeOn:
@@ -188,6 +209,8 @@ class Game:
                         global isDrawingModeOn
                         isDrawingModeOn = False
                         self.achievements.handle_achievement_unlocked("topopisy")
+                    elif event.key == pygame.K_BACKSPACE and len(points) > 0:
+                        polygonDrawing.popapoint(self.polygonDrawing)
 
 
 
@@ -197,6 +220,11 @@ class Game:
                         if isinstance(object, settings_screen.Settings_screen):
                             object.checkevent(event.pos)
 
+            elif self.mode == 'achievements':
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    for object in self.objects:
+                        if isinstance(object, achievements_screen.AchievementsScreen):
+                            object.checkevent(event.pos)
     def update(self):
         """
         Updates the game display and controls the game FPS.
@@ -258,7 +286,7 @@ class Game:
 
 
                 object.render()
-                if type(object) != bin.Bin:
+                if type(object) != bin.Bin and type(object) != achievements_screen.AchievementsScreen and type(object) != settings_screen.Settings_screen:
                     for bin_2 in self.objects:
                         if type(bin_2) == bin.Bin:
                             bin_2.checkCollision(object)
@@ -272,13 +300,29 @@ class Game:
                 self.executed_command = 'settings'
             else:
                 self.settings_screen.render()
+        elif self.mode == 'achievements':
+            if self.executed_command != 'achievements':
+                self.achievements_screen = achievements_screen.AchievementsScreen(self)
+                self.achievements_screen.render()
+                self.executed_command = 'achievements'
+            else:
+                self.achievements_screen.render()
         elif self.mode == 'load_new_settings':
-            self.objects.remove(self.settings_screen)
+            try:
+                self.objects.remove(self.settings_screen)
+            except:
+                pass
+            try:
+                self.objects.remove(self.achievements_screen)
+            except:
+                pass
             self.settings_screen = None
+            self.achievements_screen = None
             self.mode = 'default'
             self.settings = settingsSetup.load_settings()
             self.width = self.settings['WIDTH']
             self.height = self.settings['HEIGHT']
+            self.mixer = mixer_c.Mixer(self.settings)
             if self.settings['FULLSCREEN'] == 'ON':
                 self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
             else:
@@ -290,11 +334,14 @@ class Game:
 
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
         if isDrawingModeOn:
-
+            self.cursor_img_rect[0] += 10
+            self.cursor_img_rect[1] -= 10
             points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
             self.screen.blit(self.pen_img, self.cursor_img_rect)
             for i in range(len(points)):
-                pygame.draw.circle(self.screen, (200, 0, 0), points[i], 5)
+                if self.isDotHeld != -1 and self.isDotHeld == i:
+                    points[i] = (self.cursor_img_rect[0] + 10, self.cursor_img_rect[1] + 20)
+                pygame.draw.circle(self.screen, (200, 0, 0), points[i], 8)
             if len(points) >= 2:
                 pygame.draw.lines(self.screen, (255, 255, 255), True, points)
         else:
@@ -422,8 +469,10 @@ class Game:
                 obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 1, 1)
 
             elif parameters['class'] == "Lens":
-                obj = gameobjects.Lens(self, [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100), (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)], (64, 137, 189), 0, 0, 140, 0, 0.5)
-
+                obj = gameobjects.Lens(self,
+                                       [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
+                                        (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
+                                       (64, 137, 189), 0, 140, 0, 1)
             # elif parameters['class'] == ""
 
             obj.parameters = parameters

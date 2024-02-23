@@ -1,7 +1,7 @@
 import os.path
 import json
 
-settings = {'WIDTH': 1000, 'HEIGHT': 700, 'FULLSCREEN': 'OFF', 'HOTBAR_POSITION': 'bottom', 'VSYNC': 'OFF', 'DEBUG': 'False', 'Flashlight_FOV': 20, 'Flashlight_Rays': 30, 'Flashlight_Depth': 500, "HD_Flashlight": "OFF"}
+settings = {'WIDTH': 1000, 'HEIGHT': 700, 'FULLSCREEN': 'OFF', 'HOTBAR_POSITION': 'bottom', 'VSYNC': 'OFF', 'DEBUG': 'False', 'Flashlight_FOV': 20, 'Flashlight_Rays': 30, 'Flashlight_Depth': 500, "HD_Flashlight": "OFF", "MASTER_VOLUME": 1, "SOUNDTRACK_VOLUME": 1, "OBJECT_VOLUME": 1, "ACTION_VOLUME": 1, "ACHIEVEMENT_VOLUME": 1}
 
 def start(s=settings):
     if os.path.exists('settings.json'):

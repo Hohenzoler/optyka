@@ -147,7 +147,7 @@ class Light:
             self.current_object_type=None
             lenses = []
             for object in self.game.objects:
-                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism:
+                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism or type(object)==gameobjects.Corridor:
                     self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
 
                 if type(object) == gameobjects.Lens:
@@ -179,7 +179,7 @@ class Light:
             if self.index >= 100:
                 self.mini_run = False
     def check_object(self,object):
-        self.linear_function.draw(self.game)
+        # self.linear_function.draw(self.game)
 
 
         self.object_counter=0
@@ -212,7 +212,7 @@ class Light:
                 y = lf.calculate(x)
                 # lf.draw(self.game)
                 # self.linear_function.draw(self.game)
-                #
+
                 # pygame.draw.circle(self.game.screen,(255,0,0),(x,self.linear_function.calculate(x)),5)
                 # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[0], 5)
                 # # pygame.draw.circle(self.game.screen, (0, 255, 0), slope[1], 5)
@@ -239,7 +239,8 @@ class Light:
                         else:
                             if y >= self.current_starting_point[1]:
                                 cases += 1
-                        # print(cases)
+                        print(self.vertical,self.horizontal,self.r)
+                        print(cases,'aaaaaaaaaaaaaaaaaaaaaa')
                         if cases == 2:
                             pygame.draw.line(self.game.screen, (0, 255, 0), slope[0], slope[1],
                                              5)
@@ -260,6 +261,8 @@ class Light:
                                     self.current_object_type = 'lens'
                                 elif type(object) == gameobjects.Prism:
                                     self.current_object_type = 'prism'
+                                elif type(object) == gameobjects.Corridor:
+                                    self.current_object_type = 'mirror'
 
                             else:
                                 if dist < self.current_distance:
@@ -278,6 +281,9 @@ class Light:
                                     elif type(object) == gameobjects.Prism:
 
                                         self.current_object_type = 'prism'
+                                    elif type(object) == gameobjects.Corridor:
+                                        self.current_object_type = 'mirror'
+                                        print('aaa')
 
         # if self.object_counter>1:
         #     self.ignore_object=object
@@ -290,18 +296,24 @@ class Light:
         for index, point in enumerate(lens.lens_points):
             if functions.is_linear_function_passing_through_point(self.linear_function, point):
                 x=point[0]
-                dist = abs(x - self.current_starting_point[0])
-                if self.current_distance == None:
-
-                    self.current_distance = dist
-                    self.current_point = point
-                    self.current_slope = None
-                    self.current_object =lens
-                    self.current_object_type = 'lens'
-
-
+                y=point[1]
+                cases=0
+                if self.horizontal == 'right':
+                    if x >= self.current_starting_point[0]:
+                        cases += 1
+                        # print('aaaaaaa')
                 else:
-                    if dist < self.current_distance:
+                    if x <= self.current_starting_point[0]:
+                        cases += 1
+                if self.vertical == 'up':
+                    if y <= self.current_starting_point[1]:
+                        cases += 1
+                else:
+                    if y >= self.current_starting_point[1]:
+                        cases += 1
+                if cases==2:
+                    dist = abs(x - self.current_starting_point[0])
+                    if self.current_distance == None:
 
                         self.current_distance = dist
                         self.current_point = point
@@ -309,7 +321,16 @@ class Light:
                         self.current_object = lens
                         self.current_object_type = 'lens'
 
-    def left_lens(self, lens):
+
+                    else:
+                        if dist < self.current_distance:
+                            self.current_distance = dist
+                            self.current_point = point
+                            self.current_slope = None
+                            self.current_object = lens
+                            self.current_object_type = 'lens'
+
+    def left_lens(self, lens, direction):
         for index, point in enumerate(lens.lens_points):
             if functions.is_linear_function_passing_through_point(self.linear_function, point):
                 offset = 0
@@ -317,14 +338,32 @@ class Light:
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(point[0], point[1], lens.center1[0], lens.center1[1])
                 intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
-                ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
-                # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
-                normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
-                # print(math.degrees(normal_angle))
-                if index < len(lens.lens_points) / 2:
-                    self.r = -normal_angle - ref_angle
-                else:
-                    self.r = -normal_angle + ref_angle
+                if direction == 'out':
+                    temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
+                    # print(math.degrees(math.asin(temp)))
+                    if temp > 1:
+                        # print("sdsdsd")
+                        temp -= 1
+                        ref_angle = math.asin(temp) + math.pi / 2
+                    else:
+                        ref_angle = math.asin(temp)
+                    # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(lens.center1[0], lens.center1[1], point[0], point[1])
+                    # print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points) / 2:
+                        self.r = -normal_angle - ref_angle
+                    else:
+                        self.r = -normal_angle + ref_angle
+                    # print(math.degrees(self.r))
+                if direction == 'in':
+                    ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
+                    # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
+                    # print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points) / 2:
+                        self.r = -normal_angle - ref_angle
+                    else:
+                        self.r = -normal_angle + ref_angle
 
                 # print(math.degrees(self.r))
 
@@ -334,10 +373,103 @@ class Light:
                 self.linear_function = Linear_Function(math.tan(-self.r),
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
-
+                self.calibrate_r2()
                 #self.linear_function.draw(self.game)
                 break
-    def right_lens(self, lens):
+    def right_lens(self, lens, direction):
+        for index, point in enumerate(lens.lens_points2):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                offset = 0
+                pygame.draw.line(self.game.screen, (255, 255, 80), lens.center2,
+                                 (point[0] - offset, point[1] - offset))
+                slope1 = self.linear_function.a
+                slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
+
+                intersect_angle = functions.calculate_intersection_angle(slope2, slope1)
+                if direction == 'out':
+                    temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
+                    #print(math.degrees(math.asin(temp)))
+                    if temp > 1:
+                        # print("sdsdsd")
+                        temp -= 1
+                        ref_angle = math.asin(temp) + math.pi/2
+                    else:
+                        ref_angle = math.asin(temp)
+                    # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
+                    # print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points2) / 2:
+                        self.r = -normal_angle - ref_angle
+                    else:
+                        self.r = -normal_angle + ref_angle
+                    # print(math.degrees(self.r))
+                if direction == 'in':
+                    ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
+                    # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(point[0], point[1], lens.center2[0], lens.center2[1])
+                    # print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points2) / 2:
+                        self.r = -normal_angle - ref_angle #+ math.pi
+                    else:
+                        self.r = -normal_angle + ref_angle #+ math.pi
+
+                self.points.append(point)
+                self.colors.append(self.RGB.rgb)
+                self.current_starting_point = point
+                self.linear_function = Linear_Function(math.tan(-self.r),
+                                                       self.find_b(math.tan(-self.r),
+                                                                   self.current_starting_point))
+                self.calibrate_r2()
+                #self.linear_function.draw(self.game)
+                break
+
+    def left_lens_concave(self, lens, direction):
+        for index, point in enumerate(lens.lens_points):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                offset = 0
+                pygame.draw.line(self.game.screen, (255, 255, 80), lens.center1, (point[0] - offset, point[1] - offset))
+                slope1 = self.linear_function.a
+                slope2 = functions.calculate_slope(point[0], point[1], lens.center1[0], lens.center1[1])
+                intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
+                if direction == 'in':
+                    ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
+                    # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
+                    # print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points) / 2:
+                        self.r = -normal_angle + ref_angle + math.pi
+                    else:
+                        self.r = -normal_angle - ref_angle + math.pi
+
+                    # print(math.degrees(self.r))
+                if direction == 'out':
+                    temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
+                    # print(math.degrees(math.asin(temp)))
+                    if temp > 1:
+                        temp -= 1
+                        ref_angle = math.asin(temp) + math.pi / 2
+                    else:
+                        ref_angle = math.asin(temp)
+                    # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(lens.center1[0], lens.center1[1], point[0], point[1])
+                    # print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points) / 2:
+                        self.r = -normal_angle + ref_angle + math.pi
+                    else:
+                        self.r = -normal_angle - ref_angle + math.pi
+                    # print(math.degrees(self.r))
+
+                self.points.append(point)
+                self.colors.append(self.RGB.rgb)
+                self.current_starting_point = point
+                self.linear_function = Linear_Function(math.tan(-self.r),
+                                                       self.find_b(math.tan(-self.r),
+                                                                   self.current_starting_point))
+
+                self.linear_function.draw(self.game)
+                break
+
+    def right_lens_concave(self, lens, direction):
         for index, point in enumerate(lens.lens_points2):
             if functions.is_linear_function_passing_through_point(self.linear_function, point):
                 offset = 0
@@ -346,22 +478,31 @@ class Light:
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
                 intersect_angle = functions.calculate_intersection_angle(slope2, slope1)
-                temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
-                #print(math.degrees(math.asin(temp)))
-                if temp > 1:
-                    print("sdsdsd")
-                    temp -= 1
-                    ref_angle = math.asin(temp) + math.pi/2
-                else:
-                    ref_angle = math.asin(temp)
-                print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
-                normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
-                print(math.degrees(normal_angle))
-                if index < len(lens.lens_points2) / 2:
-                    self.r = -normal_angle - ref_angle
-                else:
-                    self.r = -normal_angle + ref_angle
-                print(math.degrees(self.r))
+                if direction == 'in':
+                    ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
+                    # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(point[0], point[1], lens.center2[0], lens.center2[1])
+                    # print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points2) / 2:
+                        self.r = -normal_angle - ref_angle + math.pi
+                    else:
+                        self.r = -normal_angle + ref_angle + math.pi
+                if direction == 'out':
+                    temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
+                    # print(math.degrees(math.asin(temp)))
+                    if temp > 1:
+                        temp -= 1
+                        ref_angle = math.asin(temp) + math.pi / 2
+                    else:
+                        ref_angle = math.asin(temp)
+                    #print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                    normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
+                    #print(math.degrees(normal_angle))
+                    if index < len(lens.lens_points2) / 2:
+                        self.r = -normal_angle - ref_angle + math.pi
+                    else:
+                        self.r = -normal_angle + ref_angle + math.pi
+                    #print(math.degrees(self.r))
 
                 self.points.append(point)
                 self.colors.append(self.RGB.rgb)
@@ -369,20 +510,68 @@ class Light:
                 self.linear_function = Linear_Function(math.tan(-self.r),
                                                        self.find_b(math.tan(-self.r),
                                                                    self.current_starting_point))
-                #self.linear_function.draw(self.game)
+                # self.linear_function.draw(self.game)
                 break
     def lens_stuff(self, lens):
-            print('a')
-            if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
-                #print(abs(lens.angle))
-                self.left_lens(lens)
-                if lens.type == lens.CONVEX:
-                    self.right_lens(lens)
+        print('a')
+            # if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
+        # print(abs(lens.angle))
+        lens_collide_point1 = None
+        lens_collide_point2 = None
+        for index, point in enumerate(lens.lens_points):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                lens_collide_point1 = point
+        for index, point in enumerate(lens.lens_points2):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                lens_collide_point2 = point
+        last_light_point = self.points[-1]
+        starting_lens_side = None
+        if lens_collide_point1 is not None:
+            dist1 = functions.distance_between_points(last_light_point, lens_collide_point1)
+        else:
+            starting_lens_side = 2
+        if lens_collide_point2 is not None:
+            dist2 = functions.distance_between_points(last_light_point, lens_collide_point2)
+        else:
+            starting_lens_side = 1
+
+        if starting_lens_side is None:
+            if dist1 < dist2:
+                starting_lens_side = 1
             else:
-                print("rotated")
-                self.right_lens(lens)
-                if lens.type == lens.CONVEX:
-                    self.left_lens(lens)
+                starting_lens_side = 2
+
+
+        if starting_lens_side == 1:
+            if lens.type == lens.CONVEX:
+                self.left_lens(lens, 'in')
+                self.right_lens(lens, 'out')
+            if lens.type == lens.SINGLE_VEX:
+                self.left_lens(lens, 'in')
+            if lens.type == lens.SINGLE_CAVE:
+                self.left_lens_concave(lens, 'in')
+            if lens.type == lens.CONCAVE:
+                self.left_lens_concave(lens, 'in')
+                self.right_lens_concave(lens, 'out')
+        if starting_lens_side == 2:
+            print("the other side")
+            if lens.type == lens.CONVEX:
+                self.right_lens(lens, 'in')
+                self.left_lens(lens, 'out')
+            if lens.type == lens.SINGLE_VEX:
+                self.right_lens(lens, 'in')
+            if lens.type == lens.SINGLE_CAVE:
+                self.right_lens_concave(lens, 'in')
+            if lens.type == lens.CONCAVE:
+                self.right_lens_concave(lens, 'in')
+                self.left_lens_concave(lens, 'out')
+
+
+            #else:
+        # print("rotated")
+        # self.right_lens(lens)
+        # if lens.type == lens.CONVEX:
+        #     self.left_lens(lens)
 
 
 
@@ -466,7 +655,8 @@ class Light:
     def second_difract(self,prism):
         n = prism.n
         fi = prism.fi
-        self.r=math.pi-math.asin(math.sin(1/2*prism.angle+fi-self.r)/n)
+        self.r = fi / 2 + self.r + (round(prism.angle)) / 180 * math.pi - math.asin(math.sin((fi / 2 + self.r)) / n)
+        self.r-=fi/2
     def prism_stuff(self):
 
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
@@ -476,10 +666,13 @@ class Light:
                              int(self.RGB.b * transmittance))
 
         self.colors.append(self.RGB.rgb)
-        if self.in_prism:
+
+        if self.r<=math.pi/2:
             self.first_difract(self.current_object)
         else:
-            self.first_difract(self.current_object)
+            if self.in_prism:
+                self.second_difract(self.current_object)
+
 
         if not self.in_prism and self.prism_light==False:
             angle=math.pi/18

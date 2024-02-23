@@ -13,6 +13,7 @@ class Loading_saves_screen:
         self.width = self.game.width
         self.height = self.game.height
         self.screen = self.game.screen
+        self.mixer = self.game.mixer
 
         self.state = 'default'
         self.action = None
