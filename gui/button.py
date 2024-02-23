@@ -225,25 +225,25 @@ class Button:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189), 0, 140, 0, 1, 140)
+                                           (64, 137, 189), 0, 140, 0, 1, 140, refraction_index=1.5)
                     self.game.achievements.handle_achievement_unlocked("first step to... glasses")
                 elif self.number == 6:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189), 0, 140, 0, 1)
+                                           (64, 137, 189), 0, 140, 0, 1, refraction_index=1.5)
                     self.game.achievements.handle_achievement_unlocked("first step to... glasses")
                 elif self.number == 7:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189),  0, -140, 0, 1, -140)
+                                           (64, 137, 189),  0, -140, 0, 1, -140, refraction_index=1.5)
                     self.game.achievements.handle_achievement_unlocked("first step to... glasses")
                 elif self.number == 8:
                     obj = gameobjects.Lens(self.game,
                                            [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189), 0, -140, 0, 1)
+                                           (64, 137, 189), 0, -140, 0, 1, refraction_index=1.5)
                     self.game.achievements.handle_achievement_unlocked("first step to... glasses")
                 elif self.number == 9:
                     print(123)

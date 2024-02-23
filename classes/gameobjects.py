@@ -450,7 +450,7 @@ class Corridor(GameObject):
         print(self.slopes)
 
 class Lens(GameObject):
-    def __init__(self, game, points, color, angle, curvature_radius, reflection_factor, transmittance, curvature_radius2=None, islighting=False, image_path=None):
+    def __init__(self, game, points, color, angle, curvature_radius, reflection_factor, transmittance, curvature_radius2=None, refraction_index=1.5, islighting=False, image_path=None):
         super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
         self.curvature_radius = curvature_radius
         self.CONVEX = 0
@@ -460,7 +460,7 @@ class Lens(GameObject):
         self.VEX_CAVE = 4
         self.CAVE_VEX = 5
         self.lens_points = []
-        self.refraction_index = 1.5
+        self.refraction_index = refraction_index
         self.layer = 0
 
         if curvature_radius2 is not None:
