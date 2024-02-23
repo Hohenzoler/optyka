@@ -560,7 +560,8 @@ class Light:
     def second_difract(self,prism):
         n = prism.n
         fi = prism.fi
-        self.r=math.pi-math.asin(math.sin(1/2*prism.angle+fi-self.r)/n)
+        self.r = fi / 2 + self.r + (round(prism.angle)) / 180 * math.pi - math.asin(math.sin((fi / 2 + self.r)) / n)
+        self.r-=fi/2
     def prism_stuff(self):
 
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
@@ -570,10 +571,13 @@ class Light:
                              int(self.RGB.b * transmittance))
 
         self.colors.append(self.RGB.rgb)
-        if self.in_prism:
+
+        if self.r<=math.pi/2:
             self.first_difract(self.current_object)
         else:
-            self.first_difract(self.current_object)
+            if self.in_prism:
+                self.second_difract(self.current_object)
+
 
         if not self.in_prism and self.prism_light==False:
             angle=math.pi/18
