@@ -626,7 +626,9 @@ class Lens(GameObject):
                         self.lens_points.reverse()
                     pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
                                                   self.color)
-
+                    if self.type == self.CONCAVE:
+                        self.lens_points.reverse()
+                        # self.lens_points2.reverse()
         else:
             mousepos = pygame.mouse.get_pos()
             if self.game.r:
@@ -657,6 +659,9 @@ class Lens(GameObject):
                     self.lens_points.reverse()
                 pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
                                               self.color)
+                if self.type == self.CONCAVE:
+                    self.lens_points.reverse()
+                    # self.lens_points2.reverse()
 
             self.drawoutline()
     def adjust(self, x, y, d_angle):

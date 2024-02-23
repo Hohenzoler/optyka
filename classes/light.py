@@ -371,13 +371,84 @@ class Light:
                                                                    self.current_starting_point))
                 #self.linear_function.draw(self.game)
                 break
+
+    def left_lens_concave(self, lens):
+        for index, point in enumerate(lens.lens_points):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                offset = 0
+                #pygame.draw.line(self.game.screen, (255, 255, 80), lens.center1, (point[0] - offset, point[1] - offset))
+                slope1 = self.linear_function.a
+                slope2 = functions.calculate_slope(point[0], point[1], lens.center1[0], lens.center1[1])
+                intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
+                ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
+                # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
+                # print(math.degrees(normal_angle))
+                if index < len(lens.lens_points) / 2:
+                    self.r = -normal_angle + ref_angle + math.pi
+                else:
+                    self.r = -normal_angle - ref_angle + math.pi
+
+                # print(math.degrees(self.r))
+
+                self.points.append(point)
+                self.colors.append(self.RGB.rgb)
+                self.current_starting_point = point
+                self.linear_function = Linear_Function(math.tan(-self.r),
+                                                       self.find_b(math.tan(-self.r),
+                                                                   self.current_starting_point))
+
+                self.linear_function.draw(self.game)
+                break
+
+    def right_lens_concave(self, lens):
+        for index, point in enumerate(lens.lens_points2):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                offset = 0
+                pygame.draw.line(self.game.screen, (255, 255, 80), lens.center2,
+                                 (point[0] - offset, point[1] - offset))
+                slope1 = self.linear_function.a
+                slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
+                intersect_angle = functions.calculate_intersection_angle(slope2, slope1)
+                temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
+                # print(math.degrees(math.asin(temp)))
+                if temp > 1:
+                    print("sdsdsd")
+                    temp -= 1
+                    ref_angle = math.asin(temp) + math.pi / 2
+                else:
+                    ref_angle = math.asin(temp)
+                print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
+                normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
+                print(math.degrees(normal_angle))
+                if index < len(lens.lens_points2) / 2:
+                    self.r = -normal_angle - ref_angle + math.pi
+                else:
+                    self.r = -normal_angle + ref_angle + math.pi
+                print(math.degrees(self.r))
+
+                self.points.append(point)
+                self.colors.append(self.RGB.rgb)
+                self.current_starting_point = point
+                self.linear_function = Linear_Function(math.tan(-self.r),
+                                                       self.find_b(math.tan(-self.r),
+                                                                   self.current_starting_point))
+                # self.linear_function.draw(self.game)
+                break
     def lens_stuff(self, lens):
             print('a')
             if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
-                #print(abs(lens.angle))
-                self.left_lens(lens)
+                # print(abs(lens.angle))
                 if lens.type == lens.CONVEX:
+                    self.left_lens(lens)
                     self.right_lens(lens)
+                if lens.type == lens.SINGLE_VEX:
+                    self.left_lens(lens)
+                if lens.type == lens.SINGLE_CAVE:
+                    self.left_lens_concave(lens)
+                if lens.type == lens.CONCAVE:
+                    self.left_lens_concave(lens)
+                    self.right_lens_concave(lens)  # almost works
             else:
                 print("rotated")
                 self.right_lens(lens)
