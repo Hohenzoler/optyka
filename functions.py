@@ -77,3 +77,6 @@ def draw_thick_line(surface, x1, y1, x2, y2, color, THICC):
     else:
         for offset in range(THICC):
             pygame.gfxdraw.line(surface, x1 + offset, y1, x2 + offset, y2, color)
+
+def distance_between_points(p1, p2):
+    return math.sqrt(pow(abs(p1[0] - p2[0]), 2) + pow(abs(p1[1] - p2[1]), 2))
