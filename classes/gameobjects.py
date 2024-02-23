@@ -318,7 +318,6 @@ class GameObject:
             if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
                 self.selectedtrue = True
                 self.game.selected_object = self  # Set this object as the currently selected object
-                self.game.mixer.selected_sound()
             elif self.selectedtrue:
                 if self.game.r_key:
                     if self.resizing is False:

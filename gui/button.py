@@ -190,6 +190,7 @@ class Button:
         """
         if self.rect.collidepoint(mousepos[0], mousepos[1]):
             if self.game.isDrawingModeOn != True:
+                self.game.mixer.clicked_sound()
                 if self.number == 0:
                     obj = gameobjects.Flashlight(self.game,
                                                  [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]),
