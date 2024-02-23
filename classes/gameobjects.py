@@ -439,8 +439,9 @@ class Corridor(GameObject):
     def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None, layer = 5):
         super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
     def get_slopes(self):
-        self.slopes = [(self.points[2*i], self.points[2*i + 1]) for i in range((len(self.points) - 1)//2)]
+        self.slopes = [(self.points[2*i], self.points[2*i + 1]) for i in range((len(self.points))//2)]
         # self.slopes.append((self.points[len(self.points) - 1], self.points[0]))
+        print(self.slopes)
 
 class Lens(GameObject):
     def __init__(self, game, points, color, angle, curvature_radius, reflection_factor, transmittance, curvature_radius2=None, islighting=False, image_path=None):

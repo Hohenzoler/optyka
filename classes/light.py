@@ -147,7 +147,7 @@ class Light:
             self.current_object_type=None
             lenses = []
             for object in self.game.objects:
-                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism:
+                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism or type(object)==gameobjects.Corridor:
                     self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
 
                 if type(object) == gameobjects.Lens:
@@ -283,6 +283,7 @@ class Light:
                                         self.current_object_type = 'prism'
                                     elif type(object) == gameobjects.Corridor:
                                         self.current_object_type = 'mirror'
+                                        print('aaa')
 
         # if self.object_counter>1:
         #     self.ignore_object=object
