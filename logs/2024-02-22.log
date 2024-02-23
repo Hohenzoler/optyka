@@ -1,0 +1,288 @@
+2024-02-22 13:04:13,758 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 362, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 76, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 117, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 323, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:04:47,037 - ERROR - 'Mirror' object has no attribute 'x_resize_index'
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 377, in loop
+    self.render()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 260, in render
+    object.render()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\gameobjects.py", line 99, in render
+    self.drawResizeOutline()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\gameobjects.py", line 282, in drawResizeOutline
+    self.points[self.x_resize_index] = (pygame.mouse.get_pos()[0], self.points[self.x_resize_index][1])
+                                                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Mirror' object has no attribute 'x_resize_index'
+2024-02-22 13:05:03,750 - DEBUG - STREAM b'IHDR' 16 13
+2024-02-22 13:05:03,750 - DEBUG - STREAM b'iCCP' 41 388
+2024-02-22 13:05:03,750 - DEBUG - iCCP profile name b'ICC profile'
+2024-02-22 13:05:03,751 - DEBUG - Compression method 0
+2024-02-22 13:05:03,751 - DEBUG - STREAM b'pHYs' 441 9
+2024-02-22 13:05:03,751 - DEBUG - STREAM b'tIME' 462 7
+2024-02-22 13:05:03,751 - DEBUG - b'tIME' 462 7 (unknown)
+2024-02-22 13:05:03,751 - DEBUG - STREAM b'tEXt' 481 25
+2024-02-22 13:05:03,751 - DEBUG - STREAM b'IDAT' 518 8192
+2024-02-22 13:13:27,810 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:14:20,438 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:15:17,626 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:16:58,649 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:19:14,475 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:20:27,688 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:21:09,106 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:21:41,267 - DEBUG - STREAM b'IHDR' 16 13
+2024-02-22 13:21:41,267 - DEBUG - STREAM b'iCCP' 41 388
+2024-02-22 13:21:41,267 - DEBUG - iCCP profile name b'ICC profile'
+2024-02-22 13:21:41,267 - DEBUG - Compression method 0
+2024-02-22 13:21:41,267 - DEBUG - STREAM b'pHYs' 441 9
+2024-02-22 13:21:41,267 - DEBUG - STREAM b'tIME' 462 7
+2024-02-22 13:21:41,267 - DEBUG - b'tIME' 462 7 (unknown)
+2024-02-22 13:21:41,267 - DEBUG - STREAM b'tEXt' 481 25
+2024-02-22 13:21:41,268 - DEBUG - STREAM b'IDAT' 518 8192
+2024-02-22 13:27:16,104 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:34:48,894 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:36:41,786 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:38:30,758 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:39:12,058 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:40:09,428 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:40:41,246 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
+2024-02-22 13:41:19,343 - ERROR - Library not initialized
+Traceback (most recent call last):
+  File "D:\chris\__Python\PycharmProjects\optyka\main.py", line 39, in new_game
+    game_instance.loop()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 384, in loop
+    self.achievements.fps_achievements()
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\achievements.py", line 78, in fps_achievements
+    if int(self.game.return_fps()) < 20:
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 119, in return_fps
+    return self.displayFPS()
+           ^^^^^^^^^^^^^^^^^
+  File "D:\chris\__Python\PycharmProjects\optyka\classes\game.py", line 334, in displayFPS
+    fps_text = self.font.render(f"FPS: {int(fps)}", True, "white")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygame.error: Library not initialized
