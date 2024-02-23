@@ -1,7 +1,7 @@
 import functions
 import pygame
 from gui import ModifyParameters as mp
-from classes import light, sounds, images
+from classes import light, mixer_c, images
 import math
 from pygame.transform import rotate
 import random
@@ -318,7 +318,7 @@ class GameObject:
             if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
                 self.selectedtrue = True
                 self.game.selected_object = self  # Set this object as the currently selected object
-                sounds.selected_sound()
+                self.game.mixer.selected_sound()
             elif self.selectedtrue:
                 if self.game.r_key:
                     if self.resizing is False:
@@ -328,9 +328,9 @@ class GameObject:
                 self.selectedtrue = False
                 self.game.selected_object = None  # No object is selected now
                 if type(self) == Flashlight:
-                    sounds.laser_sound()
+                    self.game.mixer.laser_sound()
                 else:
-                    sounds.placed_sound()
+                    self.game.mixer.placed_sound()
 
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)
@@ -343,6 +343,9 @@ class GameObject:
         self.parameters['reflection_factor'] = self.reflection_factor
 
         self.parameters['transmittance'] = self.transmittance
+
+        self.parameters['points'] = self.defualt_points
+        print(self.defualt_points)
 
         if type(self) == Flashlight:
             lazer_on = {'lazer': self.lazer}
@@ -361,6 +364,8 @@ class GameObject:
             self.find_parameters()
             mp.Parameters(self)
 
+        print(self.parameters)
+
         self.scale_factor = self.parameters['size']
         self.change_size()
         d_angle = self.parameters['angle']
@@ -369,18 +374,17 @@ class GameObject:
         self.scale_factor = self.parameters['size']
         self.transmittance = self.parameters['transmittance']
         self.reflection_factor = self.parameters['reflection_factor']
+        self.defualt_points = self.parameters['points']
+        self.points = self.defualt_points
 
         try:
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
+            self.textureName = None
+            self.get_Texture()
 
         except Exception as e:
-            print(e)
-
-        try:
             self.textureName = self.parameters['texture']
             self.get_Texture()
-        except Exception as e:
-            print(e)
 
         try:
             self.lazer = self.parameters["lazer"]
@@ -431,6 +435,13 @@ class ColoredGlass(GameObject):
 class CustomPolygon(GameObject):
     def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None, layer = 5):
         super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
+class Corridor(GameObject):
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None, layer = 5):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
+    def get_slopes(self):
+        self.slopes = [(self.points[2*i], self.points[2*i + 1]) for i in range((len(self.points))//2)]
+        # self.slopes.append((self.points[len(self.points) - 1], self.points[0]))
+        print(self.slopes)
 
 class Lens(GameObject):
     def __init__(self, game, points, color, angle, curvature_radius, reflection_factor, transmittance, curvature_radius2=None, islighting=False, image_path=None):

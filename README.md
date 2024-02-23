@@ -1,7 +1,7 @@
 # Optyka
 
 ## Description
-Optyka is a Python-based game project. It uses the Pygame library for app development and includes various sound effects and GUI elements.
+Optyka is a Python-based project. It uses the Pygame library for app development and includes various sound effects and GUI elements.
 
 ## Status
 | Feature              | Status |
@@ -38,7 +38,7 @@ There are two ways to install the project: download exe file, or run the project
 ## Usage
 1. Click Start.
 2. You can choose:
-   - new game (nothing is placed)
+   - new save (nothing is placed)
    - load preset (a premade project made by the developers)
    - one of your saves (if you have any)
 3. Now you can place objects and see how they interact with each other.
@@ -54,9 +54,12 @@ There are two ways to install the project: download exe file, or run the project
    - color 
    - texture (only for mirrors)
 7. Click the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="https://github.com/Hohenzoler/optyka/blob/main/images/topopisy.png"></p>to enter _drawing mode_
-8. While in the _drawing mode_ you can draw a new object by clicking in different places on screen, or delete the last point placed by pressing backspace.
-9. Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
-10. Press `up` to randomize colors of all flashlights
+
+
+   - While in the _drawing mode_ you can draw a new object by clicking in different places on screen.
+   - You can also delete the last point placed by pressing `backspace` or move a point by `right clicking`.
+   - Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
+8. Press `up` to randomize colors of all flashlights
 
 
 

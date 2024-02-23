@@ -2,7 +2,7 @@ import pygame
 import sqlite3
 import classes.font
 from classes import parkinson as particles
-from classes import sounds
+# from classes import mixer_c
 import random
 from gui import button
 from gui.button_animation import ButtonAnimation
@@ -16,6 +16,8 @@ class AchievementsScreen:
         self.objects = []
         self.font = pygame.font.Font(None, 24)  # Adjust the font size as needed
         self.achievements = []
+
+        self.mixer = self.game.mixer
 
         self.rarity_values = {
             'common': 1,
