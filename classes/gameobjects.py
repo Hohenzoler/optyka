@@ -60,6 +60,8 @@ class GameObject:
 
         self.find_parameters()
 
+        self.was_selected = False
+
     def update_rect(self):
         # Update the rect based on the points
         min_x = min(pt[0] for pt in self.points)
@@ -316,6 +318,10 @@ class GameObject:
                 self.game.selected_object.selectedtrue = False  # Deselect the currently selected object
 
             if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
+                if self.was_selected:
+                    self.game.mixer.selected_sound()
+                if self.was_selected == False:
+                    self.was_selected = True
                 self.selectedtrue = True
                 self.game.selected_object = self  # Set this object as the currently selected object
             elif self.selectedtrue:
@@ -330,6 +336,7 @@ class GameObject:
                     self.game.mixer.laser_sound()
                 else:
                     self.game.mixer.placed_sound()
+
 
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)
