@@ -4,6 +4,7 @@
 Optyka is a Python-based project. It uses the Pygame library for app development and includes various sound effects and GUI elements.
 
 </div>
+
 ## Status
 | Feature              | Status |
 |----------------------|--------|
