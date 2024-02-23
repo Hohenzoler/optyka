@@ -54,6 +54,8 @@ There are two ways to install the project: download exe file, or run the project
    - color 
    - texture (only for mirrors)
 7. Click the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="https://github.com/Hohenzoler/optyka/blob/main/images/topopisy.png"></p>to enter _drawing mode_
+
+
    - While in the _drawing mode_ you can draw a new object by clicking in different places on screen.
    - You can also delete the last point placed by pressing `backspace` or move a point by `right clicking`.
    - Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
