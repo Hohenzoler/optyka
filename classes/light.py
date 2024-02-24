@@ -650,53 +650,15 @@ class Light:
 
         self.current_starting_point = self.current_point
     def first_difract(self,prism):
-        self.callibrate_slope_angle()
         n=prism.n
-        alpha=self.r+self.slope_angle-math.pi/2
-        delta = math.asin(math.sin(alpha) / n)
-        x=self.r-delta
-        self.r=self.r-x
-    def callibrate_slope_angle(self):
-        if (self.current_slope[0][0] - self.current_slope[1][0]) == 0:
-            self.slope_angle = math.pi / 2
-        else:
+        fi=prism.fi
+        self.r=fi/2+self.r+(round(prism.angle))/180*math.pi-math.asin(math.sin((fi/2+self.r))/n)
 
-            self.slope_angle = math.atan((self.current_slope[0][1] - self.current_slope[1][1]) / (
-                    self.current_slope[0][0] - self.current_slope[1][0]))
-            if self.current_slope[0][0] >= self.current_slope[1][0] and self.current_slope[0][1] > \
-                    self.current_slope[1][1]:
-                self.slope_angle = math.pi - self.slope_angle
-            elif self.current_slope[1][0] >= self.current_slope[0][0] and self.current_slope[1][1] > \
-                    self.current_slope[0][1]:
-                self.slope_angle = math.pi - self.slope_angle
-            else:
-                self.slope_angle = -self.slope_angle
-        self.calibrate_r2()
     def second_difract(self,prism):
-        n = prism.n
+        n=prism.n
         fi = prism.fi
-        self.callibrate_slope_angle()
-        a=self.slope_angle
-        epsilon=math.pi-a+self.r
-        beta = math.asin(math.sin(epsilon) / n)
-        self.r=math.pi/2-a+beta
-        self.r=2*math.pi-self.r
-        # prism_r = self.slope_angle
-        # x=math.pi/2-fi/2+prism_r-self.r
-        # epsilon=x+fi-math.pi/2
-        #
-        # lf_angle=prism_r+fi/2
-        #
-        # lf = Linear_Function(math.tan(lf_angle),
-        #                      self.find_b(math.tan(lf_angle), self.current_point))
-        # # lf.draw(self.game)
-        #beta = math.asin(math.sin(epsilon) / n)
-
-        # self.r=math.pi-beta+prism_r
-        # self.r=3*math.pi-self.r
-        # self.r=-self.r
-        print('a')
-
+        self.r = fi / 2 + self.r + (round(prism.angle)) / 180 * math.pi - math.asin(math.sin((fi / 2 + self.r)) / n)
+        self.r-=fi/2
     def prism_stuff(self):
 
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
@@ -707,15 +669,16 @@ class Light:
 
         self.colors.append(self.RGB.rgb)
 
-        if self.in_prism:
-            self.second_difract(self.current_object)
-        else:
+        if self.r<=math.pi/2:
             self.first_difract(self.current_object)
+        else:
+            if self.in_prism:
+                self.second_difract(self.current_object)
 
 
         if not self.in_prism and self.prism_light==False:
             angle=math.pi/18
-            da_factor=7
+            da_factor=10
             da=angle*2/da_factor
             colors=[(194, 14, 26),(220, 145, 26),(247, 234, 59),(106, 169, 65),(69, 112, 180),(90, 40, 127),(128, 33, 125)]
             red=self.RGB.rgb[0]/255
@@ -725,7 +688,7 @@ class Light:
             for x in range(0,7):
                 self.make_prism_light((colors[x][0]*weights[x],colors[x][1]*weights[x],colors[x][2]*weights[x]),angle)
                 angle-=da
-            # self.mini_run = False
+            self.mini_run = False
 
 
         self.current_starting_point = self.current_point
