@@ -142,6 +142,16 @@ class Game:
                 else:
                     self.r = round(-1 / (time_difference * 9), 2)
 
+    def movePoints(self, points, position):
+        if self.isDotHeld != -1:
+            points[self.isDotHeld] = position
+            self.isDotHeld = -1
+        else:
+            for i in range(len(points)):
+                distance = ((points[i][0] - position[0]) ** 2 + (points[i][1] - position[1]) ** 2) ** 0.5
+                if distance < 8 and self.isDotHeld == -1:
+                    self.isDotHeld = i
+
     def events(self):
         """
         Handles all the pygame events.
@@ -184,15 +194,8 @@ class Game:
                     self.create_clicked_particles()
                     if event.button == 3:
                         self.rightclickedmousepos = event.pos
-                        if self.isDrawingModeOn:
-                            if self.isDotHeld != -1:
-                                points[self.isDotHeld] = event.pos
-                                self.isDotHeld = -1
-                            else:
-                                for i in range(len(points)):
-                                    distance = ((points[i][0] - self.rightclickedmousepos[0]) ** 2 + (points[i][1] - self.rightclickedmousepos[1]) ** 2 ) ** 0.5
-                                    if distance < 8 and self.isDotHeld == -1:
-                                        self.isDotHeld = i
+
+                        self.movePoints(points, event.pos)
                 if event.type == pygame.MOUSEWHEEL:
                     self.scrolling(event)
                 if event.type == pygame.KEYDOWN:

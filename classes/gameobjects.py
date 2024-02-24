@@ -1,3 +1,4 @@
+import classes.game
 import functions
 import pygame
 from gui import ModifyParameters as mp
@@ -99,6 +100,7 @@ class GameObject:
         if not self.selectedtrue:
             if self.resizing:
                 self.drawResizeOutline()
+                pass
             # Render the image if available
             if self.image:
                 center_x = sum(x for x, _ in self.points) / len(self.points)
@@ -274,24 +276,27 @@ class GameObject:
             pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
 
     def drawResizeOutline(self):
-        # Draw an outline around the object
-        pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 0, 255))
-        self.resize_rects = []
-        for point in self.points:
-            rect = pygame.Rect(point[0] - 10, point[1] - 10, 20, 20)
-            pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=10)
-            self.resize_rects.append(rect)
-        if self.resize_on:
-            self.points[self.x_resize_index] = (pygame.mouse.get_pos()[0], self.points[self.x_resize_index][1])
-            #pygame.draw.circle(self.game.screen, (255, 0, 0), self.points[self.x_resize_index], 5)
-            self.points[self.y_resize_index] = (self.points[self.y_resize_index][0], pygame.mouse.get_pos()[1])
-            #pygame.draw.circle(self.game.screen, (0, 255, 0), self.points[self.y_resize_index], 5)
-            self.points[self.resize_point_index] = pygame.mouse.get_pos()
-            #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
+        if isinstance(self, Mirror) and self.textureName == None:
+            classes.game.Game.movePoints(self.game, self.points, pygame.mouse.get_pos())
+        else:
+            # Draw an outline around the object
+            pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 0, 255))
+            self.resize_rects = []
+            for point in self.points:
+                rect = pygame.Rect(point[0] - 10, point[1] - 10, 20, 20)
+                pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=10)
+                self.resize_rects.append(rect)
+            if self.resize_on:
+                self.points[self.x_resize_index] = (pygame.mouse.get_pos()[0], self.points[self.x_resize_index][1])
+                #pygame.draw.circle(self.game.screen, (255, 0, 0), self.points[self.x_resize_index], 5)
+                self.points[self.y_resize_index] = (self.points[self.y_resize_index][0], pygame.mouse.get_pos()[1])
+                #pygame.draw.circle(self.game.screen, (0, 255, 0), self.points[self.y_resize_index], 5)
+                self.points[self.resize_point_index] = pygame.mouse.get_pos()
+                #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
 
 
-        if settings['DEBUG'] == "True":
-            pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
+            if settings['DEBUG'] == "True":
+                pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
 
     def checkifclicked(self, mousepos):
         if self.game.isDrawingModeOn != True:
