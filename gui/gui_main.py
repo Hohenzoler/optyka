@@ -73,6 +73,8 @@ class GUI:
             return "Lens"
         elif id == 9:
             return "random button"
+        elif id == 10:
+            return "weird mirror"
 
     def load_settings(self):
         self.width = self.game.width
