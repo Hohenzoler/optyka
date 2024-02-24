@@ -158,7 +158,7 @@ class Button:
         Renders the button on the screen.
         """
         if self.color != None:
-            pygame.draw.rect(self.game.screen, self.color, self.rect)
+            pygame.draw.rect(self.game.screen, self.color, self.rect, 0, 5)
 
         try:
             self.game.screen.blit(self.icon, self.icon_rect)
@@ -177,7 +177,7 @@ class Button:
         text_rect = text_surface.get_rect()
         text_rect.bottomright = (mouse_pos[0]-5, mouse_pos[1]-5)
 
-        pygame.draw.rect(self.game.screen, (0, 0, 0), text_rect.inflate(10, 10))
+        pygame.draw.rect(self.game.screen, (0, 0, 0), text_rect.inflate(10, 10), 0, 5)
 
         self.game.screen.blit(text_surface, text_rect)
 

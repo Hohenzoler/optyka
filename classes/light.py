@@ -32,7 +32,7 @@ class Light:
         self.color = color
         self.angle = angle
         self.light_width = light_width
-        self.layer = 0  # Assign a layer value to control rendering order
+        self.layer = 1# Assign a layer value to control rendering order
         #self.game.objects.insert(-1, self)
         self.colors=[]
         self.RGB = RGB_Class(self.color[0], self.color[1], self.color[2])
@@ -103,7 +103,7 @@ class Light:
                 for x in range(0, len(self.points) - 1):
                     self.draw_thick_line(self.game.screen, int(self.points[x][0]), int(self.points[x][1]),
                                         int(self.points[x + 1][0]), int(self.points[x + 1][1]), self.colors[x], 5)
-
+            self.game.objects.remove(self)
         except (AttributeError, ValueError):
             pass
     #NON - RECURSIVE
