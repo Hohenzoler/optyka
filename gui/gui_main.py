@@ -22,7 +22,7 @@ class GUI:
             self.game.achievements.handle_achievement_unlocked("U are weird...")
 
 
-        self.layer = 2  # Assign a higher layer value to GUI to ensure it's rendered on top
+        self.layer = 3  # Assign a higher layer value to GUI to ensure it's rendered on top
         self.game.objects.append(self)
         self.f = None
 

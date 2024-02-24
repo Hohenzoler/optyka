@@ -34,7 +34,7 @@ class GameObject:
         self.on = True
         self.selectedtrue = False
         self.mousepos = None
-        self.layer = 1
+        self.layer = 0
         self.placed = False
         self.angle = angle
         self.image = image if image else None
@@ -733,6 +733,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
         self.image = image if image else None
         self.lazer = True
         self.rays = []
+        self.layer = 2
 
     def render(self):
 
@@ -768,7 +769,6 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                         self.game.objects.append(self.light)
                         #self.game.objects.remove(self.light)
                         ray_angle += DELTA_ANGLE
-                    super().render()
                     #self.game.screen.blit(surface, (0, 0))
 
                 elif not self.on:
@@ -794,7 +794,6 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                     # self.light.trace_path2()
                     self.placed = True
                     self.game.objects.append(self.light)
-                    super().render()
 
                 elif not self.on:
                     self.light = None

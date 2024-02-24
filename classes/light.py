@@ -31,7 +31,7 @@ class Light:
         self.color = color
         self.angle = angle
         self.light_width = light_width
-        self.layer = 999  # Assign a layer value to control rendering order
+        self.layer = 1# Assign a layer value to control rendering order
         #self.game.objects.insert(-1, self)
         self.colors=[]
         self.RGB = RGB_Class(self.color[0], self.color[1], self.color[2])
