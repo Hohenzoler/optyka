@@ -390,8 +390,11 @@ class GameObject:
             self.get_Texture()
 
         except Exception as e:
-            self.textureName = self.parameters['texture']
-            self.get_Texture()
+            try:
+                self.textureName = self.parameters['texture']
+                self.get_Texture()
+            except:
+                pass
 
         try:
             self.lazer = self.parameters["lazer"]
