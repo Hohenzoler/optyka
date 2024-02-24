@@ -20,6 +20,7 @@ class Light:
     def __init__(self, game, points, color, angle, light_width, alpha=255):
         # points is a list that represents endpoints of next lines building a stream of light
         self.debug=False
+        self.offset_r=0
         self.difract_type='first'
         self.prism_light=False
         self.in_prism=False
@@ -674,20 +675,28 @@ class Light:
     def second_difract(self,prism):
         n = prism.n
         fi = prism.fi
-        prism_r = prism.angle / 180 * math.pi
-        x=math.pi/2-fi/2+prism_r-self.r
-        epsilon=x+fi-math.pi/2
+        self.callibrate_slope_angle()
+        a=self.slope_angle
+        epsilon=math.pi-a+self.r
+        beta = math.asin(math.sin(epsilon) / n)
+        self.r=math.pi/2-a+beta
+        self.r=2*math.pi-self.r
+        # prism_r = self.slope_angle
+        # x=math.pi/2-fi/2+prism_r-self.r
+        # epsilon=x+fi-math.pi/2
+        #
+        # lf_angle=prism_r+fi/2
+        #
+        # lf = Linear_Function(math.tan(lf_angle),
+        #                      self.find_b(math.tan(lf_angle), self.current_point))
+        # # lf.draw(self.game)
+        #beta = math.asin(math.sin(epsilon) / n)
 
-        lf_angle=prism_r+fi/2
-
-        lf = Linear_Function(math.tan(lf_angle),
-                             self.find_b(math.tan(lf_angle), self.current_point))
-        lf.draw(self.game)
-
-        beta=math.asin(math.sin(epsilon)/n)
-        self.r=math.pi-beta+fi/2+prism_r
-        self.r=3*math.pi-self.r
+        # self.r=math.pi-beta+prism_r
+        # self.r=3*math.pi-self.r
+        # self.r=-self.r
         print('a')
+
     def prism_stuff(self):
 
         pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
@@ -698,15 +707,15 @@ class Light:
 
         self.colors.append(self.RGB.rgb)
 
-        if self.difract_type=='first':
-            self.first_difract(self.current_object)
-        else:
+        if self.in_prism:
             self.second_difract(self.current_object)
+        else:
+            self.first_difract(self.current_object)
 
 
         if not self.in_prism and self.prism_light==False:
             angle=math.pi/18
-            da_factor=10
+            da_factor=7
             da=angle*2/da_factor
             colors=[(194, 14, 26),(220, 145, 26),(247, 234, 59),(106, 169, 65),(69, 112, 180),(90, 40, 127),(128, 33, 125)]
             red=self.RGB.rgb[0]/255
@@ -716,7 +725,7 @@ class Light:
             for x in range(0,7):
                 self.make_prism_light((colors[x][0]*weights[x],colors[x][1]*weights[x],colors[x][2]*weights[x]),angle)
                 angle-=da
-            self.mini_run = False
+            # self.mini_run = False
 
 
         self.current_starting_point = self.current_point
@@ -732,6 +741,7 @@ class Light:
         light1.in_mirror = True
         light1.ignore_object = self.current_object
         light1.debug = False
+
         light1.trace_path2()
         light1.render()
 
@@ -742,10 +752,10 @@ class Light:
         light1.in_prism = True
         light1.prism_light=True
         light1.debug=False
-        if self.horizontal=='left':
-            light1.difract_type='second'
+
         light1.trace_path2()
         light1.render()
+
 
 
 
