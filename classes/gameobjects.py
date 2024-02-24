@@ -199,9 +199,10 @@ class GameObject:
             pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
 
             for obj in self.game.objects:
-                if obj.rect.colliderect(temp_rect):
-                    if obj != self and isinstance(obj, GameObject):
-                        return
+                if type(obj) != light.Light:
+                    if obj.rect.colliderect(temp_rect):
+                        if obj != self and isinstance(obj, GameObject):
+                            return
 
             # Reset the flag to regenerate triangles
             self.triangles_generated = False
@@ -764,7 +765,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                         # Render the light before blitting the rotated surface
                         #light.Light.render(self.light, surface)
-                        light.Light.render(self.light)
+                        self.game.objects.append(self.light)
                         #self.game.objects.remove(self.light)
                         ray_angle += DELTA_ANGLE
                     super().render()
@@ -792,7 +793,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                     self.light.trace_path2()
                     # self.light.trace_path2()
                     self.placed = True
-                    light.Light.render(self.light)
+                    self.game.objects.append(self.light)
                     super().render()
 
                 elif not self.on:
