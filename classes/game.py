@@ -298,6 +298,17 @@ class Game:
             #     optyka.gui.polygonDrawing.renderDots()
             self.displayFPS()
             self.displayClock()
+            if self.popup == True:
+                if time.time() - self.popup_start_time >= 5:
+                    self.popup = False
+                    self.popup_start_time = None
+                    self.currentAchievementName = None
+                    self.currentAchievementRarity = None
+                else:
+                    popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName,
+                                                   self.currentAchievementRarity,
+                                                   self.width // 2 - ((self.width // 2 - 100) // 2), 20)
+                    print(self.currentAchievementName)
         elif self.mode == 'settings':
             if self.executed_command != 'settings':
                 self.settings_screen = settings_screen.Settings_screen(self)
@@ -351,15 +362,7 @@ class Game:
                 pygame.draw.lines(self.screen, (255, 255, 255), True, points)
         else:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
-        if self.popup == True:
-            if time.time() - self.popup_start_time >= 5:
-                self.popup = False
-                self.popup_start_time = None
-                self.currentAchievementName = None
-                self.currentAchievementRarity = None
-            else:
-                popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName, self.currentAchievementRarity, self.width//2 - ((self.width//2 - 100)//2), 20)
-                print(self.currentAchievementName)
+
 
 
 
