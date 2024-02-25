@@ -131,16 +131,16 @@ class GameObject:
                         pygame.gfxdraw.polygon(self.game.screen, self.points, (255, 255, 255))
 
         else:
-            font = pygame.font.Font(Font, self.game.width//40)
-
-            text = font.render('Click P to open parameters window', True, (255, 255, 255))
-
-            text_rect = text.get_rect()
-
-            text_rect.centerx = self.game.screen.get_rect().centerx
-            text_rect.y = 10
-
-            self.game.screen.blit(text, text_rect)
+            # font = pygame.font.Font(Font, self.game.width//40)
+            #
+            # text = font.render('Click P to open parameters window', True, (255, 255, 255))
+            #
+            # text_rect = text.get_rect()
+            #
+            # text_rect.centerx = self.game.screen.get_rect().centerx
+            # text_rect.y = 10
+            #
+            # self.game.screen.blit(text, text_rect)
             mousepos = pygame.mouse.get_pos()
             if self.game.r:
 

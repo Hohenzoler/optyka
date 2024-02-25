@@ -358,7 +358,7 @@ class Game:
                 self.currentAchievementName = None
                 self.currentAchievementRarity = None
             else:
-                popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName, self.currentAchievementRarity, 50, 100)
+                popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName, self.currentAchievementRarity, self.width//2 - ((self.width//2 - 100)//2), 20)
                 print(self.currentAchievementName)
 
 
