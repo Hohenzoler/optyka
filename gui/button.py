@@ -218,7 +218,7 @@ class Button:
 
                 elif self.number == 3:
                     obj = gameobjects.Prism(self.game,
-                                            [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100),
+                                            [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100*3**(1/2)/2),
                                              (mousepos[0] + 50, mousepos[1])], None, 0, 0, 1)
                     self.game.achievements.handle_achievement_unlocked("a whole new world")
                 elif self.number == 5:

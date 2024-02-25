@@ -443,6 +443,39 @@ class Prism(GameObject):
         self.n=1.52
         self.fi=math.pi/3
         self.dispersion_angle=math.pi/3
+    def get_left_wall(self):
+        xs=[point[0] for point in self.points]
+        ys=[point[1] for point in self.points]
+        self.get_slopes()
+        for slope in self.slopes:
+            a=True
+            for point in slope:
+                if max(xs) in point:
+                    a=False
+            if a:
+                self.left_slope=slope
+        pygame.draw.line(self.game.screen, (255, 0, 0), self.left_slope[0], self.left_slope[1], 5)
+    def get_right_wall(self):
+        xs=[point[0] for point in self.points]
+        ys=[point[1] for point in self.points]
+        self.get_slopes()
+        for slope in self.slopes:
+            a=True
+            for point in slope:
+                if min(xs) in point:
+                    a=False
+            if a:
+                self.right_slope=slope
+        pygame.draw.line(self.game.screen, (0, 255, 255), self.right_slope[0], self.right_slope[1], 5)
+    def get_bottom_wall(self):
+        xs=[point[0] for point in self.points]
+        ys=[point[1] for point in self.points]
+        self.get_slopes()
+        for slope in self.slopes:
+
+            if (slope[0][0]==max(xs) and slope[1][0]==min(xs)) or (slope[1][0]==max(xs) and slope[0][0]==min(xs)):
+                self.bottom_slope=slope
+        pygame.draw.line(self.game.screen, (255, 255, 0), self.bottom_slope[0], self.bottom_slope[1], 5)
 
 class ColoredGlass(GameObject):
     def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None):
