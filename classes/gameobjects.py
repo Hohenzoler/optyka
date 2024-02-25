@@ -471,6 +471,9 @@ class Lens(GameObject):
         self.lens_points = []
         self.refraction_index = refraction_index
         self.layer = 0
+        self.change_curvature_left = False
+        self.change_curvature_right = False
+        self.last_mouse_pos = None
 
         if curvature_radius2 is not None:
             self.curvature_radius2 = curvature_radius2
@@ -543,9 +546,11 @@ class Lens(GameObject):
     def generate_points(self, rect_points, angle):
         x1 = rect_points[0][1]
         x2 = rect_points[2][1]
-        self.width = abs(x1 - x2)
-        self.height = abs(rect_points[0][0] - rect_points[2][0])
-        POINTS_NUM = int(self.width) * 2
+        self.height = abs(x1 - x2)
+        self.width = abs(rect_points[0][0] - rect_points[2][0])
+        POINTS_NUM = int(self.height) * 2
+        points_num1 = self.curvature_radius * 2
+        points_num2 = self.curvature_radius2 * 2
         center = self.rect.center
         center_x = center[0]
 
@@ -559,32 +564,32 @@ class Lens(GameObject):
         #     y = center[1] + int(self.curvature_radius * math.sin(angle))
         #     self.parabola_points.append((x, y))
         if self.type == self.CONVEX:
-            center1 = (center_x + self.curvature_radius - self.height // 2, center[1])
-            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
-            center2 = (center_x - self.curvature_radius + self.height // 2, center[1])
-            self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2, POINTS_NUM)
+            center1 = (center_x + self.curvature_radius - self.width // 2, center[1])
+            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, points_num1)
+            center2 = (center_x - self.curvature_radius2 + self.width // 2, center[1])
+            self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius2, -math.pi / 2, math.pi / 2, points_num2)
         elif self.type == self.SINGLE_VEX:
-            center1 = (center_x + self.curvature_radius - self.height // 2, center[1])
+            center1 = (center_x + self.curvature_radius - self.width // 2, center[1])
             center2 = (center_x - self.curvature_radius, center[1])
-            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, POINTS_NUM)
+            self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi/2, 3 * math.pi / 2, points_num1)
             self.lens_points2 = []
             for i in range(POINTS_NUM):
-                self.lens_points2.append((center_x, center[1] - self.height + i * 2 * (self.height / POINTS_NUM)))
+                self.lens_points2.append((center_x, center[1] - self.width + i * 2 * (self.width / POINTS_NUM)))
         elif self.type == self.SINGLE_CAVE:
             center1 = (center_x + self.curvature_radius, center[1])
             center2 = (center_x - self.curvature_radius, center[1])
             self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi / 2, 3 * math.pi / 2,
-                                                        POINTS_NUM)
+                                                        points_num1)
             self.lens_points2 = []
             for i in range(POINTS_NUM):
-                self.lens_points2.append((center_x, center[1] - self.height + i*2*(self.height / POINTS_NUM)))
+                self.lens_points2.append((center_x, center[1] - self.width + i*2*(self.width / POINTS_NUM)))
         else:
             center1 = (center_x + self.curvature_radius, center[1])
             self.lens_points = self.generate_arc_points(center1, self.curvature_radius, math.pi / 2, 3 * math.pi / 2,
-                                                        POINTS_NUM)
+                                                        points_num1)
             center2 = (center_x - self.curvature_radius, center[1])
             self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, -math.pi / 2, math.pi / 2,
-                                                         POINTS_NUM)
+                                                         points_num2)
         self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
         self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
         self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
@@ -593,6 +598,48 @@ class Lens(GameObject):
         self.center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
         pygame.draw.circle(self.game.screen, (0, 255, 0),
                           self.center2, 2, 0)
+
+    def drawResizeOutline(self):
+        # Draw an outline around the object
+        pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 0, 255))
+        self.resize_rects = []
+        for point in self.points:
+            rect = pygame.Rect(point[0] - 10, point[1] - 10, 20, 20)
+            pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=10)
+            self.resize_rects.append(rect)
+        self.resize_rects.append(pygame.Rect(self.points[0][0] - 10, self.points[0][1] + self.height/2 - 10, 20, 20))
+        pygame.draw.rect(self.game.screen, (245, 212, 24), self.resize_rects[-1], border_radius=10)
+        mouse_pos = pygame.mouse.get_pos()
+        self.resize_rects.append(pygame.Rect(self.points[1][0] - 10, self.points[1][1] + self.height / 2 - 10, 20, 20))
+        pygame.draw.rect(self.game.screen, (245, 212, 24), self.resize_rects[-1], border_radius=10)
+
+        if self.resize_on:
+            self.points[self.x_resize_index] = (mouse_pos[0], self.points[self.x_resize_index][1])
+            #pygame.draw.circle(self.game.screen, (255, 0, 0), self.points[self.x_resize_index], 5)
+            self.points[self.y_resize_index] = (self.points[self.y_resize_index][0], mouse_pos[1])
+            #pygame.draw.circle(self.game.screen, (0, 255, 0), self.points[self.y_resize_index], 5)
+            self.points[self.resize_point_index] = mouse_pos
+            #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
+            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height -5:
+                self.curvature_radius2 += 1
+            if self.lens_points2[0][0] < self.lens_points[0][0]:
+                self.curvature_radius2 += 1
+            if self.lens_points[0][1] - self.lens_points[-1][1] < self.height -5:
+                self.curvature_radius += 1
+            if self.lens_points2[0][0] < self.lens_points[0][0]:
+                self.curvature_radius += 1
+        if self.change_curvature_left:
+            if mouse_pos[0] < self.last_mouse_pos[0] and self.lens_points2[0][0] > self.lens_points[0][0] and self.lens_points[0][1] - self.lens_points[-1][1] > self.height -5:
+                self.curvature_radius -= 1
+            if mouse_pos[0] > self.last_mouse_pos[0]:
+                self.curvature_radius += 1
+        if self.change_curvature_right:
+            if mouse_pos[0] > self.last_mouse_pos[0] and self.lens_points2[0][0] > self.lens_points[0][0] and self.lens_points2[-1][1] - self.lens_points2[0][1] > self.height -5:
+                self.curvature_radius2 -= 1
+            if mouse_pos[0] < self.last_mouse_pos[0]:
+                self.curvature_radius2 += 1
+        self.last_mouse_pos = mouse_pos
+        self.update_rect()
 
 
     def rotate_points2(self, points, angle, center):

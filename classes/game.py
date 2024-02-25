@@ -168,24 +168,36 @@ class Game:
                 points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
+
                     for object in self.objects:
+                        if type(object) == gameobjects.Lens:
+                            if object.change_curvature_left:
+                                object.change_curvature_left = False
+                            if object.change_curvature_right:
+                                object.change_curvature_right = False
                         if type(object) in (gameobjects.GameObject, gameobjects.Mirror, gameobjects.Lens, gameobjects.Flashlight, gameobjects.Prism, gameobjects.CustomPolygon, gameobjects.ColoredGlass) and object.resizing:
                             if object.resize_on is False:
                                 for idx, rect in enumerate(object.resize_rects):
                                     if rect.collidepoint(self.mousepos):
-                                        object.resize_on = True
                                         object.resize_point_index = idx
-                                        resize_point = object.points[idx]
-                                        for index, point in enumerate(object.points):
-                                            if point[0] == resize_point[0] and point != resize_point:
-                                                object.x_resize_index = index
+                                        if type(object) != gameobjects.Lens or idx < 4:
+                                            object.resize_on = True
+                                            resize_point = object.points[idx]
+                                            for index, point in enumerate(object.points):
+                                                if point[0] == resize_point[0] and point != resize_point:
+                                                    object.x_resize_index = index
 
-                                            elif point[1] == resize_point[1] and point != resize_point:
-                                                object.y_resize_index = index
-                                                pygame.draw.circle(self.screen, (0, 255, 0), point, 5)
-                                            elif point != resize_point:
-                                                object.static_point_index = index
-                                                pygame.draw.circle(self.screen, (255, 0, 0), point, 5)
+                                                elif point[1] == resize_point[1] and point != resize_point:
+                                                    object.y_resize_index = index
+                                                    pygame.draw.circle(self.screen, (0, 255, 0), point, 5)
+                                                elif point != resize_point:
+                                                    object.static_point_index = index
+                                                    pygame.draw.circle(self.screen, (255, 0, 0), point, 5)
+                                        else:
+                                            if idx == 4:
+                                                object.change_curvature_left = True
+                                            elif idx == 5:
+                                                object.change_curvature_right = True
                             else:
                                 object.resize_on = False
                     if self.isDrawingModeOn:
