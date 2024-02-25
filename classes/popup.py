@@ -24,16 +24,16 @@ class Popup:
         return color
 
     def render_achievement(self, achievement, rarity, x_offset, y_offset):
-        self.smol_font = pygame.font.Font(font.Font, 15)
-        self.normal_font = pygame.font.Font(font.Font, 30)
+        self.smol_font = pygame.font.Font(font.Font, 16)
+        self.normal_font = pygame.font.Font(font.Font, 22)
         self.rarity = rarity
         achievement_name = achievement
         text_color = (255, 255, 255)
 
         color = self.rarity_color(self.rarity)
 
-        rect_width = self.width - 100
-        rect_height = 50
+        rect_width = self.width//2 - 100
+        rect_height = 40
 
         textRect = pygame.Rect(x_offset, y_offset, rect_width, rect_height)
 
@@ -48,9 +48,8 @@ class Popup:
         self.game.screen.blit(unlocked_text_surface, unlocked_text_rect)
 
         text_surface = self.smol_font.render(f"{achievement_name}", True, text_color)
-        text_surface_rect = text_surface.get_rect(center=(center_x, center_y+15))
+        text_surface_rect = text_surface.get_rect(center=(center_x, center_y+12))
         self.game.screen.blit(text_surface, text_surface_rect)
 
-        self.game.screen.blit(text_surface, text_surface_rect)
         return y_offset + rect_height + 20
 

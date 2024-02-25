@@ -168,24 +168,36 @@ class Game:
                 points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
+
                     for object in self.objects:
+                        if type(object) == gameobjects.Lens:
+                            if object.change_curvature_left:
+                                object.change_curvature_left = False
+                            if object.change_curvature_right:
+                                object.change_curvature_right = False
                         if type(object) in (gameobjects.GameObject, gameobjects.Mirror, gameobjects.Lens, gameobjects.Flashlight, gameobjects.Prism, gameobjects.CustomPolygon, gameobjects.ColoredGlass) and object.resizing:
                             if object.resize_on is False:
                                 for idx, rect in enumerate(object.resize_rects):
                                     if rect.collidepoint(self.mousepos):
-                                        object.resize_on = True
                                         object.resize_point_index = idx
-                                        resize_point = object.points[idx]
-                                        for index, point in enumerate(object.points):
-                                            if point[0] == resize_point[0] and point != resize_point:
-                                                object.x_resize_index = index
+                                        if type(object) != gameobjects.Lens or idx < 4:
+                                            object.resize_on = True
+                                            resize_point = object.points[idx]
+                                            for index, point in enumerate(object.points):
+                                                if point[0] == resize_point[0] and point != resize_point:
+                                                    object.x_resize_index = index
 
-                                            elif point[1] == resize_point[1] and point != resize_point:
-                                                object.y_resize_index = index
-                                                pygame.draw.circle(self.screen, (0, 255, 0), point, 5)
-                                            elif point != resize_point:
-                                                object.static_point_index = index
-                                                pygame.draw.circle(self.screen, (255, 0, 0), point, 5)
+                                                elif point[1] == resize_point[1] and point != resize_point:
+                                                    object.y_resize_index = index
+                                                    pygame.draw.circle(self.screen, (0, 255, 0), point, 5)
+                                                elif point != resize_point:
+                                                    object.static_point_index = index
+                                                    pygame.draw.circle(self.screen, (255, 0, 0), point, 5)
+                                        else:
+                                            if idx == 4:
+                                                object.change_curvature_left = True
+                                            elif idx == 5:
+                                                object.change_curvature_right = True
                             else:
                                 object.resize_on = False
                     if self.isDrawingModeOn:
@@ -298,6 +310,17 @@ class Game:
             #     optyka.gui.polygonDrawing.renderDots()
             self.displayFPS()
             self.displayClock()
+            if self.popup == True:
+                if time.time() - self.popup_start_time >= 5:
+                    self.popup = False
+                    self.popup_start_time = None
+                    self.currentAchievementName = None
+                    self.currentAchievementRarity = None
+                else:
+                    popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName,
+                                                   self.currentAchievementRarity,
+                                                   self.width // 2 - ((self.width // 2 - 100) // 2), 20)
+                    print(self.currentAchievementName)
         elif self.mode == 'settings':
             if self.executed_command != 'settings':
                 self.settings_screen = settings_screen.Settings_screen(self)
@@ -351,15 +374,7 @@ class Game:
                 pygame.draw.lines(self.screen, (255, 255, 255), True, points)
         else:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
-        if self.popup == True:
-            if time.time() - self.popup_start_time >= 5:
-                self.popup = False
-                self.popup_start_time = None
-                self.currentAchievementName = None
-                self.currentAchievementRarity = None
-            else:
-                popup.Popup.render_achievement(popup.Popup(self), self.currentAchievementName, self.currentAchievementRarity, 50, 100)
-                print(self.currentAchievementName)
+
 
 
 
