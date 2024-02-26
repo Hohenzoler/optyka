@@ -150,7 +150,7 @@ class Parameters:
                 # print(new_parameters)
                 new_parameters[param] = value
 
-            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') + new_parameters.get('absorbsion_facto') > 1:
+            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') + new_parameters.get('absorbsion_factor') > 1:
                 messagebox.showwarning("Error", "The sum of reflection factor and transmittance and absorbsion_facto cannot exceed 100%.")
                 return
 
