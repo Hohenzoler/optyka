@@ -217,6 +217,7 @@ class GameObject:
                 if type(obj) != light.Light:
                     if obj.rect.colliderect(temp_rect):
                         if obj != self and isinstance(obj, GameObject):
+                            self.angle -= d_angle
                             return
 
             # Reset the flag to regenerate triangles
