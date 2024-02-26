@@ -189,6 +189,23 @@ class Game:
 
             if self.mode == 'default':
                 points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+                    for object in self.objects:
+                        if type(object) == gameobjects.Lens:
+                            object.curvature_resize_step += 1
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+                    for object in self.objects:
+                        if type(object) == gameobjects.Lens:
+                            if object.curvature_resize_step > 1:
+                                object.curvature_resize_step -= 1
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    for object in self.objects:
+                        if type(object) == gameobjects.Lens:
+                            if object.change_curvature_left:
+                                object.change_curvature_left = False
+                            if object.change_curvature_right:
+                                object.change_curvature_right = False
+                        object.resize_on = False
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
                     if not self.isDrawingModeOn:
