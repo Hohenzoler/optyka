@@ -7,6 +7,7 @@
     "size": 1.0,
     "reflection_factor": 0.0,
     "transmittance": 1.0,
+    "absorbsion_factor": 0,
     "points": [
       [
         35,
@@ -38,6 +39,7 @@
     "size": 1,
     "reflection_factor": 0,
     "transmittance": 1,
+    "absorbsion_factor": 0,
     "points": [
       [
         301,
@@ -68,6 +70,7 @@
     "size": 1,
     "reflection_factor": 0,
     "transmittance": 1,
+    "absorbsion_factor": 0,
     "points": [
       [
         297,
@@ -98,6 +101,7 @@
     "size": 1,
     "reflection_factor": 0,
     "transmittance": 1,
+    "absorbsion_factor": 0,
     "points": [
       [
         37,
@@ -129,6 +133,7 @@
     "size": 1.0,
     "reflection_factor": 0.0,
     "transmittance": 1.0,
+    "absorbsion_factor": 0,
     "points": [
       [
         167,
@@ -159,6 +164,7 @@
     "size": 1.0,
     "reflection_factor": 0.0,
     "transmittance": 1.0,
+    "absorbsion_factor": 0,
     "points": [
       [
         180,
@@ -189,6 +195,7 @@
     "size": 1.0,
     "reflection_factor": 0.0,
     "transmittance": 1.0,
+    "absorbsion_factor": 0,
     "points": [
       [
         172,
@@ -219,6 +226,7 @@
     "size": 1.0,
     "reflection_factor": 0.0,
     "transmittance": 1.0,
+    "absorbsion_factor": 0,
     "points": [
       [
         179,

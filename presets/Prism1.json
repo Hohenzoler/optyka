@@ -7,6 +7,7 @@
     "size": 1,
     "reflection_factor": 0,
     "transmittance": 1,
+    "absorbsion_factor": 0,
     "points": [
       [
         51,
@@ -38,6 +39,7 @@
     "size": 1,
     "reflection_factor": 0,
     "transmittance": 1,
+    "absorbsion_factor": 0,
     "points": [
       [
         201,
@@ -61,6 +63,7 @@
     "size": 1,
     "reflection_factor": 1,
     "transmittance": 0,
+    "absorbsion_factor": 0,
     "points": [
       [
         7,
@@ -91,6 +94,7 @@
     "size": 1,
     "reflection_factor": 0,
     "transmittance": 1,
+    "absorbsion_factor": 0,
     "points": [
       [
         202,
