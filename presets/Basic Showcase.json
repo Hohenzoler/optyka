@@ -1,0 +1,92 @@
+[
+  "Have fun exploring the environment",
+  {
+    "x": 131.0,
+    "y": 332.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        36,
+        674
+      ],
+      [
+        236,
+        674
+      ],
+      [
+        236,
+        774
+      ],
+      [
+        36,
+        774
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 699.0,
+    "y": 373.00000000000006,
+    "angle": 325.6299999999998,
+    "size": 1,
+    "reflection_factor": 1,
+    "transmittance": 0,
+    "points": [
+      [
+        21,
+        628
+      ],
+      [
+        221,
+        628
+      ],
+      [
+        221,
+        728
+      ],
+      [
+        21,
+        728
+      ]
+    ],
+    "texture": "glass",
+    "class": "Mirror"
+  },
+  {
+    "x": 739.0,
+    "y": 174.0,
+    "angle": 288.81,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        175,
+        619
+      ],
+      [
+        195,
+        619
+      ],
+      [
+        195,
+        719
+      ],
+      [
+        175,
+        719
+      ]
+    ],
+    "red": 0,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  }
+]
