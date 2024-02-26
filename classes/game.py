@@ -251,7 +251,7 @@ class Game:
                         polygonDrawing.clearPoints(self.polygonDrawing)
                         global isDrawingModeOn
                         isDrawingModeOn = False
-                        self.achievements.handle_achievement_unlocked("topopisy")
+                        self.achievements.handle_achievement_unlocked("a new creature")
                     elif event.key == pygame.K_BACKSPACE and len(points) > 0:
                         polygonDrawing.popapoint(self.polygonDrawing)
 
