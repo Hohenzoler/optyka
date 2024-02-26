@@ -18,7 +18,7 @@ DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
 
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, image = None, textureName=None):
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, image = None):
         # Initialize common attributes
         self.game = game
 
@@ -26,11 +26,10 @@ class GameObject:
 
         self.points = self.defualt_points
 
-        self.textureName = textureName if textureName else None
 
-        self.get_Texture()
+        # self.get_Texture()
 
-        self.color = color if not self.texture else None
+        self.color = color
 
         self.on = True
         self.selectedtrue = False
@@ -94,7 +93,7 @@ class GameObject:
         pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
 
     def checkResize(self):
-        if self.resizing and isinstance(self, Mirror) and self.textureName == None:
+        if self.resizing and isinstance(self, Mirror):
             return self.points
         else:
             return False
@@ -126,18 +125,15 @@ class GameObject:
                 self.game.screen.blit(rotated_image, image_rect.topleft)
             else:
                 # Draw the rotated lines without transparency
-                if self.texture:
-                    pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
-                else:
-                    if self.color:
-                        try:
-                            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
-                        except Exception as e:
+                if self.color:
+                    try:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                    except Exception as e:
 
-                            # print(self.points)
-                            print(e)
-                    else:
-                        pygame.gfxdraw.polygon(self.game.screen, self.points, (255, 255, 255))
+                        # print(self.points)
+                        print(e)
+                else:
+                    pygame.gfxdraw.polygon(self.game.screen, self.points, (255, 255, 255))
 
         else:
             # font = pygame.font.Font(Font, self.game.width//40)
@@ -242,16 +238,10 @@ class GameObject:
             else:
                 self.points = [(x + self.x, y + self.y) for x, y in self.points]
                 mousepos = pygame.mouse.get_pos()
-                if self.texture:
-                    try:
-                        pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
-                    except:
-                        pass
-                else:
-                    try:
-                        pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
-                    except:
-                        pass
+                try:
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+                except:
+                    pass
                 self.update_rect()
 
     def move(self):
@@ -280,10 +270,8 @@ class GameObject:
         else:
 
             mousepos = pygame.mouse.get_pos()
-            if self.texture:
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
-            else:
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+            pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+
     def drawoutline(self):
         # Draw an outline around the object
         pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))
@@ -291,7 +279,7 @@ class GameObject:
             pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
 
     def drawResizeOutline(self):
-        if isinstance(self, Mirror) and self.textureName == None:
+        if isinstance(self, Mirror):
             classes.game.Game.movePoints(self.game, self.points, pygame.mouse.get_pos())
         else:
             # Draw an outline around the object
@@ -388,8 +376,6 @@ class GameObject:
             colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
             self.parameters.update(colors)
 
-        if self.textureName != None:
-            self.parameters['texture'] = self.textureName
 
 
     def change_parameters(self, placeholder=None):
@@ -416,34 +402,29 @@ class GameObject:
 
         try:
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
-            self.textureName = None
-            self.get_Texture()
+            # self.get_Texture()
 
         except Exception as e:
-            try:
-                self.textureName = self.parameters['texture']
-                self.get_Texture()
-            except:
-                pass
+            print(e)
 
         try:
             self.lazer = self.parameters["lazer"]
         except Exception as e:
             print(e)
 
-    def get_Texture(self):
-        if self.textureName == 'wood':
-            self.texture = images.wood
-        elif self.textureName == 'glass':
-            self.texture = images.glass
-        elif self.textureName == 'water':
-            self.texture = images.water
-        elif self.textureName == 'clouds':
-            self.texture = images.clouds
-        elif self.textureName == 'paper':
-            self.texture = images.papier
-        else:
-            self.texture = None
+    # def get_Texture(self):
+    #     if self.textureName == 'wood':
+    #         self.texture = images.wood
+    #     elif self.textureName == 'glass':
+    #         self.texture = images.glass
+    #     elif self.textureName == 'water':
+    #         self.texture = images.water
+    #     elif self.textureName == 'clouds':
+    #         self.texture = images.clouds
+    #     elif self.textureName == 'paper':
+    #         self.texture = images.papier
+    #     else:
+    #         self.texture = None
 
     def change_size(self):
 
@@ -459,12 +440,12 @@ class GameObject:
         self.points = new_points
 
 class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
 
 class Prism(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
         self.n=1.52
         self.fi=math.pi/3
         self.dispersion_angle=math.pi/3
@@ -503,14 +484,14 @@ class Prism(GameObject):
         pygame.draw.line(self.game.screen, (255, 255, 0), self.bottom_slope[0], self.bottom_slope[1], 5)
 
 class ColoredGlass(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
 class CustomPolygon(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None, layer = 5):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, layer = 5):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
 class Corridor(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, textureName = None, layer = 5):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path, textureName)
+    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, layer = 5):
+        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
     def get_slopes(self):
         self.slopes = [(self.points[2*i], self.points[2*i + 1]) for i in range((len(self.points))//2)]
         # self.slopes.append((self.points[len(self.points) - 1], self.points[0]))
@@ -738,9 +719,6 @@ class Lens(GameObject):
             # Draw the rotated lines without transparency
             if self.resizing:
                 self.drawResizeOutline()
-            if self.texture:
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, int(self.x), int(self.y))
-            else:
                 if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE:
                     self.generate_points(self.points, self.angle)
                     pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
@@ -835,10 +813,10 @@ class Lens(GameObject):
         else:
             self.points = [(x + self.x, y + self.y) for x, y in self.points]
             mousepos = pygame.mouse.get_pos()
-            if self.texture:
-                pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
-            # else:
-                # pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+            # if self.texture:
+            #     pygame.gfxdraw.textured_polygon(self.game.screen, self.points, self.texture, mousepos[0], -mousepos[1])
+            # # else:
+            #     # pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
             self.update_rect()
     def update_rect(self):
         # Update the rect based on the points
