@@ -119,11 +119,11 @@ class StartScreen:
                 pygame.quit()
                 self.run = False
 
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 for object in self.objects:
-                    if type(object) == button.ButtonForgame:
+                    if type(object) == button.ButtonForgame and event.button == 1:
                         object.checkcollision(event.pos)
-                    elif type(object) == settings_screen.Settings_screen or type(object) == loading_saves_screen.Loading_saves_screen or type(object) == achievements_screen.AchievementsScreen or type(object) == music_settings.Music_settings_screen:
+                    elif type(object) == settings_screen.Settings_screen or type(object) == loading_saves_screen.Loading_saves_screen or type(object) == achievements_screen.AchievementsScreen or type(object) == music_settings.Music_settings_screen and event.button == 1:
                         object.checkevent(event.pos)
                     elif type(object) == loading_saves_screen.saveselector:
                         if event.button == 4 and object.scrolling_needed:
