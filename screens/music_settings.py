@@ -164,7 +164,7 @@ class Volume_bar:
     def draw_plus_button(self):
         pygame.draw.rect(self.game.screen, self.white,
                          (self.plus_button_x, self.button_y, self.button_width, self.button_height), 0, 5)
-        plus_text = self.game.font.render("+", True, (0, 0, 0))
+        plus_text = self.game.font2.render("+", True, (0, 0, 0))
         text_rect = plus_text.get_rect(
             center=(self.plus_button_x + self.button_width // 2, self.button_y + self.button_height // 2))
         self.game.screen.blit(plus_text, text_rect)
@@ -172,7 +172,7 @@ class Volume_bar:
     def draw_minus_button(self):
         pygame.draw.rect(self.game.screen, self.white,
                          (self.minus_button_x, self.button_y, self.button_width, self.button_height), 0, 5)
-        minus_text = self.game.font.render("-", True, (0, 0, 0))
+        minus_text = self.game.font2.render("-", True, (0, 0, 0))
         text_rect = minus_text.get_rect(
             center=(self.minus_button_x + self.button_width // 2, self.button_y + self.button_height // 2))
         self.game.screen.blit(minus_text, text_rect)
