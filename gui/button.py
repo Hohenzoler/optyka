@@ -204,7 +204,7 @@ class Button:
                     obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] + 50),
-                                                         (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 1, 0,
+                                                         (mousepos[0] - 100, mousepos[1] + 50)], (200, 200, 200), 0, 1, 0,
                                              textureName='glass')
                     self.game.achievements.handle_achievement_unlocked("is it... me?")
 
@@ -370,7 +370,6 @@ class ButtonForgame:
             self.width = self.screen.width // 5
             self.y = (self.screen.height - self.screen.height // 10)
             self.x = (self.screen.width // 2) + gap
-            print(self.x)
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         else:

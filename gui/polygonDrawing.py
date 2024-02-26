@@ -25,7 +25,7 @@ class polygonDrawing:
         self.currentPolygonPoints = []
     def createPolygon(self, game):
         if len(self.currentPolygonPoints) >= 3:
-            Adam = gameobjects.Mirror(game, self.currentPolygonPoints, (200, 0, 0), 0, 1, 0)
+            Adam = gameobjects.Mirror(game, self.currentPolygonPoints, (200, 200, 200), 0, 1, 0)
             game.objects.append(Adam)
             self.clearPoints()
 
