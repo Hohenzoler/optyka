@@ -91,6 +91,13 @@ class GameObject:
 
     def draw_Poly(self):
         pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
+
+    def checkResize(self):
+        if self.resizing and isinstance(self, Mirror) and self.textureName == None:
+            return self.points
+        else:
+            return False
+
     def render(self):
         # print(self.get_triangles())
 
@@ -293,12 +300,15 @@ class GameObject:
                 pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=10)
                 self.resize_rects.append(rect)
             if self.resize_on:
-                self.points[self.x_resize_index] = (pygame.mouse.get_pos()[0], self.points[self.x_resize_index][1])
-                #pygame.draw.circle(self.game.screen, (255, 0, 0), self.points[self.x_resize_index], 5)
-                self.points[self.y_resize_index] = (self.points[self.y_resize_index][0], pygame.mouse.get_pos()[1])
-                #pygame.draw.circle(self.game.screen, (0, 255, 0), self.points[self.y_resize_index], 5)
-                self.points[self.resize_point_index] = pygame.mouse.get_pos()
-                #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
+                try:
+                    self.points[self.x_resize_index] = (pygame.mouse.get_pos()[0], self.points[self.x_resize_index][1])
+                    #pygame.draw.circle(self.game.screen, (255, 0, 0), self.points[self.x_resize_index], 5)
+                    self.points[self.y_resize_index] = (self.points[self.y_resize_index][0], pygame.mouse.get_pos()[1])
+                    #pygame.draw.circle(self.game.screen, (0, 255, 0), self.points[self.y_resize_index], 5)
+                    self.points[self.resize_point_index] = pygame.mouse.get_pos()
+                    #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
+                except:
+                    print(1)
 
 
             if settings['DEBUG'] == "True":

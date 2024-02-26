@@ -99,6 +99,8 @@ class Game:
 
         self.polygonDrawing = polygonDrawing()
         self.isDotHeld = -1
+        self.rPressed = 0
+        self.isAngleHeld = -1
 
 
     def create_cursor_particles(self):
@@ -142,14 +144,36 @@ class Game:
                     self.r = round(-1 / (time_difference * 9), 2)
 
     def movePoints(self, points, position):
-        if self.isDotHeld != -1:
-            points[self.isDotHeld] = position
-            self.isDotHeld = -1
+        linepoints = points
+        if self.rPressed == 1:
+            if self.isDotHeld != -1:
+                points[self.isDotHeld] = position
+                self.isDotHeld = -1
+            else:
+                for i in range(len(points)):
+                    distance = ((points[i][0] - position[0]) ** 2 + (points[i][1] - position[1]) ** 2) ** 0.5
+                    if distance < 8 and self.isDotHeld == -1:
+                        self.isDotHeld = i
         else:
             for i in range(len(points)):
-                distance = ((points[i][0] - position[0]) ** 2 + (points[i][1] - position[1]) ** 2) ** 0.5
-                if distance < 8 and self.isDotHeld == -1:
-                    self.isDotHeld = i
+                pygame.draw.circle(self.screen, (255, 255, 0), points[i], 10)
+        if self.rPressed == 2:
+            if self.isAngleHeld != -1:
+                print(1)
+                points[self.isAngleHeld] = position
+                self.isAngleHeld = -1
+            else:
+                print(2)
+                for i in range(len(points)):
+                    distance = ((points[i][0] - position[0]) ** 2 + (points[i][1] - position[1]) ** 2) ** 0.5
+                    if distance < 8 and self.isAngleHeld == -1:
+                        self.isAngleHeld = i
+
+        if self.isAngleHeld != -1:
+            linepoints[self.isAngleHeld] = position
+        self.lineDrawing(linepoints)
+        self.rPressed = 0
+
 
     def events(self):
         """
@@ -167,6 +191,8 @@ class Game:
                 points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.mousepos = event.pos  # when the left button is clicked the position is saved to self.mousepos
+                    if not self.isDrawingModeOn:
+                        self.rPressed = 2
 
                     for object in self.objects:
                         if type(object) == gameobjects.Lens:
@@ -205,8 +231,11 @@ class Game:
                     self.create_clicked_particles()
                     if event.button == 3:
                         self.rightclickedmousepos = event.pos
+                        if self.isDrawingModeOn:
+                            self.rPressed = 1
+                            self.movePoints(points, event.pos)
 
-                        self.movePoints(points, event.pos)
+
                 if event.type == pygame.MOUSEWHEEL:
                     self.scrolling(event)
                 if event.type == pygame.KEYDOWN:
@@ -267,6 +296,13 @@ class Game:
 
         self.cursor_particle_system.update()
         self.cursor_particle_system.draw(self.screen)
+
+    def lineDrawing(self, points):
+        for i in range(len(points)):
+            try:
+                pygame.draw.line(points[i], points[i + 1])
+            except:
+                pygame.draw.line(self.screen, (255, 255, 255), points[i], points[0])
 
     def render(self):
         """
