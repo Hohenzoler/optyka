@@ -119,67 +119,68 @@ class Light:
         elif self.r==math.pi:
             self.r=math.pi+0.00001
     def trace_path2(self):
-        self.current_starting_point = self.starting_point
-        self.special_case_adjust()
-        self.mini_run=True
-        self.index=0
-        while self.mini_run:
-            if self.r < math.pi:
-                self.vertical = 'up'
-            else:
-                self.vertical = 'down'
-            if self.r < 3 / 2 * math.pi and self.r > 1 / 2 * math.pi:
-                self.horizontal = 'left'
-            else:
-                self.horizontal = 'right'
-            self.index+=1
-            self.linear_function = Linear_Function(math.tan(-self.r),
-                                                   self.find_b(math.tan(-self.r), self.current_starting_point))
-            if self.debug==True:
-                self.linear_function.draw(self.game)
-            try:
-                self.slope_before=self.current_slope
-            except:
-                self.slope_before=self.main_light_slope
-            self.current_point_before=self.current_starting_point
-            self.current_distance = None
-            self.current_point = None
-            self.current_slope = None
-            self.current_object=None
-            self.current_object_type=None
-            lenses = []
-            for object in self.game.objects:
-                if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism or type(object)==gameobjects.Corridor:
-                    self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
+        if self.RGB.a > 0:
+            self.current_starting_point = self.starting_point
+            self.special_case_adjust()
+            self.mini_run=True
+            self.index=0
+            while self.mini_run:
+                if self.r < math.pi:
+                    self.vertical = 'up'
+                else:
+                    self.vertical = 'down'
+                if self.r < 3 / 2 * math.pi and self.r > 1 / 2 * math.pi:
+                    self.horizontal = 'left'
+                else:
+                    self.horizontal = 'right'
+                self.index+=1
+                self.linear_function = Linear_Function(math.tan(-self.r),
+                                                       self.find_b(math.tan(-self.r), self.current_starting_point))
+                if self.debug==True:
+                    self.linear_function.draw(self.game)
+                try:
+                    self.slope_before=self.current_slope
+                except:
+                    self.slope_before=self.main_light_slope
+                self.current_point_before=self.current_starting_point
+                self.current_distance = None
+                self.current_point = None
+                self.current_slope = None
+                self.current_object=None
+                self.current_object_type=None
+                lenses = []
+                for object in self.game.objects:
+                    if type(object) == gameobjects.Mirror or type(object)==gameobjects.ColoredGlass or type(object)==gameobjects.Prism or type(object)==gameobjects.Corridor:
+                        self.check_object(object) # gets the slope closest to the light and on the line of light and some other stuff
 
-                if type(object) == gameobjects.Lens:
+                    if type(object) == gameobjects.Lens:
 
-                    self.check_lens(object)
+                        self.check_lens(object)
 
-            # for lens in lenses:
-            #     self.lens_stuff(lens)
+                # for lens in lenses:
+                #     self.lens_stuff(lens)
 
-            # print(self.current_object_type)
-            if type(self.current_object) == gameobjects.Lens:
-                self.ignore_object = self.current_object
-            # To do: fix bug causing only one lens to be analyzed
+                # print(self.current_object_type)
+                if type(self.current_object) == gameobjects.Lens:
+                    self.ignore_object = self.current_object
+                # To do: fix bug causing only one lens to be analyzed
 
-            if self.current_object_type == None:
-                self.border_stuff()
-            elif self.current_object_type=='mirror':
-                self.mirror_stuff()
-            elif self.current_object_type=='glass':
-                self.glass_stuff()
+                if self.current_object_type == None:
+                    self.border_stuff()
+                elif self.current_object_type=='mirror':
+                    self.mirror_stuff()
+                elif self.current_object_type=='glass':
+                    self.glass_stuff()
 
-            elif self.current_object_type=='prism':
-                self.prism_stuff()
-            elif self.current_object_type=='lens':
-                self.lens_stuff(self.current_object)
+                elif self.current_object_type=='prism':
+                    self.prism_stuff()
+                elif self.current_object_type=='lens':
+                    self.lens_stuff(self.current_object)
 
 
 
-            if self.index >= 100:
-                self.mini_run = False
+                if self.index >= 100:
+                    self.mini_run = False
     def check_object(self,object):
         # self.linear_function.draw(self.game)
 
