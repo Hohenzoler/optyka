@@ -157,9 +157,9 @@ class Volume_bar:
         for i in range(self.num_rects):
             rect_x = self.x + (self.rect_width + self.gap) * i
             if i < self.volume_level:
-                pygame.draw.rect(self.game.screen, self.green, (rect_x, self.y, self.rect_width, self.rect_height), 0, 5)
+                pygame.draw.rect(self.game.screen, self.green, (rect_x, self.y, self.rect_width, self.rect_height), 0, 3)
             else:
-                pygame.draw.rect(self.game.screen, self.grey, (rect_x, self.y, self.rect_width, self.rect_height), 0, 5)
+                pygame.draw.rect(self.game.screen, self.grey, (rect_x, self.y, self.rect_width, self.rect_height), 0, 3)
 
     def draw_plus_button(self):
         pygame.draw.rect(self.game.screen, self.white,
