@@ -204,8 +204,7 @@ class Button:
                     obj = gameobjects.Mirror(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] + 50),
-                                                         (mousepos[0] - 100, mousepos[1] + 50)], (200, 200, 200), 0, 1, 0,
-                                             textureName='glass')
+                                                         (mousepos[0] - 100, mousepos[1] + 50)], (200, 200, 200), 0, 1, 0)
                     self.game.achievements.handle_achievement_unlocked("is it... me?")
 
                 elif self.number == 2:
@@ -249,8 +248,7 @@ class Button:
                     obj = gameobjects.Corridor(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] + 50),
-                                                         (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 1, 0,
-                                             textureName='glass')
+                                                         (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 1, 0,)
                 elif self.number == -1:
                     self.game.save_game()
                 elif self.number == -2:
