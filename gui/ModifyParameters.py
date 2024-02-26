@@ -63,12 +63,12 @@ class Parameters:
                 elif param == 'lazer':
                     self.slider_buttons.append(ToggleSwitch(self.parameters_dict[param], self.root))
                     self.slider_buttons[0].grid(row=row, column=1, padx=25, pady=5, sticky='w')
-
-                elif param == 'texture':
-                    self.textureOptions = [file[:-4].capitalize() for file in os.listdir("images/materials") if file.endswith('.png')]
-                    self.TextureDropdown = ttk.Combobox(self.root, values=self.textureOptions)
-                    self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
-                    self.TextureDropdown.set(self.parameters_dict[param].capitalize())
+                #
+                # elif param == 'texture':
+                #     self.textureOptions = [file[:-4].capitalize() for file in os.listdir("images/materials") if file.endswith('.png')]
+                #     self.TextureDropdown = ttk.Combobox(self.root, values=self.textureOptions)
+                #     self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                #     self.TextureDropdown.set(self.parameters_dict[param].capitalize())
 
                 else:
                     try:
@@ -110,8 +110,8 @@ class Parameters:
             lazer_on = {'lazer': self.slider_buttons[0].value}
             new_parameters.update(lazer_on)
 
-        if self.TextureDropdown != None:
-            new_parameters['texture'] = self.TextureDropdown.get().lower()
+        # if self.TextureDropdown != None:
+        #     new_parameters['texture'] = self.TextureDropdown.get().lower()
 
         if self.parameters_dict['points'] != None:
             new_parameters['points'] = self.parameters_dict['points']

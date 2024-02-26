@@ -65,16 +65,12 @@ class Loading_saves_screen:
         if self.action != 'default':
             self.objects = []
             new_game_button = button.ButtonForgame(72, self)
-            self.objects.append(new_game_button)
 
             load_preset_button = button.ButtonForgame(73, self)
-            self.objects.append(load_preset_button)
 
             back_button = button.ButtonForgame(74, self)
-            self.objects.append(back_button)
 
             del_button = button.ButtonForgame(75, self)
-            self.objects.append(del_button)
 
             self.buttons = [new_game_button, load_preset_button, back_button, del_button]
 
