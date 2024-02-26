@@ -82,8 +82,8 @@ class Bin:
         """
         settings = self.game.settings
 
-        self.x = self.game.width - self.game.width // 10
-        self.y = self.game.height - self.game.height // 4
+        self.x = self.game.width - self.game.width // 12
+        self.y = self.game.height - self.game.height // 4.5
 
         if settings['HOTBAR_POSITION'] != 'bottom':
             self.y = self.game.height - self.game.height // 7
@@ -94,8 +94,8 @@ class Bin:
                 self.x = self.game.width - self.game.width // 5
 
 
-        self.rect_w = self.game.width // 14
-        self.rect_h = self.game.height // 8
+        self.rect_w = self.game.width // 17
+        self.rect_h = self.game.height // 11
 
         self.bin_img = pygame.transform.scale(self.bin_img, (self.rect_w, self.rect_h))
 
