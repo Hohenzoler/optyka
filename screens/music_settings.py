@@ -14,8 +14,8 @@ class Music_settings_screen:
         self.screen = self.game.screen
         self.mixer = self.game.mixer
 
-        self.font = self.game.font
         from classes.font import Font
+        self.font = pygame.font.Font(Font, self.width // 20)
         self.font2 = pygame.font.Font(Font, self.width // 40)
 
         self.gapsize = self.height // 50 + self.height // 47
@@ -45,6 +45,8 @@ class Music_settings_screen:
 
         self.back_button_animation.animate()
 
+
+        self.screen.blit(self.maintext, self.maintextRect)
         self.screen.blit(self.mastervolume, self.mastervolume_rect)
         self.screen.blit(self.Soundtrack, self.SoundtrackRect)
         self.screen.blit(self.objectVolume, self.objectVolumeRect)
@@ -86,6 +88,11 @@ class Music_settings_screen:
             object.checkcollision(pos)
 
     def generate_text(self):
+
+        self.maintext = self.font.render('Music Settings', True, 'white')
+        self.maintextRect = self.maintext.get_rect()
+        self.maintextRect.center = (self.width // 2, (self.height // 2) - (3 * self.height // 8))
+
         self.mastervolume = self.font2.render('Master Volume:', True, 'white')
         self.mastervolume_rect = self.mastervolume.get_rect()
         self.mastervolume_rect.center = (
