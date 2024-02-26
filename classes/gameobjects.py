@@ -719,24 +719,24 @@ class Lens(GameObject):
             # Draw the rotated lines without transparency
             if self.resizing:
                 self.drawResizeOutline()
-                if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE:
-                    self.generate_points(self.points, self.angle)
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                    if self.type != self.SINGLE_VEX:
-                        pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-                else:
-                    self.generate_points(self.points, self.angle)
+            if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE:
+                self.generate_points(self.points, self.angle)
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                if self.type != self.SINGLE_VEX:
+                    pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+            else:
+                self.generate_points(self.points, self.angle)
                     # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
                     # pygame.gfxdraw.filled_polygon(self.game.screen, (
                     # self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
                     # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-                    if self.type == self.SINGLE_CAVE:
-                        self.lens_points.reverse()
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
+                if self.type == self.SINGLE_CAVE:
+                    self.lens_points.reverse()
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
                                                   self.color)
-                    if self.type == self.CONCAVE:
-                        self.lens_points.reverse()
+                if self.type == self.CONCAVE:
+                    self.lens_points.reverse()
                         # self.lens_points2.reverse()
         else:
             mousepos = pygame.mouse.get_pos()
