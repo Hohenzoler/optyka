@@ -246,8 +246,6 @@ class Button:
                                            (64, 137, 189), 0, -140, 0, 1, refraction_index=1.5)
                     self.game.achievements.handle_achievement_unlocked("first step to... glasses")
                 elif self.number == 9:
-                    print(123)
-                elif self.number == 10:
                     obj = gameobjects.Corridor(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] + 50),
