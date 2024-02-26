@@ -46,6 +46,7 @@ class GameObject:
 
         self.reflection_factor = reflection_factor
         self.transmittance = transmittance #przepuszczalność ;-;
+        self.absorbsion_factor = 100-reflection_factor-transmittance
 
         if image != None:
             self.image_width = self.image.get_width()
