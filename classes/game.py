@@ -7,8 +7,7 @@ import math
 from pygame import *
 from gui import gui_main as gui1
 from gui.gui_main import GUI
-from screens import settings_screen
-from screens import achievements_screen
+from screens import settings_screen, achievements_screen, music_settings
 import settingsSetup
 from classes import fps
 from classes import bin, images, gameobjects
@@ -240,6 +239,12 @@ class Game:
                     for object in self.objects:
                         if isinstance(object, achievements_screen.AchievementsScreen):
                             object.checkevent(event.pos)
+
+            elif self.mode == 'music':
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    for object in self.objects:
+                        if isinstance(object, music_settings.Music_settings_screen):
+                            object.checkevent(event.pos)
     def update(self):
         """
         Updates the game display and controls the game FPS.
@@ -290,6 +295,9 @@ class Game:
 
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
             for object in sorted_objects:
+                if type(object) == settings_screen.Settings_screen:
+                    print('whga')
+
                 if type(self.mousepos) is tuple:
                     if type(object) is gui1.GUI:
                         object.checkifclicked(self.mousepos)
@@ -344,8 +352,14 @@ class Game:
                 self.objects.remove(self.achievements_screen)
             except:
                 pass
+            try:
+                self.objects.remove(self.music_screen)
+            except:
+                pass
+
             self.settings_screen = None
             self.achievements_screen = None
+            self.music_screen = None
             self.mode = 'default'
             self.settings = settingsSetup.load_settings()
             self.width = self.settings['WIDTH']
@@ -359,6 +373,9 @@ class Game:
                 if type(object) == gui1.GUI or type(object) == bin.Bin:
                     object.load_settings()
             self.executed_command = 'default'
+        elif self.mode == 'music':
+            self.music()
+        # print(self.mode)
 
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
         if isDrawingModeOn:
@@ -555,4 +572,18 @@ class Game:
             self.run = False
         self.cancel = False
 
+    def music(self):
+        if self.executed_command != 'music':
+            self.buttons = []
 
+            # self.objects = []
+
+            self.objects.remove(self.settings_screen)
+            self.settings_screen = None
+            self.music_screen = music_settings.Music_settings_screen(self)
+            self.music_screen.render()
+
+            self.executed_command = 'music'
+
+        else:
+            self.music_screen.render()
