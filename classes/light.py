@@ -741,17 +741,17 @@ class Light:
                 math.sqrt(0)).add(
                 self.normalized_vector.substract(
                     self.slope_normal_vector.scale(self.slope_normal_vector.dot(self.normalized_vector))).scale(mi))
-        if self.in_prism:
-            self.new_vector=self.new_vector.substract(self.slope_normal_vector.scale(2*self.new_vector.dot(self.slope_normal_vector)))
+        # if self.in_prism:
+        #     self.new_vector=self.new_vector.substract(self.slope_normal_vector.scale(2*self.new_vector.dot(self.slope_normal_vector)))
         self.new_vector.draw(self.game.screen,self.current_point)
         self.r=self.new_vector.get_angle()
         self.calibrate_r2()
         self.split_light()
-        if not self.in_prism:
-            if self.in_prism == True:
-                self.in_prism = False
-            else:
-                self.in_prism = True
+
+        if self.in_prism == True:
+            self.in_prism = False
+        else:
+            self.in_prism = True
 
         # if self.in_prism==False:
         #     # if self.current_slope == self.current_object.left_slope:
@@ -779,7 +779,7 @@ class Light:
         return Vector(slope[1][0]-slope[0][0],slope[1][1]-slope[0][1])
     def split_light(self):
         if self.prism_light==False:
-            angle=math.pi/1000
+            angle=math.pi/500
             da=angle/7*2
             colors=[(194, 14, 26),(220, 145, 26),(247, 234, 59),(106, 169, 65),(69, 112, 180),(90, 40, 127),(128, 33, 125)]
             red=self.RGB.rgb[0]/255
