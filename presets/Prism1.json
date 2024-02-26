@@ -1,0 +1,110 @@
+[
+  "Prism1",
+  {
+    "x": 80.0,
+    "y": 425.0,
+    "angle": 347.1,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        51,
+        673
+      ],
+      [
+        251,
+        673
+      ],
+      [
+        251,
+        773
+      ],
+      [
+        51,
+        773
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 317.0,
+    "y": 398.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        201,
+        666
+      ],
+      [
+        251,
+        579.3974596215561
+      ],
+      [
+        301,
+        666
+      ]
+    ],
+    "class": "Prism"
+  },
+  {
+    "x": 496.0,
+    "y": 473.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 1,
+    "transmittance": 0,
+    "points": [
+      [
+        7,
+        620
+      ],
+      [
+        207,
+        620
+      ],
+      [
+        207,
+        720
+      ],
+      [
+        7,
+        720
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 677.0,
+    "y": 399.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        202,
+        662
+      ],
+      [
+        252,
+        575.3974596215561
+      ],
+      [
+        302,
+        662
+      ]
+    ],
+    "class": "Prism"
+  }
+]

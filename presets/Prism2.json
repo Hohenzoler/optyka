@@ -1,0 +1,177 @@
+[
+  "Prism2",
+  {
+    "x": 133.0,
+    "y": 536.0,
+    "angle": 334.9100000000001,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        56,
+        664
+      ],
+      [
+        256,
+        664
+      ],
+      [
+        256,
+        764
+      ],
+      [
+        56,
+        764
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 350.0,
+    "y": 476.0,
+    "angle": 1.1299999999999613,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        193,
+        669
+      ],
+      [
+        243,
+        582.3974596215561
+      ],
+      [
+        293,
+        669
+      ]
+    ],
+    "class": "Prism"
+  },
+  {
+    "x": 613.0,
+    "y": 477.0,
+    "angle": 287.4100000000001,
+    "size": 1.0,
+    "reflection_factor": 1.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        -5,
+        621
+      ],
+      [
+        195,
+        621
+      ],
+      [
+        195,
+        721
+      ],
+      [
+        -5,
+        721
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 235.0,
+    "y": 265.0,
+    "angle": 287.4100000000001,
+    "size": 1.0,
+    "reflection_factor": 1.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        5,
+        622
+      ],
+      [
+        205,
+        622
+      ],
+      [
+        205,
+        722
+      ],
+      [
+        5,
+        722
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 684.0,
+    "y": 255.0,
+    "angle": 287.4100000000001,
+    "size": 1.0,
+    "reflection_factor": 1.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        4,
+        631
+      ],
+      [
+        204,
+        631
+      ],
+      [
+        204,
+        731
+      ],
+      [
+        4,
+        731
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 304.0,
+    "y": 39.0,
+    "angle": 285.1700000000001,
+    "size": 1.0,
+    "reflection_factor": 1.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        13,
+        622
+      ],
+      [
+        213,
+        622
+      ],
+      [
+        213,
+        722
+      ],
+      [
+        13,
+        722
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  }
+]

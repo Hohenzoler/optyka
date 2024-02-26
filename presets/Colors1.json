@@ -1,0 +1,244 @@
+[
+  "Colors1",
+  {
+    "x": 109.0,
+    "y": 350.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        26,
+        674
+      ],
+      [
+        226,
+        674
+      ],
+      [
+        226,
+        774
+      ],
+      [
+        26,
+        774
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 292.0,
+    "y": 352.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        164,
+        618
+      ],
+      [
+        184,
+        618
+      ],
+      [
+        184,
+        718
+      ],
+      [
+        164,
+        718
+      ]
+    ],
+    "red": 0,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 384.0,
+    "y": 353.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        182,
+        627
+      ],
+      [
+        202,
+        627
+      ],
+      [
+        202,
+        727
+      ],
+      [
+        182,
+        727
+      ]
+    ],
+    "red": 0,
+    "green": 190,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 477.0,
+    "y": 354.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        175,
+        627
+      ],
+      [
+        195,
+        627
+      ],
+      [
+        195,
+        727
+      ],
+      [
+        175,
+        727
+      ]
+    ],
+    "red": 0,
+    "green": 146,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 567.0,
+    "y": 353.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        167,
+        622
+      ],
+      [
+        187,
+        622
+      ],
+      [
+        187,
+        722
+      ],
+      [
+        167,
+        722
+      ]
+    ],
+    "red": 0,
+    "green": 121,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 654.0,
+    "y": 355.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        178,
+        610
+      ],
+      [
+        198,
+        610
+      ],
+      [
+        198,
+        710
+      ],
+      [
+        178,
+        710
+      ]
+    ],
+    "red": 0,
+    "green": 90,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 736.0,
+    "y": 354.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        172,
+        628
+      ],
+      [
+        192,
+        628
+      ],
+      [
+        192,
+        728
+      ],
+      [
+        172,
+        728
+      ]
+    ],
+    "red": 0,
+    "green": 53,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 169.0,
+    "y": 673.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        159,
+        623
+      ],
+      [
+        179,
+        623
+      ],
+      [
+        179,
+        723
+      ],
+      [
+        159,
+        723
+      ]
+    ],
+    "red": 0,
+    "green": 0,
+    "blue": 0,
+    "class": "ColoredGlass"
+  }
+]

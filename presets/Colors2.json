@@ -1,0 +1,247 @@
+[
+  "Colors2",
+  {
+    "x": 242.0,
+    "y": 506.0,
+    "angle": 315.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        39,
+        667
+      ],
+      [
+        239,
+        667
+      ],
+      [
+        239,
+        767
+      ],
+      [
+        39,
+        767
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 487.0,
+    "y": 405.0,
+    "angle": 269.38999999999993,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        169,
+        628
+      ],
+      [
+        189,
+        628
+      ],
+      [
+        189,
+        728
+      ],
+      [
+        169,
+        728
+      ]
+    ],
+    "red": 132,
+    "green": 255,
+    "blue": 255,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 566.0,
+    "y": 334.0,
+    "angle": 0.29999999999995225,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        171,
+        616
+      ],
+      [
+        191,
+        616
+      ],
+      [
+        191,
+        716
+      ],
+      [
+        171,
+        716
+      ]
+    ],
+    "red": 255,
+    "green": 132,
+    "blue": 255,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 416.0,
+    "y": 332.0,
+    "angle": 0.9200000000000159,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        159,
+        619
+      ],
+      [
+        179,
+        619
+      ],
+      [
+        179,
+        719
+      ],
+      [
+        159,
+        719
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 121,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 490.0,
+    "y": 265.0,
+    "angle": 270.84000000000003,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        175,
+        628
+      ],
+      [
+        195,
+        628
+      ],
+      [
+        195,
+        728
+      ],
+      [
+        175,
+        728
+      ]
+    ],
+    "red": 255,
+    "green": 155,
+    "blue": 97,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 755.9999999999999,
+    "y": 146.0,
+    "angle": 135.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        48,
+        670
+      ],
+      [
+        248,
+        670
+      ],
+      [
+        248,
+        770
+      ],
+      [
+        48,
+        770
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 658.0,
+    "y": 558.0,
+    "angle": 222.11999999999995,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        32,
+        676
+      ],
+      [
+        232,
+        676
+      ],
+      [
+        232,
+        776
+      ],
+      [
+        32,
+        776
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 276.0,
+    "y": 86.0,
+    "angle": 39.60000000000001,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        41,
+        669
+      ],
+      [
+        241,
+        669
+      ],
+      [
+        241,
+        769
+      ],
+      [
+        41,
+        769
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  }
+]

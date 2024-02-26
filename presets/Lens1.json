@@ -1,0 +1,245 @@
+[
+  "Lens1",
+  {
+    "x": 113.0,
+    "y": 246.0,
+    "angle": 357.16,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        35,
+        679
+      ],
+      [
+        235,
+        679
+      ],
+      [
+        235,
+        779
+      ],
+      [
+        35,
+        779
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 320.0,
+    "y": 316.0,
+    "angle": -2.000000000000001,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        301,
+        584
+      ],
+      [
+        401,
+        584
+      ],
+      [
+        401,
+        784
+      ],
+      [
+        301,
+        784
+      ]
+    ],
+    "red": 64,
+    "green": 137,
+    "blue": 189,
+    "class": "Lens"
+  },
+  {
+    "x": 505.0,
+    "y": 318.0,
+    "angle": 0,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        297,
+        567
+      ],
+      [
+        397,
+        567
+      ],
+      [
+        397,
+        767
+      ],
+      [
+        297,
+        767
+      ]
+    ],
+    "red": 64,
+    "green": 137,
+    "blue": 189,
+    "class": "Lens"
+  },
+  {
+    "x": 752.0,
+    "y": 258.0,
+    "angle": 185.2599999999999,
+    "size": 1,
+    "reflection_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        37,
+        667
+      ],
+      [
+        237,
+        667
+      ],
+      [
+        237,
+        767
+      ],
+      [
+        37,
+        767
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 251.0,
+    "y": 251.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        167,
+        622
+      ],
+      [
+        187,
+        622
+      ],
+      [
+        187,
+        722
+      ],
+      [
+        167,
+        722
+      ]
+    ],
+    "red": 0,
+    "green": 255,
+    "blue": 255,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 601.0,
+    "y": 244.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        180,
+        626
+      ],
+      [
+        200,
+        626
+      ],
+      [
+        200,
+        726
+      ],
+      [
+        180,
+        726
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 252.0,
+    "y": 401.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        172,
+        620
+      ],
+      [
+        192,
+        620
+      ],
+      [
+        192,
+        720
+      ],
+      [
+        172,
+        720
+      ]
+    ],
+    "red": 0,
+    "green": 255,
+    "blue": 255,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 601.0,
+    "y": 406.0,
+    "angle": 0.0,
+    "size": 1.0,
+    "reflection_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        179,
+        635
+      ],
+      [
+        199,
+        635
+      ],
+      [
+        199,
+        735
+      ],
+      [
+        179,
+        735
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  }
+]

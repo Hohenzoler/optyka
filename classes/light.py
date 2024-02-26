@@ -730,7 +730,7 @@ class Light:
         else:
             self.slope_normal_vector=self.slope_vector.normal().scale(-1)
 
-        self.slope_normal_vector.draw(self.game.screen,self.current_point)
+        # self.slope_normal_vector.draw(self.game.screen,self.current_point)
         try:
 
             self.new_vector=self.slope_normal_vector.scale(math.sqrt(1-mi**2*(1-(self.slope_normal_vector.dot(self.normalized_vector))**2))).add(self.normalized_vector.substract(self.slope_normal_vector.scale(self.slope_normal_vector.dot(self.normalized_vector))).scale(mi))
@@ -743,7 +743,7 @@ class Light:
                     self.slope_normal_vector.scale(self.slope_normal_vector.dot(self.normalized_vector))).scale(mi))
         # if self.in_prism:
         #     self.new_vector=self.new_vector.substract(self.slope_normal_vector.scale(2*self.new_vector.dot(self.slope_normal_vector)))
-        self.new_vector.draw(self.game.screen,self.current_point)
+        # self.new_vector.draw(self.game.screen,self.current_point)
         self.r=self.new_vector.get_angle()
         self.calibrate_r2()
         self.split_light()
@@ -752,29 +752,6 @@ class Light:
             self.in_prism = False
         else:
             self.in_prism = True
-
-        # if self.in_prism==False:
-        #     # if self.current_slope == self.current_object.left_slope:
-        #         print('cccccccccccccccccccc')
-        #
-        #         if not self.in_prism:
-        #             self.first_difract(self.current_object)
-        #         else:
-        #             self.second_difract(self.current_object)
-        #         self.split_light()
-        # else:
-        #     # if self.current_slope == self.current_object.right_slope:
-        #         print('dddddddddddddddddddddd')
-        #
-        #         if not self.in_prism:
-        #             self.first_difract(self.current_object)
-        #         else:
-        #             self.second_difract(self.current_object)
-
-
-
-
-
     def slope_to_vector(self,slope):
         return Vector(slope[1][0]-slope[0][0],slope[1][1]-slope[0][1])
     def split_light(self):
