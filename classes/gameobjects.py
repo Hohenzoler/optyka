@@ -805,6 +805,19 @@ class Lens(GameObject):
 
         # Assuming self.transparent_surface is a surface with transparency
         # Blit the rotated image with transparency
+        temp_rect = self.rect.move(self.x, self.y)
+
+        # print(temp_rect)
+
+        pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
+
+        for obj in self.game.objects:
+            if type(obj) != light.Light:
+                if obj.rect.colliderect(temp_rect):
+                    if obj != self and isinstance(obj, GameObject):
+                        self.angle -= d_angle
+                        return
+
         if self.image:
             rotated_image = pygame.transform.rotate(self.image, -self.angle)
             image_rect = rotated_image.get_rect(center=((self.x + sum(pt[0] for pt in self.points) / len(self.points)),
