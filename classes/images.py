@@ -7,7 +7,7 @@ imgtocode.generateImages()  # Generating images if the directory does not exist
 
 # Loading various images using the pygame module
 torch_icon = pygame.image.load("images/torch_icon.png")  # Loading the torch icon image
-object_icon = pygame.image.load("images/object_icon.png")  # Loading the object icon image
+object_icon = pygame.image.load("images/lustro.png")  # Loading the object icon image
 prism_icon = pygame.image.load("images/Prism.png")  # Loading the prism icon image
 settings_icon = pygame.image.load('images/settings.png')  # Loading the settings icon image
 exit_icon = pygame.image.load('images/exit.png')  # Loading the exit icon image
