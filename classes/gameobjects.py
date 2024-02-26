@@ -412,7 +412,7 @@ class GameObject:
         self.scale_factor = self.parameters['size']
         self.transmittance = self.parameters['transmittance']
         self.reflection_factor = self.parameters['reflection_factor']
-        self.absorbsion_factor = 100-self.transmittance-self.reflection_factor
+        self.absorbsion_factor = self.parameters['absorbsion_factor']
 
         try:
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
