@@ -6,6 +6,7 @@ import random
 from gui.button_animation import ButtonAnimation
 from classes import mixer_c
 
+
 class Music_settings_screen:
     def __init__(self, game):
         self.game = game
@@ -45,22 +46,13 @@ class Music_settings_screen:
 
         self.back_button_animation.animate()
 
-
-        self.screen.blit(self.maintext, self.maintextRect)
-        self.screen.blit(self.mastervolume, self.mastervolume_rect)
-        self.screen.blit(self.Soundtrack, self.SoundtrackRect)
-        self.screen.blit(self.objectVolume, self.objectVolumeRect)
-        self.screen.blit(self.actionVolume, self.actionVolumeRect)
-        self.screen.blit(self.achievementVolume, self.achievementVolumeRect)
-
-
+        self.render_text()
 
         if self.state == 'default':
             self.default()
 
         for object in self.objects:
             object.render()
-
 
     def generate_particles(self):
         # Adjust the parameters as needed
@@ -80,7 +72,6 @@ class Music_settings_screen:
 
     def default(self):
         if self.action != 'default':
-
             self.action = 'default'
 
     def checkevent(self, pos):
@@ -96,7 +87,7 @@ class Music_settings_screen:
         self.mastervolume = self.font2.render('Master Volume:', True, 'white')
         self.mastervolume_rect = self.mastervolume.get_rect()
         self.mastervolume_rect.center = (
-        self.width // 2 - self.width // 4, self.height // 4 + self.gapsize)
+            self.width // 2 - self.width // 4, self.height // 4 + self.gapsize)
 
         self.Soundtrack = self.font2.render('Soundtrack Volume:', True, 'white')
         self.SoundtrackRect = self.Soundtrack.get_rect()
@@ -122,6 +113,13 @@ class Music_settings_screen:
             self.width // 2 - self.width // 4,
             self.height // 4 + 4 * (self.width // 20 + self.height // 47) + self.gapsize)
 
+    def render_text(self):
+        self.screen.blit(self.maintext, self.maintextRect)
+        self.screen.blit(self.mastervolume, self.mastervolume_rect)
+        self.screen.blit(self.Soundtrack, self.SoundtrackRect)
+        self.screen.blit(self.objectVolume, self.objectVolumeRect)
+        self.screen.blit(self.actionVolume, self.actionVolumeRect)
+        self.screen.blit(self.achievementVolume, self.achievementVolumeRect)
 
 
 class Volume_bar:
@@ -134,18 +132,18 @@ class Volume_bar:
         self.grey = (150, 150, 150)
         self.green = (0, 255, 0)
 
-        self.rect_width = self.game.width//33
-        self.rect_height = self.game.height//14
-        self.gap = self.game.width//200
+        self.rect_width = self.game.width // 33
+        self.rect_height = self.game.height // 14
+        self.gap = self.game.width // 200
         self.num_rects = 10
 
-        self.button_width = self.game.width//20
-        self.button_height = self.game.height//14
+        self.button_width = self.game.width // 20
+        self.button_height = self.game.height // 14
 
         self.y = self.game.height // 4 + self.number * (
-                    self.game.width // 20 + self.game.height // 47) + self.game.gapsize - self.rect_height // 2
+                self.game.width // 20 + self.game.height // 47) + self.game.gapsize - self.rect_height // 2
         self.button_y = self.game.height // 4 + self.number * (
-                    self.game.width // 20 + self.game.height // 47) + self.game.gapsize - self.button_height // 2
+                self.game.width // 20 + self.game.height // 47) + self.game.gapsize - self.button_height // 2
 
         self.x = self.game.width // 2 + (self.num_rects * (self.gap + self.rect_width)) // 8
         self.plus_button_x = self.x + self.num_rects * (self.gap + self.rect_width)
@@ -164,30 +162,32 @@ class Volume_bar:
                 pygame.draw.rect(self.game.screen, self.grey, (rect_x, self.y, self.rect_width, self.rect_height))
 
     def draw_plus_button(self):
-        pygame.draw.rect(self.game.screen, self.white, (self.plus_button_x, self.button_y, self.button_width, self.button_height))
+        pygame.draw.rect(self.game.screen, self.white,
+                         (self.plus_button_x, self.button_y, self.button_width, self.button_height))
         plus_text = self.game.font.render("+", True, (0, 0, 0))
         text_rect = plus_text.get_rect(
             center=(self.plus_button_x + self.button_width // 2, self.button_y + self.button_height // 2))
         self.game.screen.blit(plus_text, text_rect)
 
     def draw_minus_button(self):
-        pygame.draw.rect(self.game.screen, self.white, (self.minus_button_x, self.button_y, self.button_width, self.button_height))
+        pygame.draw.rect(self.game.screen, self.white,
+                         (self.minus_button_x, self.button_y, self.button_width, self.button_height))
         minus_text = self.game.font.render("-", True, (0, 0, 0))
         text_rect = minus_text.get_rect(
             center=(self.minus_button_x + self.button_width // 2, self.button_y + self.button_height // 2))
         self.game.screen.blit(minus_text, text_rect)
 
     def checkcollision(self, pos):
-        if self.plus_button_x <= pos[0] <= self.plus_button_x + self.button_width and self.button_y <= pos[1] <= self.button_y + self.button_height:
+        if self.plus_button_x <= pos[0] <= self.plus_button_x + self.button_width and self.button_y <= pos[
+            1] <= self.button_y + self.button_height:
             if self.volume_level < self.num_rects:
                 self.volume_level += 1
                 self.change_volume()
-        elif self.minus_button_x <= pos[0] <= self.minus_button_x + self.button_width and self.button_y <= pos[1] <= self.button_y + self.button_height:
+        elif self.minus_button_x <= pos[0] <= self.minus_button_x + self.button_width and self.button_y <= pos[
+            1] <= self.button_y + self.button_height:
             if self.volume_level > 0:
                 self.volume_level -= 1
                 self.change_volume()
-
-
 
     def render(self):
         self.draw_volume_slider()
@@ -231,5 +231,3 @@ class Volume_bar:
             self.volume_level = s["ACHIEVEMENT_VOLUME"] * 10
         else:
             self.volume_level = 0
-
-
