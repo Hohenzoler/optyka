@@ -367,6 +367,11 @@ class Game:
                     print(self.currentAchievementName)
         elif self.mode == 'settings':
             if self.executed_command != 'settings':
+                try:
+                    self.objects.remove(self.music_screen)
+                except:
+                    pass
+                self.music_screen = None
                 self.settings_screen = settings_screen.Settings_screen(self)
                 self.settings_screen.render()
                 self.executed_command = 'settings'

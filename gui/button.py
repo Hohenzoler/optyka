@@ -402,9 +402,10 @@ class ButtonForgame:
             elif self.number == 71:
                 if type(self.screen) != music_settings.Music_settings_screen:
                     self.screen.game.mode = 'load_new_settings'
+                    self.screen.mixer.clicked_sound()
                 else:
                     self.screen.game.mode = 'settings'
-                self.screen.mixer.clicked_sound()
+                    self.screen.game.mixer.clicked_sound()
             elif self.number == 72:
                 self.screen.game.mode = 'default'
                 if self.screen.state == 'presets' and any(value for value in self.screen.game.selected_buttons.values()):

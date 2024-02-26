@@ -19,6 +19,8 @@ class StartScreen:
 
         settings = settingsSetup.load_settings()
 
+        self.settings = settings
+
         self.mixer = mixer_c.Mixer(settings)
         self.mixer.soundtrack()
 
@@ -160,7 +162,6 @@ class StartScreen:
         self.cursor_img_rect.center = pygame.mouse.get_pos()
         self.screen.blit(self.cursor_img, self.cursor_img_rect)
         pygame.display.update()
-
     def generate_particles(self):
         # Adjust the parameters as needed
         self.particle_system.add_particle(
@@ -202,6 +203,7 @@ class StartScreen:
 
             self.objects = []
 
+            self.screen_mode = None
             self.screen_mode = settings_screen.Settings_screen(self)
 
             self.executed_functions = 'settings'
@@ -221,11 +223,11 @@ class StartScreen:
 
         settings = settingsSetup.load_settings()
 
+        self.settings = settings
+
         self.width = settings['WIDTH']
         self.height = settings['HEIGHT']
 
-        self.mixer = mixer_c.Mixer(settings)
-        self.mixer.soundtrack()
 
         from classes.font import Font
         self.font = pygame.font.Font(Font, self.width // 20)
