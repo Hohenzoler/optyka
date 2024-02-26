@@ -96,6 +96,7 @@ class GameObject:
 
         self.get_slopes()
 
+        # print(self.points)
 
         if not self.selectedtrue:
             if self.resizing:
@@ -125,7 +126,7 @@ class GameObject:
                             pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
                         except Exception as e:
 
-                            print(self.points)
+                            # print(self.points)
                             print(e)
                     else:
                         pygame.gfxdraw.polygon(self.game.screen, self.points, (255, 255, 255))
@@ -192,11 +193,16 @@ class GameObject:
             else:
                 break
         if self.game.isDrawingModeOn != True:
+            # print(self.points)
             self.angle += d_angle
             self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
             self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
 
+            # print(self.x)
+
             temp_rect = self.rect.move(self.x, self.y)
+
+            # print(temp_rect)
 
             pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
 
@@ -347,6 +353,7 @@ class GameObject:
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)
         centery = sum(y[1] for y in self.points) / len(self.points)
+        # print('xxxxxxxxxxxx', centerx)
 
         self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
 
@@ -357,7 +364,7 @@ class GameObject:
         self.parameters['transmittance'] = self.transmittance
 
         self.parameters['points'] = self.defualt_points
-        print(self.defualt_points)
+        # print(self.defualt_points)
 
         if type(self) == Flashlight:
             lazer_on = {'lazer': self.lazer}
@@ -378,16 +385,19 @@ class GameObject:
 
         print(self.parameters)
 
+        self.defualt_points = self.parameters['points']
+        self.points = self.defualt_points
+
         self.scale_factor = self.parameters['size']
         self.change_size()
         d_angle = self.parameters['angle']
         self.angle = 0
-        self.adjust(self.parameters['x'], self.parameters['y'], d_angle)
+        self.x = self.parameters['x']
+        self.y = self.parameters['y']
+        self.adjust(self.x, self.y, d_angle)
         self.scale_factor = self.parameters['size']
         self.transmittance = self.parameters['transmittance']
         self.reflection_factor = self.parameters['reflection_factor']
-        self.defualt_points = self.parameters['points']
-        self.points = self.defualt_points
 
         try:
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
@@ -489,7 +499,7 @@ class Corridor(GameObject):
     def get_slopes(self):
         self.slopes = [(self.points[2*i], self.points[2*i + 1]) for i in range((len(self.points))//2)]
         # self.slopes.append((self.points[len(self.points) - 1], self.points[0]))
-        print(self.slopes)
+        # print(self.slopes)
 
 class Lens(GameObject):
     def __init__(self, game, points, color, angle, curvature_radius, reflection_factor, transmittance, curvature_radius2=None, refraction_index=1.5, islighting=False, image_path=None):

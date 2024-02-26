@@ -122,7 +122,7 @@ class Parameters:
                     break
                 value = entry_widget.get()
 
-                print(param, value)
+                # print(param, value)
 
                 if param == 'size':
                     value = str(value)
@@ -147,14 +147,14 @@ class Parameters:
                         return
                 else:
                     value = float(value)
-                print(new_parameters)
+                # print(new_parameters)
                 new_parameters[param] = value
 
             if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') > 1:
                 messagebox.showwarning("Error", "The sum of reflection factor and transmittance cannot exceed 100%.")
                 return
 
-            print(new_parameters)
+            # print(new_parameters)
             self.object.parameters.update(new_parameters)
         except Exception as e:
             print(e)
