@@ -46,7 +46,7 @@ class GameObject:
 
         self.reflection_factor = reflection_factor
         self.transmittance = transmittance #przepuszczalność ;-;
-        self.absorbsion_factor = 100-reflection_factor-transmittance
+        self.absorbsion_factor = 1-reflection_factor-transmittance
 
         if image != None:
             self.image_width = self.image.get_width()
@@ -375,6 +375,8 @@ class GameObject:
 
         self.parameters['transmittance'] = self.transmittance
 
+        self.parameters['absorbsion_factor'] = self.absorbsion_factor
+
         self.parameters['points'] = self.defualt_points
         # print(self.defualt_points)
 
@@ -410,6 +412,7 @@ class GameObject:
         self.scale_factor = self.parameters['size']
         self.transmittance = self.parameters['transmittance']
         self.reflection_factor = self.parameters['reflection_factor']
+        self.absorbsion_factor = self.parameters['absorbsion_factor']
 
         try:
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])

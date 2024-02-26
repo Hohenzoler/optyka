@@ -74,7 +74,7 @@ class Parameters:
                     try:
                         entry = tk.Entry(self.root)
                         if param != 'size':
-                            if param in ['reflection_factor', 'transmittance']:
+                            if param in ['reflection_factor', 'transmittance', 'absorbsion_factor']:
                                 entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value in percentage
                             else:
                                 entry.insert(0, str(self.parameters_dict[param])) # Set default value
@@ -133,7 +133,7 @@ class Parameters:
                         return
                     # self.object.points = self.change_size(value)
 
-                elif param == 'reflection_factor' or param == 'transmittance':
+                elif param == 'reflection_factor' or param == 'transmittance' or param == 'absorbsion_factor':
                     value = str(value)
                     value = value.strip("%")
                     value = float(value) / 100
@@ -150,8 +150,8 @@ class Parameters:
                 # print(new_parameters)
                 new_parameters[param] = value
 
-            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') > 1:
-                messagebox.showwarning("Error", "The sum of reflection factor and transmittance cannot exceed 100%.")
+            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') + new_parameters.get('absorbsion_factor') > 1:
+                messagebox.showwarning("Error", "The sum of reflection factor and transmittance and absorbsion_facto cannot exceed 100%.")
                 return
 
             # print(new_parameters)
