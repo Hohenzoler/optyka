@@ -29,7 +29,7 @@ class Achievements:
             "kaboom": "uncommon",
             "a new creature": "uncommon",
             "you just found more options": "rare",
-            "U are weird...": "rare",
+            # "U are weird...": "rare",
             # "not much time left to live": "rare",
             "epilepsy": "epic",
             # "get a new computer": "epic",
