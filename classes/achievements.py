@@ -27,12 +27,12 @@ class Achievements:
             "first step to... glasses": "common",
             "a whole new world": "common",
             "kaboom": "uncommon",
-            "topopisy": "uncommon",
+            "a new creature": "uncommon",
             "you just found more options": "rare",
             "U are weird...": "rare",
-            "not much time left to live": "rare",
+            # "not much time left to live": "rare",
             "epilepsy": "epic",
-            "get a new computer": "epic",
+            # "get a new computer": "epic",
             "so you've chosen death": "epic",
             "white mode": "legendary",
         }
@@ -74,9 +74,10 @@ class Achievements:
         self.unlock_achievement(achievement_name)
 
     def fps_achievements(self):
-        if time.time()>self.start_time+5:
-            if int(self.game.return_fps()) < 20:
-                self.handle_achievement_unlocked("not much time left to live")
-            if time.time() < self.start_time+30:
-                if int(self.game.return_fps()) < 20:
-                    self.handle_achievement_unlocked("get a new computer")
+        pass
+        # if time.time()>self.start_time+5:
+        #     if int(self.game.return_fps()) < 20:
+        #         self.handle_achievement_unlocked("not much time left to live")
+        #     if time.time() < self.start_time+30:
+        #         if int(self.game.return_fps()) < 20:
+        #             self.handle_achievement_unlocked("get a new computer")
