@@ -62,7 +62,7 @@ class GUI:
         elif id == 3:
             return "Prism"
         elif id == 4:
-            return "Topopisy"
+            return "Drawing Mode"
         elif id == 5:
             return "Lens"
         elif id == 6:
