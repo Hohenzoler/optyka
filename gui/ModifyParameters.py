@@ -139,19 +139,19 @@ class Parameters:
                     value = float(value) / 100
                     if value < 0:
                         messagebox.showwarning("Error",
-                                             "Reflection factor nor transmittance cannot be below 0%.")
+                                             "Reflection factor nor transmittance nor absorbsion factor cannot be below 0%.")
                         return
                     elif value > 1:
                         messagebox.showwarning("Error",
-                                             "The sum of reflection factor and transmittance cannot exceed 100%.")
+                                             "The sum of reflection factor and transmittance nor absorbsion factor cannot exceed 100%.")
                         return
                 else:
                     value = float(value)
                 # print(new_parameters)
                 new_parameters[param] = value
 
-            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') + new_parameters.get('absorbsion_factor') > 1:
-                messagebox.showwarning("Error", "The sum of reflection factor and transmittance and absorbsion_facto cannot exceed 100%.")
+            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') + new_parameters.get('absorbsion_factor') != 1:
+                messagebox.showwarning("Error", "The sum of reflection factor and transmittance and absorbsion factor must be equal to 100%.")
                 return
 
             # print(new_parameters)
