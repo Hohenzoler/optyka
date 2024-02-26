@@ -334,7 +334,7 @@ class ButtonForgame:
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         elif self.number == 72:
-            self.text = self.font.render('New Game', True, 'black')
+            self.text = self.font.render('New Save', True, 'black')
             if self.screen.state == 'presets':
                 self.width = self.screen.width // 3
                 self.y = (self.screen.height - self.screen.height // 10)
@@ -441,11 +441,11 @@ class ButtonForgame:
         if self.number == 72:
             if any(value for value in self.screen.game.selected_buttons.values()):
                 if self.screen.state == 'default':
-                    self.text = self.font.render('Load Game', True, 'black')
+                    self.text = self.font.render('Load Save', True, 'black')
                 elif self.screen.state == 'presets':
                     self.text = self.font.render('Load Preset', True, 'black')
             else:
-                self.text = self.font.render('New Game', True, 'black')
+                self.text = self.font.render('New Save', True, 'black')
             self.textRect = self.text.get_rect()
             self.textRect.center = (self.rect[0] + (self.rect[2] // 2), self.rect[1] + (self.rect[3] // 2))
 

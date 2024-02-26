@@ -1,8 +1,7 @@
 <div align="center">
    
-# Optyka
-Optyka is a Python-based project. It uses the Pygame library for app development and includes various sound effects and GUI elements.
-
+# Optics
+Optics is a Python-based simulator of optic phenomenons. It uses the Pygame library for app development.
 </div>
 
 ## Status
@@ -12,27 +11,26 @@ Optyka is a Python-based project. It uses the Pygame library for app development
 | Mirror               | ✅      |
 | Lens                 | ✅      |
 | Prism                | ✅      |
-| Zwierciadlo          | ❌      |
 | Transmittance factor | ✅      |
 | Reflection factor    | ✅      |
 | color                | ✅      |
-| refractive index     | ❌      |
+| refractive index     | ✅      |
 
 ## Installation
 There are two ways to install the project: download exe file, or run the project from source.
 
 > [!NOTE]
-> If you don't want to modify the project, we highly recommend using the first method.
+> If you don't want to modify the project, we recommend using the first method.
 
 ### Method 1
-1. Go to the ***Releases*** page on GitHub
+1. Go to the ***Releases*** page on our project's GitHub
 2. Download ***1.0 - zip***
 3. Extract all the files
 4. Run ***optyka.exe***
 
 ### Method 2
 1. Clone the repository: `git clone https://github.com/Hohenzoler/optyka.git`
-2. Navigate to the project directory: `cd optyka`
+2. Navigate to the project directory: `optyka`
 3. Install the required packages: `pip install -r requirements.txt`
 4. Run the main script: `python main.py`
 
