@@ -729,7 +729,7 @@ class Light:
         self.r=-self.r
 
     def prism_stuff(self):
-        # pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
+        pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         transmittance = self.current_object.transmittance
         self.RGB = RGB_Class(int(self.RGB.r * transmittance), int(self.RGB.g * transmittance),
@@ -765,7 +765,7 @@ class Light:
                     self.slope_normal_vector.scale(self.slope_normal_vector.dot(self.normalized_vector))).scale(mi))
         # if self.in_prism:
         #     self.new_vector=self.new_vector.substract(self.slope_normal_vector.scale(2*self.new_vector.dot(self.slope_normal_vector)))
-        # self.new_vector.draw(self.game.screen,self.current_point)
+        self.new_vector.draw(self.game.screen,self.current_point)
         self.r=self.new_vector.get_angle()
         self.calibrate_r2()
         self.split_light()
@@ -774,6 +774,29 @@ class Light:
             self.in_prism = False
         else:
             self.in_prism = True
+
+        # if self.in_prism==False:
+        #     # if self.current_slope == self.current_object.left_slope:
+        #         print('cccccccccccccccccccc')
+        #
+        #         if not self.in_prism:
+        #             self.first_difract(self.current_object)
+        #         else:
+        #             self.second_difract(self.current_object)
+        #         self.split_light()
+        # else:
+        #     # if self.current_slope == self.current_object.right_slope:
+        #         print('dddddddddddddddddddddd')
+        #
+        #         if not self.in_prism:
+        #             self.first_difract(self.current_object)
+        #         else:
+        #             self.second_difract(self.current_object)
+
+
+
+
+
     def slope_to_vector(self,slope):
         return Vector(slope[1][0]-slope[0][0],slope[1][1]-slope[0][1])
     def split_light(self):
@@ -785,6 +808,8 @@ class Light:
             green=self.RGB.rgb[1]/255
             blue=self.RGB.rgb[2] / 255
             weights=[red,2/3*red+1/3*green,1/3*red+2/3*green,green,2/3*green+1/3*blue,1/3*green+2/3*blue,blue,2/3*blue+1/3*red,1/3*blue+2/3*red]
+            if self.horizontal=='right':
+                weights.reverse()
             for x in range(0,7):
                 self.make_prism_light((colors[x][0]*weights[x],colors[x][1]*weights[x],colors[x][2]*weights[x]),angle)
                 angle-=da
