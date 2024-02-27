@@ -101,6 +101,7 @@ class Game:
         self.isDotHeld = -1
         self.rPressed = 0
         self.isAngleHeld = -1
+        self.readyToCheck = False
 
 
     def create_cursor_particles(self):
@@ -142,6 +143,26 @@ class Game:
                     self.r = -1
                 else:
                     self.r = round(-1 / (time_difference * 9), 2)
+    def getHitbox(self, points):
+        x, y = [], []
+        for i in points:
+            x.append(i[0])
+            y.append(i[1])
+        return (min(x), min(y), max(x) - min(x), max(y) - min(y))
+    def createPoly(self, isReal):
+        if isReal == False and len(self.objects) > 3:
+            self.readyToCheck = self.getHitbox(self.polygonDrawing.returnPolygonPoints())
+        else:
+            print('creating')
+            polygonDrawing.createPolygon(self.polygonDrawing, self)
+            polygonDrawing.clearPoints(self.polygonDrawing)
+            global isDrawingModeOn
+            isDrawingModeOn = False
+            self.achievements.handle_achievement_unlocked("a new creature")
+
+
+
+
 
     def movePoints(self, points, position):
         linepoints = points
@@ -264,11 +285,7 @@ class Game:
                         self.r_key = True
                         self.selected_object.selected(pygame.mouse.get_pos())
                     elif event.key == 13 and self.isDrawingModeOn:
-                        polygonDrawing.createPolygon(self.polygonDrawing, self)
-                        polygonDrawing.clearPoints(self.polygonDrawing)
-                        global isDrawingModeOn
-                        isDrawingModeOn = False
-                        self.achievements.handle_achievement_unlocked("a new creature")
+                        self.createPoly(False)
                     elif event.key == pygame.K_BACKSPACE and len(points) > 0:
                         polygonDrawing.popapoint(self.polygonDrawing)
 

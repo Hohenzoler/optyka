@@ -64,6 +64,7 @@ class GameObject:
         self.find_parameters()
 
         self.was_selected = False
+        self.collisionDetected = True
 
     def update_rect(self):
         # Update the rect based on the points
@@ -101,6 +102,25 @@ class GameObject:
             return False
 
     def render(self):
+
+        if self.game.readyToCheck != False:
+            self.collisionDetected = False
+            for obj in self.game.objects:
+                if self.game.readyToCheck != False:
+                    if type(obj) != light.Light:
+                        try:
+                            print('trying')
+                            if obj.rect.colliderect(pygame.Rect(self.game.readyToCheck)):
+                                print('goodcolide')
+                                self.collisionDetected = True
+                                self.game.readyToCheck = False
+
+                        except:
+                            print(' wrong')
+            if not self.collisionDetected:
+                self.game.readyToCheck = False
+                self.game.createPoly(True)
+
         # print(self.get_triangles())
 
         self.get_slopes()
