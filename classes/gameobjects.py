@@ -303,11 +303,47 @@ class GameObject:
         pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))
         if settings['DEBUG'] == "True":
             pygame.draw.rect(self.game.screen, (255, 255, 0), self.rect, 2) # draw object hitbox
+    def checkIfNormalMirror(self):
+        x, y = [], []
+        maxi, mini = 0, 0
+
+        if len(self.points) == 4:
+            for i in self.points:
+                x.append(i[0])
+                y.append(i[1])
+
+            maxi, mini = max(x), min(x)
+            maxCounter, minCounter = 0, 0
+            for i in self.points:
+                if i[0] == maxi:
+                    maxCounter += 1
+                elif i[0] == mini:
+                    minCounter += 1
+                else:
+                    return False
+            if minCounter == 2 and maxCounter == 2:
+                maxi, mini = max(y), min(y)
+                maxCounter, minCounter = 0, 0
+                for i in self.points:
+                    if i[1] == maxi:
+                        maxCounter += 1
+                    elif i[1] == mini:
+                        minCounter += 1
+                    else:
+                        return False
+                if minCounter == 2 and maxCounter == 2:
+                    return True
+            else:
+                return False
+        else:
+            return False
 
     def drawResizeOutline(self):
-        if isinstance(self, Mirror):
+        if isinstance(self, Mirror) and not self.checkIfNormalMirror():
+            print(self.checkIfNormalMirror())
             classes.game.Game.movePoints(self.game, self.points, pygame.mouse.get_pos())
         elif not isinstance(self, Flashlight):
+            print(self.checkIfNormalMirror())
             # Draw an outline around the object
             pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 0, 255))
             self.resize_rects = []
