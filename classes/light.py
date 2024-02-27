@@ -760,6 +760,7 @@ class Light:
             print(self.horizontal)
             if self.horizontal=='left':
                 colors.reverse()
+                angle = math.pi / 200
             for x in range(0,7):
                 self.make_prism_light((colors[x][0]*weights[x],colors[x][1]*weights[x],colors[x][2]*weights[x]),angle)
                 angle-=da
