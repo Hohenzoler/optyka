@@ -2,6 +2,7 @@ import classes.game
 import functions
 import pygame
 from gui import ModifyParameters as mp
+from gui import gui_main
 from classes import light, mixer_c, images
 import math
 from pygame.transform import rotate
@@ -214,6 +215,9 @@ class GameObject:
                 if type(obj) != light.Light:
                     if obj.rect.colliderect(temp_rect):
                         if obj != self and isinstance(obj, GameObject):
+                            self.angle -= d_angle
+                            return
+                        elif isinstance(obj, gui_main.GUI):
                             self.angle -= d_angle
                             return
 
