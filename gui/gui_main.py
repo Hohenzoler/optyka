@@ -42,6 +42,8 @@ class GUI:
             button.render()
 
     def checkifclicked(self, mousepos):
+        if self.game.selected_object is not None:
+            return
         for button in self.buttons:
             button.checkifclicked(mousepos)
 
