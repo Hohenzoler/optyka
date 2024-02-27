@@ -701,7 +701,7 @@ class Light:
 
         self.current_starting_point = self.current_point
     def prism_stuff(self):
-        pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
+        # pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         transmittance = self.current_object.transmittance
         self.RGB = RGB_Class(int(self.RGB.r * transmittance), int(self.RGB.g * transmittance),
@@ -737,7 +737,7 @@ class Light:
                     self.slope_normal_vector.scale(self.slope_normal_vector.dot(self.normalized_vector))).scale(mi))
         # if self.in_prism:
         #     self.new_vector=self.new_vector.substract(self.slope_normal_vector.scale(2*self.new_vector.dot(self.slope_normal_vector)))
-        self.new_vector.draw(self.game.screen,self.current_point)
+        # self.new_vector.draw(self.game.screen,self.current_point)
         self.r=self.new_vector.get_angle()
         self.calibrate_r2()
         self.split_light()
