@@ -307,7 +307,7 @@ class GameObject:
     def drawResizeOutline(self):
         if isinstance(self, Mirror):
             classes.game.Game.movePoints(self.game, self.points, pygame.mouse.get_pos())
-        else:
+        elif not isinstance(self, Flashlight):
             # Draw an outline around the object
             pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 0, 255))
             self.resize_rects = []
