@@ -912,83 +912,86 @@ class Lens(GameObject):
         # print(self.get_triangles())
 
         # self.get_slopes()
-        if not self.selectedtrue:
-            # Draw the rotated lines without transparency
-            if self.resizing:
-                self.drawResizeOutline()
-                #print(self.type)
-            if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE and self.type != self.CAVE_VEX and self.type != self.SINGLE_CAVE_2 and self.type != self.VEX_CAVE:
-                self.generate_points(self.points, self.angle)
-                if self.type != self.SINGLE_VEX_2:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+        try:
+            if not self.selectedtrue:
+                # Draw the rotated lines without transparency
+                if self.resizing:
+                    self.drawResizeOutline()
+                    #print(self.type)
+                if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE and self.type != self.CAVE_VEX and self.type != self.SINGLE_CAVE_2 and self.type != self.VEX_CAVE:
+                    self.generate_points(self.points, self.angle)
+                    if self.type != self.SINGLE_VEX_2:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                    else:
+                        self.lens_points.reverse()
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                    if self.type != self.SINGLE_VEX and self.type != self.SINGLE_VEX_2:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
                 else:
-                    self.lens_points.reverse()
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-                if self.type != self.SINGLE_VEX and self.type != self.SINGLE_VEX_2:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, (self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                    self.generate_points(self.points, self.angle)
+                    # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                    # pygame.gfxdraw.filled_polygon(self.game.screen, (
+                    # self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                    # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                    if self.type == self.SINGLE_CAVE:
+                        #self.lens_points.reverse()
+                        pass
+                    if self.type == self.SINGLE_CAVE_2:
+                        self.lens_points.reverse()
+                    if self.type == self.CAVE_VEX or self.type == self.VEX_CAVE:
+                        self.lens_points.reverse()
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
+                                                  self.color)
+                    if self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
+                        self.lens_points.reverse()
+                        # self.lens_points2.reverse()
             else:
-                self.generate_points(self.points, self.angle)
-                # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                # pygame.gfxdraw.filled_polygon(self.game.screen, (
-                # self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-                if self.type == self.SINGLE_CAVE:
-                    #self.lens_points.reverse()
-                    pass
-                if self.type == self.SINGLE_CAVE_2:
-                    self.lens_points.reverse()
-                if self.type == self.CAVE_VEX or self.type == self.VEX_CAVE:
-                    self.lens_points.reverse()
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
-                                              self.color)
-                if self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
-                    self.lens_points.reverse()
-                    # self.lens_points2.reverse()
-        else:
-            mousepos = pygame.mouse.get_pos()
-            if self.game.r:
+                mousepos = pygame.mouse.get_pos()
+                if self.game.r:
 
-                self.adjust(mousepos[0], mousepos[1], self.game.r)
-                self.game.r = False
+                    self.adjust(mousepos[0], mousepos[1], self.game.r)
+                    self.game.r = False
 
-            elif self.game.p:
-                self.change_parameters()
-                self.selectedtrue = False
+                elif self.game.p:
+                    self.change_parameters()
+                    self.selectedtrue = False
 
-            else:
-                self.adjust(mousepos[0], mousepos[1], 0)
-            if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE and self.type != self.CAVE_VEX and self.type != self.SINGLE_CAVE_2 and self.type != self.VEX_CAVE:
-                self.generate_points(self.points, self.angle)
-                if self.type != self.SINGLE_VEX_2:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
                 else:
-                    self.lens_points.reverse()
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-                if self.type != self.SINGLE_VEX and self.type != self.SINGLE_VEX_2:
-                    pygame.gfxdraw.filled_polygon(self.game.screen, (
-                    self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
-                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-            else:
-                self.generate_points(self.points, self.angle)
-                #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
-                # length = len(self.lens_points)//2
-                # lens_points = []
-                # for point in self.lens_points:
-                if self.type == self.SINGLE_CAVE:
-                    # self.lens_points.reverse()
-                    pass
-                if self.type == self.SINGLE_CAVE_2:
-                    self.lens_points.reverse()
-                if self.type == self.CAVE_VEX or self.type == self.VEX_CAVE:
-                    self.lens_points.reverse()
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
-                                              self.color)
-                if self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
-                    self.lens_points.reverse()
-                    # self.lens_points2.reverse()
+                    self.adjust(mousepos[0], mousepos[1], 0)
+                if self.type != self.CONCAVE and self.type != self.SINGLE_CAVE and self.type != self.CAVE_VEX and self.type != self.SINGLE_CAVE_2 and self.type != self.VEX_CAVE:
+                    self.generate_points(self.points, self.angle)
+                    if self.type != self.SINGLE_VEX_2:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                    else:
+                        self.lens_points.reverse()
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                    if self.type != self.SINGLE_VEX and self.type != self.SINGLE_VEX_2:
+                        pygame.gfxdraw.filled_polygon(self.game.screen, (
+                        self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
+                        pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
+                else:
+                    self.generate_points(self.points, self.angle)
+                    #pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
+                    # length = len(self.lens_points)//2
+                    # lens_points = []
+                    # for point in self.lens_points:
+                    if self.type == self.SINGLE_CAVE:
+                        # self.lens_points.reverse()
+                        pass
+                    if self.type == self.SINGLE_CAVE_2:
+                        self.lens_points.reverse()
+                    if self.type == self.CAVE_VEX or self.type == self.VEX_CAVE:
+                        self.lens_points.reverse()
+                    pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
+                                                  self.color)
+                    if self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
+                        self.lens_points.reverse()
+                        # self.lens_points2.reverse()
 
-            self.drawoutline()
+                self.drawoutline()
+        except:
+            print("lens has 0 points, it should not be possible")
     def adjust(self, x, y, d_angle):
         # Adjust the object's position and angle
         self.angle += d_angle
