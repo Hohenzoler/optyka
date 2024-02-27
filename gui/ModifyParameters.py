@@ -49,8 +49,18 @@ class Parameters:
     def create_element(self, param, row):
         if param != 'points':
             try:
-                label = tk.Label(self.root, text=f"{param.capitalize()}:")
-                label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+                if param != 'transmittance' and param != 'absorbsion_factor':
+                    label = tk.Label(self.root, text=f"{param.capitalize()}:")
+                    label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+
+                elif param == 'absorbsion_factor':
+                    label = tk.Label(self.root, text=f"Absorption:")
+                    label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+
+                else:
+                    label = tk.Label(self.root, text=f"Transmittance:")
+                    label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+
                 if param == 'red' or param == 'blue' or param == 'green':
                     slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
                     slider.set(self.parameters_dict[param])
@@ -80,8 +90,8 @@ class Parameters:
 
                 else:
                     try:
-                        entry = tk.Entry(self.root, width=27)
-                        if param != 'size':
+                        entry = tk.Entry(self.root, width=24, justify='right')
+                        if param != 'size' and param != 'absorbsion_factor':
                             entry.insert(0, str(self.parameters_dict[param])) # Set default value
                         else:
                             entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
