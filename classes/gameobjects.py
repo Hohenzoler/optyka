@@ -745,18 +745,18 @@ class Lens(GameObject):
                 self.curvature_radius += self.curvature_resize_step
             if self.lens_points2[0][0] < self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
-        if self.type == self.SINGLE_VEX:
+        elif self.type == self.SINGLE_VEX:
             if self.lens_points[0][1] - self.lens_points[-1][1] < self.height -5:
                 self.curvature_radius += self.curvature_resize_step
             if self.lens_points2[0][0] < self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
-        if self.type == self.SINGLE_VEX_2:
+        elif self.type == self.SINGLE_VEX_2:
             if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height -5:
                 #self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius2 += self.curvature_resize_step
             if self.lens_points2[0][0] < self.lens_points[0][0]:
                 self.curvature_radius2 += self.curvature_resize_step
-        if self.type == self.CONCAVE:
+        elif self.type == self.CONCAVE:
             if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
@@ -769,7 +769,7 @@ class Lens(GameObject):
                 self.curvature_radius2 += self.curvature_resize_step
             if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius2 += self.curvature_resize_step
-        if self.type == self.SINGLE_CAVE:
+        elif self.type == self.SINGLE_CAVE:
             if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
@@ -801,7 +801,7 @@ class Lens(GameObject):
                         self.raw_curvature_radius = self.curvature_radius
                         self.checktype()
                         self.margin = self.DEFAULT_MARGIN
-                if mouse_pos[0] < self.last_mouse_pos[0]:
+                elif mouse_pos[0] < self.last_mouse_pos[0]:
                     if self.margin < self.DEFAULT_MARGIN:
                         self.margin = self.DEFAULT_MARGIN
                     self.margin += 1
@@ -818,7 +818,7 @@ class Lens(GameObject):
                         self.curvature_radius = 0
                         self.raw_curvature_radius = self.curvature_radius
                         self.checktype()
-                if mouse_pos[0] > self.last_mouse_pos[0]:
+                elif mouse_pos[0] > self.last_mouse_pos[0]:
                     self.curvature_radius += self.curvature_resize_step
 
         if self.change_curvature_right:
@@ -830,7 +830,7 @@ class Lens(GameObject):
                         self.curvature_radius2 = 0
                         self.raw_curvature_radius2 = 0
                         self.checktype()
-                if mouse_pos[0] > self.last_mouse_pos[0]:
+                elif mouse_pos[0] > self.last_mouse_pos[0]:
                     self.curvature_radius2 += self.curvature_resize_step
             elif self.type == self.SINGLE_VEX or self.type == self.SINGLE_CAVE_2:  # right side is flat
                 print(self.margin)
@@ -861,7 +861,7 @@ class Lens(GameObject):
                         self.curvature_radius2 = 0
                         self.raw_curvature_radius2 = self.curvature_radius2
                         self.checktype()
-                if mouse_pos[0] < self.last_mouse_pos[0]:
+               elif mouse_pos[0] < self.last_mouse_pos[0]:
                     self.curvature_radius2 += self.curvature_resize_step
             # if mouse_pos[0] > self.last_mouse_pos[0]:
             #     if self.lens_points2[0][0] > self.lens_points[0][0] and self.lens_points2[-1][1] - self.lens_points2[0][1] > self.height -5:
