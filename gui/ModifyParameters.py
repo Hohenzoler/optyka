@@ -29,6 +29,7 @@ class Parameters:
         self.TextureDropdown = None
 
         self.sliders = []
+        self.sliders_2 = []
         self.slider_buttons = []
 
         title_label = tk.Label(self.root, text="Enter Parameters:")
@@ -70,14 +71,18 @@ class Parameters:
                 #     self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                 #     self.TextureDropdown.set(self.parameters_dict[param].capitalize())
 
+
+                elif param == 'transmittance':
+                    slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, length=150)
+                    slider.set(self.parameters_dict[param]*100)
+                    slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                    self.sliders_2.append(slider)
+
                 else:
                     try:
-                        entry = tk.Entry(self.root)
+                        entry = tk.Entry(self.root, width=27)
                         if param != 'size':
-                            if param in ['reflection_factor', 'transmittance', 'absorbsion_factor']:
-                                entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value in percentage
-                            else:
-                                entry.insert(0, str(self.parameters_dict[param])) # Set default value
+                            entry.insert(0, str(self.parameters_dict[param])) # Set default value
                         else:
                             entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
                         entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
@@ -97,7 +102,7 @@ class Parameters:
     def store_parameters(self):
         new_parameters = {}
 
-        if len(self.sliders) > 0:
+        if len(self.sliders) > 1:
             new_color = []
             for slider in self.sliders:
                 color = self.get_slider_value(slider)
@@ -105,6 +110,12 @@ class Parameters:
             new_parameters['red'] = new_color[0]
             new_parameters['green'] = new_color[1]
             new_parameters['blue'] = new_color[2]
+
+        if len(self.sliders_2) == 1:
+            transmittens = self.get_slider_value(self.sliders_2[0])
+            new_parameters['transmittance'] = transmittens/100
+
+
 
         if len(self.slider_buttons) > 0:
             lazer_on = {'lazer': self.slider_buttons[0].value}
@@ -116,9 +127,10 @@ class Parameters:
         if self.parameters_dict['points'] != None:
             new_parameters['points'] = self.parameters_dict['points']
 
+
         try:
             for param, entry_widget in self.parameters_dict.items():
-                if param == 'lazer' or param == 'red' or param == 'texture' or param == 'points':
+                if param == 'lazer' or param == 'red' or param == 'texture' or param == 'points' or param == 'transmittance':
                     break
                 value = entry_widget.get()
 
@@ -133,7 +145,7 @@ class Parameters:
                         return
                     # self.object.points = self.change_size(value)
 
-                elif param == 'reflection_factor' or param == 'transmittance' or param == 'absorbsion_factor':
+                elif param == 'absorbsion_factor':
                     value = str(value)
                     value = value.strip("%")
                     value = float(value) / 100
@@ -154,10 +166,12 @@ class Parameters:
                 messagebox.showwarning("Error", "The sum of reflection factor and transmittance and absorbsion factor must be equal to 100%.")
                 return
 
-            # print(new_parameters)
-            self.object.parameters.update(new_parameters)
+
+
         except Exception as e:
             print(e)
+
+        self.object.parameters.update(new_parameters)
 
         self.root.quit()
         self.root.destroy()

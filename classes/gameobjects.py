@@ -19,7 +19,7 @@ DELTA_ANGLE = FOV / NUM_RAYS
 
 class GameObject:
 
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, image = None):
+    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, image = None):
         # Initialize common attributes
         self.game = game
         self.color = color
@@ -44,9 +44,10 @@ class GameObject:
         self.resize_on = False
         self.resize_point = None
 
-        self.reflection_factor = reflection_factor
-        self.transmittance = transmittance #przepuszczalność ;-;
-        self.absorbsion_factor = 1-reflection_factor-transmittance
+        self.absorbsion_factor = absorbsion_factor
+        self.transmittance = transmittance*(1-absorbsion_factor)  # przepuszczalność ;-;
+        self.reflection_factor = 1-transmittance*(1-absorbsion_factor)
+
 
         if image != None:
             self.image_width = self.image.get_width()
@@ -364,11 +365,11 @@ class GameObject:
 
         self.parameters['size'] = self.scale_factor
 
-        self.parameters['reflection_factor'] = self.reflection_factor
-
-        self.parameters['transmittance'] = self.transmittance
+        # self.parameters['reflection_factor'] = self.reflection_factor
 
         self.parameters['absorbsion_factor'] = self.absorbsion_factor
+
+        self.parameters['transmittance'] = self.transmittance
 
         self.parameters['points'] = self.defualt_points
         # print(self.defualt_points)
@@ -388,7 +389,7 @@ class GameObject:
             self.find_parameters()
             mp.Parameters(self)
 
-        print(self.parameters)
+        # print(self.parameters)
 
         self.defualt_points = self.parameters['points']
         self.points = self.defualt_points
@@ -401,9 +402,11 @@ class GameObject:
         self.y = self.parameters['y']
         self.adjust(self.x, self.y, d_angle)
         self.scale_factor = self.parameters['size']
-        self.transmittance = self.parameters['transmittance']
-        self.reflection_factor = self.parameters['reflection_factor']
         self.absorbsion_factor = self.parameters['absorbsion_factor']
+        self.transmittance = self.parameters['transmittance'] * (1 - self.absorbsion_factor)
+        self.reflection_factor = 1 - self.parameters['transmittance'] * (1 - self.absorbsion_factor)
+
+        # print('a', self.absorbsion_factor, 't', self.transmittance, self.parameters['transmittance'], 'r', self.reflection_factor)
 
         try:
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
@@ -445,12 +448,12 @@ class GameObject:
         self.points = new_points
 
 class Mirror(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
+    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
 
 class Prism(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
+    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
         self.n=1.52
         self.fi=math.pi/3
         self.dispersion_angle=math.pi/3
@@ -489,22 +492,22 @@ class Prism(GameObject):
         pygame.draw.line(self.game.screen, (255, 255, 0), self.bottom_slope[0], self.bottom_slope[1], 5)
 
 class ColoredGlass(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
+    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
 class CustomPolygon(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, layer = 5):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
+    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None, layer = 5):
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
 class Corridor(GameObject):
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=False, image_path=None, layer = 5):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
+    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None, layer = 5):
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
     def get_slopes(self):
         self.slopes = [(self.points[2*i], self.points[2*i + 1]) for i in range((len(self.points))//2)]
         # self.slopes.append((self.points[len(self.points) - 1], self.points[0]))
         # print(self.slopes)
 
 class Lens(GameObject):
-    def __init__(self, game, points, color, angle, curvature_radius, reflection_factor, transmittance, curvature_radius2=None, refraction_index=1.5, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image_path)
+    def __init__(self, game, points, color, angle, curvature_radius, transmittance, absorbsion_factor, curvature_radius2=None, refraction_index=1.5, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
         self.curvature_radius = curvature_radius
         self.CONVEX = 0
         self.CONCAVE = 1
@@ -1051,8 +1054,8 @@ class Lens(GameObject):
         self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
 
 class Flashlight(GameObject):  # Inheriting from GameObject
-    def __init__(self, game, points, color, angle, reflection_factor, transmittance, islighting=True, image=None):
-        super().__init__(game, points, color, angle, reflection_factor, transmittance, image)
+    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=True, image=None):
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image)
         self.islighting = bool(islighting)
         self.light = None
         self.light_width = 8
