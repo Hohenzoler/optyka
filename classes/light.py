@@ -808,8 +808,9 @@ class Light:
             green=self.RGB.rgb[1]/255
             blue=self.RGB.rgb[2] / 255
             weights=[red,2/3*red+1/3*green,1/3*red+2/3*green,green,2/3*green+1/3*blue,1/3*green+2/3*blue,blue,2/3*blue+1/3*red,1/3*blue+2/3*red]
-            if self.horizontal=='right':
-                weights.reverse()
+            print(self.horizontal)
+            if self.horizontal=='left':
+                colors.reverse()
             for x in range(0,7):
                 self.make_prism_light((colors[x][0]*weights[x],colors[x][1]*weights[x],colors[x][2]*weights[x]),angle)
                 angle-=da
