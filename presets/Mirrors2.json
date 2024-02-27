@@ -1,0 +1,246 @@
+[
+  "Beatiful Geometry",
+  {
+    "x": 89.0,
+    "y": 489.0,
+    "angle": 0,
+    "size": 1,
+    "absorbsion_factor": 1,
+    "transmittance": 0,
+    "points": [
+      [
+        55,
+        663
+      ],
+      [
+        255,
+        663
+      ],
+      [
+        255,
+        763
+      ],
+      [
+        55,
+        763
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 361.0,
+    "y": 504.0,
+    "angle": 315.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        8,
+        630
+      ],
+      [
+        208,
+        630
+      ],
+      [
+        208,
+        730
+      ],
+      [
+        8,
+        730
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 304.0,
+    "y": 282.0,
+    "angle": 315.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        5,
+        626
+      ],
+      [
+        205,
+        626
+      ],
+      [
+        205,
+        726
+      ],
+      [
+        5,
+        726
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 618.0,
+    "y": 367.0,
+    "angle": 315.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        6,
+        620
+      ],
+      [
+        206,
+        620
+      ],
+      [
+        206,
+        720
+      ],
+      [
+        6,
+        720
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 576.0,
+    "y": 108.0,
+    "angle": 315.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        1,
+        621
+      ],
+      [
+        201,
+        621
+      ],
+      [
+        201,
+        721
+      ],
+      [
+        1,
+        721
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 813.0,
+    "y": 106.0,
+    "angle": 45.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.0,
+    "points": [
+      [
+        9,
+        615
+      ],
+      [
+        209,
+        615
+      ],
+      [
+        209,
+        715
+      ],
+      [
+        9,
+        715
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 364.0,
+    "y": 70.0,
+    "angle": 90.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0001,
+    "transmittance": 0.0,
+    "points": [
+      [
+        43,
+        679
+      ],
+      [
+        243,
+        679
+      ],
+      [
+        243,
+        779
+      ],
+      [
+        43,
+        779
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 790.0,
+    "y": 486.0,
+    "angle": 270.38,
+    "size": 1,
+    "absorbsion_factor": 1,
+    "transmittance": 0,
+    "points": [
+      [
+        33,
+        675
+      ],
+      [
+        233,
+        675
+      ],
+      [
+        233,
+        775
+      ],
+      [
+        33,
+        775
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  }
+]

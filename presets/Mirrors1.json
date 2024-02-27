@@ -1,0 +1,214 @@
+[
+  "Playing with transmittance factor",
+  {
+    "x": 139.0,
+    "y": 374.0,
+    "angle": 0,
+    "size": 1,
+    "absorbsion_factor": 1,
+    "transmittance": 0,
+    "points": [
+      [
+        39,
+        672
+      ],
+      [
+        239,
+        672
+      ],
+      [
+        239,
+        772
+      ],
+      [
+        39,
+        772
+      ]
+    ],
+    "lazer": true,
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 415.0,
+    "y": 386.0,
+    "angle": 315.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.53,
+    "points": [
+      [
+        3,
+        628
+      ],
+      [
+        203,
+        628
+      ],
+      [
+        203,
+        728
+      ],
+      [
+        3,
+        728
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 636.0,
+    "y": 388.0,
+    "angle": 315.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.5,
+    "points": [
+      [
+        13,
+        615
+      ],
+      [
+        213,
+        615
+      ],
+      [
+        213,
+        715
+      ],
+      [
+        13,
+        715
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 848.9999999999999,
+    "y": 409.0,
+    "angle": 315.0,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.5,
+    "points": [
+      [
+        -1,
+        625
+      ],
+      [
+        199,
+        625
+      ],
+      [
+        199,
+        725
+      ],
+      [
+        -1,
+        725
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 358.0,
+    "y": 228.0,
+    "angle": 89.30999999999999,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        179,
+        632
+      ],
+      [
+        199,
+        632
+      ],
+      [
+        199,
+        732
+      ],
+      [
+        179,
+        732
+      ]
+    ],
+    "red": 0,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 583.0,
+    "y": 222.0,
+    "angle": 90.26000000000003,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        166,
+        627
+      ],
+      [
+        186,
+        627
+      ],
+      [
+        186,
+        727
+      ],
+      [
+        166,
+        727
+      ]
+    ],
+    "red": 0,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 822.0,
+    "y": 222.0,
+    "angle": 90.04,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        180,
+        615
+      ],
+      [
+        200,
+        615
+      ],
+      [
+        200,
+        715
+      ],
+      [
+        180,
+        715
+      ]
+    ],
+    "red": 0,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  }
+]
