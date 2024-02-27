@@ -35,6 +35,7 @@ class Parameters:
         title_label = tk.Label(self.root, text="Enter Parameters:")
         title_label.grid(row=0, column=0, columnspan=2, pady=10)
 
+
         for idx, param in enumerate(self.parameters_dict):
             self.create_element(param, idx+1)
 
@@ -84,7 +85,16 @@ class Parameters:
 
                 elif param == 'transmittance':
                     slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, length=150)
-                    slider.set(self.parameters_dict[param]*100)
+                    abf = self.parameters_dict['absorbsion_factor'].get()
+                    abf = abf.strip('%')
+                    abf = float(abf)
+                    print(self.parameters_dict[param], abf)
+                    if abf < 1:
+                        value = self.parameters_dict[param]/(1 - abf)
+                    else:
+                        value = 0
+                    value = value*100
+                    slider.set(value)
                     slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                     self.sliders_2.append(slider)
 
