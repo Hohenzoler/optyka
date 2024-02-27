@@ -24,7 +24,7 @@ There are two ways to install the project: download exe file, or run the project
 
 ### Method 1
 1. Go to the ***Releases*** page on our project's GitHub
-2. Download ***1.0 - zip***
+2. Download ***1.0.zip***
 3. Extract all the files
 4. Run ***optyka.exe***
 
@@ -53,17 +53,19 @@ There are two ways to install the project: download exe file, or run the project
    - laser (only for flashlights, if on, they only emit one beam)
    - color 
    - texture (only for mirrors)
-* When holding an object you can also press `R` to enter _resizing mode_
-* While in _resizing mode_ you can click one of the points visible on the object and place said point elsewhere, thus resizing the object.
+* When holding an object you can rotate it by scrolling.
+* When holding an object you can also press `R` to enter _resizing mode_. 
+   - In _resizing mode_ you can resize the object by clicking and dragging one of the points visible on the object.
+   - You can also press `R` again to exit _resizing mode_.
+* You can delete an object by dragging it to the bin.
 
-
-* You can enter _drawing mode_ by clicking the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="documentation/bad_pen.png"></p>
+* You can enter _drawing mode_ by clicking the icon that looks like this: <p align="center"><img width="60" height="60" border = 10 src="documentation/bad_pen.png"></p>
 
 
    - While in _drawing mode_ you can draw a new object by clicking different places on screen.
    - You can also delete the last point placed by pressing `Backspace` or move a point by `right clicking`.
    - Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
-* Press `up` to randomize colors of all flashlights
+* Press `Up Arrow` to randomize colors of all flashlights
 
 
 
@@ -95,7 +97,7 @@ There are two ways to install the project: download exe file, or run the project
 * **Clock** - Lets you know what time it is.
 * **Sound effects** - helps to immerse in the world of optics.
 * **Calm music** - makes the experience much more pleasant
-* **Color randomizer** - activated by pressing `up`, there isn't any particular reason for its existence
+* **Color randomizer** - activated by pressing `Up Arrow`, there isn't any particular reason for its existence
 
 ## Opinions
 > "I think it's a great app. It's very educational and fun to play with. I would recommend it to anyone who wants to learn about optics." - *Jeff*
