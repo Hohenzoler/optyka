@@ -57,7 +57,7 @@ There are two ways to install the project: download exe file, or run the project
 * While in _resizing mode_ you can click one of the points visible on the object and place said point elsewhere, thus resizing the object.
 
 
-* You can enter _drawing mode_ by clicking the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="https://github.com/Hohenzoler/optyka/blob/main/images/bad_pen.png"></p>
+* You can enter _drawing mode_ by clicking the icon that looks like this <p align="center"><img width="60" height="60" border = 10 src="documentation/bad_pen.png"></p>
 
 
    - While in _drawing mode_ you can draw a new object by clicking different places on screen.
@@ -102,7 +102,7 @@ There are two ways to install the project: download exe file, or run the project
 
 Picture of Jeff:
 
-![Jeff](images/Jeff.png)
+![Jeff](documentation/Jeff.png)
 
 ## Credits
 This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [MalyszekTobias](https://github.com/MalyszekTobias), [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [V8Enthusiast](https://github.com/V8Enthusiast).
