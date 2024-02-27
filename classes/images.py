@@ -29,3 +29,4 @@ oneconcave = pygame.image.load("images/oneconcave.png")  # Loading the one conca
 oneconvex = pygame.image.load("images/oneconvex.png")  # Loading the oneconvex icon image
 puchar = pygame.image.load("images/upo_puchar.png")
 corridor = pygame.image.load("images/idk.png")
+corridor_icon = pygame.image.load("images/corridor_icon.png")

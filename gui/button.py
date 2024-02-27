@@ -126,6 +126,11 @@ class Button:
             self.icon = images.oneconcave
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
+        elif self.number == 9:
+            self.color = (253, 184, 38)
+            self.icon = images.corridor_icon
+            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
         elif self.number == -1:
             self.color = None
