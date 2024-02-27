@@ -35,6 +35,7 @@ class Parameters:
         title_label = tk.Label(self.root, text="Enter Parameters:")
         title_label.grid(row=0, column=0, columnspan=2, pady=10)
 
+
         for idx, param in enumerate(self.parameters_dict):
             self.create_element(param, idx+1)
 
@@ -49,8 +50,18 @@ class Parameters:
     def create_element(self, param, row):
         if param != 'points':
             try:
-                label = tk.Label(self.root, text=f"{param.capitalize()}:")
-                label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+                if param != 'transmittance' and param != 'absorbsion_factor':
+                    label = tk.Label(self.root, text=f"{param.capitalize()}:")
+                    label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+
+                elif param == 'absorbsion_factor':
+                    label = tk.Label(self.root, text=f"Absorption:")
+                    label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+
+                else:
+                    label = tk.Label(self.root, text=f"Transmittance:")
+                    label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+
                 if param == 'red' or param == 'blue' or param == 'green':
                     slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
                     slider.set(self.parameters_dict[param])
@@ -74,14 +85,23 @@ class Parameters:
 
                 elif param == 'transmittance':
                     slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, length=150)
-                    slider.set(self.parameters_dict[param]*100)
+                    abf = self.parameters_dict['absorbsion_factor'].get()
+                    abf = abf.strip('%')
+                    abf = float(abf)
+                    print(self.parameters_dict[param], abf)
+                    if abf < 1:
+                        value = self.parameters_dict[param]/(1 - abf)
+                    else:
+                        value = 0
+                    value = value*100
+                    slider.set(value)
                     slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                     self.sliders_2.append(slider)
 
                 else:
                     try:
-                        entry = tk.Entry(self.root, width=27)
-                        if param != 'size':
+                        entry = tk.Entry(self.root, width=24, justify='right')
+                        if param != 'size' and param != 'absorbsion_factor':
                             entry.insert(0, str(self.parameters_dict[param])) # Set default value
                         else:
                             entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
