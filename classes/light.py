@@ -656,6 +656,22 @@ class Light:
 
         light1.trace_path2()
         light1.render()
+    def callibrate_slope_angle(self):
+        if (self.current_slope[0][0] - self.current_slope[1][0]) == 0:
+            self.slope_angle = math.pi / 2
+        else:
+
+            self.slope_angle = math.atan((self.current_slope[0][1] - self.current_slope[1][1]) / (
+                    self.current_slope[0][0] - self.current_slope[1][0]))
+            if self.current_slope[0][0] >= self.current_slope[1][0] and self.current_slope[0][1] > \
+                    self.current_slope[1][1]:
+                self.slope_angle = math.pi - self.slope_angle
+            elif self.current_slope[1][0] >= self.current_slope[0][0] and self.current_slope[1][1] > \
+                    self.current_slope[0][1]:
+                self.slope_angle = math.pi - self.slope_angle
+            else:
+                self.slope_angle = -self.slope_angle
+        self.calibrate_r2()
     def mirror_stuff(self):
         self.counter += 1
         if self.counter > 99:
@@ -684,52 +700,8 @@ class Light:
 
 
         self.current_starting_point = self.current_point
-    def first_difract(self,prism):
-        n=prism.n
-        fi=prism.fi
-        self.r=fi/2+self.r+(round(prism.angle))/180*math.pi-math.asin(math.sin((fi/2+self.r))/n)
-
-    def second_difract(self,prism):
-        n=prism.n
-        fi = prism.fi
-        self.r = fi / 2 + self.r + (round(prism.angle)) / 180 * math.pi - math.asin(math.sin((fi / 2 + self.r)) / n)
-        self.r-=fi/2
-    def first_difract(self,prism):
-        self.callibrate_slope_angle()
-        n=prism.n
-        alpha=self.r+self.slope_angle-math.pi/2
-        delta = math.asin(math.sin(alpha) / n)
-        x=self.r-delta
-        self.r=self.r-x
-    def callibrate_slope_angle(self):
-        if (self.current_slope[0][0] - self.current_slope[1][0]) == 0:
-            self.slope_angle = math.pi / 2
-        else:
-
-            self.slope_angle = math.atan((self.current_slope[0][1] - self.current_slope[1][1]) / (
-                    self.current_slope[0][0] - self.current_slope[1][0]))
-            if self.current_slope[0][0] >= self.current_slope[1][0] and self.current_slope[0][1] > \
-                    self.current_slope[1][1]:
-                self.slope_angle = math.pi - self.slope_angle
-            elif self.current_slope[1][0] >= self.current_slope[0][0] and self.current_slope[1][1] > \
-                    self.current_slope[0][1]:
-                self.slope_angle = math.pi - self.slope_angle
-            else:
-                self.slope_angle = -self.slope_angle
-        self.calibrate_r2()
-    def second_difract(self,prism):
-        n = prism.n
-        fi = prism.fi
-        self.callibrate_slope_angle()
-        a=self.slope_angle
-        epsilon=math.pi-a+self.r
-        beta = math.asin(math.sin(epsilon) / n)
-        self.r=math.pi/2-a+beta
-        self.r=2*math.pi-self.r
-        self.r=-self.r
-
     def prism_stuff(self):
-        pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
+        # pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)
         transmittance = self.current_object.transmittance
         self.RGB = RGB_Class(int(self.RGB.r * transmittance), int(self.RGB.g * transmittance),
@@ -765,7 +737,7 @@ class Light:
                     self.slope_normal_vector.scale(self.slope_normal_vector.dot(self.normalized_vector))).scale(mi))
         # if self.in_prism:
         #     self.new_vector=self.new_vector.substract(self.slope_normal_vector.scale(2*self.new_vector.dot(self.slope_normal_vector)))
-        self.new_vector.draw(self.game.screen,self.current_point)
+        # self.new_vector.draw(self.game.screen,self.current_point)
         self.r=self.new_vector.get_angle()
         self.calibrate_r2()
         self.split_light()
@@ -774,29 +746,6 @@ class Light:
             self.in_prism = False
         else:
             self.in_prism = True
-
-        # if self.in_prism==False:
-        #     # if self.current_slope == self.current_object.left_slope:
-        #         print('cccccccccccccccccccc')
-        #
-        #         if not self.in_prism:
-        #             self.first_difract(self.current_object)
-        #         else:
-        #             self.second_difract(self.current_object)
-        #         self.split_light()
-        # else:
-        #     # if self.current_slope == self.current_object.right_slope:
-        #         print('dddddddddddddddddddddd')
-        #
-        #         if not self.in_prism:
-        #             self.first_difract(self.current_object)
-        #         else:
-        #             self.second_difract(self.current_object)
-
-
-
-
-
     def slope_to_vector(self,slope):
         return Vector(slope[1][0]-slope[0][0],slope[1][1]-slope[0][1])
     def split_light(self):
@@ -815,9 +764,6 @@ class Light:
                 self.make_prism_light((colors[x][0]*weights[x],colors[x][1]*weights[x],colors[x][2]*weights[x]),angle)
                 angle-=da
             self.mini_run = False
-
-
-
     def make_prism_light(self,color,angle):
         light1 = Light(self.game, [self.current_point], color, (self.r + angle) * 180 / math.pi,
                          self.light_width)
@@ -828,29 +774,11 @@ class Light:
         light1.calibrate_r2()
         light1.trace_path2()
         light1.render()
-
     def calibrate_r2(self):
         if self.r>2*math.pi:
             self.r-=2*math.pi
         if self.r<0:
             self.r+=2*math.pi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     def get_r(self):
         self.r=self.angle/360*2*math.pi
         if self.r>2*math.pi:
