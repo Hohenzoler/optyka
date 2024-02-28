@@ -1,0 +1,299 @@
+[
+  "Bouncing Colorful Lights",
+  {
+    "x": 1.25,
+    "y": 699.5,
+    "angle": 0.001,
+    "size": 1,
+    "absorbsion_factor": 1,
+    "transmittance": 0,
+    "points": [
+      [
+        1,
+        700
+      ],
+      [
+        2,
+        700
+      ],
+      [
+        1,
+        699
+      ],
+      [
+        1,
+        699
+      ]
+    ],
+    "red": 0,
+    "green": 0,
+    "blue": 0,
+    "class": "Mirror"
+  },
+  {
+    "x": 1.25,
+    "y": 699.5,
+    "angle": 0.0,
+    "size": 1,
+    "absorbsion_factor": 1,
+    "transmittance": 0,
+    "points": [
+      [
+        1,
+        700
+      ],
+      [
+        2,
+        700
+      ],
+      [
+        1,
+        699
+      ],
+      [
+        1,
+        699
+      ]
+    ],
+    "red": 0,
+    "green": 0,
+    "blue": 0,
+    "class": "Mirror"
+  },
+  {
+    "x": 290.0,
+    "y": 264.0,
+    "angle": 0.001,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        370,
+        615
+      ],
+      [
+        570,
+        615
+      ],
+      [
+        570,
+        715
+      ],
+      [
+        370,
+        715
+      ]
+    ],
+    "red": 255,
+    "green": 0,
+    "blue": 0,
+    "class": "Corridor"
+  },
+  {
+    "x": 84.0,
+    "y": 431.0,
+    "angle": 304.2509999999999,
+    "size": 1,
+    "points": [
+      [
+        22,
+        673
+      ],
+      [
+        222,
+        673
+      ],
+      [
+        222,
+        773
+      ],
+      [
+        22,
+        773
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 478.0,
+    "y": 421.0,
+    "angle": 0.001,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        13,
+        612
+      ],
+      [
+        213,
+        612
+      ],
+      [
+        213,
+        712
+      ],
+      [
+        13,
+        712
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 417.0,
+    "y": 267.0,
+    "angle": 0.001,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        169,
+        623
+      ],
+      [
+        189,
+        623
+      ],
+      [
+        189,
+        723
+      ],
+      [
+        169,
+        723
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 0,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 547.0,
+    "y": 266.0,
+    "angle": 0.001,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 1.0,
+    "points": [
+      [
+        162,
+        620
+      ],
+      [
+        182,
+        620
+      ],
+      [
+        182,
+        720
+      ],
+      [
+        162,
+        720
+      ]
+    ],
+    "red": 0,
+    "green": 255,
+    "blue": 255,
+    "class": "ColoredGlass"
+  },
+  {
+    "x": 678.0,
+    "y": 266.0,
+    "angle": 0.001,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        368,
+        627
+      ],
+      [
+        568,
+        627
+      ],
+      [
+        568,
+        727
+      ],
+      [
+        368,
+        727
+      ]
+    ],
+    "red": 255,
+    "green": 0,
+    "blue": 0,
+    "class": "Corridor"
+  },
+  {
+    "x": 873.9999999999999,
+    "y": 97.0,
+    "angle": 125.20100000000004,
+    "size": 1,
+    "points": [
+      [
+        38,
+        657
+      ],
+      [
+        238,
+        657
+      ],
+      [
+        238,
+        757
+      ],
+      [
+        38,
+        757
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 480.0,
+    "y": 117.0,
+    "angle": 0.001,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        11,
+        624
+      ],
+      [
+        211,
+        624
+      ],
+      [
+        211,
+        724
+      ],
+      [
+        11,
+        724
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  }
+]
