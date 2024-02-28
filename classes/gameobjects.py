@@ -38,6 +38,8 @@ class GameObject:
         self.layer = 0
         self.placed = False
         self.angle = angle
+
+
         self.image = image if image else None
         self.resizing = False
         self.resize_rects = []
@@ -66,6 +68,8 @@ class GameObject:
 
         self.was_selected = False
         self.collisionDetected = True
+        mousepos = pygame.mouse.get_pos()
+        self.adjust(mousepos[0], mousepos[1], self.angle)
 
     def update_rect(self):
         # Update the rect based on the points
@@ -186,6 +190,7 @@ class GameObject:
             self.drawoutline()
 
     def rotate_points(self, points, angle):
+
         # Rotate points around the center of the object
         center_x = sum(x for x, _ in points) / len(points)
         center_y = sum(y for _, y in points) / len(points)
@@ -211,7 +216,9 @@ class GameObject:
             rotated_points.append((final_x, final_y))
 
         return rotated_points
-
+    # def get_slopes_rect(self,rect):
+    #     slopes = [(rect.points[i], rect.points[i + 1]) for i in range(len(self.points) - 1)]
+    #     slopes.append((self.points[len(self.points) - 1], self.points[0]))
     def adjust(self, x, y, d_angle):
         while True:
             if self.angle >= 360:
@@ -220,6 +227,16 @@ class GameObject:
                 self.angle += 360
             else:
                 break
+        if self.angle==0:
+            self.angle=0.1
+        elif self.angle==180:
+            self.angle=180.1
+        elif self.angle==90:
+            self.angle=90.1
+        elif self.angle==270:
+            self.angle=270.1
+
+
         if self.game.isDrawingModeOn != True:
             # print(self.points)
             self.angle += d_angle
@@ -227,22 +244,77 @@ class GameObject:
             self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
 
             # print(self.x)
-
+            newpoints=[]
+            oldpoints=self.points
             temp_rect = self.rect.move(self.x, self.y)
+            for point in self.points:
+                newpoints.append((point[0]+self.x,point[1]+self.y))
+            self.points=newpoints
+            self.get_slopes()
+            for obj in self.game.objects:
+
+                    if obj != self and isinstance(obj, GameObject):
+                        # if obj.rect.colliderect(temp_rect):
+                        obj.get_slopes()
+
+                        slopes=obj.slopes
+                        for s1 in self.slopes:
+                            for s2 in slopes:
+                                if (s1[0][0] - s1[1][0]) == 0:
+                                    dx = 0.001
+                                else:
+                                    dx = (s1[0][0] - s1[1][0])
+                                # r=math.atan((slope[0][0]-slope[1][0])/dy)
+
+                                lf1 = light.Linear_Function((s1[0][1] - s1[1][1]) / dx,
+                                                     self.find_b(((s1[0][1] - s1[1][1]) / dx), s1[0]))
+                                lf1.draw(self.game)
+
+                                # calculating second linear function:
+                                if (s2[0][0] - s2[1][0]) == 0:
+                                    dx = 0.001
+                                else:
+                                    dx = (s2[0][0] - s2[1][0])
+                                # r=math.atan((slope[0][0]-slope[1][0])/dy)
+
+                                lf2 = light.Linear_Function((s2[0][1] - s2[1][1]) / dx,
+                                                     self.find_b(((s2[0][1] - s2[1][1]) / dx), s2[0]))
+                                lf2.draw(self.game)
+                                x = lf1.intercept(lf2)
+
+                                y = lf1.calculate(x)
+                                point = (x, lf1.calculate(x))
+
+
+                                if (s1[0][0] - s1[1][0]) == 0:  # checking 'special case slope': |
+                                    adding = 1
+                                else:
+                                    adding = 0
+                                if x - adding <= max(s1[0][0], s1[1][0]) and x + adding >= min(s1[0][0],
+                                                                                                     s1[1][0]):
+                                    if y <= max(s1[0][1], s1[1][1]) and y >= min(s1[0][1], s1[1][1]):
+                                        if x - adding <= max(s2[0][0], s2[1][0]) and x + adding >= min(s2[0][0],
+                                                                                                       s2[1][0]):
+                                            if y <= max(s2[0][1], s2[1][1]) and y >= min(s2[0][1], s2[1][1]):
+
+                                                self.angle -= d_angle
+                                                pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
+                                                return
+
+
+
+
+                        # elif isinstance(obj, gui_main.GUI):
+                        #     self.angle -= d_angle
+                        #     return
+            self.points=oldpoints
+
 
             # print(temp_rect)
 
             pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
 
-            for obj in self.game.objects:
-                if type(obj) != light.Light:
-                    if obj.rect.colliderect(temp_rect):
-                        if obj != self and isinstance(obj, GameObject):
-                            self.angle -= d_angle
-                            return
-                        elif isinstance(obj, gui_main.GUI):
-                            self.angle -= d_angle
-                            return
+
 
             # Reset the flag to regenerate triangles
             self.triangles_generated = False
@@ -270,7 +342,8 @@ class GameObject:
                 except:
                     pass
                 self.update_rect()
-
+    def find_b(self,a,point):
+        return point[1]-a*point[0]
     def move(self):
         # code for moving object with mouse
         self.mousepos = pygame.mouse.get_pos()
