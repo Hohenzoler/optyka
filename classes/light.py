@@ -382,7 +382,7 @@ class Light:
                 else:
                     intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 if direction == 'out':
-                    if lens.type == lens.SINGLE_VEX_2:
+                    if lens.type == lens.SINGLE_VEX_2 and slope1 != 'vl':
                         intersect_angle = abs(math.degrees(math.atan(slope1)))
                     temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                     # print(math.degrees(math.asin(temp)))
@@ -404,7 +404,7 @@ class Light:
                     # print(math.degrees(self.r))
                     self.calibrate_r2()
                 if direction == 'in':
-                    if lens.type == lens.SINGLE_VEX_2:
+                    if lens.type == lens.SINGLE_VEX_2 and slope1 != 'vl':
                         intersect_angle = abs(math.degrees(math.atan(slope1)))
                     ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
@@ -442,7 +442,7 @@ class Light:
                 else:
                     intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 if direction == 'out':
-                    if lens.type == lens.SINGLE_VEX:
+                    if lens.type == lens.SINGLE_VEX and slope1 != 'vl':
                         intersect_angle = abs(math.degrees(math.atan(slope1)))
                     temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                     #print(math.degrees(math.asin(temp)))
@@ -464,7 +464,7 @@ class Light:
                         self.r = -normal_angle + ref_angle
                     # print(math.degrees(self.r))
                 if direction == 'in':
-                    if lens.type == lens.SINGLE_VEX:
+                    if lens.type == lens.SINGLE_VEX and slope1 != 'vl':
                         intersect_angle = abs(math.degrees(math.atan(slope1)))
                     ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
@@ -499,7 +499,7 @@ class Light:
                 else:
                     intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 if direction == 'in':
-                    if lens.type == lens.SINGLE_CAVE_2:
+                    if lens.type == lens.SINGLE_CAVE_2 and slope2 != 'vl':
                         intersect_angle = abs(math.degrees(math.atan(slope2)))
                     ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
@@ -525,7 +525,7 @@ class Light:
 
                     # print(math.degrees(self.r))
                 if direction == 'out':
-                    if lens.type == lens.SINGLE_CAVE_2:
+                    if lens.type == lens.SINGLE_CAVE_2 and slope2 != 'vl':
                         intersect_angle = abs(math.degrees(math.atan(slope2)))
                     temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                     # print(math.degrees(math.asin(temp)))
@@ -579,7 +579,7 @@ class Light:
                 else:
                     intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 if direction == 'in':
-                    if lens.type == lens.SINGLE_CAVE:
+                    if lens.type == lens.SINGLE_CAVE and slope2 != 'vl':
                         intersect_angle = abs(math.degrees(math.atan(slope2)))
                     ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
@@ -597,7 +597,7 @@ class Light:
                         else:
                             self.r = -normal_angle + ref_angle + math.pi
                 if direction == 'out':
-                    if lens.type == lens.SINGLE_CAVE:
+                    if lens.type == lens.SINGLE_CAVE and slope2 != 'vl':
                         intersect_angle = abs(math.degrees(math.atan(slope2)))
                     temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                     # print(math.degrees(math.asin(temp)))

@@ -758,7 +758,8 @@ class Lens(GameObject):
         self.curvature_resize_step = 1
         self.DEFAULT_MARGIN = 20
         self.margin = self.DEFAULT_MARGIN
-
+        print(curvature_radius)
+        print(curvature_radius2)
         if curvature_radius2 is not None and curvature_radius2 != 0:
             self.curvature_radius2 = curvature_radius2
             self.raw_curvature_radius2 = curvature_radius
@@ -776,9 +777,9 @@ class Lens(GameObject):
                 self.curvature_radius2 = -curvature_radius2
             elif curvature_radius == 0 and curvature_radius2 > 0:
                 self.type = self.SINGLE_VEX_2
-                self.curvature_radius2 = -curvature_radius2
+                self.raw_curvature_radius2 = curvature_radius2
+                self.curvature_radius2 = curvature_radius2
             elif curvature_radius == 0 and curvature_radius2 < 0:
-                print("init as ")
                 #self.curvature_radius = self.curvature_radius2
                 self.type = self.SINGLE_CAVE
                 self.raw_curvature_radius2 = curvature_radius2
