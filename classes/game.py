@@ -339,9 +339,14 @@ class Game:
                 pygame.draw.line(self.screen, (255, 255, 255), points[i], points[0])
 
     def render(self):
+        # if self.selected_object != None:
+        #     # print(self.selected_object)
         """
         Renders all the game objects and the custom cursor.
         """
+
+        # if self.rightclickedmousepos != None:
+        #     print(self.rightclickedmousepos)
 
         pygame.mouse.set_visible(False)  # Hide the default mouse cursor
 

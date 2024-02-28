@@ -478,7 +478,7 @@ class GameObject:
 
             if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and self.game.selected_object is not None and self.game.selected_object != self:
                 self.game.selected_object.selectedtrue = False  # Deselect the currently selected object
-
+            print(mask_surface.get_at((int(mousepos[0]), int(mousepos[1]))))
             if mask_surface.get_at((int(mousepos[0]), int(mousepos[1])))[3] != 0 and not self.selectedtrue:
                 if self.was_selected:
                     self.game.mixer.selected_sound()
