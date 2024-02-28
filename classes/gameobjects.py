@@ -686,10 +686,9 @@ class Prism(GameObject):
 
         self.parameters['refraction index'] = self.n
 
-        if type(self) != Flashlight and type(self) != Lens:
-            self.parameters['absorbsion_factor'] = self.absorbsion_factor
+        self.parameters['absorbsion_factor'] = self.absorbsion_factor
 
-            self.parameters['transmittance'] = self.orginal_transmittance
+        self.parameters['transmittance'] = self.orginal_transmittance
 
         self.parameters['points'] = self.defualt_points
         # print(self.defualt_points)
@@ -729,6 +728,14 @@ class Prism(GameObject):
         self.scale_factor = self.parameters['size']
 
         self.n = self.parameters['refraction index']
+
+        self.absorbsion_factor = self.parameters['absorbsion_factor']
+
+
+        self.orginal_transmittance = self.parameters['transmittance']
+
+        self.set_transmittence()
+
 
 class ColoredGlass(GameObject):
     def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
