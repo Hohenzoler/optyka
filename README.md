@@ -50,9 +50,7 @@ There are two ways to install the project: download exe file, or run the project
    - size relative to original size
    - reflection factor (how much of the light gets reflected)
    - transmittance (how much of the light passes through the object)
-   - laser (only for flashlights, if on, they only emit one beam)
    - color 
-   - texture (only for mirrors)
 * When holding an object you can rotate it by scrolling.
 * When holding an object you can also press `R` to enter _resizing mode_. 
    - In _resizing mode_ you can resize the object by clicking and dragging one of the points visible on the object.
