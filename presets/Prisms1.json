@@ -40,6 +40,7 @@
     "reflection_factor": 0,
     "transmittance": 1,
     "absorbsion_factor": 0,
+    "refraction index": 1.52,
     "points": [
       [
         201,
