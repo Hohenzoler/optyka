@@ -396,7 +396,7 @@ class Light:
                     normal_angle = functions.calculate_angle(lens.center1[0], lens.center1[1], point[0], point[1])
                     # print(math.degrees(normal_angle))
                     if lens.type == lens.SINGLE_VEX_2:
-                        normal_angle = math.radians(lens.angle + 180)
+                        normal_angle = math.pi
                     if index < len(lens.lens_points) / 2:
                         self.r = -normal_angle - ref_angle
                     else:
@@ -411,7 +411,7 @@ class Light:
                     normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
                     # print(math.degrees(normal_angle))
                     if lens.type == lens.SINGLE_VEX_2:
-                        normal_angle = math.radians(lens.angle)
+                        normal_angle = 0
                     if index < len(lens.lens_points) / 2:
                         self.r = -normal_angle - ref_angle
                     else:
@@ -456,7 +456,7 @@ class Light:
                     normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
                     # print(math.degrees(normal_angle))
                     if lens.type == lens.SINGLE_VEX:
-                        normal_angle = math.radians(lens.angle)
+                        normal_angle = 0
 
                     if index < len(lens.lens_points2) / 2:
                         self.r = -normal_angle - ref_angle
@@ -471,7 +471,7 @@ class Light:
                     normal_angle = functions.calculate_angle(point[0], point[1], lens.center2[0], lens.center2[1])
                     # print(math.degrees(normal_angle))
                     if lens.type == lens.SINGLE_VEX:
-                        normal_angle = math.radians(lens.angle)
+                        normal_angle = 0
                     if index < len(lens.lens_points2) / 2:
                         self.r = -normal_angle - ref_angle #+ math.pi
                     else:
@@ -510,9 +510,9 @@ class Light:
                             self.r = -normal_angle - ref_angle + math.pi
                         else:
                             self.r = -normal_angle + ref_angle + math.pi
-                        print(math.degrees(ref_angle))
+                        #print(math.degrees(ref_angle))
                     elif lens.type == lens.SINGLE_CAVE_2:
-                        normal_angle = math.radians(lens.angle)
+                        normal_angle = 0
                         if index < len(lens.lens_points) / 2:
                             self.r = -normal_angle - ref_angle + math.pi
                         else:
@@ -538,7 +538,7 @@ class Light:
                     normal_angle = functions.calculate_angle(lens.center1[0], lens.center1[1], point[0], point[1])
                     # print(math.degrees(normal_angle))
                     if lens.type == lens.SINGLE_CAVE_2:
-                        normal_angle = math.radians(lens.angle)
+                        normal_angle = 0
                         if index < len(lens.lens_points) / 2:
                             self.r = -normal_angle + ref_angle
                         else:
@@ -586,7 +586,7 @@ class Light:
                     normal_angle = functions.calculate_angle(point[0], point[1], lens.center2[0], lens.center2[1])
                     # print(math.degrees(normal_angle))
                     if lens.type == lens.SINGLE_CAVE:
-                        normal_angle = math.radians(lens.angle)
+                        normal_angle = 0
                         if index < len(lens.lens_points2) / 2:
                             self.r = normal_angle + ref_angle
                         else:
@@ -610,7 +610,7 @@ class Light:
                     normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
                     #print(math.degrees(normal_angle))
                     if lens.type == lens.SINGLE_CAVE:
-                        normal_angle = math.radians(lens.angle)
+                        normal_angle = 0
                     if index < len(lens.lens_points2) / 2:
                         self.r = -normal_angle - ref_angle + math.pi
                     else:
