@@ -69,6 +69,7 @@ class GameObject:
         self.was_selected = False
         self.collisionDetected = True
         mousepos = pygame.mouse.get_pos()
+        self.ready = self.game.readyToCheck
         # self.adjust(mousepos[0], mousepos[1], self.angle)
 
     def update_rect(self):
@@ -105,27 +106,9 @@ class GameObject:
             return self.points
         else:
             return False
-    def checkCollision(self):
-        if self.game.readyToCheck != False:
-            self.collisionDetected = False
-            for obj in self.game.objects:
-                if self.game.readyToCheck != False:
-                    if type(obj) != light.Light:
-                        try:
-                            print('trying')
-                            if obj.rect.colliderect(pygame.Rect(self.game.readyToCheck)):
-                                print('goodcolide')
-                                self.collisionDetected = True
-                                self.game.readyToCheck = False
-
-                        except:
-                            print(' wrong')
-            if not self.collisionDetected:
-                self.game.readyToCheck = False
-                self.game.createPoly(True)
 
     def render(self):
-
+        self.ready = self.game.readyToCheck
         if self.game.readyToCheck != False:
             self.collisionDetected = False
             for obj in self.game.objects:
@@ -1275,8 +1258,11 @@ class Lens(GameObject):
         return rotated_points
 
     def render(self):
-        # print(self.get_triangles())
-        if self.game.readyToCheck != False:
+        if self.ready:
+            print(self.game.readyToCheck, 13)
+            print(self.ready)
+        if self.ready != False:
+            print('lens')
             self.collisionDetected = False
             for obj in self.game.objects:
                 if self.game.readyToCheck != False:
