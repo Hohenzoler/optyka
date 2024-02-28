@@ -22,6 +22,7 @@ class polygonDrawing:
     #     for i in currentPolygonPoints:
     #         pygame.draw.circle(screen, (200, 200, 200), i, 10)
     def clearPoints(self):
+        print(12345)
         self.currentPolygonPoints = []
     def createPolygon(self, game):
         print('created')

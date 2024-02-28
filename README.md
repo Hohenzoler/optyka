@@ -65,6 +65,7 @@ There are two ways to install the project: download exe file, or run the project
    - While in _drawing mode_ you can draw a new object by clicking different places on screen.
    - You can also delete the last point placed by pressing `Backspace` or move a point by `right clicking`.
    - Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
+   - It's possible to exit this mode by simply clicking on the icon again.
 * Press `Up Arrow` to randomize colors of all flashlights.
 
 
