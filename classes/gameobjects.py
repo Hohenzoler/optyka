@@ -47,8 +47,8 @@ class GameObject:
         self.resize_point = None
 
         self.absorbsion_factor = absorbsion_factor
-        self.transmittance = transmittance*(1-absorbsion_factor)  # przepuszczalność ;-;
-        self.reflection_factor = (1-transmittance)*(1-absorbsion_factor)
+        self.orginal_transmittance = transmittance
+        self.set_transmittence()
 
 
         if image != None:
@@ -495,10 +495,10 @@ class GameObject:
         self.parameters['size'] = self.scale_factor
 
         # self.parameters['reflection_factor'] = self.reflection_factor
+        if type(self) != Flashlight and type(self) != Lens:
+            self.parameters['absorbsion_factor'] = self.absorbsion_factor
 
-        self.parameters['absorbsion_factor'] = self.absorbsion_factor
-
-        self.parameters['transmittance'] = self.transmittance
+            self.parameters['transmittance'] = self.orginal_transmittance
 
         self.parameters['points'] = self.defualt_points
         # print(self.defualt_points)
@@ -506,6 +506,7 @@ class GameObject:
         if type(self) == Flashlight:
             lazer_on = {'lazer': self.lazer}
             self.parameters.update(lazer_on)
+
 
         if self.color != None:
             colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
@@ -531,11 +532,14 @@ class GameObject:
         self.y = self.parameters['y']
         self.adjust(self.x, self.y, d_angle)
         self.scale_factor = self.parameters['size']
-        self.absorbsion_factor = self.parameters['absorbsion_factor']
-        self.transmittance = self.parameters['transmittance'] * (1 - self.absorbsion_factor)
-        self.reflection_factor = (1 - self.parameters['transmittance']) * (1 - self.absorbsion_factor)
+        try:
+            self.absorbsion_factor = self.parameters['absorbsion_factor']
+            self.orginal_transmittance = self.parameters['transmittance']
+            self.set_transmittence()
+        except:
+            pass
 
-        print('a', self.absorbsion_factor, 't', self.transmittance, self.parameters['transmittance'], 'r', self.reflection_factor)
+        # print('a', self.absorbsion_factor, 't', self.transmittance, self.parameters['transmittance'], 'r', self.reflection_factor)
 
         try:
             self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
@@ -575,6 +579,11 @@ class GameObject:
 
             new_points.append((new_x, new_y))
         self.points = new_points
+
+    def set_transmittence(self):
+        self.transmittance = self.orginal_transmittance * (1 - self.absorbsion_factor)  # przepuszczalność ;-;
+        self.reflection_factor = (1 - self.orginal_transmittance) * (1 - self.absorbsion_factor)
+
 
 class Mirror(GameObject):
     def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):

@@ -30,6 +30,7 @@ class Parameters:
 
         self.sliders = []
         self.sliders_2 = []
+        self.sliders_3 = []
         self.slider_buttons = []
 
         title_label = tk.Label(self.root, text="Enter Parameters:")
@@ -43,7 +44,7 @@ class Parameters:
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
         self.store_button.grid(row=len(self.parameters_dict) + 3, column=0, columnspan=2, pady=10)
 
-        self.root.geometry(f'300x{60*len(self.parameters_dict)}')
+        self.root.geometry(f'300x{50*len(self.parameters_dict)}')
 
         self.root.mainloop()
 
@@ -85,23 +86,22 @@ class Parameters:
 
                 elif param == 'transmittance':
                     slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, length=150)
-                    abf = self.parameters_dict['absorbsion_factor'].get()
-                    abf = abf.strip('%')
-                    abf = float(abf)
-                    print(self.parameters_dict[param], abf)
-                    if abf < 1:
-                        value = self.parameters_dict[param]/(1 - abf)
-                    else:
-                        value = 0
-                    value = value*100
+                    value = self.parameters_dict[param]*100
                     slider.set(value)
                     slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                     self.sliders_2.append(slider)
 
+                elif param == 'absorbsion_factor':
+                    slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, length=150)
+                    value = self.parameters_dict[param]*100
+                    slider.set(value)
+                    slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
+                    self.sliders_3.append(slider)
+
                 else:
                     try:
                         entry = tk.Entry(self.root, width=24, justify='right')
-                        if param != 'size' and param != 'absorbsion_factor':
+                        if param != 'size':
                             entry.insert(0, str(self.parameters_dict[param])) # Set default value
                         else:
                             entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
@@ -135,6 +135,10 @@ class Parameters:
             transmittens = self.get_slider_value(self.sliders_2[0])
             new_parameters['transmittance'] = transmittens/100
 
+        if len(self.sliders_3) == 1:
+            absorbsion_factor = self.get_slider_value(self.sliders_3[0])
+            new_parameters['absorbsion_factor'] = absorbsion_factor/100
+
 
 
         if len(self.slider_buttons) > 0:
@@ -164,19 +168,6 @@ class Parameters:
                         messagebox.showwarning("Error", "Size cannot be below or equal to 0%.")
                         return
                     # self.object.points = self.change_size(value)
-
-                elif param == 'absorbsion_factor':
-                    value = str(value)
-                    value = value.strip("%")
-                    value = float(value) / 100
-                    if value < 0:
-                        messagebox.showwarning("Error",
-                                             "Reflection factor nor transmittance nor absorbsion factor cannot be below 0%.")
-                        return
-                    elif value > 1:
-                        messagebox.showwarning("Error",
-                                             "The sum of reflection factor and transmittance nor absorbsion factor cannot exceed 100%.")
-                        return
                 else:
                     value = float(value)
                 # print(new_parameters)
@@ -253,4 +244,3 @@ class ToggleSwitch(tk.Canvas):
 class TestObj:
     def __init__(self):
         self.parameters = {'x': 100, 'y': 250, 'angle': 90, 'lazer': False, 'red': 198, 'green': 23, 'blue': 103}
-

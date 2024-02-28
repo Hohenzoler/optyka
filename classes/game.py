@@ -585,7 +585,12 @@ class Game:
                                        [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
                                         (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
                                        (64, 137, 189), 0, 140, 0, 1)
-            # elif parameters['class'] == ""
+            elif parameters['class'] == "Corridor":
+                obj = gameobjects.Corridor(self, [(mousepos[0] - 100, mousepos[1] - 50),
+                                                       (mousepos[0] + 100, mousepos[1] - 50),
+                                                       (mousepos[0] + 100, mousepos[1] + 50),
+                                                       (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0, 0,
+                                           image_path=images.corridor)
 
             obj.parameters = parameters
             obj.change_parameters('not')
