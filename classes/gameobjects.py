@@ -244,6 +244,7 @@ class GameObject:
                 newpoints.append((point[0]+self.x,point[1]+self.y))
             self.points=newpoints
             self.get_slopes()
+            pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
             for obj in self.game.objects:
 
                     if obj != self and isinstance(obj, GameObject):
