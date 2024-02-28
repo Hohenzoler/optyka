@@ -100,7 +100,7 @@ class Parameters:
 
                 else:
                     try:
-                        entry = tk.Entry(self.root, width=24, justify='right')
+                        entry = tk.Entry(self.root, width=24, justify='center')
                         if param != 'size':
                             entry.insert(0, str(self.parameters_dict[param])) # Set default value
                         else:
