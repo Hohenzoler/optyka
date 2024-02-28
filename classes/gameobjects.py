@@ -654,6 +654,11 @@ class Lens(GameObject):
     def __init__(self, game, points, color, angle, curvature_radius, transmittance, absorbsion_factor, curvature_radius2=None, refraction_index=1.5, islighting=False, image_path=None):
         self.refraction_index = refraction_index
         self.curvature_radius = curvature_radius
+        self.curvature_radius2 = None
+
+        self.raw_curvature_radius = self.curvature_radius
+        self.raw_curvature_radius2 = self.curvature_radius2
+
         super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
         self.CONVEX = 0
         self.CONCAVE = 1
@@ -669,12 +674,10 @@ class Lens(GameObject):
         self.change_curvature_left = False
         self.change_curvature_right = False
         self.last_mouse_pos = None
-        self.curvature_radius2 = None
+
         self.curvature_resize_step = 1
         self.DEFAULT_MARGIN = 20
         self.margin = self.DEFAULT_MARGIN
-        self.raw_curvature_radius = self.curvature_radius
-        self.raw_curvature_radius2 = self.curvature_radius2
 
         if curvature_radius2 is not None:
             self.curvature_radius2 = curvature_radius2
@@ -1312,6 +1315,9 @@ class Lens(GameObject):
         self.parameters['size'] = self.scale_factor
 
         self.parameters['refraction index'] = self.refraction_index
+
+        self.parameters['curvature_radius'] = self.raw_curvature_radius
+        self.parameters['curvature_radius_2'] = self.raw_curvature_radius2
         print(self.refraction_index)
 
         self.parameters['points'] = self.defualt_points
@@ -1341,6 +1347,10 @@ class Lens(GameObject):
         self.adjust(self.x, self.y, 0)
         self.scale_factor = self.parameters['size']
         self.refraction_index = self.parameters['refraction index']
+
+        self.raw_curvature_radius = self.parameters['curvature_radius']
+        self.raw_curvature_radius2 = self.parameters['curvature_radius_2']
+
 
         # print('a', self.absorbsion_factor, 't', self.transmittance, self.parameters['transmittance'], 'r', self.reflection_factor)
 
