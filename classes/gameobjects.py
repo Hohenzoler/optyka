@@ -291,7 +291,7 @@ class GameObject:
                                             if y <= max(s2[0][1], s2[1][1]) and y >= min(s2[0][1], s2[1][1]):
 
                                                 self.angle -= d_angle
-                                                pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
+                                                # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
                                                 return
 
 
