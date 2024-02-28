@@ -179,7 +179,7 @@ class Light:
 
 
 
-                if self.index >= 100:
+                if self.index >= 1000:
                     self.mini_run = False
     def check_object(self,object):
         # self.linear_function.draw(self.game)

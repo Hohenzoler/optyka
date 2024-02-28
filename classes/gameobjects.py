@@ -105,6 +105,24 @@ class GameObject:
             return self.points
         else:
             return False
+    def checkCollision(self):
+        if self.game.readyToCheck != False:
+            self.collisionDetected = False
+            for obj in self.game.objects:
+                if self.game.readyToCheck != False:
+                    if type(obj) != light.Light:
+                        try:
+                            print('trying')
+                            if obj.rect.colliderect(pygame.Rect(self.game.readyToCheck)):
+                                print('goodcolide')
+                                self.collisionDetected = True
+                                self.game.readyToCheck = False
+
+                        except:
+                            print(' wrong')
+            if not self.collisionDetected:
+                self.game.readyToCheck = False
+                self.game.createPoly(True)
 
     def render(self):
 
@@ -1174,6 +1192,23 @@ class Lens(GameObject):
 
     def render(self):
         # print(self.get_triangles())
+        if self.game.readyToCheck != False:
+            self.collisionDetected = False
+            for obj in self.game.objects:
+                if self.game.readyToCheck != False:
+                    if type(obj) != light.Light:
+                        try:
+                            print('trying')
+                            if obj.rect.colliderect(pygame.Rect(self.game.readyToCheck)):
+                                print('goodcolide')
+                                self.collisionDetected = True
+                                self.game.readyToCheck = False
+
+                        except:
+                            print(' wrong')
+            if not self.collisionDetected:
+                self.game.readyToCheck = False
+                self.game.createPoly(True)
 
         # self.get_slopes()
         if not self.selectedtrue:
