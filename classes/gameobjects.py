@@ -69,6 +69,7 @@ class GameObject:
         self.was_selected = False
         self.collisionDetected = True
         mousepos = pygame.mouse.get_pos()
+        self.ready = self.game.readyToCheck
         # self.adjust(mousepos[0], mousepos[1], self.angle)
 
     def update_rect(self):
@@ -105,27 +106,9 @@ class GameObject:
             return self.points
         else:
             return False
-    def checkCollision(self):
-        if self.game.readyToCheck != False:
-            self.collisionDetected = False
-            for obj in self.game.objects:
-                if self.game.readyToCheck != False:
-                    if type(obj) != light.Light:
-                        try:
-                            print('trying')
-                            if obj.rect.colliderect(pygame.Rect(self.game.readyToCheck)):
-                                print('goodcolide')
-                                self.collisionDetected = True
-                                self.game.readyToCheck = False
-
-                        except:
-                            print(' wrong')
-            if not self.collisionDetected:
-                self.game.readyToCheck = False
-                self.game.createPoly(True)
 
     def render(self):
-
+        self.ready = self.game.readyToCheck
         if self.game.readyToCheck != False:
             self.collisionDetected = False
             for obj in self.game.objects:
@@ -244,10 +227,9 @@ class GameObject:
             x.append(i[0])
             y.append(i[1])
         for i in points1:
-            if min(x) <= i[0] <= max(x):
+            if min(x) <= i[0] <= max(x) and min(y)  <= i[1] <= max(y):
                 return True
-            if min(y)  <= i[1] <= max(y):
-                return True
+
         else:
             return False
     def adjust(self, x, y, d_angle):
@@ -321,14 +303,18 @@ class GameObject:
                                         if x - adding <= max(s2[0][0], s2[1][0]) and x + adding >= min(s2[0][0],
                                                                                                        s2[1][0]):
                                             if y <= max(s2[0][1], s2[1][1]) and y >= min(s2[0][1], s2[1][1]):
+                                                        self.angle -= d_angle
+                                                        self.points = oldpoints
+                                                        # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
+                                                        print('aaaa')
+                                                        return
 
-                                                self.angle -= d_angle
-                                                self.points = oldpoints
-                                                # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
-                                                print('aaaa')
-                                                return
-
-
+                        if self.checkIfIn(self.points, obj.points) or self.checkIfIn(obj.points, self.points) :
+                            self.angle -= d_angle
+                            self.points = oldpoints
+                            # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
+                            print('aaaa')
+                            return
 
 
                         # elif isinstance(obj, gui_main.GUI):
@@ -779,7 +765,8 @@ class Lens(GameObject):
         self.curvature_resize_step = 1
         self.DEFAULT_MARGIN = 20
         self.margin = self.DEFAULT_MARGIN
-
+        print(curvature_radius)
+        print(curvature_radius2)
         if curvature_radius2 is not None and curvature_radius2 != 0:
             self.curvature_radius2 = curvature_radius2
             self.raw_curvature_radius2 = curvature_radius
@@ -797,9 +784,9 @@ class Lens(GameObject):
                 self.curvature_radius2 = -curvature_radius2
             elif curvature_radius == 0 and curvature_radius2 > 0:
                 self.type = self.SINGLE_VEX_2
-                self.curvature_radius2 = -curvature_radius2
+                self.raw_curvature_radius2 = curvature_radius2
+                self.curvature_radius2 = curvature_radius2
             elif curvature_radius == 0 and curvature_radius2 < 0:
-                print("init as ")
                 #self.curvature_radius = self.curvature_radius2
                 self.type = self.SINGLE_CAVE
                 self.raw_curvature_radius2 = curvature_radius2
@@ -1282,8 +1269,11 @@ class Lens(GameObject):
         return rotated_points
 
     def render(self):
-        # print(self.get_triangles())
-        if self.game.readyToCheck != False:
+        if self.ready:
+            print(self.game.readyToCheck, 13)
+            print(self.ready)
+        if self.ready != False:
+            print('lens')
             self.collisionDetected = False
             for obj in self.game.objects:
                 if self.game.readyToCheck != False:

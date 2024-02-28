@@ -103,6 +103,9 @@ class Game:
         self.isAngleHeld = -1
         self.readyToCheck = False
 
+        obj = gameobjects.Mirror(self, [(1, self.height), (2, self.height), (1, self.height - 1), (1, self.height - 1)], (0, 0, 0, 0), 0.001, 0, 1)
+        self.objects.append(obj)
+        print(self.objects)
 
     def create_cursor_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -593,6 +596,10 @@ class Game:
                 elif parameters['curvature_radius_2'] == 0:
                     obj = gameobjects.Lens(self, parameters['points'], (64, 137, 189), 0,
                                            parameters['curvature_radius'], 0, 1, None,
+                                           parameters['refraction index'])
+                elif parameters['curvature_radius'] == 0:
+                    obj = gameobjects.Lens(self, parameters['points'], (64, 137, 189), 0,
+                                           0, 0, 1, parameters['curvature_radius_2'],
                                            parameters['refraction index'])
             elif parameters['class'] == "Corridor":
                 obj = gameobjects.Corridor(self, [(mousepos[0] - 100, mousepos[1] - 50),

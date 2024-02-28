@@ -1,0 +1,195 @@
+[
+  "Lenses with prisms",
+  {
+    "x": 15.000000000000007,
+    "y": 484.0,
+    "angle": 0.001,
+    "size": 1,
+    "points": [
+      [
+        15,
+        655
+      ],
+      [
+        215,
+        655
+      ],
+      [
+        215,
+        755
+      ],
+      [
+        15,
+        755
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 259.0,
+    "y": 502.0,
+    "angle": 316.29099999999994,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        212,
+        690
+      ],
+      [
+        262,
+        583.3974596215561
+      ],
+      [
+        312,
+        690
+      ]
+    ],
+    "class": "Prism"
+  },
+  {
+    "x": 4.0,
+    "y": 120.0,
+    "angle": 1.1109999999999993,
+    "size": 1,
+    "points": [
+      [
+        35,
+        665
+      ],
+      [
+        235,
+        665
+      ],
+      [
+        235,
+        765
+      ],
+      [
+        35,
+        765
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 256.0,
+    "y": 157.0,
+    "angle": 354.80099999999993,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        205,
+        692
+      ],
+      [
+        255,
+        585.3974596215561
+      ],
+      [
+        305,
+        692
+      ]
+    ],
+    "class": "Prism"
+  },
+  {
+    "x": 527.0,
+    "y": 297.0,
+    "size": 1,
+    "refraction index": 1.5,
+    "curvature_radius": -144,
+    "curvature_radius_2": -144,
+    "points": [
+      [
+        311,
+        596
+      ],
+      [
+        411,
+        596
+      ],
+      [
+        411,
+        796
+      ],
+      [
+        311,
+        796
+      ]
+    ],
+    "red": 64,
+    "green": 137,
+    "blue": 189,
+    "class": "Lens"
+  },
+  {
+    "x": 705.0,
+    "y": 305.0,
+    "size": 1,
+    "refraction index": 1.5,
+    "curvature_radius": 144,
+    "curvature_radius_2": 140,
+    "points": [
+      [
+        313,
+        585
+      ],
+      [
+        413,
+        585
+      ],
+      [
+        413,
+        785
+      ],
+      [
+        313,
+        785
+      ]
+    ],
+    "red": 64,
+    "green": 137,
+    "blue": 189,
+    "class": "Lens"
+  },
+  {
+    "x": 1046.0,
+    "y": 333.0,
+    "size": 1,
+    "refraction index": 1.5,
+    "curvature_radius": 140,
+    "curvature_radius_2": 0,
+    "points": [
+      [
+        284,
+        595
+      ],
+      [
+        384,
+        595
+      ],
+      [
+        384,
+        795
+      ],
+      [
+        284,
+        795
+      ]
+    ],
+    "red": 64,
+    "green": 137,
+    "blue": 189,
+    "class": "Lens"
+  }
+]
