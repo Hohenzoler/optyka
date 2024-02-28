@@ -91,7 +91,6 @@ There are two ways to install the project: download exe file, or run the project
 * **Adjustable resolution** - you can change the resolution of the window.
 * **Togglable fullscreen** - you can toggle fullscreen on and off.
 * **Adjustable hotbar location** - you can change the location of the hotbar.
-* **Pretty flashlight toggle** - you can turn pretty flashlight on and off (Works best on high-end machines).
 * **Bin** - you can delete objects you don't need anymore.
 * **Achievements** - you can measure how much of the application you have discovered.
 * **FPS meter** - measures frames per second.
