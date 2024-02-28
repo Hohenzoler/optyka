@@ -115,14 +115,15 @@ class GameObject:
                 if self.game.readyToCheck != False:
                     if type(obj) != light.Light:
                         try:
-                            print('trying')
+                            #print('trying')
                             if obj.rect.colliderect(pygame.Rect(self.game.readyToCheck)):
-                                print('goodcolide')
+                                #print('goodcolide')
                                 self.collisionDetected = True
                                 self.game.readyToCheck = False
 
                         except:
-                            print(' wrong')
+                            #print(' wrong')
+                            pass
             if not self.collisionDetected:
                 self.game.readyToCheck = False
                 self.game.createPoly(True)
@@ -310,14 +311,13 @@ class GameObject:
                                                         self.angle -= d_angle
                                                         self.points = oldpoints
                                                         # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
-                                                        print('aaaa')
                                                         return
 
                         if self.checkIfIn(self.points, obj.points) or self.checkIfIn(obj.points, self.points) :
                             self.angle -= d_angle
                             self.points = oldpoints
                             # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
-                            print('aaaa')
+
                             return
 
 
@@ -451,7 +451,8 @@ class GameObject:
                     self.points[self.resize_point_index] = pygame.mouse.get_pos()
                     #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
                 except:
-                    print(1)
+                    #print(1)
+                    pass
 
 
             if settings['DEBUG'] == "True":
@@ -506,7 +507,6 @@ class GameObject:
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)
         centery = sum(y[1] for y in self.points) / len(self.points)
-        # print('xxxxxxxxxxxx', centerx)
 
         self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
 
@@ -663,7 +663,6 @@ class Prism(GameObject):
     def find_parameters(self):
         centerx = sum(x[0] for x in self.points) / len(self.points)
         centery = sum(y[1] for y in self.points) / len(self.points)
-        # print('xxxxxxxxxxxx', centerx)
 
         self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
 
@@ -769,8 +768,7 @@ class Lens(GameObject):
         self.curvature_resize_step = 1
         self.DEFAULT_MARGIN = 20
         self.margin = self.DEFAULT_MARGIN
-        print(curvature_radius)
-        print(curvature_radius2)
+
         if curvature_radius2 is not None and curvature_radius2 != 0:
             self.curvature_radius2 = curvature_radius2
             self.raw_curvature_radius2 = curvature_radius
@@ -1151,7 +1149,7 @@ class Lens(GameObject):
                                 self.curvature_radius = 0
                                 self.raw_curvature_radius = self.curvature_radius
                         self.checktype()
-                        print(self.type)
+                        # print(self.type)
                 if mouse_pos[0] > self.last_mouse_pos[0]:
                     # if self.type == self.SINGLE_CAVE_2:
                     #     self.curvature_radius2 += self.curvature_resize_step
@@ -1272,24 +1270,25 @@ class Lens(GameObject):
         return rotated_points
 
     def render(self):
-        if self.ready:
-            print(self.game.readyToCheck, 13)
-            print(self.ready)
+        # if self.ready:
+        #     print(self.game.readyToCheck, 13)
+        #     print(self.ready)
         if self.ready != False:
-            print('lens')
+            #print('lens')
             self.collisionDetected = False
             for obj in self.game.objects:
                 if self.game.readyToCheck != False:
                     if type(obj) != light.Light:
                         try:
-                            print('trying')
+                            #print('trying')
                             if obj.rect.colliderect(pygame.Rect(self.game.readyToCheck)):
-                                print('goodcolide')
+                                #print('goodcolide')
                                 self.collisionDetected = True
                                 self.game.readyToCheck = False
 
                         except:
-                            print(' wrong')
+                            # print(' wrong')
+                            pass
             if not self.collisionDetected:
                 self.game.readyToCheck = False
                 self.game.createPoly(True)
@@ -1518,7 +1517,7 @@ class Lens(GameObject):
                                         self.angle -= d_angle
                                         self.points = oldpoints
                                         # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
-                                        print('aaaa')
+                                        #print('aaaa')
                                         return
 
                 # elif isinstance(obj, gui_main.GUI):
