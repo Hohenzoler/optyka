@@ -223,11 +223,15 @@ class GameObject:
 
     def checkIfIn(self, points1, points2):
         x, y = [], []
+        counter = len(points1)
         for i in points2:
             x.append(i[0])
             y.append(i[1])
         for i in points1:
             if min(x) <= i[0] <= max(x) and min(y)  <= i[1] <= max(y):
+                counter -= 1
+            if counter == 0:
+
                 return True
 
         else:
