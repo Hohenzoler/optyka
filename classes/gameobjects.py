@@ -1369,6 +1369,7 @@ class Lens(GameObject):
                 if self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
                     self.lens_points.reverse()
                     # self.lens_points2.reverse()
+            self.drawoutline()
         ### Checks if the lenses dont overlap ###
         if self.type == self.CONVEX:
             if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
@@ -1442,7 +1443,6 @@ class Lens(GameObject):
                 self.curvature_radius2 += self.curvature_resize_step
             if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius2 += self.curvature_resize_step
-            self.drawoutline()
     def adjust(self, x, y, d_angle):
         # Adjust the object's position and angle
         self.angle += d_angle
