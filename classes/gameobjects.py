@@ -488,6 +488,9 @@ class GameObject:
 
         self.parameters['size'] = self.scale_factor
 
+        # if type(self) == Lens:
+        #     self.p
+
         # self.parameters['reflection_factor'] = self.reflection_factor
         if type(self) != Flashlight and type(self) != Lens:
             self.parameters['absorbsion_factor'] = self.absorbsion_factor
@@ -497,9 +500,9 @@ class GameObject:
         self.parameters['points'] = self.defualt_points
         # print(self.defualt_points)
 
-        if type(self) == Flashlight:
-            lazer_on = {'lazer': self.lazer}
-            self.parameters.update(lazer_on)
+        # if type(self) == Flashlight:
+        #     lazer_on = {'lazer': self.lazer}
+        #     self.parameters.update(lazer_on)
 
 
         if self.color != None:
@@ -648,6 +651,7 @@ class Corridor(GameObject):
 
 class Lens(GameObject):
     def __init__(self, game, points, color, angle, curvature_radius, transmittance, absorbsion_factor, curvature_radius2=None, refraction_index=1.5, islighting=False, image_path=None):
+        self.refraction_index = refraction_index
         super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
         self.curvature_radius = curvature_radius
         self.CONVEX = 0
@@ -660,7 +664,6 @@ class Lens(GameObject):
         self.SINGLE_CAVE_2 = 7
 
         self.lens_points = []
-        self.refraction_index = refraction_index
         self.layer = 0
         self.change_curvature_left = False
         self.change_curvature_right = False
@@ -1296,6 +1299,56 @@ class Lens(GameObject):
         max_y = max(pt[1] for pt in self.points)
         self.rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)
 
+    def find_parameters(self):
+        centerx = sum(x[0] for x in self.points) / len(self.points)
+        centery = sum(y[1] for y in self.points) / len(self.points)
+        # print('xxxxxxxxxxxx', centerx)
+
+        self.parameters = {'x':centerx, 'y':centery}
+
+        self.parameters['size'] = self.scale_factor
+
+        self.parameters['refraction index'] = self.refraction_index
+        print(self.refraction_index)
+
+        self.parameters['points'] = self.defualt_points
+
+
+        if self.color != None:
+            colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
+            self.parameters.update(colors)
+
+
+
+    def change_parameters(self, placeholder=None):
+        if placeholder == None:
+            self.find_parameters()
+            mp.Parameters(self)
+
+
+
+        print(self.parameters)
+
+        self.defualt_points = self.parameters['points']
+        self.points = self.defualt_points
+
+        self.scale_factor = self.parameters['size']
+        self.change_size()
+
+        self.x = self.parameters['x']
+        self.y = self.parameters['y']
+        self.adjust(self.x, self.y, 0)
+        self.scale_factor = self.parameters['size']
+        self.refraction_index = self.parameters['refraction index']
+
+        # print('a', self.absorbsion_factor, 't', self.transmittance, self.parameters['transmittance'], 'r', self.reflection_factor)
+
+        try:
+            self.color = (self.parameters['red'], self.parameters['green'], self.parameters['blue'])
+            # self.get_Texture()
+
+        except Exception as e:
+            print(e)
 class Flashlight(GameObject):  # Inheriting from GameObject
     def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=True, image=None):
         super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image)
@@ -1415,3 +1468,5 @@ class Flashlight(GameObject):  # Inheriting from GameObject
 
                 # Calculate the angle between the normalized direction and the x-axis
                 # self.angle = math.degrees(math.atan2(normalized_direction[1], normalized_direction[0]))
+
+
