@@ -69,7 +69,7 @@ class GameObject:
         self.was_selected = False
         self.collisionDetected = True
         mousepos = pygame.mouse.get_pos()
-        self.adjust(mousepos[0], mousepos[1], self.angle)
+        # self.adjust(mousepos[0], mousepos[1], self.angle)
 
     def update_rect(self):
         # Update the rect based on the points
@@ -261,7 +261,7 @@ class GameObject:
 
                                 lf1 = light.Linear_Function((s1[0][1] - s1[1][1]) / dx,
                                                      self.find_b(((s1[0][1] - s1[1][1]) / dx), s1[0]))
-                                lf1.draw(self.game)
+                                # lf1.draw(self.game)
 
                                 # calculating second linear function:
                                 if (s2[0][0] - s2[1][0]) == 0:
@@ -272,7 +272,7 @@ class GameObject:
 
                                 lf2 = light.Linear_Function((s2[0][1] - s2[1][1]) / dx,
                                                      self.find_b(((s2[0][1] - s2[1][1]) / dx), s2[0]))
-                                lf2.draw(self.game)
+                                # lf2.draw(self.game)
                                 x = lf1.intercept(lf2)
 
                                 y = lf1.calculate(x)
