@@ -630,7 +630,9 @@ class Game:
     def save_game(self):
         if not self.preset:
             self.generate_save()
-            if len(self.objects) > 3:
+
+            if len(self.objects) > 2:
+
                 if self.save_title != None:
                     prev_save_data = settingsSetup.load_settings(f'saves/{self.save_title}.json')
                     if len(prev_save_data) > 1:
