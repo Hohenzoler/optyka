@@ -26,7 +26,7 @@ There are two ways to install the project: download exe file, or run the project
 1. Go to the ***Releases*** page on our project's GitHub
 2. Download ***v1.0.zip*** or ***v1.0-onefile.zip***
 3. Extract all the files
-4. Run ***optyka.exe***
+4. Run ***optics.exe***
 
 ### Method 2
 1. Clone the repository: `git clone https://github.com/Hohenzoler/optyka.git`
