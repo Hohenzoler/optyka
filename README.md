@@ -24,7 +24,7 @@ There are two ways to install the project: download exe file, or run the project
 
 ### Method 1
 1. Go to the ***Releases*** page on our project's GitHub
-2. Download ***optyka-1.0.zip*** or ***optyka-1.0-onefile.zip***
+2. Download ***optics-1.0.zip*** or ***optics-1.0-onefile.zip***
 3. Extract all the files
 4. Run ***optyka.exe***
 

@@ -95,6 +95,7 @@
     "size": 1,
     "reflection_factor": 0,
     "transmittance": 1,
+     "refraction index": 1.52,
     "absorbsion_factor": 0,
     "points": [
       [
