@@ -85,15 +85,7 @@ class Parameters:
 
                 elif param == 'transmittance':
                     slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, length=150)
-                    abf = self.parameters_dict['absorbsion_factor'].get()
-                    abf = abf.strip('%')
-                    abf = float(abf)
-                    print(self.parameters_dict[param], abf)
-                    if abf < 1:
-                        value = self.parameters_dict[param]/(1 - abf)
-                    else:
-                        value = 0
-                    value = value*100
+                    value = self.parameters_dict[param]*100
                     slider.set(value)
                     slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                     self.sliders_2.append(slider)
