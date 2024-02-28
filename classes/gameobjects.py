@@ -1213,6 +1213,8 @@ class Lens(GameObject):
 
             elif self.game.p:
                 self.change_parameters()
+                self.game.selected_object = None
+                self.game.achievements.handle_achievement_unlocked("you just found more options")
                 self.selectedtrue = False
 
             else:
