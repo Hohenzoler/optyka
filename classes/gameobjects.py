@@ -652,8 +652,8 @@ class Corridor(GameObject):
 class Lens(GameObject):
     def __init__(self, game, points, color, angle, curvature_radius, transmittance, absorbsion_factor, curvature_radius2=None, refraction_index=1.5, islighting=False, image_path=None):
         self.refraction_index = refraction_index
-        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
         self.curvature_radius = curvature_radius
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
         self.CONVEX = 0
         self.CONCAVE = 1
         self.SINGLE_VEX = 2
@@ -1325,9 +1325,7 @@ class Lens(GameObject):
             self.find_parameters()
             mp.Parameters(self)
 
-
-
-        print(self.parameters)
+        # print(self.parameters)
 
         self.defualt_points = self.parameters['points']
         self.points = self.defualt_points
