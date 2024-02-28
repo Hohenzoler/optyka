@@ -333,6 +333,43 @@ class Light:
                             self.current_object = lens
                             self.current_object_type = 'lens'
 
+        for index, point in enumerate(lens.lens_points2):
+            if functions.is_linear_function_passing_through_point(self.linear_function, point):
+                x=point[0]
+                y=point[1]
+                cases=0
+                if self.horizontal == 'right':
+                    if x >= self.current_starting_point[0]:
+                        cases += 1
+                        # print('aaaaaaa')
+                else:
+                    if x <= self.current_starting_point[0]:
+                        cases += 1
+                if self.vertical == 'up':
+                    if y <= self.current_starting_point[1]:
+                        cases += 1
+                else:
+                    if y >= self.current_starting_point[1]:
+                        cases += 1
+                if cases==2:
+                    dist = abs(x - self.current_starting_point[0])
+                    if self.current_distance == None:
+
+                        self.current_distance = dist
+                        self.current_point = point
+                        self.current_slope = None
+                        self.current_object = lens
+                        self.current_object_type = 'lens'
+
+
+                    else:
+                        if dist < self.current_distance:
+                            self.current_distance = dist
+                            self.current_point = point
+                            self.current_slope = None
+                            self.current_object = lens
+                            self.current_object_type = 'lens'
+
     def left_lens(self, lens, direction):
         for index, point in enumerate(lens.lens_points):
             if functions.is_linear_function_passing_through_point(self.linear_function, point):
@@ -340,8 +377,13 @@ class Light:
                 pygame.draw.line(self.game.screen, (255, 255, 80), lens.center1, (point[0] - offset, point[1] - offset))
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(point[0], point[1], lens.center1[0], lens.center1[1])
-                intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
+                if slope2 == 'vl':
+                    intersect_angle = 90 - math.degrees(math.atan(slope1))
+                else:
+                    intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 if direction == 'out':
+                    if lens.type == lens.SINGLE_VEX_2:
+                        intersect_angle = abs(math.degrees(math.atan(slope1)))
                     temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                     # print(math.degrees(math.asin(temp)))
                     if temp > 1:
@@ -353,16 +395,23 @@ class Light:
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                     normal_angle = functions.calculate_angle(lens.center1[0], lens.center1[1], point[0], point[1])
                     # print(math.degrees(normal_angle))
+                    if lens.type == lens.SINGLE_VEX_2:
+                        normal_angle = math.radians(lens.angle + 180)
                     if index < len(lens.lens_points) / 2:
                         self.r = -normal_angle - ref_angle
                     else:
                         self.r = -normal_angle + ref_angle
                     # print(math.degrees(self.r))
+                    self.calibrate_r2()
                 if direction == 'in':
+                    if lens.type == lens.SINGLE_VEX_2:
+                        intersect_angle = abs(math.degrees(math.atan(slope1)))
                     ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                     normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
                     # print(math.degrees(normal_angle))
+                    if lens.type == lens.SINGLE_VEX_2:
+                        normal_angle = math.radians(lens.angle)
                     if index < len(lens.lens_points) / 2:
                         self.r = -normal_angle - ref_angle
                     else:
@@ -388,8 +437,13 @@ class Light:
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
 
-                intersect_angle = functions.calculate_intersection_angle(slope2, slope1)
+                if slope2 == 'vl':
+                    intersect_angle = 90 - math.degrees(math.atan(slope1))
+                else:
+                    intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 if direction == 'out':
+                    if lens.type == lens.SINGLE_VEX:
+                        intersect_angle = abs(math.degrees(math.atan(slope1)))
                     temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                     #print(math.degrees(math.asin(temp)))
                     if temp > 1:
@@ -401,16 +455,23 @@ class Light:
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                     normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
                     # print(math.degrees(normal_angle))
+                    if lens.type == lens.SINGLE_VEX:
+                        normal_angle = math.radians(lens.angle)
+
                     if index < len(lens.lens_points2) / 2:
                         self.r = -normal_angle - ref_angle
                     else:
                         self.r = -normal_angle + ref_angle
                     # print(math.degrees(self.r))
                 if direction == 'in':
+                    if lens.type == lens.SINGLE_VEX:
+                        intersect_angle = abs(math.degrees(math.atan(slope1)))
                     ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                     normal_angle = functions.calculate_angle(point[0], point[1], lens.center2[0], lens.center2[1])
                     # print(math.degrees(normal_angle))
+                    if lens.type == lens.SINGLE_VEX:
+                        normal_angle = math.radians(lens.angle)
                     if index < len(lens.lens_points2) / 2:
                         self.r = -normal_angle - ref_angle #+ math.pi
                     else:
@@ -433,19 +494,39 @@ class Light:
                 pygame.draw.line(self.game.screen, (255, 255, 80), lens.center1, (point[0] - offset, point[1] - offset))
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(point[0], point[1], lens.center1[0], lens.center1[1])
-                intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
+                if slope2 == 'vl':
+                    intersect_angle = 90 - math.degrees(math.atan(slope1))
+                else:
+                    intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 if direction == 'in':
+                    if lens.type == lens.SINGLE_CAVE_2:
+                        intersect_angle = abs(math.degrees(math.atan(slope2)))
                     ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                     normal_angle = functions.calculate_angle(point[0], point[1], lens.center1[0], lens.center1[1])
                     # print(math.degrees(normal_angle))
-                    if index < len(lens.lens_points) / 2:
-                        self.r = -normal_angle + ref_angle + math.pi
+                    if lens.type == lens.SINGLE_CAVE:
+                        if index < len(lens.lens_points) / 2:
+                            self.r = -normal_angle - ref_angle + math.pi
+                        else:
+                            self.r = -normal_angle + ref_angle + math.pi
+                        print(math.degrees(ref_angle))
+                    elif lens.type == lens.SINGLE_CAVE_2:
+                        normal_angle = math.radians(lens.angle)
+                        if index < len(lens.lens_points) / 2:
+                            self.r = -normal_angle - ref_angle + math.pi
+                        else:
+                            self.r = -normal_angle + ref_angle + math.pi
                     else:
-                        self.r = -normal_angle - ref_angle + math.pi
+                        if index < len(lens.lens_points) / 2:
+                            self.r = -normal_angle + ref_angle + math.pi
+                        else:
+                            self.r = -normal_angle - ref_angle + math.pi
 
                     # print(math.degrees(self.r))
                 if direction == 'out':
+                    if lens.type == lens.SINGLE_CAVE_2:
+                        intersect_angle = abs(math.degrees(math.atan(slope2)))
                     temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                     # print(math.degrees(math.asin(temp)))
                     if temp > 1:
@@ -456,11 +537,23 @@ class Light:
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                     normal_angle = functions.calculate_angle(lens.center1[0], lens.center1[1], point[0], point[1])
                     # print(math.degrees(normal_angle))
-
-                    if index < len(lens.lens_points) / 2:
-                        self.r = -normal_angle + ref_angle + math.pi
+                    if lens.type == lens.SINGLE_CAVE_2:
+                        normal_angle = math.radians(lens.angle)
+                        if index < len(lens.lens_points) / 2:
+                            self.r = -normal_angle + ref_angle
+                        else:
+                            self.r = -normal_angle - ref_angle
+                    elif lens.type == lens.SINGLE_CAVE:
+                        if index < len(lens.lens_points) / 2:
+                            self.r = -normal_angle - ref_angle + math.pi
+                        else:
+                            self.r = -normal_angle + ref_angle + math.pi
+                        print(math.degrees(ref_angle))
                     else:
-                        self.r = -normal_angle - ref_angle + math.pi
+                        if index < len(lens.lens_points) / 2:
+                            self.r = -normal_angle + ref_angle + math.pi
+                        else:
+                            self.r = -normal_angle - ref_angle + math.pi
                     # print(math.degrees(self.r))
 
                 self.points.append(point)
@@ -481,17 +574,31 @@ class Light:
                                  (point[0] - offset, point[1] - offset))
                 slope1 = self.linear_function.a
                 slope2 = functions.calculate_slope(lens.center2[0], lens.center2[1], point[0], point[1])
-                intersect_angle = functions.calculate_intersection_angle(slope2, slope1)
+                if slope2 == 'vl':
+                    intersect_angle = 90 - math.degrees(math.atan(slope1))
+                else:
+                    intersect_angle = functions.calculate_intersection_angle(slope1, slope2)
                 if direction == 'in':
+                    if lens.type == lens.SINGLE_CAVE:
+                        intersect_angle = abs(math.degrees(math.atan(slope2)))
                     ref_angle = math.asin(math.sin(math.radians(intersect_angle)) / lens.refraction_index)
                     # print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                     normal_angle = functions.calculate_angle(point[0], point[1], lens.center2[0], lens.center2[1])
                     # print(math.degrees(normal_angle))
-                    if index < len(lens.lens_points2) / 2:
-                        self.r = -normal_angle - ref_angle + math.pi
+                    if lens.type == lens.SINGLE_CAVE:
+                        normal_angle = math.radians(lens.angle)
+                        if index < len(lens.lens_points2) / 2:
+                            self.r = normal_angle + ref_angle
+                        else:
+                            self.r = normal_angle - ref_angle
                     else:
-                        self.r = -normal_angle + ref_angle + math.pi
+                        if index < len(lens.lens_points2) / 2:
+                            self.r = -normal_angle - ref_angle + math.pi
+                        else:
+                            self.r = -normal_angle + ref_angle + math.pi
                 if direction == 'out':
+                    if lens.type == lens.SINGLE_CAVE:
+                        intersect_angle = abs(math.degrees(math.atan(slope2)))
                     temp = lens.refraction_index * math.sin(math.radians(intersect_angle))
                     # print(math.degrees(math.asin(temp)))
                     if temp > 1:
@@ -502,6 +609,8 @@ class Light:
                     #print(str(intersect_angle) + " | " + str(math.degrees(ref_angle)))
                     normal_angle = functions.calculate_angle(lens.center2[0], lens.center2[1], point[0], point[1])
                     #print(math.degrees(normal_angle))
+                    if lens.type == lens.SINGLE_CAVE:
+                        normal_angle = math.radians(lens.angle)
                     if index < len(lens.lens_points2) / 2:
                         self.r = -normal_angle - ref_angle + math.pi
                     else:
@@ -518,11 +627,11 @@ class Light:
                 #self.linear_function.draw(self.game)
                 break
     def lens_stuff(self, lens):
-        print('a')
-            # if abs(self.angle) not in range(int(abs(lens.angle) + 90), int(abs(lens.angle) + 270)): # light shining from left to right # unfinished, bug when rotating >180deg
-        # print(abs(lens.angle))
         lens_collide_point1 = None
         lens_collide_point2 = None
+        collides_on_only_one_side = False
+        collide_direction = None
+        #self.linear_function.draw(self.game)
         for index, point in enumerate(lens.lens_points):
             if functions.is_linear_function_passing_through_point(self.linear_function, point):
                 lens_collide_point1 = point
@@ -535,10 +644,24 @@ class Light:
             dist1 = functions.distance_between_points(last_light_point, lens_collide_point1)
         else:
             starting_lens_side = 2
+            collides_on_only_one_side = True
         if lens_collide_point2 is not None:
             dist2 = functions.distance_between_points(last_light_point, lens_collide_point2)
         else:
             starting_lens_side = 1
+            collides_on_only_one_side = True
+
+        if collides_on_only_one_side:
+            if lens_collide_point1 is None:
+                if last_light_point[0] > lens_collide_point2[0]:
+                    collide_direction = 'right'
+                else:
+                    collide_direction = 'left'
+            if lens_collide_point2 is None:
+                if last_light_point[0] > lens_collide_point1[0]:
+                    collide_direction = 'right'
+                else:
+                    collide_direction = 'left'
 
         if starting_lens_side is None:
             if dist1 < dist2:
@@ -546,50 +669,108 @@ class Light:
             else:
                 starting_lens_side = 2
 
-
-        if starting_lens_side == 1:
-            if lens.type == lens.CONVEX:
-                self.left_lens(lens, 'in')
-                self.right_lens(lens, 'out')
-            if lens.type == lens.SINGLE_VEX:
-                self.left_lens(lens, 'in')
-            if lens.type == lens.SINGLE_VEX_2:
-                self.left_lens(lens, 'in')
-            if lens.type == lens.SINGLE_CAVE:
-                self.left_lens_concave(lens, 'in')
-            if lens.type == lens.SINGLE_CAVE_2:
-                self.left_lens_concave(lens, 'in')
-            if lens.type == lens.CONCAVE:
-                self.left_lens_concave(lens, 'in')
-                self.right_lens_concave(lens, 'out')
-            if lens.type == lens.CAVE_VEX:
-                self.left_lens(lens, 'in')
-                self.right_lens_concave(lens, 'out')
-            if lens.type == lens.VEX_CAVE:
-                self.left_lens_concave(lens, 'in')
-                self.right_lens(lens, 'out')
-        if starting_lens_side == 2:
-            print("the other side")
-            if lens.type == lens.CONVEX:
-                self.right_lens(lens, 'in')
-                self.left_lens(lens, 'out')
-            if lens.type == lens.SINGLE_VEX:
-                self.right_lens(lens, 'in')
-            if lens.type == lens.SINGLE_VEX_2:
-                self.right_lens(lens, 'in')
-            if lens.type == lens.SINGLE_CAVE:
-                self.right_lens_concave(lens, 'in')
-            if lens.type == lens.SINGLE_CAVE_2:
-                self.right_lens_concave(lens, 'in')
-            if lens.type == lens.CONCAVE:
-                self.right_lens_concave(lens, 'in')
-                self.left_lens_concave(lens, 'out')
-            if lens.type == lens.CAVE_VEX:
-                self.right_lens_concave(lens, 'in')
-                self.left_lens(lens, 'out')
-            if lens.type == lens.VEX_CAVE:
-                self.right_lens(lens, 'in')
-                self.left_lens_concave(lens, 'out')
+        if collides_on_only_one_side is False:
+            if starting_lens_side == 1:
+                if lens.type == lens.CONVEX:
+                    self.left_lens(lens, 'in')
+                    self.right_lens(lens, 'out')
+                if lens.type == lens.SINGLE_VEX:
+                    self.left_lens(lens, 'in')
+                    self.right_lens(lens, 'out')
+                if lens.type == lens.SINGLE_VEX_2:
+                    self.left_lens(lens, 'in')
+                    self.right_lens(lens, 'out')
+                if lens.type == lens.SINGLE_CAVE:
+                    self.left_lens_concave(lens, 'in')
+                    self.right_lens_concave(lens, 'out')
+                if lens.type == lens.SINGLE_CAVE_2:
+                    self.left_lens_concave(lens, 'in')
+                    self.right_lens_concave(lens, 'out')
+                if lens.type == lens.CONCAVE:
+                    self.left_lens_concave(lens, 'in')
+                    self.right_lens_concave(lens, 'out')
+                if lens.type == lens.CAVE_VEX:
+                    self.left_lens(lens, 'in')
+                    self.right_lens_concave(lens, 'out')
+                if lens.type == lens.VEX_CAVE:
+                    self.left_lens_concave(lens, 'in')
+                    self.right_lens(lens, 'out')
+            if starting_lens_side == 2:
+                #print("the other side")
+                if lens.type == lens.CONVEX:
+                    self.right_lens(lens, 'in')
+                    self.left_lens(lens, 'out')
+                if lens.type == lens.SINGLE_VEX:
+                    self.right_lens(lens, 'in')
+                    self.left_lens(lens, 'out')
+                if lens.type == lens.SINGLE_VEX_2:
+                    self.right_lens(lens, 'in')
+                    self.left_lens(lens, 'out')
+                if lens.type == lens.SINGLE_CAVE:
+                    self.right_lens_concave(lens, 'in')
+                    self.left_lens_concave(lens, 'out')
+                if lens.type == lens.SINGLE_CAVE_2:
+                    self.right_lens_concave(lens, 'in')
+                    self.left_lens_concave(lens, 'out')
+                if lens.type == lens.CONCAVE:
+                    self.right_lens_concave(lens, 'in')
+                    self.left_lens_concave(lens, 'out')
+                if lens.type == lens.CAVE_VEX:
+                    self.right_lens_concave(lens, 'in')
+                    self.left_lens(lens, 'out')
+                if lens.type == lens.VEX_CAVE:
+                    self.right_lens(lens, 'in')
+                    self.left_lens_concave(lens, 'out')
+        else:
+            print("weird collide")
+            if starting_lens_side == 1:
+                if lens.type == lens.CONVEX:
+                    if collide_direction == 'right':
+                        self.left_lens(lens, 'out')
+                    self.right_lens(lens, 'out')
+                if lens.type == lens.SINGLE_VEX:
+                    self.left_lens(lens, 'in')
+                if lens.type == lens.SINGLE_VEX_2:
+                    self.left_lens(lens, 'in')
+                if lens.type == lens.SINGLE_CAVE:
+                    self.left_lens_concave(lens, 'in')
+                if lens.type == lens.SINGLE_CAVE_2:
+                    self.left_lens_concave(lens, 'in')
+                if lens.type == lens.CONCAVE:
+                    self.left_lens_concave(lens, 'in')
+                    self.right_lens_concave(lens, 'out')
+                if lens.type == lens.CAVE_VEX:
+                    self.left_lens(lens, 'in')
+                    self.right_lens_concave(lens, 'out')
+                if lens.type == lens.VEX_CAVE:
+                    self.left_lens_concave(lens, 'in')
+                    self.right_lens(lens, 'out')
+            if starting_lens_side == 2:
+                #print("the other side")
+                if lens.type == lens.CONVEX:
+                    if collide_direction == 'right':
+                        self.right_lens(lens, 'in')
+                        self.left_lens(lens, 'out')
+                    if collide_direction == 'left':
+                        self.right_lens(lens, 'out')
+                        # self.left_lens(lens, 'out')
+                if lens.type == lens.SINGLE_VEX:
+                    self.right_lens(lens, 'in')
+                if lens.type == lens.SINGLE_VEX_2:
+                    self.right_lens(lens, 'in')
+                if lens.type == lens.SINGLE_CAVE:
+                    self.right_lens_concave(lens, 'in')
+                if lens.type == lens.SINGLE_CAVE_2:
+                    self.right_lens_concave(lens, 'in')
+                if lens.type == lens.CONCAVE:
+                    self.right_lens_concave(lens, 'in')
+                    self.left_lens_concave(lens, 'out')
+                if lens.type == lens.CAVE_VEX:
+                    self.right_lens_concave(lens, 'in')
+                    self.left_lens(lens, 'out')
+                if lens.type == lens.VEX_CAVE:
+                    self.right_lens(lens, 'in')
+                    self.left_lens_concave(lens, 'out')
 
 
             #else:

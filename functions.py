@@ -64,7 +64,7 @@ def calculate_angle(x1, y1, x2, y2):
 
 def calculate_slope(x1, y1, x2, y2):
     if x2 - x1 == 0:
-        raise ValueError("Vertical line")
+        return 'vl'
     slope = (y2 - y1) / (x2 - x1)
 
     return slope
