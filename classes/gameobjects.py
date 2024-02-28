@@ -227,10 +227,9 @@ class GameObject:
             x.append(i[0])
             y.append(i[1])
         for i in points1:
-            if min(x) <= i[0] <= max(x):
+            if min(x) <= i[0] <= max(x) and min(y)  <= i[1] <= max(y):
                 return True
-            if min(y)  <= i[1] <= max(y):
-                return True
+
         else:
             return False
     def adjust(self, x, y, d_angle):
@@ -304,14 +303,18 @@ class GameObject:
                                         if x - adding <= max(s2[0][0], s2[1][0]) and x + adding >= min(s2[0][0],
                                                                                                        s2[1][0]):
                                             if y <= max(s2[0][1], s2[1][1]) and y >= min(s2[0][1], s2[1][1]):
+                                                        self.angle -= d_angle
+                                                        self.points = oldpoints
+                                                        # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
+                                                        print('aaaa')
+                                                        return
 
-                                                self.angle -= d_angle
-                                                self.points = oldpoints
-                                                # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
-                                                print('aaaa')
-                                                return
-
-
+                        if self.checkIfIn(self.points, obj.points) or self.checkIfIn(obj.points, self.points) :
+                            self.angle -= d_angle
+                            self.points = oldpoints
+                            # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
+                            print('aaaa')
+                            return
 
 
                         # elif isinstance(obj, gui_main.GUI):

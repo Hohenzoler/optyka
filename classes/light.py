@@ -961,9 +961,9 @@ class Light:
         try:
 
             self.new_vector=self.slope_normal_vector.scale(math.sqrt(1-mi**2*(1-(self.slope_normal_vector.dot(self.normalized_vector))**2))).add(self.normalized_vector.substract(self.slope_normal_vector.scale(self.slope_normal_vector.dot(self.normalized_vector))).scale(mi))
-            print('aaaaaaaaaaaaaaaaaaaaaaaaaa')
+            # print('aaaaaaaaaaaaaaaaaaaaaaaaaa')
         except:
-            print('bbbbbbbbbbbbbbbbbbbbbbbbbbb')
+            # print('bbbbbbbbbbbbbbbbbbbbbbbbbbb')
             self.new_vector = self.slope_normal_vector.scale(
                 math.sqrt(0)).add(
                 self.normalized_vector.substract(
