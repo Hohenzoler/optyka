@@ -226,14 +226,7 @@ class GameObject:
                 self.angle += 360
             else:
                 break
-        if self.angle==0:
-            self.angle=0.1
-        elif self.angle==180:
-            self.angle=180.1
-        elif self.angle==90:
-            self.angle=90.1
-        elif self.angle==270:
-            self.angle=270.1
+
 
 
         if self.game.isDrawingModeOn != True:
@@ -527,6 +520,15 @@ class GameObject:
         self.scale_factor = self.parameters['size']
         self.change_size()
         d_angle = self.parameters['angle']
+
+        if self.angle==0:
+            d_angle=0.1
+        elif self.angle==180:
+            d_angle=180.1
+        elif self.angle==90:
+            d_angle=90.1
+        elif self.angle==270:
+            d_angle=270.1
         self.angle = 0
         self.x = self.parameters['x']
         self.y = self.parameters['y']
