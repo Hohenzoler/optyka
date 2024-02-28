@@ -712,7 +712,7 @@ class Lens(GameObject):
         self.DEFAULT_MARGIN = 20
         self.margin = self.DEFAULT_MARGIN
 
-        if curvature_radius2 is not None:
+        if curvature_radius2 is not None and curvature_radius2 != 0:
             self.curvature_radius2 = curvature_radius2
             self.raw_curvature_radius2 = curvature_radius
             if curvature_radius2 > 0 and curvature_radius > 0:
@@ -727,10 +727,19 @@ class Lens(GameObject):
             elif curvature_radius > 0 and curvature_radius2 < 0:
                 self.type = self.VEX_CAVE
                 self.curvature_radius2 = -curvature_radius2
+            elif curvature_radius == 0 and curvature_radius2 > 0:
+                self.type = self.SINGLE_VEX_2
+                self.curvature_radius2 = -curvature_radius2
+            elif curvature_radius == 0 and curvature_radius2 < 0:
+                print("init as ")
+                #self.curvature_radius = self.curvature_radius2
+                self.type = self.SINGLE_CAVE
+                self.raw_curvature_radius2 = curvature_radius2
+                self.curvature_radius2 = -curvature_radius2
         elif curvature_radius > 0:
             self.type = self.SINGLE_VEX
         elif curvature_radius < 0:
-            self.type = self.SINGLE_CAVE
+            self.type = self.SINGLE_CAVE_2
             self.curvature_radius = -curvature_radius
 
     def checktype(self):
