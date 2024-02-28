@@ -49,7 +49,7 @@ class Parameters:
         if type(object) == gameobjects.Lens:
             l -= 2
 
-        self.root.geometry(f'300x{50*l}')
+        self.root.geometry(f'500x{70*l}')
 
         self.root.mainloop()
 
