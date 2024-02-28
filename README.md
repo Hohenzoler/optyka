@@ -54,7 +54,7 @@ There are two ways to install the project: download exe file, or run the project
 * When holding an object you can rotate it by scrolling.
 * When holding an object you can also press `R` to enter _resizing mode_. 
    - In _resizing mode_ you can resize the object by clicking and dragging one of the points visible on the object.
-   - If the object in question is a lens, you can drag the points in the middle to change the lens's curvature radius
+   - If the object in question is a lens, you can drag the points in the middle to change the lens's curvature radius.
    - You can also press `R` again while holding the object to exit _resizing mode_.
 * You can delete an object by dragging it to the bin.
 
@@ -64,7 +64,7 @@ There are two ways to install the project: download exe file, or run the project
    - While in _drawing mode_ you can draw a new object by clicking different places on screen.
    - You can also delete the last point placed by pressing `Backspace` or move a point by `right clicking`.
    - Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
-* Press `Up Arrow` to randomize colors of all flashlights
+* Press `Up Arrow` to randomize colors of all flashlights.
 
 
 
@@ -86,7 +86,7 @@ There are two ways to install the project: download exe file, or run the project
 * **Reshaping objects** - you can press `R` to begin reshaping held object
 * **Rotating objects** - you can rotate held objects using scroll.
 * **Intersection prevention** - objects cannot intersect with each other (just like in real life).
-* **Spherical aberration** - lenses work just like in real life, including the [Spherical aberration](https://en.wikipedia.org/wiki/Spherical_aberration)
+* **Spherical aberration** - lenses work just like in real life, including the [Spherical aberration](https://en.wikipedia.org/wiki/Spherical_aberration).
 * **Adjustable resolution** - you can change the resolution of the window.
 * **Togglable fullscreen** - you can toggle fullscreen on and off.
 * **Adjustable hotbar location** - you can change the location of the hotbar.
@@ -96,8 +96,8 @@ There are two ways to install the project: download exe file, or run the project
 * **FPS meter** - measures frames per second.
 * **Clock** - Lets you know what time it is.
 * **Sound effects** - helps to immerse in the world of optics.
-* **Calm music** - makes the experience much more pleasant
-* **Color randomizer** - activated by pressing `Up Arrow`, there isn't any particular reason for its existence
+* **Calm music** - makes the experience much more pleasant.
+* **Color randomizer** - activated by pressing `Up Arrow`, there isn't any particular reason for its existence.
 
 ## Opinions
 > "I think it's a great app. It's very educational and fun to play with. I would recommend it to anyone who wants to learn about optics." - *Jeff*
@@ -112,4 +112,4 @@ This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [Malys
 Large majority of the assets used in the app were made by our team.
 We have permission to use the font as stated [here](https://www.dafont.com/junegull.font).
 
-We also have permission to use the background music, made by [C418](https://www.youtube.com/watch?v=XuZDeT8zI5c&ab_channel=C418-Topic)
+We also have permission to use the background music, made by [C418](https://www.youtube.com/watch?v=XuZDeT8zI5c&ab_channel=C418-Topic).
