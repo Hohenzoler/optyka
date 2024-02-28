@@ -999,16 +999,15 @@ class Lens(GameObject):
                 # self.points[self.static_point_index] = (temp + self.points[self.resize_point_index][0], self.points[self.static_point_index][1])
                 # self.points[self.resize_point_index] = (self.points[self.resize_point_index][0] + temp, self.points[self.static_point_index][1])
 
-
         ### Checks if the lenses dont overlap ###
         if self.type == self.CONVEX:
-            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height -5:
-                #self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius2 += self.curvature_resize_step
             if self.lens_points2[0][0] < self.lens_points[0][0]:
                 self.curvature_radius2 += self.curvature_resize_step
-                #self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
-            if self.lens_points[0][1] - self.lens_points[-1][1] < self.height -5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+            if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
                 self.curvature_radius += self.curvature_resize_step
             if self.lens_points2[0][0] < self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
@@ -1020,12 +1019,12 @@ class Lens(GameObject):
             if self.lens_points2[0][0] < self.lens_points[0][0] + 10:
                 self.curvature_radius += self.curvature_resize_step
             if self.lens_points[0][1] <= self.lens_points2[0][1] - 20:
-                self.curvature_radius = self.height//2
+                self.curvature_radius = self.height // 2
         if self.type == self.SINGLE_VEX_2:
             if self.curvature_radius2 < self.height // 2 + 10:
                 self.curvature_radius2 += self.curvature_resize_step
-            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height -5:
-                #self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius2 += self.curvature_resize_step
             if self.lens_points2[0][0] < self.lens_points[0][0] + 10:
                 self.curvature_radius2 += self.curvature_resize_step
@@ -1035,7 +1034,7 @@ class Lens(GameObject):
             if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
-            #print(self.curvature_radius2)
+            # print(self.curvature_radius2)
             if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
@@ -1048,7 +1047,7 @@ class Lens(GameObject):
             if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
-            #print(self.curvature_radius2)
+            # print(self.curvature_radius2)
             if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
@@ -1056,7 +1055,7 @@ class Lens(GameObject):
             if abs(self.lens_points2[0][1] - self.lens_points2[-1][1]) < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
-            #print(self.curvature_radius2)
+            # print(self.curvature_radius2)
             if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
@@ -1371,7 +1370,79 @@ class Lens(GameObject):
                 if self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
                     self.lens_points.reverse()
                     # self.lens_points2.reverse()
-
+        ### Checks if the lenses dont overlap ###
+        if self.type == self.CONVEX:
+            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+                self.curvature_radius2 += self.curvature_resize_step
+            if self.lens_points2[0][0] < self.lens_points[0][0]:
+                self.curvature_radius2 += self.curvature_resize_step
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+            if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
+                self.curvature_radius += self.curvature_resize_step
+            if self.lens_points2[0][0] < self.lens_points[0][0]:
+                self.curvature_radius += self.curvature_resize_step
+        if self.type == self.SINGLE_VEX:
+            if self.curvature_radius < self.height // 2 + 10:
+                self.curvature_radius += self.curvature_resize_step
+            if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
+                self.curvature_radius += self.curvature_resize_step
+            if self.lens_points2[0][0] < self.lens_points[0][0] + 10:
+                self.curvature_radius += self.curvature_resize_step
+            if self.lens_points[0][1] <= self.lens_points2[0][1] - 20:
+                self.curvature_radius = self.height // 2
+        if self.type == self.SINGLE_VEX_2:
+            if self.curvature_radius2 < self.height // 2 + 10:
+                self.curvature_radius2 += self.curvature_resize_step
+            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+                self.curvature_radius2 += self.curvature_resize_step
+            if self.lens_points2[0][0] < self.lens_points[0][0] + 10:
+                self.curvature_radius2 += self.curvature_resize_step
+            if self.lens_points[0][1] <= self.lens_points2[0][1] - 20:
+                self.curvature_radius2 = self.height // 2
+        if self.type == self.CONCAVE:
+            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+                self.curvature_radius += self.curvature_resize_step
+            # print(self.curvature_radius2)
+            if self.lens_points2[0][0] > self.lens_points[0][0]:
+                self.curvature_radius += self.curvature_resize_step
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+            if self.lens_points[-1][1] - self.lens_points[0][1] < self.height - 5:
+                # print(self.lens_points[-1][1] - self.lens_points[0][1])
+                self.curvature_radius2 += self.curvature_resize_step
+            if self.lens_points2[0][0] > self.lens_points[0][0]:
+                self.curvature_radius2 += self.curvature_resize_step
+        if self.type == self.SINGLE_CAVE:
+            if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+                self.curvature_radius += self.curvature_resize_step
+            # print(self.curvature_radius2)
+            if self.lens_points2[0][0] > self.lens_points[0][0]:
+                self.curvature_radius += self.curvature_resize_step
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+        if self.type == self.SINGLE_CAVE_2:
+            if abs(self.lens_points2[0][1] - self.lens_points2[-1][1]) < self.height - 5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+                self.curvature_radius += self.curvature_resize_step
+            # print(self.curvature_radius2)
+            if self.lens_points2[0][0] > self.lens_points[0][0]:
+                self.curvature_radius += self.curvature_resize_step
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+        if self.type == self.VEX_CAVE or self.type == self.CAVE_VEX:
+            if abs(self.lens_points2[-1][1] - self.lens_points2[0][1]) < self.height - 5:
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+                self.curvature_radius += self.curvature_resize_step
+            # print(self.curvature_radius2)
+            if self.lens_points2[0][0] > self.lens_points[0][0]:
+                self.curvature_radius += self.curvature_resize_step
+                # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
+            if self.lens_points[-1][1] - self.lens_points[0][1] < self.height - 5:
+                # print(self.lens_points[-1][1] - self.lens_points[0][1])
+                self.curvature_radius2 += self.curvature_resize_step
+            if self.lens_points2[0][0] > self.lens_points[0][0]:
+                self.curvature_radius2 += self.curvature_resize_step
             self.drawoutline()
     def adjust(self, x, y, d_angle):
         # Adjust the object's position and angle
