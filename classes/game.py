@@ -102,6 +102,7 @@ class Game:
         self.rPressed = 0
         self.isAngleHeld = -1
         self.readyToCheck = False
+        self.hotbarRect = None
 
         obj = gameobjects.Mirror(self, [(1, self.height), (2, self.height), (1, self.height - 1), (1, self.height - 1)], (0, 0, 0, 0), 0.001, 0, 1)
         self.objects.append(obj)
@@ -267,7 +268,8 @@ class Game:
                             else:
                                 object.resize_on = False
                     if self.isDrawingModeOn:
-                        polygonDrawing.addPoint(self.polygonDrawing, self.mousepos)
+                        if not self.hotbarRect.collidepoint(self.mousepos):
+                            polygonDrawing.addPoint(self.polygonDrawing, self.mousepos)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.create_clicked_particles()
                     if event.button == 3:
@@ -344,6 +346,9 @@ class Game:
     def render(self):
         # if self.selected_object != None:
         #     # print(self.selected_object)
+        for object in self.objects:
+            if type(object) == gui1.GUI:
+                self.hotbarRect = object.rect
         """
         Renders all the game objects and the custom cursor.
         """

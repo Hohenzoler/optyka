@@ -249,12 +249,10 @@ class GameObject:
 
 
         if self.game.isDrawingModeOn != True:
-            # print(self.points)
             self.angle += d_angle
             self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
             self.y = y - sum(pt[1] for pt in self.points) / len(self.points)
 
-            # print(self.x)
             newpoints=[]
             oldpoints=self.points
             temp_rect = self.rect.move(self.x, self.y)
