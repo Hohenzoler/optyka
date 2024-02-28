@@ -237,6 +237,19 @@ class GameObject:
     # def get_slopes_rect(self,rect):
     #     slopes = [(rect.points[i], rect.points[i + 1]) for i in range(len(self.points) - 1)]
     #     slopes.append((self.points[len(self.points) - 1], self.points[0]))
+
+    def checkIfIn(self, points1, points2):
+        x, y = [], []
+        for i in points2:
+            x.append(i[0])
+            y.append(i[1])
+        for i in points1:
+            if min(x) <= i[0] <= max(x):
+                return True
+            if min(y)  <= i[1] <= max(y):
+                return True
+        else:
+            return False
     def adjust(self, x, y, d_angle):
         while True:
             if self.angle >= 360:
