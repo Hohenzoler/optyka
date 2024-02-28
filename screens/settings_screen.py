@@ -53,7 +53,7 @@ class Settings_screen:
 
         self.hottextRect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 2 * (self.width // 20 + self.height // 47) + self.gapsize)
 
-        self.flashlighttext = self.font2.render('HD Flashlight:', True, 'white')
+        self.flashlighttext = self.font2.render('Pretty Flashlight (beta):', True, 'white')
         self.flashlighttextRect = self.flashlighttext.get_rect()
 
         self.flashlighttextRect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 3 * (self.width // 20 + self.height // 47) + self.gapsize)

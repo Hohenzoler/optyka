@@ -67,14 +67,10 @@ class GUI:
             return "Drawing Mode"
         elif id == 5:
             return "Lens"
-        elif id == 9:
-            return "Lens"
-        elif id == 7:
-            return "Lens"
-        elif id == 8:
-            return "Lens"
         elif id == 6:
-            return "weird mirror"
+            return "Corridor"
+        else:
+            return "Unknown"
 
     def load_settings(self):
         self.width = self.game.width
