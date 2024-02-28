@@ -293,6 +293,7 @@ class GameObject:
                                                 self.angle -= d_angle
                                                 self.points = oldpoints
                                                 # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
+                                                print('aaaa')
                                                 return
 
 
@@ -1272,12 +1273,67 @@ class Lens(GameObject):
 
         pygame.gfxdraw.rectangle(self.game.screen, temp_rect, (255, 255, 255))
 
+        newpoints = []
+        oldpoints = self.points
+        temp_rect = self.rect.move(self.x, self.y)
+        for point in self.points:
+            newpoints.append((point[0] + self.x, point[1] + self.y))
+        self.points = newpoints
+        self.get_slopes()
         for obj in self.game.objects:
-            if type(obj) != light.Light:
-                if obj.rect.colliderect(temp_rect):
-                    if obj != self and isinstance(obj, GameObject):
-                        self.angle -= d_angle
-                        return
+
+            if obj != self and isinstance(obj, GameObject):
+                # if obj.rect.colliderect(temp_rect):
+                obj.get_slopes()
+
+                slopes = obj.slopes
+                for s1 in self.slopes:
+                    for s2 in slopes:
+                        if (s1[0][0] - s1[1][0]) == 0:
+                            dx = 0.001
+                        else:
+                            dx = (s1[0][0] - s1[1][0])
+                        # r=math.atan((slope[0][0]-slope[1][0])/dy)
+
+                        lf1 = light.Linear_Function((s1[0][1] - s1[1][1]) / dx,
+                                                    self.find_b(((s1[0][1] - s1[1][1]) / dx), s1[0]))
+                        # lf1.draw(self.game)
+
+                        # calculating second linear function:
+                        if (s2[0][0] - s2[1][0]) == 0:
+                            dx = 0.001
+                        else:
+                            dx = (s2[0][0] - s2[1][0])
+                        # r=math.atan((slope[0][0]-slope[1][0])/dy)
+
+                        lf2 = light.Linear_Function((s2[0][1] - s2[1][1]) / dx,
+                                                    self.find_b(((s2[0][1] - s2[1][1]) / dx), s2[0]))
+                        # lf2.draw(self.game)
+                        x = lf1.intercept(lf2)
+
+                        y = lf1.calculate(x)
+                        point = (x, lf1.calculate(x))
+
+                        if (s1[0][0] - s1[1][0]) == 0:  # checking 'special case slope': |
+                            adding = 1
+                        else:
+                            adding = 0
+                        if x - adding <= max(s1[0][0], s1[1][0]) and x + adding >= min(s1[0][0],
+                                                                                       s1[1][0]):
+                            if y <= max(s1[0][1], s1[1][1]) and y >= min(s1[0][1], s1[1][1]):
+                                if x - adding <= max(s2[0][0], s2[1][0]) and x + adding >= min(s2[0][0],
+                                                                                               s2[1][0]):
+                                    if y <= max(s2[0][1], s2[1][1]) and y >= min(s2[0][1], s2[1][1]):
+                                        self.angle -= d_angle
+                                        self.points = oldpoints
+                                        # pygame.draw.circle(self.game.screen, (255, 0, 0), (x, y), 3)
+                                        print('aaaa')
+                                        return
+
+                # elif isinstance(obj, gui_main.GUI):
+                #     self.angle -= d_angle
+                #     return
+        self.points = oldpoints
 
         if self.image:
             rotated_image = pygame.transform.rotate(self.image, -self.angle)
