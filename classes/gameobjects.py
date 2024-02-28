@@ -62,6 +62,7 @@ class GameObject:
         self.parameters_counters = 0
 
         self.find_parameters()
+        self.change_parameters('afdsf')
 
         self.was_selected = False
         self.collisionDetected = True
