@@ -100,13 +100,6 @@ There are two ways to install the project: download exe file, or run the project
 * **Calm music** - makes the experience much more pleasant.
 * **Color randomizer** - activated by pressing `Up Arrow`, there isn't any particular reason for its existence.
 
-## Opinions
-> "I think it's a great app. It's very educational and fun to play with. I would recommend it to anyone who wants to learn about optics." - *Jeff*
-
-Picture of Jeff:
-
-![Jeff](documentation/Jeff.png)
-
 ## Credits
 This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [MalyszekTobias](https://github.com/MalyszekTobias), [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [V8Enthusiast](https://github.com/V8Enthusiast).
 
