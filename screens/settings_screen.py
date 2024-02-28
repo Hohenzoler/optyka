@@ -24,7 +24,7 @@ class Settings_screen:
 
         self.Fullscreen = [{'FULLSCREEN': 'ON'}, {'FULLSCREEN': 'OFF'}]
 
-        self.Flashlight = [{'HD_Flashlight': 'ON'}, {'HD_Flashlight': 'OFF'}]
+        # self.Flashlight = [{'HD_Flashlight': 'ON'}, {'HD_Flashlight': 'OFF'}]
 
         from classes.font import Font
         self.font2 = pygame.font.Font(Font, self.width // 40)
@@ -53,22 +53,22 @@ class Settings_screen:
 
         self.hottextRect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 2 * (self.width // 20 + self.height // 47) + self.gapsize)
 
-        self.flashlighttext = self.font2.render('Pretty Flashlight (beta):', True, 'white')
-        self.flashlighttextRect = self.flashlighttext.get_rect()
-
-        self.flashlighttextRect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 3 * (self.width // 20 + self.height // 47) + self.gapsize)
+        # self.flashlighttext = self.font2.render('Pretty Flashlight (beta):', True, 'white')
+        # self.flashlighttextRect = self.flashlighttext.get_rect()
+        #
+        # self.flashlighttextRect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 4 * (self.width // 20 + self.height // 47) + self.gapsize)
 
         self.musictext = self.font2.render('Music Settings:', True, 'white')
         self.musictextrect = self.musictext.get_rect()
 
-        self.musictextrect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 4 * (self.width // 20 + self.height // 47) + self.gapsize)
+        self.musictextrect.center = (self.width // 2 - self.width // 7,  self.height // 4 + 3 * (self.width // 20 + self.height // 47) + self.gapsize)
 
         save_n_exit = button.ButtonForgame(71, self)
         self.save_n_exit_animation = ButtonAnimation(save_n_exit, save_n_exit.rect.x*6+(save_n_exit.width//2), save_n_exit.rect.y)
 
         self.Menu_buttons = []
 
-        self.Menu_buttons = [dm.ButtonMenus(self, x) for x in range(5)]
+        self.Menu_buttons = [dm.ButtonMenus(self, x) for x in range(4)]
 
         self.game.objects.append(self)
 
@@ -78,7 +78,7 @@ class Settings_screen:
         self.screen.blit(self.hottext, self.hottextRect)
         self.screen.blit(self.maintext, self.maintextRect)
         self.screen.blit(self.FStext, self.FStextRect)
-        self.screen.blit(self.flashlighttext, self.flashlighttextRect)
+        # self.screen.blit(self.flashlighttext, self.flashlighttextRect)
         self.screen.blit(self.musictext, self.musictextrect)
 
         self.generate_particles()

@@ -53,7 +53,7 @@ class ButtonMenus:
             s = settingsSetup.load_settings()
 
             self.selected_option_2 = s['FULLSCREEN']
-        elif self.number == 3:
+        elif self.number == 4:
             for option in self.ss.Flashlight:
                 self.options.append(option['HD_Flashlight'])
 
@@ -61,7 +61,7 @@ class ButtonMenus:
 
             self.selected_option_2 = s['HD_Flashlight']
 
-        elif self.number == 4:
+        elif self.number == 3:
             self.options.append('Change')
             self.selected_option_2 = 'Change'
 
@@ -117,7 +117,7 @@ class ButtonMenus:
 
             settingsSetup.writesettingstofile(s)
 
-        elif self.number == 3:
+        elif self.number == 4:
             self.selected_option_2 = option
 
             s = settingsSetup.load_settings()
@@ -127,7 +127,7 @@ class ButtonMenus:
             settingsSetup.writesettingstofile(s)
             settingsSetup.settings['HD_Flashlight'] = option
 
-        elif self.number == 4:
+        elif self.number == 3:
             self.ss.game.mode = 'music'
 
         self.current_index += 1
