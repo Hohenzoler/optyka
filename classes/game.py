@@ -495,6 +495,7 @@ class Game:
         return fps
 
     def displayClock(self):
+        # print(self.objects)
         current_time = time.localtime()
         current_hour = current_time.tm_hour
         current_minute = current_time.tm_min

@@ -33,7 +33,7 @@ class Bin:
 
         self.load_parameters()
 
-        self.game.objects.append(self)
+        # self.game.objects.append(self)
 
         self.achievements = game.achievements
 

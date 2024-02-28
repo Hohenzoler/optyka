@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-
+from classes import gameobjects
 import ttkbootstrap as ttk
 import os
 
@@ -44,12 +44,17 @@ class Parameters:
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
         self.store_button.grid(row=len(self.parameters_dict) + 3, column=0, columnspan=2, pady=10)
 
-        self.root.geometry(f'300x{50*len(self.parameters_dict)}')
+        l = len(self.parameters_dict)
+
+        if type(object) == gameobjects.Lens:
+            l -= 2
+
+        self.root.geometry(f'300x{50*l}')
 
         self.root.mainloop()
 
     def create_element(self, param, row):
-        if param != 'points':
+        if param != 'points' and param != 'curvature_radius' and param != 'curvature_radius_2':
             try:
                 if param != 'transmittance' and param != 'absorbsion_factor':
                     label = tk.Label(self.root, text=f"{param.capitalize()}:")
