@@ -103,6 +103,9 @@ class Game:
         self.isAngleHeld = -1
         self.readyToCheck = False
 
+        obj = gameobjects.Mirror(self, [(1, self.height), (2, self.height), (1, self.height - 1), (1, self.height - 1)], (0, 0, 0, 0), 0.001, 0, 1)
+        self.objects.append(obj)
+        print(self.objects)
 
     def create_cursor_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
