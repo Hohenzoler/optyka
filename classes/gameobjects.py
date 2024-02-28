@@ -345,11 +345,11 @@ class GameObject:
         elif not isinstance(self, Flashlight):
             print(self.checkIfNormalMirror())
             # Draw an outline around the object
-            pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 0, 255))
+            pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))
             self.resize_rects = []
             for point in self.points:
                 rect = pygame.Rect(point[0] - 10, point[1] - 10, 20, 20)
-                pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=10)
+                pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=5)
                 self.resize_rects.append(rect)
             if self.resize_on:
                 try:
@@ -765,37 +765,47 @@ class Lens(GameObject):
             self.lens_points2 = self.generate_arc_points(center2, self.curvature_radius, math.pi / 2, 3 * math.pi / 2,
                                                         points_num2)
 
-        self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
-        self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
-        self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
-        pygame.draw.circle(self.game.screen, (0, 255, 0),
-                           self.center1, 2, 0)
-        self.center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
-        pygame.draw.circle(self.game.screen, (0, 255, 0),
-                          self.center2, 2, 0)
+        # self.lens_points = self.rotate_points2(self.lens_points, angle, (center_x, center[1]))
+        # self.lens_points2 = self.rotate_points2(self.lens_points2, angle, (center_x, center[1]))
+        # self.center1 = self.rotate_points2([center1], angle, (center_x, center[1]))[0]
+        # pygame.draw.circle(self.game.screen, (0, 255, 0),
+        #                    self.center1, 2, 0)
+        # self.center2 = self.rotate_points2([center2], angle, (center_x, center[1]))[0]
+        # pygame.draw.circle(self.game.screen, (0, 255, 0),
+        #                   self.center2, 2, 0)
+        #
+        self.center1 = center1
+        self.center2 = center2
 
     def drawResizeOutline(self):
         # Draw an outline around the object
         self.angle = 0
-        pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 0, 255))
+        pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))
         self.resize_rects = []
         for point in self.points:
             rect = pygame.Rect(point[0] - 10, point[1] - 10, 20, 20)
-            pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=10)
+            pygame.draw.rect(self.game.screen, (245, 212, 24), rect, border_radius=5)
             self.resize_rects.append(rect)
         self.resize_rects.append(pygame.Rect(self.points[0][0] - 10, self.points[0][1] + self.height/2 - 10, 20, 20))
-        pygame.draw.rect(self.game.screen, (245, 212, 24), self.resize_rects[-1], border_radius=10)
+        pygame.draw.rect(self.game.screen, (245, 212, 24), self.resize_rects[-1], border_radius=5)
         mouse_pos = pygame.mouse.get_pos()
         self.resize_rects.append(pygame.Rect(self.points[1][0] - 10, self.points[1][1] + self.height / 2 - 10, 20, 20))
-        pygame.draw.rect(self.game.screen, (245, 212, 24), self.resize_rects[-1], border_radius=10)
+        pygame.draw.rect(self.game.screen, (245, 212, 24), self.resize_rects[-1], border_radius=5)
 
         if self.resize_on:
-            self.points[self.x_resize_index] = (mouse_pos[0], self.points[self.x_resize_index][1])
-            #pygame.draw.circle(self.game.screen, (255, 0, 0), self.points[self.x_resize_index], 5)
-            self.points[self.y_resize_index] = (self.points[self.y_resize_index][0], mouse_pos[1])
-            #pygame.draw.circle(self.game.screen, (0, 255, 0), self.points[self.y_resize_index], 5)
-            self.points[self.resize_point_index] = mouse_pos
-            #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
+            if abs(self.points[self.static_point_index][0] - self.points[self.resize_point_index][0]) > 25 and abs(self.points[self.static_point_index][1] - self.points[self.resize_point_index][1]) > 25:
+                self.points[self.x_resize_index] = (mouse_pos[0], self.points[self.x_resize_index][1])
+                #pygame.draw.circle(self.game.screen, (255, 0, 0), self.points[self.x_resize_index], 5)
+                self.points[self.y_resize_index] = (self.points[self.y_resize_index][0], mouse_pos[1])
+                #pygame.draw.circle(self.game.screen, (0, 255, 0), self.points[self.y_resize_index], 5)
+                self.points[self.resize_point_index] = mouse_pos
+                #pygame.draw.circle(self.game.screen, (0, 0, 255), self.points[self.resize_point_index], 5)
+            else:
+                pass
+                # temp = self.points[self.static_point_index][0]
+                # self.points[self.static_point_index] = (temp + self.points[self.resize_point_index][0], self.points[self.static_point_index][1])
+                # self.points[self.resize_point_index] = (self.points[self.resize_point_index][0] + temp, self.points[self.static_point_index][1])
+
 
         ### Checks if the lenses dont overlap ###
         if self.type == self.CONVEX:

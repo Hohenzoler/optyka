@@ -210,10 +210,10 @@ class Game:
 
             if self.mode == 'default':
                 points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-                    for object in self.objects:
-                        if type(object) == gameobjects.Lens:
-                            object.curvature_resize_step += 1
+                # if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+                #     for object in self.objects:
+                #         if type(object) == gameobjects.Lens:
+                #             object.curvature_resize_step += 1
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                     for object in self.objects:
                         if type(object) == gameobjects.Lens:
@@ -348,20 +348,7 @@ class Game:
         self.render_particles()
 
         if self.mode == 'default':
-            if self.settings['HD_Flashlight'] == 'ON':
-                for surface in self.surfaces:
-                    surface.fill((0, 0, 0, 0))
-                #self.surfaces = [surface.copy() for surface in self.default_surfaces]
 
-                for surface_num, rays in self.surface_rays.items():
-                    if surface_num > self.surface_num -1:
-                        break
-                    for ray in rays:
-                        functions.draw_thick_line(self.surfaces[surface_num], int(ray.start_point[0]), int(ray.start_point[1]),
-                                             int(ray.end_point[0]), int(ray.end_point[1]), ray.color, 5)
-                    self.screen.blit(self.surfaces[surface_num], (0, 0))
-
-                self.surface_rays = {i: [] for i in range(self.surface_num)}
 
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
             for object in sorted_objects:
@@ -384,6 +371,21 @@ class Game:
                         if type(bin_2) == bin.Bin:
                             bin_2.checkCollision(object)
                             break
+            if self.settings['HD_Flashlight'] == 'ON':
+                for surface in self.surfaces:
+                    surface.fill((0, 0, 0, 0))
+                #self.surfaces = [surface.copy() for surface in self.default_surfaces]
+
+                for surface_num, rays in self.surface_rays.items():
+                    if surface_num > self.surface_num -1:
+                        break
+                    for ray in rays:
+                        functions.draw_thick_line(self.surfaces[surface_num], int(ray.start_point[0]), int(ray.start_point[1]),
+                                             int(ray.end_point[0]), int(ray.end_point[1]), ray.color, 5)
+                    self.screen.blit(self.surfaces[surface_num], (0, 0))
+
+                self.surface_rays = {i: [] for i in range(self.surface_num)}
+
             # if self.isDrawingModeOn:
             #     optyka.gui.polygonDrawing.renderDots()
             self.displayFPS()

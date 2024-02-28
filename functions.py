@@ -46,7 +46,7 @@ def is_linear_function_passing_through_point(linear_function, point):
     b = linear_function.b
     x_point, y_point = point
 
-    return abs(a * x_point + b - y_point) < 1
+    return abs(a * x_point + b - y_point) < 3
 
 
 
