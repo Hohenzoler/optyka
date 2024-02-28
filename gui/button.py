@@ -253,7 +253,7 @@ class Button:
                     obj = gameobjects.Corridor(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] - 50),
                                                          (mousepos[0] + 100, mousepos[1] + 50),
-                                                         (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0, 0, image_path=images.corridor)
+                                                         (mousepos[0] - 100, mousepos[1] + 50)], None, 0, 0, 0, image_path=images.corridor)
                 elif self.number == -1:
                     self.game.save_game()
                 elif self.number == -2:

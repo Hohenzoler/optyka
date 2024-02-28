@@ -907,9 +907,9 @@ class Light:
         self.calibrate_r2()
     def mirror_stuff(self):
         self.counter += 1
-        if self.counter > 99:
+        if self.counter > 149:
             self.game.achievements.handle_achievement_unlocked("white mode")
-        elif self.counter > 49:
+        elif self.counter > 69:
             self.game.achievements.handle_achievement_unlocked("epilepsy")
         # pygame.draw.line(self.game.screen, (0, 0, 255), self.current_slope[0], self.current_slope[1], 5)
         self.points.append(self.current_point)

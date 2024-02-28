@@ -164,8 +164,14 @@ class Parameters:
                 value = entry_widget.get()
 
                 # print(param, value)
+                if param == 'refraction index':
+                    value = float(value)
+                    if value > 2:
+                        value = 2
+                    elif value < 1:
+                        value = 1
 
-                if param == 'size':
+                elif param == 'size':
                     value = str(value)
                     value = value.strip("%")
                     value = float(value) / 100

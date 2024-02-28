@@ -69,6 +69,7 @@ class GameObject:
         self.was_selected = False
         self.collisionDetected = True
         mousepos = pygame.mouse.get_pos()
+        self.ready = self.game.readyToCheck
         # self.adjust(mousepos[0], mousepos[1], self.angle)
 
     def update_rect(self):
@@ -105,27 +106,9 @@ class GameObject:
             return self.points
         else:
             return False
-    def checkCollision(self):
-        if self.game.readyToCheck != False:
-            self.collisionDetected = False
-            for obj in self.game.objects:
-                if self.game.readyToCheck != False:
-                    if type(obj) != light.Light:
-                        try:
-                            print('trying')
-                            if obj.rect.colliderect(pygame.Rect(self.game.readyToCheck)):
-                                print('goodcolide')
-                                self.collisionDetected = True
-                                self.game.readyToCheck = False
-
-                        except:
-                            print(' wrong')
-            if not self.collisionDetected:
-                self.game.readyToCheck = False
-                self.game.createPoly(True)
 
     def render(self):
-
+        self.ready = self.game.readyToCheck
         if self.game.readyToCheck != False:
             self.collisionDetected = False
             for obj in self.game.objects:
@@ -631,8 +614,9 @@ class Mirror(GameObject):
 
 class Prism(GameObject):
     def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
+        self.n = 1.52
         super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
-        self.n=1.52
+
         self.fi=math.pi/3
         self.dispersion_angle=math.pi/3
     def get_left_wall(self):
@@ -668,6 +652,66 @@ class Prism(GameObject):
             if (slope[0][0]==max(xs) and slope[1][0]==min(xs)) or (slope[1][0]==max(xs) and slope[0][0]==min(xs)):
                 self.bottom_slope=slope
         pygame.draw.line(self.game.screen, (255, 255, 0), self.bottom_slope[0], self.bottom_slope[1], 5)
+
+    def find_parameters(self):
+        centerx = sum(x[0] for x in self.points) / len(self.points)
+        centery = sum(y[1] for y in self.points) / len(self.points)
+        # print('xxxxxxxxxxxx', centerx)
+
+        self.parameters = {'x':centerx, 'y':centery, 'angle':self.angle}
+
+        self.parameters['size'] = self.scale_factor
+
+        # if type(self) == Lens:
+        #     self.p
+
+        # self.parameters['reflection_factor'] = self.reflection_factor
+
+        self.parameters['refraction index'] = self.n
+
+        if type(self) != Flashlight and type(self) != Lens:
+            self.parameters['absorbsion_factor'] = self.absorbsion_factor
+
+            self.parameters['transmittance'] = self.orginal_transmittance
+
+        self.parameters['points'] = self.defualt_points
+        # print(self.defualt_points)
+
+        # if type(self) == Flashlight:
+        #     lazer_on = {'lazer': self.lazer}
+        #     self.parameters.update(lazer_on)
+
+
+
+    def change_parameters(self, placeholder=None):
+        if placeholder == None:
+            self.find_parameters()
+            mp.Parameters(self)
+
+        # print(self.parameters)
+
+        self.defualt_points = self.parameters['points']
+        self.points = self.defualt_points
+
+        self.scale_factor = self.parameters['size']
+        self.change_size()
+        d_angle = self.parameters['angle']
+
+        if d_angle==0:
+            d_angle=0.001
+        elif d_angle==180:
+            d_angle=180.001
+        elif d_angle==90:
+            d_angle=90.001
+        elif d_angle==270:
+            d_angle=270.001
+        self.angle = 0
+        self.x = self.parameters['x']
+        self.y = self.parameters['y']
+        self.adjust(self.x, self.y, d_angle)
+        self.scale_factor = self.parameters['size']
+
+        self.n = self.parameters['refraction index']
 
 class ColoredGlass(GameObject):
     def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
@@ -1215,8 +1259,11 @@ class Lens(GameObject):
         return rotated_points
 
     def render(self):
-        # print(self.get_triangles())
-        if self.game.readyToCheck != False:
+        if self.ready:
+            print(self.game.readyToCheck, 13)
+            print(self.ready)
+        if self.ready != False:
+            print('lens')
             self.collisionDetected = False
             for obj in self.game.objects:
                 if self.game.readyToCheck != False:
@@ -1427,15 +1474,15 @@ class Lens(GameObject):
 
         self.parameters = {'x':centerx, 'y':centery}
 
-        self.parameters['size'] = self.scale_factor
+        # self.parameters['size'] = self.scale_factor
 
         self.parameters['refraction index'] = self.refraction_index
 
         self.parameters['curvature_radius'] = self.raw_curvature_radius
         self.parameters['curvature_radius_2'] = self.raw_curvature_radius2
-        print(self.refraction_index)
+        # print(self.refraction_index)
 
-        self.parameters['points'] = self.defualt_points
+        self.parameters['points'] = self.points
 
 
         if self.color != None:
@@ -1454,13 +1501,13 @@ class Lens(GameObject):
         self.defualt_points = self.parameters['points']
         self.points = self.defualt_points
 
-        self.scale_factor = self.parameters['size']
-        self.change_size()
+        # self.scale_factor = self.parameters['size']
+        # self.change_size()
 
         self.x = self.parameters['x']
         self.y = self.parameters['y']
         self.adjust(self.x, self.y, 0)
-        self.scale_factor = self.parameters['size']
+        # self.scale_factor = self.parameters['size']
         self.refraction_index = self.parameters['refraction index']
 
         self.raw_curvature_radius = self.parameters['curvature_radius']
