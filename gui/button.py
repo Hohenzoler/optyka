@@ -90,7 +90,7 @@ class Button:
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
         elif self.number == 2:
-            self.color = (0, 150, 0)
+            self.color = (0, 200, 0)
             self.icon = images.glass_icon
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
