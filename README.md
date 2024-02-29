@@ -4,6 +4,9 @@
 Optics is a Python-based simulator of optic phenomenons. It uses the Pygame library for app development.
 </div>
 
+## Showcase
+[![Watch the showcase](https://i.stack.imgur.com/Vp2cE.png)](https://www.youtube.com/watch?v=YNfKgBNiP90)
+
 ## Status
 | Feature              | Status |
 |----------------------|--------|
