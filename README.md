@@ -47,6 +47,8 @@ There are two ways to install the project: download exe file, or run the project
 * Now you can place objects and see how they interact with each other.
 * `Right click` an object to pick it up or release it.
 * When holding an object, click `P` to open its parameters window.
+ <p align="center"><img width="300" height="500" border = 10 src="documentation/Screenshot 2024-02-29 213646.png"></p>
+
 * Parameters include:
    - position
    - angle relative to horizontal position
@@ -59,6 +61,7 @@ There are two ways to install the project: download exe file, or run the project
 * When holding an object you can also press `R` to enter _resizing mode_. 
    - In _resizing mode_ you can resize the object by clicking and dragging one of the points visible on the object.
    - If the object in question is a lens, you can drag the points in the middle to change the lens's curvature radius.
+   - If you drag the points a bit farther, the lens can be curved inward. 
    - You can also press `R` again while holding the object to exit _resizing mode_.
 * You can delete an object by dragging it to the bin.
 
@@ -77,7 +80,7 @@ There are two ways to install the project: download exe file, or run the project
 ### The app includes various objects:
  **Flashlight** - produces light that other objects can interact with, can be turned on and off by `Left clicking`.
 
-<p align="center"><img width="60" height="60" border = 10 src="documentation/torch.png"></p>
+<p align="center"><img width="120" height="60" border = 10 src="documentation/torch.png"></p>
 
  **Mirror** - a rectangular object that reflects light.
 
