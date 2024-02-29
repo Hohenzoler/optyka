@@ -75,7 +75,7 @@ There are two ways to install the project: download exe file, or run the project
 
 ## Objects and Features:
 ### The app includes various objects:
- **Flashlight** - produces light that other objects can interact with.
+ **Flashlight** - produces light that other objects can interact with, can be turned on and off by `Left clicking`.
 
 <p align="center"><img width="60" height="60" border = 10 src="documentation/torch.png"></p>
 
@@ -85,7 +85,7 @@ There are two ways to install the project: download exe file, or run the project
 
  **Colored glass** - if a beam of light passes through it, the light changes color accordingly to the color of the glass.
 
- <p align="center"><img width="60" height="60" border = 10 src="documentation/glass_thing_icon.png"></p>
+[glass](images/glass_thing_icon.png)
 
  **Prism** - a triangular object that disperses and redirects light that enters it.
 
