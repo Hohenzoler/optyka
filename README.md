@@ -62,7 +62,7 @@ There are two ways to install the project: download exe file, or run the project
    - You can also press `R` again while holding the object to exit _resizing mode_.
 * You can delete an object by dragging it to the bin.
 
-* You can enter _drawing mode_ by clicking the icon that looks like this: <p align="center"><img width="60" height="60" border = 10 src="images/bad_pen.png"></p>
+* You can enter _drawing mode_ by clicking the icon that looks like this: <p align="center"><img width="60" height="60" border = 10 src="documentation/bad_pen.png"></p>
 
 
    - While in _drawing mode_ you can draw a new object by clicking different places on screen.
@@ -77,32 +77,31 @@ There are two ways to install the project: download exe file, or run the project
 ### The app includes various objects:
  **Flashlight** - produces light that other objects can interact with, can be turned on and off by `Left clicking`.
 
-<p align="center"><img width="120" height="60" border = 10 src="images/torch.png"></p>
+<p align="center"><img width="60" height="60" border = 10 src="documentation/torch.png"></p>
 
  **Mirror** - a rectangular object that reflects light.
 
- <p align="center"><img width="60" height="60" border = 10 src="images/lustro.png"></p>
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/lustro.png"></p>
 
  **Colored glass** - if a beam of light passes through it, the light changes color accordingly to the color of the glass.
 
- <p align="center"><img width="60" height="60" border = 10 src="images/glass_thing_icon.png"></p>
-
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/glass_thing_icon.png"></p>
 
  **Prism** - a triangular object that disperses and redirects light that enters it.
 
- <p align="center"><img width="60" height="60" border = 10 src="images/Prism.png"></p>
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/Prism.png"></p>
 
  **Custom-shaped mirror** - it's a regular mirror, but you can draw it so it assumes the desired shape.
 
- <p align="center"><img width="60" height="60" border = 10 src="images/bad_pen.png"></p>
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/bad_pen.png"></p>
 
  **Lens** - magnifies or demagnifies light that enters it.
 
- <p align="center"><img width="60" height="60" border = 10 src="images/glasses.png"></p>
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/glasses.png"></p>
 
  **Corridor** - Light can enter and exit it from the sides but the two other sides work like mirrors.
 
- <p align="center"><img width="60" height="60" border = 10 src="images/corridor_icon.png"></p>
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/corridor_icon.png"></p>
 
 
 ### The app also includes the following features:
