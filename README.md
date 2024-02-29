@@ -1,11 +1,15 @@
-![image](https://github.com/Hohenzoler/optyka/assets/96191787/94ed64c3-ecac-496d-a05b-e86f8bd916d7)<div align="center">
+<div align="center">
    
 # Optics
 Optics is a Python-based simulator of optic phenomenons. It uses the Pygame library for app development.
 </div>
 
 ## Showcase
-[![Watch the showcase](https://i.stack.imgur.com/Vp2cE.png)](https://www.youtube.com/watch?v=oRm5Wtt9y7Y))
+<div align="center">
+
+[![Watch the showcase](documentation/tb2.png)](https://www.youtube.com/watch?v=oRm5Wtt9y7Y)
+</div>
+
 
 ## Status
 | Feature              | Status |
