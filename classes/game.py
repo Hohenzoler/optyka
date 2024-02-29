@@ -172,8 +172,11 @@ class Game:
         linepoints = points
         if self.rPressed == 1:
             if self.isDotHeld != -1:
-                points[self.isDotHeld] = position
-                self.isDotHeld = -1
+                try:
+                    points[self.isDotHeld] = position
+                    self.isDotHeld = -1
+                except:
+                    pass
             else:
                 for i in range(len(points)):
                     distance = ((points[i][0] - position[0]) ** 2 + (points[i][1] - position[1]) ** 2) ** 0.5

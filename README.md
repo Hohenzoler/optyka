@@ -75,13 +75,20 @@ There are two ways to install the project: download exe file, or run the project
 
 ## Objects and Features:
 ### The app includes various objects:
-* **Flashlight** - produces light that other objects can interact with.
-* **Mirror** - a rectangular object that reflects light.
-* **Colored glass** - if a beam of light passes through it, the light changes color accordingly to the color of the glass.
-* **Prism** - a triangular object that disperses and redirects light that enters it.
-* **Custom-shaped mirror** - it's a regular mirror, but you can draw it so it assumes the desired shape.
-* **Lens** - magnifies or demagnifies light that enters it.
-* **Corridor** - Light can enter and exit it from the sides but the two other sides work like mirrors.
+ **Flashlight** - produces light that other objects can interact with.
+<p align="center"><img width="60" height="60" border = 10 src="documentation/torch.png"></p>
+ **Mirror** - a rectangular object that reflects light.
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/lustro.png"></p>
+ **Colored glass** - if a beam of light passes through it, the light changes color accordingly to the color of the glass.
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/glass_thing_icon.png"></p>
+ **Prism** - a triangular object that disperses and redirects light that enters it.
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/Prism.png"></p>
+ **Custom-shaped mirror** - it's a regular mirror, but you can draw it so it assumes the desired shape.
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/bad_pen.png"></p>
+ **Lens** - magnifies or demagnifies light that enters it.
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/glasses.png"></p>
+ **Corridor** - Light can enter and exit it from the sides but the two other sides work like mirrors.
+ <p align="center"><img width="60" height="60" border = 10 src="documentation/corridor_icon.png"></p>
 
 ### The app also includes the following features:
 * **Parameters** - Every object has parameters that change the way they interact with the environment.
