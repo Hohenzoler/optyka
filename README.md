@@ -1,7 +1,7 @@
 <div align="center">
    
-# Optics
-Optics is a Python-based simulator of optic phenomenons. It uses the Pygame library for app development.
+# Optics Enhanced
+Optics enhanced is fork of [Optics](https://github.com/Hohenzoler/optyka), which has (will have) more features.
 </div>
 
 ## Showcase
