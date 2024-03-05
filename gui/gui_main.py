@@ -37,7 +37,9 @@ class GUI:
 
 
     def render(self):
-        pygame.draw.rect(self.game.screen, (100, 100, 100), self.rect)
+        transparent_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
+        transparent_surface.fill((100, 100, 100, 200))
+        self.game.screen.blit(transparent_surface, self.rect.topleft)
         for button in self.buttons: #renders buttons
             button.render()
 
