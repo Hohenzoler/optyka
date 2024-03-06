@@ -76,7 +76,7 @@ There are two ways to install the project: download exe file, or run the project
    - You can also delete the last point placed by pressing `Backspace` or move a point by `right clicking`.
    - Then, when `Enter` is pressed, a mirror in the desired shape is added to the environment.
    - It's possible to exit this mode by simply clicking on the icon again.
-* Press `Up Arrow` to randomize colors of all flashlights.
+* Press `Z` to randomize colors of all flashlights.
 
 
 
@@ -129,7 +129,7 @@ There are two ways to install the project: download exe file, or run the project
 * **Clock** - Lets you know what time it is.
 * **Sound effects** - helps to immerse in the world of optics.
 * **Calm music** - makes the experience much more pleasant.
-* **Color randomizer** - activated by pressing `Up Arrow`, there isn't any particular reason for its existence.
+* **Color randomizer** - activated by pressing `Z`, there isn't any particular reason for its existence.
 
 ## Credits
 This project is developed by [Hohenzoler](https://github.com/Hohenzoler), [MalyszekTobias](https://github.com/MalyszekTobias), [rutra8002](https://github.com/rutra8002), [lolekszcz](https://github.com/lolekszcz) and [V8Enthusiast](https://github.com/V8Enthusiast).
