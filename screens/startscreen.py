@@ -56,7 +56,7 @@ class StartScreen:
 
         self.executed_functions = 'default'
 
-        self.maintext = self.font.render('Optics', True, 'white')
+        self.maintext = self.font.render('Optics Enhanced', True, 'white')
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width // 2, (self.height // 2) - (3 * self.height // 10))
 
