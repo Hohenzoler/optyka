@@ -211,44 +211,46 @@ class Game:
 
         points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
 
-        if keys[pygame.K_RIGHT]:  # Right arrow key is held down
-            for i in range(len(points)):
-                points[i] = (points[i][0] - 10, points[i][1])
+        if self.mode == 'default':
 
-            for obj in self.objects:
-                if isinstance(obj, gameobjects.GameObject):
-                    obj.rect = pygame.Rect(obj.rect.x - 10, obj.rect.y, obj.rect.width, obj.rect.height)
-                    for i in range(len(obj.points)):
-                        obj.points[i] = (obj.points[i][0] - 10, obj.points[i][1])
+            if keys[pygame.K_RIGHT]:  # Right arrow key is held down
+                for i in range(len(points)):
+                    points[i] = (points[i][0] - 10, points[i][1])
 
-        if keys[pygame.K_LEFT]:  # Left arrow key is held down
-            for i in range(len(points)):
-                points[i] = (points[i][0] + 10, points[i][1])
+                for obj in self.objects:
+                    if isinstance(obj, gameobjects.GameObject):
+                        obj.rect = pygame.Rect(obj.rect.x - 10, obj.rect.y, obj.rect.width, obj.rect.height)
+                        for i in range(len(obj.points)):
+                            obj.points[i] = (obj.points[i][0] - 10, obj.points[i][1])
 
-            for obj in self.objects:
-                if isinstance(obj, gameobjects.GameObject):
-                    obj.rect = pygame.Rect(obj.rect.x + 10, obj.rect.y, obj.rect.width, obj.rect.height)
-                    for i in range(len(obj.points)):
-                        obj.points[i] = (obj.points[i][0] + 10, obj.points[i][1])
+            if keys[pygame.K_LEFT]:  # Left arrow key is held down
+                for i in range(len(points)):
+                    points[i] = (points[i][0] + 10, points[i][1])
 
-        if keys[pygame.K_UP]:  # Up arrow key is held down
-            for i in range(len(points)):
-                points[i] = (points[i][0], points[i][1] + 10)
-            for obj in self.objects:
-                if isinstance(obj, gameobjects.GameObject):
-                    obj.rect = pygame.Rect(obj.rect.x, obj.rect.y + 10, obj.rect.width, obj.rect.height)
-                    for i in range(len(obj.points)):
-                        obj.points[i] = (obj.points[i][0], obj.points[i][1] + 10)
+                for obj in self.objects:
+                    if isinstance(obj, gameobjects.GameObject):
+                        obj.rect = pygame.Rect(obj.rect.x + 10, obj.rect.y, obj.rect.width, obj.rect.height)
+                        for i in range(len(obj.points)):
+                            obj.points[i] = (obj.points[i][0] + 10, obj.points[i][1])
 
-        if keys[pygame.K_DOWN]:  # Down arrow key is held down
-            for i in range(len(points)):
-                points[i] = (points[i][0], points[i][1] - 10)
+            if keys[pygame.K_UP]:  # Up arrow key is held down
+                for i in range(len(points)):
+                    points[i] = (points[i][0], points[i][1] + 10)
+                for obj in self.objects:
+                    if isinstance(obj, gameobjects.GameObject):
+                        obj.rect = pygame.Rect(obj.rect.x, obj.rect.y + 10, obj.rect.width, obj.rect.height)
+                        for i in range(len(obj.points)):
+                            obj.points[i] = (obj.points[i][0], obj.points[i][1] + 10)
 
-            for obj in self.objects:
-                if isinstance(obj, gameobjects.GameObject):
-                    obj.rect = pygame.Rect(obj.rect.x, obj.rect.y - 10, obj.rect.width, obj.rect.height)
-                    for i in range(len(obj.points)):
-                        obj.points[i] = (obj.points[i][0], obj.points[i][1] - 10)
+            if keys[pygame.K_DOWN]:  # Down arrow key is held down
+                for i in range(len(points)):
+                    points[i] = (points[i][0], points[i][1] - 10)
+
+                for obj in self.objects:
+                    if isinstance(obj, gameobjects.GameObject):
+                        obj.rect = pygame.Rect(obj.rect.x, obj.rect.y - 10, obj.rect.width, obj.rect.height)
+                        for i in range(len(obj.points)):
+                            obj.points[i] = (obj.points[i][0], obj.points[i][1] - 10)
 
 
         for event in pygame.event.get():
