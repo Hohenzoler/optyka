@@ -216,6 +216,28 @@ class Game:
 
 
             if self.mode == 'default':
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:  # Right arrow key is pressed
+                        for obj in self.objects:
+                            if isinstance(obj, gameobjects.GameObject):
+                                for i in range(len(obj.points)):
+                                    obj.points[i] = (obj.points[i][0] - 10, obj.points[i][1])
+                    if event.key == pygame.K_LEFT:  # Left arrow key is pressed
+                        for obj in self.objects:
+                            if isinstance(obj, gameobjects.GameObject):
+                                for i in range(len(obj.points)):
+                                    obj.points[i] = (obj.points[i][0] + 10, obj.points[i][1])
+                    if event.key == pygame.K_UP:  # Up arrow key is pressed
+                        for obj in self.objects:
+                            if isinstance(obj, gameobjects.GameObject):
+                                for i in range(len(obj.points)):
+                                    obj.points[i] = (obj.points[i][0], obj.points[i][1] + 10)
+                    if event.key == pygame.K_DOWN:  # Down arrow key is pressed
+                        for obj in self.objects:
+                            if isinstance(obj, gameobjects.GameObject):
+                                for i in range(len(obj.points)):
+                                    obj.points[i] = (obj.points[i][0], obj.points[i][1] - 10)
+
                 points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
                 # if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 #     for object in self.objects:
