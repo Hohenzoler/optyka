@@ -80,12 +80,14 @@ class Particle:
         self.alpha = alpha
         self.shape = shape
 
-    def update(self):
+    def update(self, x, y):
         """
         Updates the particle's position and decreases its lifespan and alpha value
         """
         self.x += self.vx
+        self.x += x
         self.y += self.vy
+        self.y += y
         if self.alpha > 0 and self.lifespan > 0:
             self.alpha -= self.alpha // (1/2*self.lifespan)
             self.lifespan -= 2
@@ -174,8 +176,18 @@ class UnityParticleSystem:
         """
         Updates all particles in the system
         """
+        keys = pygame.key.get_pressed()  # Get the state of each key
+        particle_x, particle_y = 0, 0
+        if keys[pygame.K_RIGHT]:  # Right arrow key is held down
+            particle_x = - 10
+        if keys[pygame.K_LEFT]:  # Left arrow key is held down
+            particle_x = 10
+        if keys[pygame.K_UP]:  # Up arrow key is held down
+            particle_y = 10
+        if keys[pygame.K_DOWN]:  # Down arrow key is held down
+            particle_y = -10
         for particle in self.particles:
-            particle.update()
+            particle.update(particle_x, particle_y)
             if particle.lifespan <= 0:
                 self.particles.remove(particle)
 
