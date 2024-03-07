@@ -19,11 +19,6 @@ class PythonHighlighter(QSyntaxHighlighter):
 
         self.highlightingRules = [(QRegularExpression(r'\b' + keyword + r'\b'), keywordFormat) for keyword in keywords]
 
-        quotationFormat = QTextCharFormat()
-        quotationFormat.setForeground(Qt.darkGreen)
-        self.highlightingRules.append((QRegularExpression(r'".*?"'), quotationFormat))
-        self.highlightingRules.append((QRegularExpression(r"'.*?'"), quotationFormat))
-
         functionFormat = QTextCharFormat()
         functionFormat.setForeground(Qt.magenta)
         self.highlightingRules.append((QRegularExpression(r'\b\w+\b(?=\s*\()'), functionFormat))
@@ -37,6 +32,11 @@ class PythonHighlighter(QSyntaxHighlighter):
 
         self.commentStartExpression = QRegularExpression(r"'''|\"\"\"")
         self.commentEndExpression = QRegularExpression(r"'''|\"\"\"")
+
+        quotationFormat = QTextCharFormat()
+        quotationFormat.setForeground(Qt.darkGreen)
+        self.highlightingRules.append((QRegularExpression(r'".*?"'), quotationFormat))
+        self.highlightingRules.append((QRegularExpression(r"'.*?'"), quotationFormat))
 
     def highlightBlock(self, text):
         for pattern, format in self.highlightingRules:
