@@ -246,7 +246,12 @@ class GameObject:
             else:
                 break
 
-
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_DELETE]:
+            self.game.objects.remove(self)
+            self.game.selected_object = None
+            self.game.mixer.destroy_sound()
+            return
 
         if self.game.isDrawingModeOn != True:
             self.angle += d_angle
