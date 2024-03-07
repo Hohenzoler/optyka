@@ -1025,10 +1025,16 @@ class Light:
         dy = y2 - y1
         if abs(dx) > abs(dy):
             for offset in range(THICC):
-                pygame.gfxdraw.line(surface, x1, y1 + offset, x2, y2 + offset, color)
+                try:
+                    pygame.gfxdraw.line(surface, x1, y1 + offset, x2, y2 + offset, color)
+                except:
+                    pass
         else:
             for offset in range(THICC):
-                pygame.gfxdraw.line(surface, x1 + offset, y1, x2 + offset, y2, color)
+                try:
+                    pygame.gfxdraw.line(surface, x1 + offset, y1, x2 + offset, y2, color)
+                except:
+                    pass
 
 
 class Vector():
