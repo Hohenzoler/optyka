@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt, QRegularExpression
-from PyQt5.QtGui import QTextCharFormat, QTextCursor, QSyntaxHighlighter, QFont
+from PyQt5.QtGui import QTextCharFormat, QTextCursor, QSyntaxHighlighter, QFont, QColor
 
 
 class PythonHighlighter(QSyntaxHighlighter):
@@ -7,8 +7,8 @@ class PythonHighlighter(QSyntaxHighlighter):
         super().__init__(parent)
 
         keywordFormat = QTextCharFormat()
-        keywordFormat.setForeground(Qt.darkYellow)
-        keywordFormat.setFontWeight(QFont.Bold)
+        keywordFormat.setForeground(QColor(220, 180, 0))
+        # keywordFormat.setFontWeight(QFont.Bold)
 
         keywords = [
             'False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break',
