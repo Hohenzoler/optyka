@@ -21,7 +21,7 @@ import gui
 from gui.polygonDrawing import polygonDrawing
 from classes import popup
 from classes import saveTK, mixer_c
-
+from classes import Camera
 
 isDrawingModeOn = False
 
@@ -106,6 +106,9 @@ class Game:
 
         obj = gameobjects.Mirror(self, [(1, self.height), (2, self.height), (1, self.height - 1), (1, self.height - 1)], (0, 0, 0, 0), 0.001, 0, 1)
         self.objects.append(obj)
+
+        self.camera = Camera.Camera(0, 0, self)
+
         print(self.objects)
 
     def create_cursor_particles(self):
@@ -165,9 +168,6 @@ class Game:
             self.achievements.handle_achievement_unlocked("a new creature")
 
 
-
-
-
     def movePoints(self, points, position):
         linepoints = points
         if self.rPressed == 1:
@@ -207,50 +207,10 @@ class Game:
         """
         Handles all the pygame events.
         """
-        keys = pygame.key.get_pressed()
-
-        points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
+        self.points = polygonDrawing.returnPolygonPoints(self.polygonDrawing)
 
         if self.mode == 'default':
-
-            if keys[pygame.K_RIGHT]:  # Right arrow key is held down
-                for i in range(len(points)):
-                    points[i] = (points[i][0] - 10, points[i][1])
-
-                for obj in self.objects:
-                    if isinstance(obj, gameobjects.GameObject):
-                        obj.rect = pygame.Rect(obj.rect.x - 10, obj.rect.y, obj.rect.width, obj.rect.height)
-                        for i in range(len(obj.points)):
-                            obj.points[i] = (obj.points[i][0] - 10, obj.points[i][1])
-
-            if keys[pygame.K_LEFT]:  # Left arrow key is held down
-                for i in range(len(points)):
-                    points[i] = (points[i][0] + 10, points[i][1])
-
-                for obj in self.objects:
-                    if isinstance(obj, gameobjects.GameObject):
-                        obj.rect = pygame.Rect(obj.rect.x + 10, obj.rect.y, obj.rect.width, obj.rect.height)
-                        for i in range(len(obj.points)):
-                            obj.points[i] = (obj.points[i][0] + 10, obj.points[i][1])
-
-            if keys[pygame.K_UP]:  # Up arrow key is held down
-                for i in range(len(points)):
-                    points[i] = (points[i][0], points[i][1] + 10)
-                for obj in self.objects:
-                    if isinstance(obj, gameobjects.GameObject):
-                        obj.rect = pygame.Rect(obj.rect.x, obj.rect.y + 10, obj.rect.width, obj.rect.height)
-                        for i in range(len(obj.points)):
-                            obj.points[i] = (obj.points[i][0], obj.points[i][1] + 10)
-
-            if keys[pygame.K_DOWN]:  # Down arrow key is held down
-                for i in range(len(points)):
-                    points[i] = (points[i][0], points[i][1] - 10)
-
-                for obj in self.objects:
-                    if isinstance(obj, gameobjects.GameObject):
-                        obj.rect = pygame.Rect(obj.rect.x, obj.rect.y - 10, obj.rect.width, obj.rect.height)
-                        for i in range(len(obj.points)):
-                            obj.points[i] = (obj.points[i][0], obj.points[i][1] - 10)
+            self.camera.update()
 
 
         for event in pygame.event.get():
@@ -324,7 +284,7 @@ class Game:
                         self.rightclickedmousepos = event.pos
                         if self.isDrawingModeOn:
                             self.rPressed = 1
-                            self.movePoints(points, event.pos)
+                            self.movePoints(self.points, event.pos)
 
 
                 if event.type == pygame.MOUSEWHEEL:
@@ -339,7 +299,7 @@ class Game:
                         self.selected_object.selected(pygame.mouse.get_pos())
                     elif event.key == 13 and self.isDrawingModeOn:
                         self.createPoly(False)
-                    elif event.key == pygame.K_BACKSPACE and len(points) > 0:
+                    elif event.key == pygame.K_BACKSPACE and len(self.points) > 0:
                         polygonDrawing.popapoint(self.polygonDrawing)
 
 

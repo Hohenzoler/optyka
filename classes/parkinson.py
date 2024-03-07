@@ -186,6 +186,10 @@ class UnityParticleSystem:
             particle_y = 10
         if keys[pygame.K_DOWN]:  # Down arrow key is held down
             particle_y = -10
+        if keys[pygame.K_RIGHT] and keys[pygame.K_LEFT]:
+            particle_x = 0
+        if keys[pygame.K_UP] and keys[pygame.K_DOWN]:
+            particle_y = 0
         for particle in self.particles:
             particle.update(particle_x, particle_y)
             if particle.lifespan <= 0:
