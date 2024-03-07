@@ -1,3 +1,5 @@
+import subprocess
+
 import classes.game
 import pygame
 from classes import gameobjects, images
@@ -150,6 +152,12 @@ class Button:
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
 
+        elif self.number == -4:  # Assuming -4 is the ID for the new button
+            self.color = (255, 123, 54)
+            # self.icon = images.k_editor_icon  # Assuming you have an icon for k_editor
+            # self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
+            # self.icon_rect = self.icon.get_rect(center=self.rect.center)
+
 
 
         else:
@@ -260,6 +268,9 @@ class Button:
                     self.game.mode = 'settings'
                 elif self.number == -3:
                     self.game.mode = 'achievements'
+                elif self.number == -4:  # Assuming -4 is the ID for the new button
+                    # Code to open k_editor window
+                    subprocess.Popen(["python", "classes/k_editor.py"])
                 try:
                     self.game.objects.append(obj)
                     obj.selected(mousepos)

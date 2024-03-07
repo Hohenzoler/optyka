@@ -29,7 +29,7 @@ class GUI:
 
         self.bin = bin.Bin(self.game)
 
-        self.button_min = -3
+        self.button_min = -4
         self.button_max = 7
 
         self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
@@ -51,6 +51,8 @@ class GUI:
 
 
     def tooltip_list(self, id):
+        if id == -4:  # Assuming -4 is the ID for the new button
+            return "K Editor"
         if id == -3:
             return "Achievements"
         elif id == -2:
