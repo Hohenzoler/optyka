@@ -51,8 +51,6 @@ class GUI:
 
 
     def tooltip_list(self, id):
-        if id == -4:  # Assuming -4 is the ID for the new button
-            return "K Editor"
         if id == -3:
             return "Achievements"
         elif id == -2:

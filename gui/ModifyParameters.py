@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 from classes import gameobjects
 import ttkbootstrap as ttk
-import os
 
 class Parameters:
     def __init__(self, object):
