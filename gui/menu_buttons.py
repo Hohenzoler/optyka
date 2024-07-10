@@ -10,7 +10,7 @@ class ButtonMenus:
         self.options = []
         self.width = self.ss.width // 5
         self.height = self.ss.width // 20
-        gap_size = self.ss.height//47
+        gap_size = self.ss.height // 47
         self.x = self.ss.width // 2 + self.width // 3
         self.y = self.ss.height // 4 + number * (self.height + gap_size)
         from classes.font import Font
@@ -77,7 +77,6 @@ class ButtonMenus:
         option_text = self.font.render(self.selected_option_2, True, self.text_color)
         option_text_rect = option_text.get_rect(center=self.rect.center)
         self.screen.blit(option_text, option_text_rect)
-
 
     def checkcollision(self, pos):
 

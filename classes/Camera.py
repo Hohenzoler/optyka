@@ -1,15 +1,16 @@
 import pygame
 from classes import gameobjects
 
+
 class Camera:
     def __init__(self, x, y, game):
         self.x = x
         self.y = y
         self.game = game
-    
+
     def update(self):
         keys = pygame.key.get_pressed()
-        
+
         if keys[pygame.K_RIGHT]:  # Right arrow key is held down
             for i in range(len(self.game.points)):
                 self.game.points[i] = (self.game.points[i][0] - 10, self.game.points[i][1])

@@ -2,6 +2,7 @@ from PIL import Image
 import numpy as np
 from collections import Counter
 
+
 def get_colors(image_path, num_colors=1):
     """
     This function takes an image path and a number of colors as input, and returns the most common colors in the image.

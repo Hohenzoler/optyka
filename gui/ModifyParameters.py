@@ -3,6 +3,7 @@ from tkinter import messagebox
 from classes import gameobjects
 import ttkbootstrap as ttk
 
+
 class Parameters:
     def __init__(self, object):
         self.root = ttk.Window(themename='solar')
@@ -35,9 +36,8 @@ class Parameters:
         title_label = tk.Label(self.root, text="Enter Parameters:")
         title_label.grid(row=0, column=0, columnspan=2, pady=10)
 
-
         for idx, param in enumerate(self.parameters_dict):
-            self.create_element(param, idx+1)
+            self.create_element(param, idx + 1)
 
         # Create a button to store parameters
         self.store_button = tk.Button(self.root, text="Store Parameters", command=self.store_parameters)
@@ -48,7 +48,7 @@ class Parameters:
         if type(object) == gameobjects.Lens:
             l -= 2
 
-        self.root.geometry(f'400x{100*l}')
+        self.root.geometry(f'400x{100 * l}')
 
         self.root.mainloop()
 
@@ -68,7 +68,8 @@ class Parameters:
                     label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
 
                 if param == 'red' or param == 'blue' or param == 'green':
-                    slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150, command=lambda value, param=param: self.update_color_preview(param))
+                    slider = tk.Scale(self.root, from_=0, to=255, orient=tk.HORIZONTAL, length=150,
+                                      command=lambda value, param=param: self.update_color_preview(param))
                     slider.set(self.parameters_dict[param])
                     slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                     self.sliders.append(slider)
@@ -87,17 +88,16 @@ class Parameters:
                 #     self.TextureDropdown.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                 #     self.TextureDropdown.set(self.parameters_dict[param].capitalize())
 
-
                 elif param == 'transmittance':
                     slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, length=150)
-                    value = self.parameters_dict[param]*100
+                    value = self.parameters_dict[param] * 100
                     slider.set(value)
                     slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                     self.sliders_2.append(slider)
 
                 elif param == 'absorbsion_factor':
                     slider = tk.Scale(self.root, from_=0, to=100, orient=tk.HORIZONTAL, length=150)
-                    value = self.parameters_dict[param]*100
+                    value = self.parameters_dict[param] * 100
                     slider.set(value)
                     slider.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                     self.sliders_3.append(slider)
@@ -106,9 +106,9 @@ class Parameters:
                     try:
                         entry = tk.Entry(self.root, width=24, justify='center')
                         if param != 'size':
-                            entry.insert(0, str(self.parameters_dict[param])) # Set default value
+                            entry.insert(0, str(self.parameters_dict[param]))  # Set default value
                         else:
-                            entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')# Set default value
+                            entry.insert(0, f'{str(self.parameters_dict[param] * 100)}%')  # Set default value
                         entry.grid(row=row, column=1, padx=25, pady=5, sticky='w')
                         self.parameters_dict[param] = entry  # Store the Entry widget itself, not its value
                     except Exception as e:
@@ -137,13 +137,11 @@ class Parameters:
 
         if len(self.sliders_2) == 1:
             transmittens = self.get_slider_value(self.sliders_2[0])
-            new_parameters['transmittance'] = transmittens/100
+            new_parameters['transmittance'] = transmittens / 100
 
         if len(self.sliders_3) == 1:
             absorbsion_factor = self.get_slider_value(self.sliders_3[0])
-            new_parameters['absorbsion_factor'] = absorbsion_factor/100
-
-
+            new_parameters['absorbsion_factor'] = absorbsion_factor / 100
 
         if len(self.slider_buttons) > 0:
             lazer_on = {'lazer': self.slider_buttons[0].value}
@@ -154,7 +152,6 @@ class Parameters:
 
         if self.parameters_dict['points'] != None:
             new_parameters['points'] = self.parameters_dict['points']
-
 
         try:
             for param, entry_widget in self.parameters_dict.items():
@@ -183,8 +180,10 @@ class Parameters:
                 # print(new_parameters)
                 new_parameters[param] = value
 
-            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') + new_parameters.get('absorbsion_factor') != 1:
-                messagebox.showwarning("Error", "The sum of reflection factor and transmittance and absorbsion factor must be equal to 100%.")
+            if new_parameters.get('reflection_factor') + new_parameters.get('transmittance') + new_parameters.get(
+                    'absorbsion_factor') != 1:
+                messagebox.showwarning("Error",
+                                       "The sum of reflection factor and transmittance and absorbsion factor must be equal to 100%.")
                 return
 
 
@@ -202,7 +201,6 @@ class Parameters:
 
     def passed(self):
         pass
-
 
 
 class ToggleSwitch(tk.Canvas):
@@ -251,6 +249,8 @@ class ToggleSwitch(tk.Canvas):
         self.create_oval(2, 2, 28, 28, fill=hex_color, outline="black", width=2, tags="slider")
 
         self.move("slider", amount_to_move, 0)
+
+
 class TestObj:
     def __init__(self):
         self.parameters = {'x': 100, 'y': 250, 'angle': 90, 'lazer': False, 'red': 198, 'green': 23, 'blue': 103}

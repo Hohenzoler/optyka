@@ -1,12 +1,13 @@
 import pygame
 
+
 class Mixer:
     def __init__(self, settings):
         self.mastervolume = settings['MASTER_VOLUME']
-        self.soundtrackvolume = settings['SOUNDTRACK_VOLUME']*self.mastervolume
-        self.objectvolume = settings["OBJECT_VOLUME"]*self.mastervolume
-        self.actionvolume = settings["ACTION_VOLUME"]*self.mastervolume
-        self.achievementvolume = settings["ACHIEVEMENT_VOLUME"]*self.mastervolume
+        self.soundtrackvolume = settings['SOUNDTRACK_VOLUME'] * self.mastervolume
+        self.objectvolume = settings["OBJECT_VOLUME"] * self.mastervolume
+        self.actionvolume = settings["ACTION_VOLUME"] * self.mastervolume
+        self.achievementvolume = settings["ACHIEVEMENT_VOLUME"] * self.mastervolume
 
     def selected_sound(self):
         selected_sound = pygame.mixer.Sound('sounds/metsej/metsej_1.wav')

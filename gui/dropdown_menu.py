@@ -12,7 +12,7 @@ class DropdownMenu:
         self.options = []
         self.width = self.ss.width // 5
         self.height = self.ss.width // 20
-        gap_size = self.ss.height//47
+        gap_size = self.ss.height // 47
         self.x = self.ss.width // 2 + self.width // 2
         self.y = self.ss.height // 2 - number * (self.height + gap_size)  # Adjusted y based on the number and gap size
         from classes.font import Font
@@ -46,7 +46,6 @@ class DropdownMenu:
 
             self.selected_option_2 = s['FULLSCREEN']
 
-
     def render(self):
         pygame.draw.rect(self.screen, (55, 55, 55), (self.x, self.y, self.width, self.height))
         pygame.draw.rect(self.screen, self.text_color, (self.x, self.y, self.width, self.height), 2)
@@ -64,7 +63,6 @@ class DropdownMenu:
                 option_text = self.font.render(option, True, self.text_color)
                 option_text_rect = option_text.get_rect(center=option_rect.center)
                 self.screen.blit(option_text, option_text_rect)
-
 
     def checkcollision(self, pos):
         if self.rect.collidepoint(pos):

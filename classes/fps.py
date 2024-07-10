@@ -11,6 +11,7 @@ try:
 except:
     pass
 
+
 def refresh_rate(device):
     """
     Function to get the refresh rate of the device.
@@ -27,6 +28,7 @@ def refresh_rate(device):
     except:
         return 60
 
+
 def gpuInfo(device):
     """
     Function to get the GPU information of the device.
@@ -38,9 +40,10 @@ def gpuInfo(device):
         The GPU information of the device. If an error occurs, it returns "GPU not found".
     """
     try:
-        return((device.DeviceString))
+        return ((device.DeviceString))
     except:
         return "GPU not found"
+
 
 def get_cpu_type():
     """
@@ -56,6 +59,7 @@ def get_cpu_type():
     except:
         return "CPU not found"
 
+
 def return_fps():
     """
     Function to get the frames per second (fps) of the device.
@@ -64,6 +68,6 @@ def return_fps():
         The fps of the device. If an error occurs, it tries to get the fps for "amogus" and returns that.
     """
     try:
-        return refresh_rate(device_info)+1
+        return refresh_rate(device_info) + 1
     except:
-        return refresh_rate("amogus")+1
+        return refresh_rate("amogus") + 1

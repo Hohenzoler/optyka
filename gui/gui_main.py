@@ -2,6 +2,7 @@ import pygame
 from gui import button
 from classes import bin
 
+
 class GUI:
     def __init__(self, game):
         self.game = game
@@ -10,22 +11,20 @@ class GUI:
         self.position = self.game.settings['HOTBAR_POSITION']
 
         if self.position == 'bottom':
-            self.rect = pygame.Rect(0, self.height*10 - self.height, self.width, self.height)
+            self.rect = pygame.Rect(0, self.height * 10 - self.height, self.width, self.height)
         elif self.position == 'left':
-            self.rect = pygame.Rect(0, 0, self.width//10, self.height*10)
+            self.rect = pygame.Rect(0, 0, self.width // 10, self.height * 10)
             # self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'right':
-            self.rect = pygame.Rect(self.width - self.width//10, 0, self.width//10, self.height*10)
+            self.rect = pygame.Rect(self.width - self.width // 10, 0, self.width // 10, self.height * 10)
             # self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
             # self.game.achievements.handle_achievement_unlocked("U are weird...")
 
-
         self.layer = 3  # Assign a higher layer value to GUI to ensure it's rendered on top
         self.game.objects.append(self)
         self.f = None
-
 
         self.bin = bin.Bin(self.game)
 
@@ -35,12 +34,11 @@ class GUI:
         self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
                         range(self.button_min, self.button_max)]  # creates buttons
 
-
     def render(self):
         transparent_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
         transparent_surface.fill((100, 100, 100, 200))
         self.game.screen.blit(transparent_surface, self.rect.topleft)
-        for button in self.buttons: #renders buttons
+        for button in self.buttons:  # renders buttons
             button.render()
 
     def checkifclicked(self, mousepos):
@@ -48,7 +46,6 @@ class GUI:
             return
         for button in self.buttons:
             button.checkifclicked(mousepos)
-
 
     def tooltip_list(self, id):
         if id == -3:
@@ -88,4 +85,5 @@ class GUI:
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
 
-        self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in range(self.button_min, self.button_max)] #creates buttons
+        self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
+                        range(self.button_min, self.button_max)]  # creates buttons

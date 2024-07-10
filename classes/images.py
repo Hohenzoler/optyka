@@ -2,7 +2,6 @@ import pygame  # Importing the pygame module
 import imgtocode  # Importing the imgtocode module
 import os  # Importing the os module
 
-
 imgtocode.generateImages()  # Generating images if the directory does not exist
 
 # Loading various images using the pygame module

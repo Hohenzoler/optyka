@@ -1,5 +1,7 @@
 import sqlite3
 import time
+
+
 # from classes import mixer_c
 
 class Achievements:
@@ -16,7 +18,6 @@ class Achievements:
         self.conn.commit()
         self.game = game
         self.start_time = time.time()
-
 
         # Define the dictionary of achievements
         self.achievements_dict = {

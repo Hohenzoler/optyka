@@ -39,6 +39,7 @@ class Particle:
     draw(screen):
         Draws the particle on the given screen
     """
+
     def __init__(self, x, y, vx, vy, lifespan, size, red, green, blue, alpha, shape):
         """
         Constructs all the necessary attributes for the particle object.
@@ -89,7 +90,7 @@ class Particle:
         self.y += self.vy
         self.y += y
         if self.alpha > 0 and self.lifespan > 0:
-            self.alpha -= self.alpha // (1/2*self.lifespan)
+            self.alpha -= self.alpha // (1 / 2 * self.lifespan)
             self.lifespan -= 2
 
     def draw(self, screen):
@@ -115,6 +116,7 @@ class Particle:
                                     [(self.size, 0), (0, self.size * 2), (self.size * 2, self.size * 2)])
             screen.blit(surface, (self.x - self.size, self.y - self.size))
 
+
 class UnityParticleSystem:
     """
     A class used to represent a Unity Particle System
@@ -135,6 +137,7 @@ class UnityParticleSystem:
     draw(screen):
         Draws all particles in the system on the given screen
     """
+
     def __init__(self):
         """
         Constructs all the necessary attributes for the UnityParticleSystem object.

@@ -25,10 +25,12 @@ from classes import Camera
 
 isDrawingModeOn = False
 
+
 class Game:
     """
     The main game class that handles the game loop, events, rendering and settings.
     """
+
     def __init__(self, save, preset):
         """
         Initializes the game with settings, pygame, objects, and other necessary attributes.
@@ -37,7 +39,7 @@ class Game:
         self.settings = settingsSetup.load_settings()  # Load game settings
         self.width = self.settings['WIDTH']  # Game width
         self.height = self.settings['HEIGHT']  # Game height
-        self.font = pygame.font.Font(Font, self.height//20)  # Font for displaying FPS
+        self.font = pygame.font.Font(Font, self.height // 20)  # Font for displaying FPS
         self.objects = []  # List of game objects
         pygame.init()  # Initialize pygame
         # Set up the game display based on settings
@@ -46,7 +48,6 @@ class Game:
         else:
             self.screen = pygame.display.set_mode((self.width, self.height), vsync=0)
         self.isDrawingModeOn = False
-
 
         self.run = True  # Game loop control
         self.fps = fps.return_fps()  # Frames per second
@@ -68,8 +69,8 @@ class Game:
 
         self.achievements.handle_achievement_unlocked("here is your first achievement ;)")
 
-        self.p = False #used for properties windows for gameobjects
-        self.r_key = False # used for resizing objects
+        self.p = False  # used for properties windows for gameobjects
+        self.r_key = False  # used for resizing objects
 
         self.selected_object = None
 
@@ -77,12 +78,12 @@ class Game:
 
         self.cached_mousepos = None
 
-        self.surface_num = 12 # IMPORTANT lower numbers = higher fps, higher numbers = better quality
+        self.surface_num = 12  # IMPORTANT lower numbers = higher fps, higher numbers = better quality
         self.surfaces = [pygame.Surface((self.width, self.height), pygame.SRCALPHA) for _ in range(self.surface_num)]
         for surface in self.surfaces:
             surface.set_alpha(40)
 
-        self.surface_rays = {i : [] for i in range(self.surface_num)}
+        self.surface_rays = {i: [] for i in range(self.surface_num)}
 
         self.save = False
         self.save_title = None
@@ -104,7 +105,8 @@ class Game:
         self.readyToCheck = False
         self.hotbarRect = None
 
-        obj = gameobjects.Mirror(self, [(1, self.height), (2, self.height), (1, self.height - 1), (1, self.height - 1)], (0, 0, 0, 0), 0.001, 0, 1)
+        obj = gameobjects.Mirror(self, [(1, self.height), (2, self.height), (1, self.height - 1), (1, self.height - 1)],
+                                 (0, 0, 0, 0), 0.001, 0, 1)
         self.objects.append(obj)
 
         self.camera = Camera.Camera(0, 0, self)
@@ -150,12 +152,14 @@ class Game:
                     self.r = -1
                 else:
                     self.r = round(-1 / (time_difference * 9), 2)
+
     def getHitbox(self, points):
         x, y = [], []
         for i in points:
             x.append(i[0])
             y.append(i[1])
         return (min(x), min(y), max(x) - min(x), max(y) - min(y))
+
     def createPoly(self, isReal):
         if isReal == False and len(self.objects) > 3:
             self.readyToCheck = self.getHitbox(self.polygonDrawing.returnPolygonPoints())
@@ -166,7 +170,6 @@ class Game:
             global isDrawingModeOn
             isDrawingModeOn = False
             self.achievements.handle_achievement_unlocked("a new creature")
-
 
     def movePoints(self, points, position):
         linepoints = points
@@ -202,7 +205,6 @@ class Game:
         self.lineDrawing(linepoints)
         self.rPressed = 0
 
-
     def events(self):
         """
         Handles all the pygame events.
@@ -212,14 +214,12 @@ class Game:
         if self.mode == 'default':
             self.camera.update()
 
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.save_game()
                 if self.cancel == False:
                     pygame.quit()
                     quit()
-
 
             if self.mode == 'default':
                 # if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
@@ -250,7 +250,9 @@ class Game:
                                 object.change_curvature_left = False
                             if object.change_curvature_right:
                                 object.change_curvature_right = False
-                        if type(object) in (gameobjects.GameObject, gameobjects.Mirror, gameobjects.Lens, gameobjects.Flashlight, gameobjects.Prism, gameobjects.CustomPolygon, gameobjects.ColoredGlass) and object.resizing:
+                        if type(object) in (
+                        gameobjects.GameObject, gameobjects.Mirror, gameobjects.Lens, gameobjects.Flashlight,
+                        gameobjects.Prism, gameobjects.CustomPolygon, gameobjects.ColoredGlass) and object.resizing:
                             if object.resize_on is False:
                                 for idx, rect in enumerate(object.resize_rects):
                                     if rect.collidepoint(self.mousepos):
@@ -286,7 +288,6 @@ class Game:
                             self.rPressed = 1
                             self.movePoints(self.points, event.pos)
 
-
                 if event.type == pygame.MOUSEWHEEL:
                     self.scrolling(event)
                 if event.type == pygame.KEYDOWN:
@@ -321,6 +322,7 @@ class Game:
                     for object in self.objects:
                         if isinstance(object, music_settings.Music_settings_screen):
                             object.checkevent(event.pos)
+
     def update(self):
         """
         Updates the game display and controls the game FPS.
@@ -370,7 +372,6 @@ class Game:
 
         if self.mode == 'default':
 
-
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
             for object in sorted_objects:
                 if type(object) == settings_screen.Settings_screen:
@@ -385,9 +386,9 @@ class Game:
                     if isinstance(object, gameobjects.GameObject):
                         object.selected(self.rightclickedmousepos)
 
-
                 object.render()
-                if type(object) != bin.Bin and type(object) != achievements_screen.AchievementsScreen and type(object) != settings_screen.Settings_screen:
+                if type(object) != bin.Bin and type(object) != achievements_screen.AchievementsScreen and type(
+                        object) != settings_screen.Settings_screen:
                     for bin_2 in self.objects:
                         if type(bin_2) == bin.Bin:
                             bin_2.checkCollision(object)
@@ -395,14 +396,15 @@ class Game:
             if self.settings['HD_Flashlight'] == 'ON':
                 for surface in self.surfaces:
                     surface.fill((0, 0, 0, 0))
-                #self.surfaces = [surface.copy() for surface in self.default_surfaces]
+                # self.surfaces = [surface.copy() for surface in self.default_surfaces]
 
                 for surface_num, rays in self.surface_rays.items():
-                    if surface_num > self.surface_num -1:
+                    if surface_num > self.surface_num - 1:
                         break
                     for ray in rays:
-                        functions.draw_thick_line(self.surfaces[surface_num], int(ray.start_point[0]), int(ray.start_point[1]),
-                                             int(ray.end_point[0]), int(ray.end_point[1]), ray.color, 5)
+                        functions.draw_thick_line(self.surfaces[surface_num], int(ray.start_point[0]),
+                                                  int(ray.start_point[1]),
+                                                  int(ray.end_point[0]), int(ray.end_point[1]), ray.color, 5)
                     self.screen.blit(self.surfaces[surface_num], (0, 0))
 
                 self.surface_rays = {i: [] for i in range(self.surface_num)}
@@ -490,9 +492,6 @@ class Game:
         else:
             self.screen.blit(self.cursor_img, self.cursor_img_rect)  # draw the cursor
 
-
-
-
     def background(self):
         # Use the background color attribute to fill the game display
         self.screen.fill(self.background_color)
@@ -539,7 +538,7 @@ class Game:
         else:
             self.x = self.width // 10
 
-        self.screen.blit(time_text, (self.width-(time_text.get_rect().width*1.1)-self.x, self.y))
+        self.screen.blit(time_text, (self.width - (time_text.get_rect().width * 1.1) - self.x, self.y))
         return time_text
 
     def achievement_popup(self, achname, rarity):
@@ -567,8 +566,6 @@ class Game:
                 self.load()
                 self.save_to_load = None
 
-
-
     def load(self):
         if not self.preset:
             try:
@@ -592,20 +589,32 @@ class Game:
             mousepos = (500, 500)
 
             if parameters['class'] == "Flashlight":
-                obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]), (mousepos[0] + 200, mousepos[1] + 100), (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, 0.5, image=images.torch)
+                obj = gameobjects.Flashlight(self, [(mousepos[0], mousepos[1]), (mousepos[0] + 200, mousepos[1]),
+                                                    (mousepos[0] + 200, mousepos[1] + 100),
+                                                    (mousepos[0], mousepos[1] + 100)], (255, 255, 255), 0, 0.4, 0.5,
+                                             image=images.torch)
 
             elif parameters['class'] == "Mirror":
-                obj = gameobjects.Mirror(self, [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0.9, 0.5)
+                obj = gameobjects.Mirror(self,
+                                         [(mousepos[0] - 100, mousepos[1] - 50), (mousepos[0] + 100, mousepos[1] - 50),
+                                          (mousepos[0] + 100, mousepos[1] + 50), (mousepos[0] - 100, mousepos[1] + 50)],
+                                         (255, 0, 0), 0, 0.9, 0.5)
 
             elif parameters['class'] == "ColoredGlass":
-                obj = gameobjects.ColoredGlass(self, [(mousepos[0] - 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] - 50), (mousepos[0] + 10, mousepos[1] + 50), (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0.4, 0.5)
+                obj = gameobjects.ColoredGlass(self, [(mousepos[0] - 10, mousepos[1] - 50),
+                                                      (mousepos[0] + 10, mousepos[1] - 50),
+                                                      (mousepos[0] + 10, mousepos[1] + 50),
+                                                      (mousepos[0] - 10, mousepos[1] + 50)], (0, 255, 0), 0, 0.4, 0.5)
 
             elif parameters['class'] == "Prism":
-                obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100), (mousepos[0] + 50, mousepos[1])], None, 0, 1, 0)
+                obj = gameobjects.Prism(self, [(mousepos[0] - 50, mousepos[1]), (mousepos[0], mousepos[1] - 100),
+                                               (mousepos[0] + 50, mousepos[1])], None, 0, 1, 0)
 
             elif parameters['class'] == "Lens":
-                if  parameters['curvature_radius'] != 0 and parameters['curvature_radius_2'] != 0:
-                    obj = gameobjects.Lens(self, parameters['points'], (64, 137, 189), 0, parameters['curvature_radius'], 0, 1, parameters['curvature_radius_2'], parameters['refraction index'])
+                if parameters['curvature_radius'] != 0 and parameters['curvature_radius_2'] != 0:
+                    obj = gameobjects.Lens(self, parameters['points'], (64, 137, 189), 0,
+                                           parameters['curvature_radius'], 0, 1, parameters['curvature_radius_2'],
+                                           parameters['refraction index'])
                 elif parameters['curvature_radius_2'] == 0:
                     obj = gameobjects.Lens(self, parameters['points'], (64, 137, 189), 0,
                                            parameters['curvature_radius'], 0, 1, None,
@@ -616,9 +625,9 @@ class Game:
                                            parameters['refraction index'])
             elif parameters['class'] == "Corridor":
                 obj = gameobjects.Corridor(self, [(mousepos[0] - 100, mousepos[1] - 50),
-                                                       (mousepos[0] + 100, mousepos[1] - 50),
-                                                       (mousepos[0] + 100, mousepos[1] + 50),
-                                                       (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0, 0,
+                                                  (mousepos[0] + 100, mousepos[1] - 50),
+                                                  (mousepos[0] + 100, mousepos[1] + 50),
+                                                  (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0, 0,
                                            image_path=images.corridor)
 
             obj.parameters = parameters
@@ -627,6 +636,7 @@ class Game:
                 self.objects.insert(3, obj)
             else:
                 self.objects.append(obj)
+
     def generate_save(self):
         self.save_obj = []
 
@@ -642,7 +652,6 @@ class Game:
                 print(object.parameters)
         if not os.path.exists("saves"):
             os.makedirs("saves")
-
 
     def save_to_file(self):
         if os.path.exists(f'saves/{self.save_title}'):

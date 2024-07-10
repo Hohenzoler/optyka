@@ -5,6 +5,7 @@ from ttkbootstrap import Style
 import os
 import tkinter.messagebox as messagebox
 
+
 class Save:
     """
     A class to represent the save functionality of a game.
@@ -113,4 +114,3 @@ class Save:
         self.game.cancel = True
         self.root.destroy()
         self.root.quit()
-
