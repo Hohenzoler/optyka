@@ -91,6 +91,7 @@ class GameObject:
                                    (self.points[0][0], self.points[0][1])))
             self.triangles_generated = True  # Set the flag to True after generating triangles
 
+
         return self.triangles
 
     def get_slopes(self):
@@ -98,7 +99,7 @@ class GameObject:
         self.slopes.append((self.points[len(self.points) - 1], self.points[0]))
 
     def draw_triangle(self, index):
-        pygame.gfxdraw.aapolygon(self.game.screen, (255, 255, 255), self.triangles[index])
+        pygame.gfxdraw.aapolygon(self.game.screen, self.triangles[index], (255, 0, 0))
 
     def draw_Poly(self):
         pygame.gfxdraw.filled_polygon(self.game.screen, self.points, self.color)
@@ -194,6 +195,10 @@ class GameObject:
             else:
                 self.adjust(mousepos[0], mousepos[1], 0)
             self.drawoutline()
+
+            #draw triangles
+            for i in range(len(self.get_triangles())):
+                self.draw_triangle(i)
 
     def rotate_points(self, points, angle):
 
