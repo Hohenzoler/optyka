@@ -390,7 +390,7 @@ class Game:
                 if type(object) != bin.Bin and type(object) != achievements_screen.AchievementsScreen and type(
                         object) != settings_screen.Settings_screen:
                     for bin_2 in self.objects:
-                        if type(bin_2) == bin.Bin:
+                        if type(bin_2) == bin.Bin and bin_2.enabled == True:
                             bin_2.checkCollision(object)
                             break
             if self.settings['HD_Flashlight'] == 'ON':

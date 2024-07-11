@@ -3,6 +3,7 @@ from classes import gameobjects as go
 from classes import parkinson as particles, achievements, color_picker
 import random
 from classes import light
+from classes import images
 
 
 class Bin:
@@ -18,6 +19,7 @@ class Bin:
         Args:
             game (Game): The game object that this Bin is part of.
         """
+        self.enabled = True
         self.particle_system = particles.UnityParticleSystem()
         self.game = game
         self.x = self.game.width - 150
@@ -30,7 +32,7 @@ class Bin:
 
         self.game.objects.append(self)
 
-        self.bin_img = pygame.image.load("images/trash1.png")
+        self.bin_img = images.bin
 
         self.load_parameters()
 
@@ -69,9 +71,24 @@ class Bin:
         """
         Renders the Bin on the game screen.
         """
-        self.game.screen.blit(self.bin_img, self.rect)
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left click
+                mouse_pos = event.pos
+                # Assuming self.bin is your Bin instance
+                self.toggle_bin(mouse_pos)
+        if self.enabled:
+            self.game.screen.blit(self.bin_img, self.rect)
+        else:
+            disabled_img = pygame.transform.scale(images.disabled_bin, (self.rect_w, self.rect_h))
+            self.game.screen.blit(disabled_img, self.rect)
         self.particle_system.update()
         self.particle_system.draw(self.game.screen)
+
+    def toggle_bin(self, mouse_pos):
+        # Check if the click is within the bin's rectangle
+        if self.rect.collidepoint(mouse_pos):
+            self.enabled = not self.enabled
+
 
     def load_settings(self):
         """
