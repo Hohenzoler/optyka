@@ -20,6 +20,7 @@ class Camera:
                     obj.rect = pygame.Rect(obj.rect.x - 10, obj.rect.y, obj.rect.width, obj.rect.height)
                     for i in range(len(obj.points)):
                         obj.points[i] = (obj.points[i][0] - 10, obj.points[i][1])
+            self.x -= 10
 
         if keys[pygame.K_LEFT]:  # Left arrow key is held down
             for i in range(len(self.game.points)):
@@ -30,6 +31,7 @@ class Camera:
                     obj.rect = pygame.Rect(obj.rect.x + 10, obj.rect.y, obj.rect.width, obj.rect.height)
                     for i in range(len(obj.points)):
                         obj.points[i] = (obj.points[i][0] + 10, obj.points[i][1])
+            self.x += 10
 
         if keys[pygame.K_UP]:  # Up arrow key is held down
             for i in range(len(self.game.points)):
@@ -40,6 +42,8 @@ class Camera:
                     for i in range(len(obj.points)):
                         obj.points[i] = (obj.points[i][0], obj.points[i][1] + 10)
 
+            self.y += 10
+
         if keys[pygame.K_DOWN]:  # Down arrow key is held down
             for i in range(len(self.game.points)):
                 self.game.points[i] = (self.game.points[i][0], self.game.points[i][1] - 10)
@@ -49,3 +53,5 @@ class Camera:
                     obj.rect = pygame.Rect(obj.rect.x, obj.rect.y - 10, obj.rect.width, obj.rect.height)
                     for i in range(len(obj.points)):
                         obj.points[i] = (obj.points[i][0], obj.points[i][1] - 10)
+
+            self.y -= 10

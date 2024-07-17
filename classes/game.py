@@ -113,6 +113,17 @@ class Game:
 
         print(self.objects)
 
+    def render_text(self, text, position, color=(255, 255, 255)):
+        """
+        Renders text at the specified position.
+        :param text: The text to render.
+        :param position: A tuple (x, y) representing where to render the text.
+        :param color: The color of the text.
+        """
+        font = pygame.font.Font(None, 24)  # You can adjust the font and size
+        text_surface = font.render(text, True, color)
+        self.screen.blit(text_surface, position)
+
     def create_cursor_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
         self.cursor_particle_system.add_particle(
@@ -373,6 +384,16 @@ class Game:
         self.render_particles()
 
         if self.mode == 'default':
+
+            camera_coords_text = f"Camera X: {self.camera.x}, Y: {self.camera.y}"
+            self.render_text(camera_coords_text, (10, 200))  # Adjust position as needed
+
+            for i, obj in enumerate(self.objects):
+                if hasattr(obj, 'x') and hasattr(obj, 'y'):
+                    object_coords_text = f"Obj {i} X: {obj.x}, Y: {obj.y}"
+                else:
+                    object_coords_text = f"Obj {i} X: N/A, Y: N/A"
+                self.render_text(object_coords_text, (10, 220 + i * 20))  # Adjust position as needed
 
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
             for object in sorted_objects:
