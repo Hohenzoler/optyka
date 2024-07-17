@@ -103,7 +103,7 @@ class Save:
             self.dir = "saves"
             self.saves_files = [file[:-5] for file in os.listdir(self.dir) if file.endswith('.json')]
 
-            if self.game.save_title in self.saves_files and self.old_save_title != self.game.save_title:
+            if self.game.save_title in self.saves_files:
                 messagebox.showerror("Error", "You can not save your game with the same name as another save file.")
             else:
                 self.game.save_to_file()
