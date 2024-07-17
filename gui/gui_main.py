@@ -35,7 +35,7 @@ class GUI:
                         range(self.button_min, self.button_max)]  # creates buttons
         self.transparent_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
 
-        self.draw_gradient(self.transparent_surface, (100, 100, 100, 200), (50, 50, 50, 200), "vertical")
+        self.draw_gradient(self.transparent_surface, (220, 220, 200, 125), (0, 50, 50, 220), "vertical")
 
     def draw_gradient(self, surface, start_color, end_color, gradient_direction="vertical"):
         """
