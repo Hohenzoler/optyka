@@ -11,17 +11,11 @@ Optics enhanced is fork of [Optics](https://github.com/Hohenzoler/optyka), which
 </div>
 
 
-## Status
-| Feature              | Status |
-|----------------------|--------|
-| Flashlight           | ✅      |
-| Mirror               | ✅      |
-| Lens                 | ✅      |
-| Prism                | ✅      |
-| Transmittance factor | ✅      |
-| Reflection factor    | ✅      |
-| color                | ✅      |
-| refractive index     | ✅      |
+## New features
+* Enhanced look of hotbar
+* Posibility to disable bin
+* Movable Camera
+* Little optimizations
 
 ## Installation
 There are two ways to install the project: download exe file, or run the project from source.
