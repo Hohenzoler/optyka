@@ -392,9 +392,9 @@ class Game:
 
             for i, obj in enumerate(self.objects):
                 if hasattr(obj, 'x') and hasattr(obj, 'y'):
-                    object_coords_text = f"Obj {i} X: {obj.x}, Y: {obj.y}"
+                    object_coords_text = f"Obj {i} X: {obj.x}, Y: {obj.y}, {obj.__class__.__name__}"
                 else:
-                    object_coords_text = f"Obj {i} X: N/A, Y: N/A"
+                    object_coords_text = f"Obj {i} X: N/A, Y: N/A, {obj.__class__.__name__}"
                 self.render_text(object_coords_text, (10, 220 + i * 20))  # Adjust position as needed
 
             sorted_objects = sorted(self.objects, key=lambda obj: getattr(obj, 'layer', 0))
