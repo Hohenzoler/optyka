@@ -13,7 +13,7 @@ Optics enhanced is fork of [Optics](https://github.com/Hohenzoler/optyka), which
 
 ## New features
 * Enhanced look of hotbar
-* Posibility to disable bin
+* Disabling Bin
 * Movable Camera
 * Little optimizations
 
