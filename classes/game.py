@@ -35,6 +35,9 @@ class Game:
         """
         Initializes the game with settings, pygame, objects, and other necessary attributes.
         """
+
+        self.camera = Camera.Camera(0, 0, self)
+
         self.save_to_load = save
         self.settings = settingsSetup.load_settings()  # Load game settings
         self.width = self.settings['WIDTH']  # Game width
@@ -109,7 +112,6 @@ class Game:
                                  (0, 0, 0, 0), 0.001, 0, 1)
         self.objects.append(obj)
 
-        self.camera = Camera.Camera(0, 0, self)
 
         print(self.objects)
 

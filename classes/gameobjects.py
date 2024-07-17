@@ -515,8 +515,8 @@ class GameObject:
                     self.game.mixer.placed_sound()
 
     def find_parameters(self):
-        centerx = sum(x[0] for x in self.points) / len(self.points)
-        centery = sum(y[1] for y in self.points) / len(self.points)
+        centerx = sum(x[0] for x in self.points) / len(self.points) - self.game.camera.x
+        centery = sum(y[1] for y in self.points) / len(self.points) - self.game.camera.y
 
         self.parameters = {'x': centerx, 'y': centery, 'angle': self.angle}
 
@@ -565,8 +565,8 @@ class GameObject:
         elif d_angle == 270:
             d_angle = 270.001
         self.angle = 0
-        self.x = self.parameters['x']
-        self.y = self.parameters['y']
+        self.x = self.parameters['x'] + self.game.camera.x
+        self.y = self.parameters['y'] + self.game.camera.y
         self.adjust(self.x, self.y, d_angle)
         self.scale_factor = self.parameters['size']
         try:
