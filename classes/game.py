@@ -77,7 +77,7 @@ class Game:
 
         self.selected_object = None
 
-        self.cursor_particle_system = particles.UnityParticleSystem()
+        self.particle_system = particles.UnityParticleSystem()
 
         self.cached_mousepos = None
 
@@ -128,7 +128,7 @@ class Game:
 
     def create_cursor_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        self.cursor_particle_system.add_particle(
+        self.particle_system.add_particle(
             mouse_x, mouse_y,
             random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5),
             200, random.randint(1, 2),
@@ -139,7 +139,7 @@ class Game:
     def create_clicked_particles(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
         for i in range(20):
-            self.cursor_particle_system.add_particle(
+            self.particle_system.add_particle(
                 mouse_x, mouse_y,
                 random.uniform(-1.5, 1.5), random.uniform(-1.5, 1.5),
                 50, random.randint(2, 3),
@@ -358,8 +358,8 @@ class Game:
 
         self.cached_mousepos = pygame.mouse.get_pos()
 
-        self.cursor_particle_system.update()
-        self.cursor_particle_system.draw(self.screen)
+        self.particle_system.update()
+        self.particle_system.draw(self.screen)
 
     def lineDrawing(self, points):
         for i in range(len(points)):

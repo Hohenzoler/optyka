@@ -1,12 +1,15 @@
 import pygame
 from classes import gameobjects
-
+from classes import parkinson
+import random
 
 class Camera:
     def __init__(self, x, y, game):
         self.x = x
         self.y = y
         self.game = game
+        self.particle_system = parkinson.UnityParticleSystem()
+
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -21,6 +24,7 @@ class Camera:
                     for i in range(len(obj.points)):
                         obj.points[i] = (obj.points[i][0] - 10, obj.points[i][1])
             self.x -= 10
+            self.add_movement_particles(direction='right')
 
         if keys[pygame.K_LEFT]:  # Left arrow key is held down
             for i in range(len(self.game.points)):
@@ -32,6 +36,7 @@ class Camera:
                     for i in range(len(obj.points)):
                         obj.points[i] = (obj.points[i][0] + 10, obj.points[i][1])
             self.x += 10
+            self.add_movement_particles(direction='left')
 
         if keys[pygame.K_UP]:  # Up arrow key is held down
             for i in range(len(self.game.points)):
@@ -43,6 +48,7 @@ class Camera:
                         obj.points[i] = (obj.points[i][0], obj.points[i][1] + 10)
 
             self.y += 10
+            self.add_movement_particles(direction='up')
 
         if keys[pygame.K_DOWN]:  # Down arrow key is held down
             for i in range(len(self.game.points)):
@@ -55,3 +61,23 @@ class Camera:
                         obj.points[i] = (obj.points[i][0], obj.points[i][1] - 10)
 
             self.y -= 10
+            self.add_movement_particles(direction='down')
+
+    def add_movement_particles(self, direction):
+        if direction == 'right':
+            vx, vy = -5, 0
+        elif direction == 'left':
+            vx, vy = 5, 0
+        elif direction == 'up':
+            vx, vy = 0, 5
+        elif direction == 'down':
+            vx, vy = 0, -5
+
+        for _ in range(2):  # Adjust the number of particles as needed
+            self.game.particle_system.add_particle(
+                random.randint(0, self.game.width), random.randint(0, self.game.height),
+                vx, vy,
+                100, 5,  # lifespan and size
+                255, 255, 255, 100,  # color and alpha
+                'circle'  # shape
+            )
