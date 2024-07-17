@@ -33,11 +33,36 @@ class GUI:
 
         self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
                         range(self.button_min, self.button_max)]  # creates buttons
+        self.transparent_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
 
+        self.draw_gradient(self.transparent_surface, (100, 100, 100, 200), (50, 50, 50, 200), "vertical")
+
+    def draw_gradient(self, surface, start_color, end_color, gradient_direction="vertical"):
+        """
+        Draws a vertical or horizontal gradient on a surface, supporting transparency.
+
+        :param surface: pygame.Surface to draw on.
+        :param start_color: Tuple of RGBA values for the start color.
+        :param end_color: Tuple of RGBA values for the end color.
+        :param gradient_direction: String, either "vertical" or "horizontal" for the gradient direction.
+        """
+        start_r, start_g, start_b, start_a = start_color
+        end_r, end_g, end_b, end_a = end_color
+        width, height = surface.get_size()
+
+        for i in range(height if gradient_direction == "vertical" else width):
+            r = start_r + (end_r - start_r) * i / (height if gradient_direction == "vertical" else width)
+            g = start_g + (end_g - start_g) * i / (height if gradient_direction == "vertical" else width)
+            b = start_b + (end_b - start_b) * i / (height if gradient_direction == "vertical" else width)
+            a = start_a + (end_a - start_a) * i / (height if gradient_direction == "vertical" else width)
+            color = (int(r), int(g), int(b), int(a))
+            pygame.draw.line(surface, color, (0, i) if gradient_direction == "vertical" else (i, 0),
+                             (width, i) if gradient_direction == "vertical" else (i, height))
+    # In the GUI class, modify the render method to use the gradient
     def render(self):
-        transparent_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
-        transparent_surface.fill((100, 100, 100, 200))
-        self.game.screen.blit(transparent_surface, self.rect.topleft)
+
+        # Apply a gradient instead of a solid fill
+        self.game.screen.blit(self.transparent_surface, self.rect.topleft)
         for button in self.buttons:  # renders buttons
             button.render()
 
