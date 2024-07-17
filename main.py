@@ -24,7 +24,7 @@ log_file = f"logs/{datetime.now().strftime('%Y-%m-%d')}.log"
 logging.basicConfig(filename=log_file, level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-version = '1.1.1-enhanced-beta'
+version = '1.1.1-enhanced'
 
 def new_game(save, preset):
     try:
