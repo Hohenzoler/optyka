@@ -245,6 +245,8 @@ class Game:
                         self.rPressed = 2
 
                     for object in self.objects:
+                        if type(object) == bin.Bin:
+                            object.toggle_bin(self.mousepos)
                         if type(object) == gameobjects.Lens:
                             if object.change_curvature_left:
                                 object.change_curvature_left = False

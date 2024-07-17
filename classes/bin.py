@@ -71,11 +71,6 @@ class Bin:
         """
         Renders the Bin on the game screen.
         """
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left click
-                mouse_pos = event.pos
-                # Assuming self.bin is your Bin instance
-                self.toggle_bin(mouse_pos)
         if self.enabled:
             self.game.screen.blit(self.bin_img, self.rect)
         else:
