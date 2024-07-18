@@ -50,9 +50,9 @@ class Particle:
                 x-coordinate of the particle
             y : int
                 y-coordinate of the particle
-            vx : int
+            vx : float
                 velocity in x-direction
-            vy : int
+            vy : float
                 velocity in y-direction
             lifespan : int
                 lifespan of the particle
@@ -154,9 +154,9 @@ class UnityParticleSystem:
                 x-coordinate of the particle
             y : int
                 y-coordinate of the particle
-            vx : int
+            vx : float
                 velocity in x-direction
-            vy : int
+            vy : float
                 velocity in y-direction
             lifespan : int
                 lifespan of the particle
