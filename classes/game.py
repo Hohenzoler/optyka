@@ -108,10 +108,6 @@ class Game:
         self.readyToCheck = False
         self.hotbarRect = None
 
-        obj = gameobjects.Mirror(self, [(1, self.height), (2, self.height), (1, self.height - 1), (1, self.height - 1)],
-                                 (0, 0, 0, 0), 0.001, 0, 1)
-        self.objects.append(obj)
-
 
         print(self.objects)
 
