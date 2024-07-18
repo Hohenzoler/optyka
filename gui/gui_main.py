@@ -105,10 +105,13 @@ class GUI:
             self.rect = pygame.Rect(0, self.height * 10 - self.height, self.width, self.height)
         elif self.position == 'left':
             self.rect = pygame.Rect(0, 0, self.width // 10, self.height * 10)
+            self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'right':
             self.rect = pygame.Rect(self.width - self.width // 10, 0, self.width // 10, self.height * 10)
+            self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
+            self.game.achievements.handle_achievement_unlocked("U are weird...")
 
         self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
                         range(self.button_min, self.button_max)]  # creates buttons
