@@ -1,0 +1,235 @@
+[
+  "Making use of new features",
+  {
+    "x": 574.0,
+    "y": 729.0,
+    "angle": 325.731,
+    "size": 1,
+    "points": [
+      [
+        64,
+        1015
+      ],
+      [
+        264,
+        1015
+      ],
+      [
+        264,
+        1115
+      ],
+      [
+        64,
+        1115
+      ]
+    ],
+    "red": 255,
+    "green": 255,
+    "blue": 255,
+    "class": "Flashlight"
+  },
+  {
+    "x": 880.0,
+    "y": 579.0,
+    "angle": 355.021,
+    "size": 1,
+    "refraction index": 1.52,
+    "absorbsion_factor": 0,
+    "transmittance": 1,
+    "points": [
+      [
+        309,
+        1045
+      ],
+      [
+        359,
+        938.3974596215561
+      ],
+      [
+        409,
+        1045
+      ]
+    ],
+    "class": "Prism"
+  },
+  {
+    "x": 3124.0,
+    "y": 101.0,
+    "angle": 44.97099999999991,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        81,
+        963
+      ],
+      [
+        281,
+        963
+      ],
+      [
+        281,
+        1063
+      ],
+      [
+        81,
+        1063
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 2865.0,
+    "y": 2160.0,
+    "angle": 324.381,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        48,
+        1003
+      ],
+      [
+        248,
+        1003
+      ],
+      [
+        248,
+        1103
+      ],
+      [
+        48,
+        1103
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 625.0,
+    "y": 1792.0,
+    "angle": 48.58099999999996,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        95,
+        977
+      ],
+      [
+        295,
+        977
+      ],
+      [
+        295,
+        1077
+      ],
+      [
+        95,
+        1077
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": 1276.0,
+    "y": 488.0,
+    "angle": 0.001,
+    "size": 1.0,
+    "absorbsion_factor": 0.0,
+    "transmittance": 0.48,
+    "points": [
+      [
+        84,
+        971
+      ],
+      [
+        284,
+        971
+      ],
+      [
+        284,
+        1071
+      ],
+      [
+        84,
+        1071
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": -577.0,
+    "y": 164.0,
+    "angle": 319.4510000000001,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        73,
+        967
+      ],
+      [
+        273,
+        967
+      ],
+      [
+        273,
+        1067
+      ],
+      [
+        73,
+        1067
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  },
+  {
+    "x": -583.0,
+    "y": 1667.0,
+    "angle": 46.85100000000001,
+    "size": 1,
+    "absorbsion_factor": 0,
+    "transmittance": 0,
+    "points": [
+      [
+        63,
+        953
+      ],
+      [
+        263,
+        953
+      ],
+      [
+        263,
+        1053
+      ],
+      [
+        63,
+        1053
+      ]
+    ],
+    "red": 200,
+    "green": 200,
+    "blue": 200,
+    "class": "Mirror"
+  }
+]
