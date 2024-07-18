@@ -74,6 +74,7 @@ class Bin:
         if self.enabled:
             self.game.screen.blit(self.bin_img, self.rect)
         else:
+            achievements.Achievements.handle_achievement_unlocked(self.achievements, "why disable me?")
             disabled_img = pygame.transform.scale(images.disabled_bin, (self.rect_w, self.rect_h))
             self.game.screen.blit(disabled_img, self.rect)
         self.particle_system.update()

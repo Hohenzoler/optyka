@@ -29,6 +29,7 @@ class Achievements:
             "a whole new world": "common",
             "kaboom": "uncommon",
             "a new creature": "uncommon",
+            "why disable me?": "uncommon",
             "you just found more options": "rare",
             "U are weird...": "rare",
             # "not much time left to live": "rare",
