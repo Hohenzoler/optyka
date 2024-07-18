@@ -323,10 +323,12 @@ class Game:
                             object.checkevent(event.pos)
 
             elif self.mode == 'achievements':
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    for object in self.objects:
-                        if isinstance(object, achievements_screen.AchievementsScreen):
-                            object.checkevent(event.pos)
+                # Inside the Game class events method
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 4:  # Mouse scroll up
+                        self.achievements_screen.handle_scroll(-1)
+                    elif event.button == 5:  # Mouse scroll down
+                        self.achievements_screen.handle_scroll(1)
 
             elif self.mode == 'music':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

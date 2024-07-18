@@ -17,6 +17,8 @@ class AchievementsScreen:
         self.font = pygame.font.Font(None, 24)  # Adjust the font size as needed
         self.achievements = []
 
+        self.scroll_position = 0
+
         self.mixer = self.game.mixer
 
         self.rarity_values = {
@@ -34,6 +36,12 @@ class AchievementsScreen:
         self.back_animation = ButtonAnimation(back, back.rect.x*6+(back.width//2), back.rect.y)
 
         self.game.objects.append(self)
+
+    def handle_scroll(self, direction):
+        print(f"Scrolling {'up' if direction > 0 else 'down'}")
+        self.scroll_position += direction * 20
+        self.scroll_position = max(self.scroll_position, 0)
+        self.scroll_position = min(self.scroll_position, len(self.achievements) * 50)
 
     def checkevent(self, pos):
         for object in self.objects:
@@ -88,6 +96,9 @@ class AchievementsScreen:
 
         y_offset1 = 100
         y_offset2 = 100
+
+        y_offset1 -= self.scroll_position  # Adjust starting position based on scroll
+        y_offset2 -= self.scroll_position
 
         for i, achievement in enumerate(self.achievements):
             if i % 2 == 0:
