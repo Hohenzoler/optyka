@@ -38,7 +38,7 @@ class AchievementsScreen:
         self.game.objects.append(self)
 
     def handle_scroll(self, direction):
-        print(f"Scrolling {'up' if direction > 0 else 'down'}")
+        print(f"Scrolling {'up' if direction < 0 else 'down'}")
         self.scroll_position += direction * 20
         self.scroll_position = max(self.scroll_position, 0)
         self.scroll_position = min(self.scroll_position, len(self.achievements) * 50 //2)
