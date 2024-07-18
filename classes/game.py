@@ -692,7 +692,7 @@ class Game:
         if not self.preset:
             self.generate_save()
             print(len(self.objects))
-            if len(self.objects) > 3:
+            if len(self.objects) > 2:
 
                 if self.save_title != None:
                     prev_save_data = settingsSetup.load_settings(f'saves/{self.save_title}.json')
@@ -707,12 +707,12 @@ class Game:
                     pygame.mouse.set_visible(True)
                     a = saveTK.Save(self)
 
-            elif len(self.objects) == 3 and self.save_title != None:
+            elif len(self.objects) == 2 and self.save_title != None:
                 prev_save_data = settingsSetup.load_settings(f'saves/{self.save_title}.json')
                 if len(prev_save_data) != 1:
                     pygame.mouse.set_visible(True)
                     a = saveTK.Save(self)
-            elif len(self.objects) == 3:
+            elif len(self.objects) == 2:
                 pass
             else:
                 pygame.mouse.set_visible(True)
