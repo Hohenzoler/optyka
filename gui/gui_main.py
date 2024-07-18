@@ -112,3 +112,7 @@ class GUI:
 
         self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
                         range(self.button_min, self.button_max)]  # creates buttons
+
+        self.transparent_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
+
+        self.draw_gradient(self.transparent_surface, (220, 220, 200, 125), (0, 50, 50, 220), "vertical")
