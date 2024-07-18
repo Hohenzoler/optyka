@@ -89,7 +89,7 @@ class AchievementsScreen:
         text_rect = text.get_rect()
 
         text_rect.centerx = self.game.screen.get_rect().centerx
-        self.game.screen.blit(text, text_rect)
+
         text_rect.y = 10
 
         midpoint = len(self.achievements) // 2
@@ -109,6 +109,8 @@ class AchievementsScreen:
         self.back_animation.animate()
         for object in self.objects:
             object.render()
+
+        self.game.screen.blit(text, text_rect)
 
     def render_achievement(self, achievement, x_offset, y_offset):
         achievement_name, unlocked, rarity = achievement
