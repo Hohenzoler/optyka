@@ -70,7 +70,7 @@ class Camera:
             self.game.particle_system.add_particle(
                 random.randint(0, self.game.width), random.randint(0, self.game.height),
                 0, 0,
-                100, 5,  # lifespan and size
-                255, 255, 255, 100,  # color and alpha
+                100, random.randint(1, 2),  # lifespan and size
+                random.randint(150, 255), random.randint(150, 255), random.randint(150, 255), 180,  # color and alpha
                 'circle'  # shape
             )
