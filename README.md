@@ -17,6 +17,7 @@ Optics enhanced is fork of [Optics](https://github.com/Hohenzoler/optyka), which
 * Movable Camera
 * New achievements
 * Scrolling in achievement screen
+* Pretty flashlight option
 * Little optimizations
 
 ## Installation
