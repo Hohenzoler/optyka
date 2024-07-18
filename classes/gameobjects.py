@@ -1335,24 +1335,23 @@ class Lens(GameObject):
                     pygame.gfxdraw.filled_polygon(self.game.screen, (
                     self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
                     pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
-                elif self.type == self.SINGLE_VEX or self.type == self.SINGLE_VEX_2:
+                if self.type == self.SINGLE_VEX or self.type == self.SINGLE_VEX_2:
                     pygame.gfxdraw.filled_polygon(self.game.screen,
                                                   self.lens_points2 + [self.lens_points[0], self.lens_points[-1]],
                                                   self.color)
             else:
                 self.generate_points(self.points, self.angle)
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
-                                              self.color)
                 # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
                 # pygame.gfxdraw.filled_polygon(self.game.screen, (
                 # self.lens_points[0], self.lens_points[-1], self.lens_points2[0], self.lens_points2[-1]), self.color)
                 # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points2, self.color)
                 if self.type == self.SINGLE_CAVE_2:
                     self.lens_points.reverse()
-                elif self.type == self.CAVE_VEX or self.type == self.VEX_CAVE:
+                if self.type == self.CAVE_VEX or self.type == self.VEX_CAVE:
                     self.lens_points.reverse()
-
-                elif self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
+                                              self.color)
+                if self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
                     self.lens_points.reverse()
                     # self.lens_points2.reverse()
         else:
@@ -1388,19 +1387,17 @@ class Lens(GameObject):
                                                   self.color)
             else:
                 self.generate_points(self.points, self.angle)
-
-                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
-                                              self.color)
                 # pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points, self.color)
                 # length = len(self.lens_points)//2
                 # lens_points = []
                 # for point in self.lens_points:
                 if self.type == self.SINGLE_CAVE_2:
                     self.lens_points.reverse()
-                elif self.type == self.CAVE_VEX or self.type == self.VEX_CAVE:
+                if self.type == self.CAVE_VEX or self.type == self.VEX_CAVE:
                     self.lens_points.reverse()
-
-                elif self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
+                pygame.gfxdraw.filled_polygon(self.game.screen, self.lens_points + self.lens_points2,
+                                              self.color)
+                if self.type == self.CONCAVE or self.type == self.CAVE_VEX or self.type == self.SINGLE_CAVE_2:
                     self.lens_points.reverse()
                     # self.lens_points2.reverse()
             self.drawoutline()
@@ -1409,33 +1406,33 @@ class Lens(GameObject):
             if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius2 += self.curvature_resize_step
-            elif self.lens_points2[0][0] < self.lens_points[0][0]:
+            if self.lens_points2[0][0] < self.lens_points[0][0]:
                 self.curvature_radius2 += self.curvature_resize_step
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
-            elif self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
+            if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
                 self.curvature_radius += self.curvature_resize_step
-            elif self.lens_points2[0][0] < self.lens_points[0][0]:
+            if self.lens_points2[0][0] < self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
-        elif self.type == self.SINGLE_VEX:
+        if self.type == self.SINGLE_VEX:
             if self.curvature_radius < self.height // 2 + 10:
                 self.curvature_radius += self.curvature_resize_step
-            elif self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
+            if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
                 self.curvature_radius += self.curvature_resize_step
-            elif self.lens_points2[0][0] < self.lens_points[0][0] + 10:
+            if self.lens_points2[0][0] < self.lens_points[0][0] + 10:
                 self.curvature_radius += self.curvature_resize_step
-            elif self.lens_points[0][1] <= self.lens_points2[0][1] - 20:
+            if self.lens_points[0][1] <= self.lens_points2[0][1] - 20:
                 self.curvature_radius = self.height // 2
         if self.type == self.SINGLE_VEX_2:
             if self.curvature_radius2 < self.height // 2 + 10:
                 self.curvature_radius2 += self.curvature_resize_step
-            elif self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
+            if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius2 += self.curvature_resize_step
-            elif self.lens_points2[0][0] < self.lens_points[0][0] + 10:
+            if self.lens_points2[0][0] < self.lens_points[0][0] + 10:
                 self.curvature_radius2 += self.curvature_resize_step
-            elif self.lens_points[0][1] <= self.lens_points2[0][1] - 20:
+            if self.lens_points[0][1] <= self.lens_points2[0][1] - 20:
                 self.curvature_radius2 = self.height // 2
-        elif self.type == self.CONCAVE:
+        if self.type == self.CONCAVE:
             if self.lens_points2[-1][1] - self.lens_points2[0][1] < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
@@ -1448,7 +1445,7 @@ class Lens(GameObject):
                 self.curvature_radius2 += self.curvature_resize_step
             if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius2 += self.curvature_resize_step
-        elif self.type == self.SINGLE_CAVE:
+        if self.type == self.SINGLE_CAVE:
             if self.lens_points[0][1] - self.lens_points[-1][1] < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
@@ -1456,7 +1453,7 @@ class Lens(GameObject):
             if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
-        elif self.type == self.SINGLE_CAVE_2:
+        if self.type == self.SINGLE_CAVE_2:
             if abs(self.lens_points2[0][1] - self.lens_points2[-1][1]) < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
@@ -1464,18 +1461,18 @@ class Lens(GameObject):
             if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
-        elif self.type == self.VEX_CAVE or self.type == self.CAVE_VEX:
+        if self.type == self.VEX_CAVE or self.type == self.CAVE_VEX:
             if abs(self.lens_points2[-1][1] - self.lens_points2[0][1]) < self.height - 5:
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
                 self.curvature_radius += self.curvature_resize_step
             # print(self.curvature_radius2)
-            elif self.lens_points2[0][0] > self.lens_points[0][0]:
+            if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius += self.curvature_resize_step
                 # self.curvature_radius2 = int(self.center2[0] - self.center1[0] - self.curvature_radius)
-            elif self.lens_points[-1][1] - self.lens_points[0][1] < self.height - 5:
+            if self.lens_points[-1][1] - self.lens_points[0][1] < self.height - 5:
                 # print(self.lens_points[-1][1] - self.lens_points[0][1])
                 self.curvature_radius2 += self.curvature_resize_step
-            elif self.lens_points2[0][0] > self.lens_points[0][0]:
+            if self.lens_points2[0][0] > self.lens_points[0][0]:
                 self.curvature_radius2 += self.curvature_resize_step
 
     def adjust(self, x, y, d_angle):
