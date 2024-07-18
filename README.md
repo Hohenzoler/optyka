@@ -16,6 +16,7 @@ Optics enhanced is fork of [Optics](https://github.com/Hohenzoler/optyka), which
 * Disabling Bin
 * Movable Camera
 * New achievements
+* Scrolling in achievement screen
 * Little optimizations
 
 ## Installation
