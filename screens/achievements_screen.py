@@ -92,6 +92,11 @@ class AchievementsScreen:
 
         text_rect.y = 10
 
+        padding = 1000
+        black_rect = pygame.Rect(text_rect.x - padding, text_rect.y - 1/20 * padding,
+                                 text_rect.width + 2 * padding, text_rect.height + 1/20 * padding)
+
+
         midpoint = len(self.achievements) // 2
 
         y_offset1 = 100
@@ -109,6 +114,9 @@ class AchievementsScreen:
         self.back_animation.animate()
         for object in self.objects:
             object.render()
+
+        # Draw the black rectangle behind the text
+        pygame.draw.rect(self.game.screen, (0, 0, 0), black_rect, 0, 0)
 
         self.game.screen.blit(text, text_rect)
 
