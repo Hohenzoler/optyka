@@ -79,7 +79,7 @@ There are two ways to install the project: download exe file, or run the project
 
 ## Objects and Features:
 ### The app includes various objects:
- **Flashlight** - produces light that other objects can interact with, can be turned on and off by `Left clicking`.
+ **Torch** - produces light that other objects can interact with, can be turned on and off by `Left clicking`.
 
 <p align="center"><img width="120" height="60" border = 10 src="documentation/torch.png"></p>
 
