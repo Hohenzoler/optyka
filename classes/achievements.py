@@ -29,6 +29,7 @@ class Achievements:
             "a whole new world": "common",
             #achievement for placing black hole
             "where am I?": "common",
+            "bouncing light": "common",
             "kaboom": "uncommon",
             "a new creature": "uncommon",
             "why disable me?": "uncommon",
