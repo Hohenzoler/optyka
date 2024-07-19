@@ -114,21 +114,6 @@ class Button:
             self.icon = images.lens
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
-        elif self.number == 9:
-            self.color = (155, 155, 155)
-            self.icon = images.oneconvex
-            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
-            self.icon_rect = self.icon.get_rect(center=self.rect.center)
-        elif self.number == 7:
-            self.color = (155, 155, 155)
-            self.icon = images.concave
-            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
-            self.icon_rect = self.icon.get_rect(center=self.rect.center)
-        elif self.number == 8:
-            self.color = (155, 155, 155)
-            self.icon = images.oneconcave
-            self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
-            self.icon_rect = self.icon.get_rect(center=self.rect.center)
         elif self.number == 6:
             self.color = (253, 184, 38)
             self.icon = images.corridor_icon
@@ -237,30 +222,18 @@ class Button:
                                             (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
                                            (64, 137, 189), 0, 140, 1, 0, 140, refraction_index=1.5)
                     self.game.achievements.handle_achievement_unlocked("first step to... glasses")
-                elif self.number == 9:
-                    obj = gameobjects.Lens(self.game,
-                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
-                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189), 0, 140, 1, 0, refraction_index=1.5)
-                    self.game.achievements.handle_achievement_unlocked("first step to... glasses")
-                elif self.number == 7:
-                    obj = gameobjects.Lens(self.game,
-                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
-                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189), 0, -140, 1, 0, -140, refraction_index=1.5)
-                    self.game.achievements.handle_achievement_unlocked("first step to... glasses")
-                elif self.number == 8:
-                    obj = gameobjects.Lens(self.game,
-                                           [(mousepos[0] - 100, mousepos[1] - 100), (mousepos[0], mousepos[1] - 100),
-                                            (mousepos[0], mousepos[1] + 100), (mousepos[0] - 100, mousepos[1] + 100)],
-                                           (64, 137, 189), 0, -140, 1, 0, refraction_index=1.5)
-                    self.game.achievements.handle_achievement_unlocked("first step to... glasses")
                 elif self.number == 6:
                     obj = gameobjects.Corridor(self.game, [(mousepos[0] - 100, mousepos[1] - 50),
                                                            (mousepos[0] + 100, mousepos[1] - 50),
                                                            (mousepos[0] + 100, mousepos[1] + 50),
                                                            (mousepos[0] - 100, mousepos[1] + 50)], None, 0, 0, 0,
                                                image_path=images.corridor)
+                elif self.number == 7:
+                    obj = gameobjects.BlackHole(self.game, [(mousepos[0] - 50, mousepos[1] - 50),
+                                                         (mousepos[0] + 50, mousepos[1] - 50),
+                                                         (mousepos[0] + 50, mousepos[1] + 50),
+                                                         (mousepos[0] - 50, mousepos[1] + 50)], (20, 20, 20), 0, 0, 0,
+                                             image_path=None)
                 elif self.number == -1:
                     self.game.save_game()
                 elif self.number == -2:

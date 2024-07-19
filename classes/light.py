@@ -156,7 +156,7 @@ class Light:
                 lenses = []
                 for object in self.game.objects:
                     if type(object) == gameobjects.Mirror or type(object) == gameobjects.ColoredGlass or type(
-                            object) == gameobjects.Prism or type(object) == gameobjects.Corridor:
+                            object) == gameobjects.Prism or type(object) == gameobjects.Corridor or type(object) == gameobjects.BlackHole:
                         self.check_object(
                             object)  # gets the slope closest to the light and on the line of light and some other stuff
 
@@ -182,6 +182,8 @@ class Light:
                     self.prism_stuff()
                 elif self.current_object_type == 'lens':
                     self.lens_stuff(self.current_object)
+                elif self.current_object_type == 'blackhole':
+                    self.black_hole_stuff()
 
                 if self.index >= 1000:
                     self.mini_run = False
@@ -270,6 +272,8 @@ class Light:
                                     self.current_object_type = 'prism'
                                 elif type(object) == gameobjects.Corridor:
                                     self.current_object_type = 'mirror'
+                                elif type(object) == gameobjects.BlackHole:
+                                    self.current_object_type = 'blackhole'
 
                             else:
                                 if dist < self.current_distance:
@@ -290,6 +294,9 @@ class Light:
                                         self.current_object_type = 'prism'
                                     elif type(object) == gameobjects.Corridor:
                                         self.current_object_type = 'mirror'
+                                    elif type(object) == gameobjects.BlackHole:
+                                        self.current_object_type = 'blackhole'
+
                                         # print('aaa')
 
         # if self.object_counter>1:
@@ -853,6 +860,10 @@ class Light:
         # print(r,self.r)
 
         self.r = r
+
+    def black_hole_stuff(self):
+        self.points.append(self.current_point)
+        self.mini_run = False
 
     def border_stuff(self):
 

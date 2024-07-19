@@ -756,6 +756,10 @@ class Corridor(GameObject):
         # self.slopes.append((self.points[len(self.points) - 1], self.points[0]))
         # print(self.slopes)
 
+class BlackHole(GameObject):
+    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
+        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
+
 
 class Lens(GameObject):
     def __init__(self, game, points, color, angle, curvature_radius, transmittance, absorbsion_factor,

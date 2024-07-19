@@ -29,7 +29,7 @@ class GUI:
         self.bin = bin.Bin(self.game)
 
         self.button_min = -3
-        self.button_max = 7
+        self.button_max = 8
 
         self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
                         range(self.button_min, self.button_max)]  # creates buttons
@@ -93,6 +93,8 @@ class GUI:
             return "Lens"
         elif id == 6:
             return "Corridor"
+        elif id == 7:
+            return "Black Hole"
         else:
             return "Unknown"
 
