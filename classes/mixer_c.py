@@ -1,5 +1,5 @@
 import pygame
-
+import random
 
 class Mixer:
     def __init__(self, settings):
@@ -46,7 +46,10 @@ class Mixer:
         pass
 
     def soundtrack(self):
-        pygame.mixer.music.load('sounds/mc.mp3')
+        if random.randint(1, 1000) == 69:
+            pygame.mixer.music.load('sounds/jews.mp3')
+        else:
+            pygame.mixer.music.load('sounds/mc.mp3')
         pygame.mixer.music.set_volume(self.soundtrackvolume)
         pygame.mixer.music.play(-1)
         pass
