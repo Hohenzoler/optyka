@@ -12,6 +12,7 @@ settings_icon = pygame.image.load('images/settings.png')  # Loading the settings
 exit_icon = pygame.image.load('images/exit.png')  # Loading the exit icon image
 torch = pygame.image.load('images/torch.png')  # Loading the torch image
 laser = pygame.image.load('images/black_rectangle.png')  # Loading the laser image
+blackhole = pygame.image.load('images/blackhole.png')  # Loading the blackhole image
 bin = pygame.image.load('images/trash1.png')
 disabled_bin = pygame.image.load("images/trash.png")
 bad_coursor = pygame.image.load('images/bad_coursor.png')  # Loading the bad cursor image
