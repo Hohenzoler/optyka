@@ -27,7 +27,8 @@ class Settings_screen:
         max_height = display_info.current_h
 
         # Append maximum monitor width and height to dimensions
-        self.dimentions.append({'WIDTH': max_width, 'HEIGHT': max_height})
+        if {'WIDTH': max_width, 'HEIGHT': max_height} not in self.dimentions:
+            self.dimentions.append({'WIDTH': max_width, 'HEIGHT': max_height})
 
         self.HotbarPositions = ['Bottom', 'Top', 'Left', 'Right']
 
