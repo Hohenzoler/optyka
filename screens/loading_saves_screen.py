@@ -223,6 +223,7 @@ class saveselector:
     def generate_presets_buttons(self):
 
         self.presets = [file[:-5] for file in os.listdir(self.preset_dir) if file.endswith('.json')]
+        self.presets.sort()
         self.presets_date_title_thingy = self.get_Dates()
 
         self.scrolling_needed = len(self.presets) > self.num_of_buttons
