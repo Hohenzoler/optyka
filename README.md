@@ -1,7 +1,7 @@
 <div align="center">
    
 # Optics Enhanced
-Optics enhanced is a fork of [Optics](https://github.com/Hohenzoler/optyka), which has more features.
+Optics enhanced is a fork of [Optics](https://github.com/Hohenzoler/optyka), but with more features.
 </div>
 
 ## Showcase
