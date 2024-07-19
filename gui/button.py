@@ -120,7 +120,7 @@ class Button:
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
         elif self.number == 7:
-            self.color = (20, 20, 20)
+            self.color = (60, 30, 20)
             self.icon = images.blackhole
             self.icon = pygame.transform.scale(self.icon, (button_width, button_height))
             self.icon_rect = self.icon.get_rect(center=self.rect.center)
