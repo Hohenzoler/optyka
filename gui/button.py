@@ -229,10 +229,7 @@ class Button:
                                                            (mousepos[0] - 100, mousepos[1] + 50)], None, 0, 0, 0,
                                                image_path=images.corridor)
                 elif self.number == 7:
-                    obj = gameobjects.BlackHole(self.game, [(mousepos[0] - 50, mousepos[1] - 50),
-                                                         (mousepos[0] + 50, mousepos[1] - 50),
-                                                         (mousepos[0] + 50, mousepos[1] + 50),
-                                                         (mousepos[0] - 50, mousepos[1] + 50)], (20, 20, 20), 0, 0, 0,
+                    obj = gameobjects.BlackHole(self.game, mousepos, 69, (20, 20, 20), 0, 0, 0,
                                              image_path=None)
                 elif self.number == -1:
                     self.game.save_game()

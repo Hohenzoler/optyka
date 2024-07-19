@@ -757,9 +757,29 @@ class Corridor(GameObject):
         # print(self.slopes)
 
 class BlackHole(GameObject):
-    def __init__(self, game, points, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
-        super().__init__(game, points, color, angle, transmittance, absorbsion_factor, image_path)
+    def __init__(self, game, center, radius, color, angle, transmittance, absorbsion_factor, islighting=False, image_path=None):
+        self.center = center
+        self.radius = radius
+        # Generate points around the circle to simulate a polygon
+        self.points = self.generate_circle_points(center, radius)
+        super().__init__(game, self.points, color, angle, transmittance, absorbsion_factor, image_path)
 
+    def generate_circle_points(self, center, radius, num_points=25):
+        """
+        Generate points around a circle's perimeter to simulate a polygon.
+
+        :param center: Tuple of (x, y) coordinates for the circle's center
+        :param radius: The radius of the circle
+        :param num_points: Number of points to generate around the circle
+        :return: List of points (tuples) around the circle
+        """
+        points = []
+        for i in range(num_points):
+            angle = 2 * math.pi * i / num_points
+            x = center[0] + radius * math.cos(angle)
+            y = center[1] + radius * math.sin(angle)
+            points.append((x, y))
+        return points
 
 class Lens(GameObject):
     def __init__(self, game, points, color, angle, curvature_radius, transmittance, absorbsion_factor,
