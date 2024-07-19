@@ -20,6 +20,15 @@ class Settings_screen:
 
         self.dimentions = [{'WIDTH': 2560, 'HEIGHT': 1440}, {'WIDTH': 1920, 'HEIGHT': 1080},
                            {'WIDTH': 1280, 'HEIGHT': 720}, {'WIDTH': 1000, 'HEIGHT': 700}]
+
+        # Get maximum monitor width and height
+        display_info = pygame.display.Info()
+        max_width = display_info.current_w
+        max_height = display_info.current_h
+
+        # Append maximum monitor width and height to dimensions
+        self.dimentions.append({'WIDTH': max_width, 'HEIGHT': max_height})
+
         self.HotbarPositions = ['Bottom', 'Top', 'Left', 'Right']
 
         self.Fullscreen = [{'FULLSCREEN': 'ON'}, {'FULLSCREEN': 'OFF'}]
