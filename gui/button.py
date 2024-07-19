@@ -231,6 +231,7 @@ class Button:
                 elif self.number == 7:
                     obj = gameobjects.BlackHole(self.game, mousepos, 69, (20, 20, 20), 0, 0, 0,
                                              image_path=None)
+                    self.game.achievements.handle_achievement_unlocked("where am I?")
                 elif self.number == -1:
                     self.game.save_game()
                 elif self.number == -2:

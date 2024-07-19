@@ -27,6 +27,8 @@ class Achievements:
             "some color in this black and white world": "common",
             "first step to... glasses": "common",
             "a whole new world": "common",
+            #achievement for placing black hole
+            "where am I?": "common",
             "kaboom": "uncommon",
             "a new creature": "uncommon",
             "why disable me?": "uncommon",
