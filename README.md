@@ -1,7 +1,7 @@
 <div align="center">
    
 # Optics Enhanced
-Optics enhanced is fork of [Optics](https://github.com/Hohenzoler/optyka), which has more features.
+Optics enhanced is a fork of [Optics](https://github.com/Hohenzoler/optyka), which has more features.
 </div>
 
 ## Showcase
@@ -15,6 +15,7 @@ Optics enhanced is fork of [Optics](https://github.com/Hohenzoler/optyka), which
 * Enhanced look of hotbar
 * Disabling Bin
 * Movable Camera
+* Black ~~square~~ hole
 * New achievements
 * Scrolling in achievement screen
 * Pretty flashlight option
