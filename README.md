@@ -19,7 +19,7 @@ Optics enhanced is a fork of [Optics](https://github.com/Hohenzoler/optyka), whi
 * New achievements
 * Scrolling in achievement screen
 * Pretty flashlight option
-* Little optimizations
+* Little optimizations and bug fixes
 
 ## Installation
 There are two ways to install the project: download exe file, or run the project from source.
