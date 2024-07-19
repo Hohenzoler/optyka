@@ -46,7 +46,9 @@ class Mixer:
         pass
 
     def soundtrack(self):
-        if random.randint(1, 1000) == 69:
+        x = random.randint(1, 1000)
+        print(x)
+        if x == 69:
             pygame.mixer.music.load('sounds/jews.mp3')
         else:
             pygame.mixer.music.load('sounds/mc.mp3')
