@@ -656,6 +656,9 @@ class Game:
                                                   (mousepos[0] + 100, mousepos[1] + 50),
                                                   (mousepos[0] - 100, mousepos[1] + 50)], (255, 0, 0), 0, 0, 0,
                                            image_path=images.corridor)
+            elif parameters['class'] == "BlackHole":
+                obj = gameobjects.BlackHole(self, mousepos, 69, (20, 20, 20), 0, 0, 0,
+                                            image_path=None)
 
             obj.parameters = parameters
             obj.change_parameters('not')
