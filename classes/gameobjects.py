@@ -441,10 +441,10 @@ class GameObject:
             return False
 
     def drawResizeOutline(self):
-        if isinstance(self, Mirror) and not self.checkIfNormalMirror():
+        if not self.checkIfNormalMirror():
             print(self.checkIfNormalMirror())
             classes.game.Game.movePoints(self.game, self.points, pygame.mouse.get_pos())
-        elif not isinstance(self, Flashlight):
+        elif not isinstance(self, Flashlight) or not isinstance(self, Corridor):
             print(self.checkIfNormalMirror())
             # Draw an outline around the object
             pygame.gfxdraw.aapolygon(self.game.screen, self.points, (255, 255, 255))

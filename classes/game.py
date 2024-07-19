@@ -366,7 +366,7 @@ class Game:
     def lineDrawing(self, points):
         for i in range(len(points)):
             try:
-                pygame.draw.line(points[i], points[i + 1])
+                pygame.draw.line(self.screen, (255, 255, 255), points[i], points[i + 1])
             except:
                 pygame.draw.line(self.screen, (255, 255, 255), points[i], points[0])
 
