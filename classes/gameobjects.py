@@ -534,9 +534,9 @@ class GameObject:
         self.parameters['points'] = self.defualt_points
         # print(self.defualt_points)
 
-        # if type(self) == Flashlight:
-        #     lazer_on = {'lazer': self.lazer}
-        #     self.parameters.update(lazer_on)
+        if type(self) == Flashlight:
+             lazer_on = {'lazer': self.lazer}
+             self.parameters.update(lazer_on)
 
         if self.color != None:
             colors = {'red': self.color[0], 'green': self.color[1], 'blue': self.color[2]}
