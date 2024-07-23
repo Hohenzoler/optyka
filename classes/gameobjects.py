@@ -13,10 +13,6 @@ from classes.font import Font
 
 settings = settingsSetup.start()
 
-NUM_RAYS = settings['Flashlight_Rays']
-FOV = settings['Flashlight_FOV']
-HALF_FOV = FOV / 2
-DELTA_ANGLE = FOV / NUM_RAYS
 
 
 class GameObject:
@@ -60,6 +56,12 @@ class GameObject:
 
         self.scale_factor = 1
         self.lazer = False
+
+        self.num_rays = 5
+        self.fov = 10
+        self.half_fov = self.fov /2
+        self.deltangle = self.fov/self.num_rays
+
         self.parameters_counters = 0
 
         self.find_parameters()
@@ -1682,7 +1684,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                 # surface = pygame.surface.Surface(self.game.screen.get_size()).convert_alpha()
                 # surface.fill([0, 0, 0, 0])
                 if self.on:
-                    ray_angle = self.angle - HALF_FOV + 0.0001
+                    ray_angle = self.angle - self.half_fov + 0.0001
                     # Calculate the starting point of the light from the center of the rotated rectangle/surface
                     center_x = sum(x for x, _ in self.points) / len(self.points)
                     center_y = sum(y for _, y in self.points) / len(self.points)
@@ -1690,7 +1692,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                     # if z clicked, color goes random
                     if pygame.key.get_pressed()[pygame.K_z]:
                         self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-                    for ray in range(NUM_RAYS):
+                    for ray in range(self.num_rays):
                         # self.light = light.Light(self.game,
                         #                          [[self.light_start_x, self.light_start_y]],
                         #                          self.color, -1*self.angle, self.light_width)
@@ -1707,7 +1709,7 @@ class Flashlight(GameObject):  # Inheriting from GameObject
                         # light.Light.render(self.light, surface)
                         self.game.objects.append(self.light)
                         # self.game.objects.remove(self.light)
-                        ray_angle += DELTA_ANGLE
+                        ray_angle += self.deltangle
                     # self.game.screen.blit(surface, (0, 0))
 
                 elif not self.on:
