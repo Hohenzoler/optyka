@@ -67,7 +67,7 @@ class StartScreen:
         self.buttons = [button.ButtonForgame(x, self) for x in range(4)]
         self.button_animations = [ButtonAnimation(b, b.rect.x*6+(b.width//2), b.rect.y) for i, b in enumerate(self.buttons)]
 
-        pygame.display.set_caption('Optics')
+        pygame.display.set_caption('Optics Enhanced')
 
         self.selected_buttons = {}
 
@@ -238,7 +238,7 @@ class StartScreen:
         from classes.font import Font
         self.font = pygame.font.Font(Font, self.width // 20)
 
-        self.maintext = self.font.render('Optics', True, 'white')
+        self.maintext = self.font.render('Optics Enhanced', True, 'white')
         self.maintextRect = self.maintext.get_rect()
         self.maintextRect.center = (self.width//2, (self.height//2) - (3 * self.height//10))
 
