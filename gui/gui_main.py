@@ -1,3 +1,5 @@
+import math
+
 import pygame
 from gui import button
 from classes import bin
@@ -13,10 +15,10 @@ class GUI:
         if self.position == 'bottom':
             self.rect = pygame.Rect(0, self.height * 10 - self.height, self.width, self.height)
         elif self.position == 'left':
-            self.rect = pygame.Rect(0, 0, self.width // 10, self.height * 10)
+            self.rect = pygame.Rect(0, 0, self.width // 15, self.height * 10)
             # self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'right':
-            self.rect = pygame.Rect(self.width - self.width // 10, 0, self.width // 10, self.height * 10)
+            self.rect = pygame.Rect(self.width - self.width // 15, 0, self.width // 15, self.height * 10)
             # self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
@@ -31,8 +33,14 @@ class GUI:
         self.button_min = -3
         self.button_max = 8
 
-        self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
-                        range(self.button_min, self.button_max)]  # creates buttons
+        self.num_of_buttons = self.button_max - self.button_min
+
+        if self.position == 'left' or self.position == 'right':
+            self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x), gap=self.game.settings['HEIGHT']//self.num_of_buttons) for x in
+                            range(self.button_min, self.button_max)]  # creates buttons
+        else:
+            self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x), gap=self.game.settings['WIDTH']//self.num_of_buttons/(math.e/2)) for x in
+                            range(self.button_min, self.button_max)]  # creates buttons
         self.transparent_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
 
         self.draw_gradient(self.transparent_surface, (220, 220, 200, 125), (0, 50, 50, 220), "vertical")
@@ -106,17 +114,21 @@ class GUI:
         if self.position == 'bottom':
             self.rect = pygame.Rect(0, self.height * 10 - self.height, self.width, self.height)
         elif self.position == 'left':
-            self.rect = pygame.Rect(0, 0, self.width // 10, self.height * 10)
+            self.rect = pygame.Rect(0, 0, self.width // 15, self.height * 10)
             self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'right':
-            self.rect = pygame.Rect(self.width - self.width // 10, 0, self.width // 10, self.height * 10)
+            self.rect = pygame.Rect(self.width - self.width // 15, 0, self.width // 15, self.height * 10)
             self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
             self.game.achievements.handle_achievement_unlocked("U are weird...")
 
-        self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x)) for x in
-                        range(self.button_min, self.button_max)]  # creates buttons
+        if self.position == 'left' or self.position == 'right':
+            self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x), gap=self.game.settings['HEIGHT']//self.num_of_buttons) for x in
+                            range(self.button_min, self.button_max)]  # creates buttons
+        else:
+            self.buttons = [button.Button(self.game, x, tooltip_text=self.tooltip_list(x), gap=self.game.settings['WIDTH']/self.num_of_buttons/(math.e/2)) for x in
+                            range(self.button_min, self.button_max)]  # creates buttons
 
         self.transparent_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
 

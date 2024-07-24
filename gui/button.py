@@ -27,7 +27,7 @@ class Button:
         icon_rect (pygame.Rect): The rectangle that represents the icon.
     """
 
-    def __init__(self, game, number, tooltip_text):
+    def __init__(self, game, number, tooltip_text, gap):
         """
         The constructor for the Button class.
 
@@ -40,7 +40,7 @@ class Button:
         self.screenheight = self.game.height
         self.screenwidth = self.game.settings['WIDTH']
         self.position = self.game.settings['HOTBAR_POSITION']
-        self.gap = self.game.settings['HEIGHT'] // 10
+        self.gap = gap
 
         self.y = self.screenheight // 10
 
@@ -53,11 +53,11 @@ class Button:
                 y = (self.screenheight - self.y) + (
                         (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
             elif self.position == 'left':
-                x = (self.screenwidth // 10 - button_width) // 2
+                x = (self.screenwidth // 15 - button_width) // 2
                 y = self.screenheight - self.gap * (-self.number - 1) - button_height - 10
             elif self.position == 'right':
-                x = (self.screenwidth - self.screenwidth // 10) + (
-                        (self.screenwidth - (self.screenwidth - self.screenwidth // 10) - button_width) // 2)
+                x = (self.screenwidth - self.screenwidth // 15) + (
+                        (self.screenwidth - (self.screenwidth - self.screenwidth // 15) - button_width) // 2)
                 y = self.screenheight - self.gap * (-self.number - 1) - button_height - 10
             elif self.position == 'top':
                 x = self.screenwidth - self.gap * (-self.number - 1) - button_width - 10
@@ -68,11 +68,11 @@ class Button:
                 y = (self.screenheight - self.y) + (
                         (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
             elif self.position == 'left':
-                x = (self.screenwidth // 10 - button_width) // 2
+                x = (self.screenwidth // 15 - button_width) // 2
                 y = self.gap * self.number + 10
             elif self.position == 'right':
-                x = (self.screenwidth - self.screenwidth // 10) + (
-                        (self.screenwidth - (self.screenwidth - self.screenwidth // 10) - button_width) // 2)
+                x = (self.screenwidth - self.screenwidth // 15) + (
+                        (self.screenwidth - (self.screenwidth - self.screenwidth // 15) - button_width) // 2)
                 y = self.gap * self.number + 10
             elif self.position == 'top':
                 x = self.gap * self.number + 10
