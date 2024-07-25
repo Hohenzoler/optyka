@@ -1,4 +1,5 @@
 import cProfile
+import pstats
 import logging
 import tkinter
 from datetime import datetime
@@ -22,7 +23,6 @@ if not os.path.exists("presets"):
 # Set up the logging configuration
 log_file = f"logs/{datetime.now().strftime('%Y-%m-%d')}.log"
 logging.basicConfig(filename=log_file, level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
-
 
 version = '1.2.1-enhanced'
 
@@ -56,4 +56,7 @@ def main():
             break
 
 if __name__ == "__main__":
-    cProfile.run('main()')
+    profile_filename = 'profile_results.prof'
+    cProfile.run('main()', profile_filename)
+    p = pstats.Stats(profile_filename)
+    p.sort_stats('tottime').print_stats()
