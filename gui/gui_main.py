@@ -15,10 +15,10 @@ class GUI:
         if self.position == 'bottom':
             self.rect = pygame.Rect(0, self.height * 10 - self.height, self.width, self.height)
         elif self.position == 'left':
-            self.rect = pygame.Rect(0, 0, self.width // 15, self.height * 10)
+            self.rect = pygame.Rect(0, 0, self.width // 18, self.height * 10)
             # self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'right':
-            self.rect = pygame.Rect(self.width - self.width // 15, 0, self.width // 15, self.height * 10)
+            self.rect = pygame.Rect(self.width - self.width // 18, 0, self.width // 15, self.height * 10)
             # self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)
@@ -114,10 +114,10 @@ class GUI:
         if self.position == 'bottom':
             self.rect = pygame.Rect(0, self.height * 10 - self.height, self.width, self.height)
         elif self.position == 'left':
-            self.rect = pygame.Rect(0, 0, self.width // 15, self.height * 10)
+            self.rect = pygame.Rect(0, 0, self.width // 18, self.height * 10)
             self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'right':
-            self.rect = pygame.Rect(self.width - self.width // 15, 0, self.width // 15, self.height * 10)
+            self.rect = pygame.Rect(self.width - self.width // 18, 0, self.width // 15, self.height * 10)
             self.game.achievements.handle_achievement_unlocked("U are weird...")
         elif self.position == 'top':
             self.rect = pygame.Rect(0, 0, self.width, self.height)

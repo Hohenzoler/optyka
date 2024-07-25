@@ -58,12 +58,12 @@ class Button:
                 y = (self.screenheight - self.y) + (
                         (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
             elif self.position == 'left':
-                x = (self.screenwidth // 15 - button_width) // 2
-                y = self.screenheight - self.gap * (-self.number - 1) - button_height - self.gap/4
+                x = (self.screenwidth // 18 - button_width) // 2
+                y = self.screenheight - self.gap * (-self.number - 1) - button_height - self.gap/8
             elif self.position == 'right':
-                x = (self.screenwidth - self.screenwidth // 15) + (
+                x = (self.screenwidth - self.screenwidth // 18) + (
                         (self.screenwidth - (self.screenwidth - self.screenwidth // 15) - button_width) // 2)
-                y = self.screenheight - self.gap * (-self.number - 1) - button_height - self.gap/4
+                y = self.screenheight - self.gap * (-self.number - 1) - button_height - self.gap/8
             elif self.position == 'top':
                 x = self.screenwidth - self.gap * (-self.number - 1) - button_width - self.gap/8
                 y = (self.y - button_height) // 2
@@ -73,12 +73,12 @@ class Button:
                 y = (self.screenheight - self.y) + (
                         (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
             elif self.position == 'left':
-                x = (self.screenwidth // 15 - button_width) // 2
-                y = self.gap * self.number + self.gap/4
+                x = (self.screenwidth // 18 - button_width) // 2
+                y = self.gap * self.number + self.gap/8
             elif self.position == 'right':
-                x = (self.screenwidth - self.screenwidth // 15) + (
+                x = (self.screenwidth - self.screenwidth // 18) + (
                         (self.screenwidth - (self.screenwidth - self.screenwidth // 15) - button_width) // 2)
-                y = self.gap * self.number + self.gap/4
+                y = self.gap * self.number + self.gap/8
             elif self.position == 'top':
                 x = self.gap * self.number + self.gap/8
                 y = (self.y - button_height) // 2
