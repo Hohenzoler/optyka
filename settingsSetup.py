@@ -1,11 +1,14 @@
 import os.path
 import json
 
-settings = {'WIDTH': 1000, 'HEIGHT': 700, 'FULLSCREEN': 'OFF', 'HOTBAR_POSITION': 'bottom', 'VSYNC': 'OFF', 'DEBUG': 'False', 'Flashlight_Depth': 500, "HD_Flashlight": "OFF", "MASTER_VOLUME": 0.5, "SOUNDTRACK_VOLUME": 1, "OBJECT_VOLUME": 1, "ACTION_VOLUME": 1, "ACHIEVEMENT_VOLUME": 1}
+settings = {'WIDTH': 1000, 'HEIGHT': 700, 'FULLSCREEN': 'OFF', 'HOTBAR_POSITION': 'bottom', 'VSYNC': 'OFF',
+            'DEBUG': 'False', 'Flashlight_Depth': 500, "HD_Flashlight": "OFF", "MASTER_VOLUME": 0.5,
+            "SOUNDTRACK_VOLUME": 1, "OBJECT_VOLUME": 1, "ACTION_VOLUME": 1, "ACHIEVEMENT_VOLUME": 1}
+
 
 def start(s=settings):
     if os.path.exists('settings.json'):
-        try: #sprawdza czy z pliku mozna wydostac json
+        try:  # sprawdza czy z pliku mozna wydostac json
             json_object = load_settings()
         except:
             writesettingstofile(s)
@@ -20,7 +23,8 @@ def start(s=settings):
         writesettingstofile(s)
     return s
 
-def load_settings(js='settings.json'): #czyta ustawienia z pliku
+
+def load_settings(js='settings.json'):  # czyta ustawienia z pliku
     try:
         with open(js, 'r') as f:
             json_object = json.loads(f.read())
@@ -30,8 +34,9 @@ def load_settings(js='settings.json'): #czyta ustawienia z pliku
     except:
         return {}
 
-def writesettingstofile(s, i=1, js='settings.json'): #funkcja zapisuje ustawienia do pilku
-        json_string = json.dumps(s, indent=i)
-        with open(js, 'w') as f:
-            f.write(json_string)
-            f.close()
+
+def writesettingstofile(s, i=1, js='settings.json'):  # funkcja zapisuje ustawienia do pilku
+    json_string = json.dumps(s, indent=i)
+    with open(js, 'w') as f:
+        f.write(json_string)
+        f.close()
