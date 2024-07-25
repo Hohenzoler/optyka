@@ -1,5 +1,5 @@
 import subprocess
-
+import time
 import classes.game
 import pygame
 from classes import gameobjects, images
@@ -299,6 +299,8 @@ class ButtonForgame:
         self.width = self.screen.width // 3
         self.height = self.screen.height // 10
 
+        self.color = [200, 200, 200]
+
         # adjust y based on the number
         gap = 15
         self.y = (self.screen.height // 2) - self.height * 1.2 + (self.height + gap) * number
@@ -377,6 +379,8 @@ class ButtonForgame:
             pos (tuple): The position of the mouse.
         """
         if self.rect.collidepoint(pos[0], pos[1]):
+            self.color = [0, 200, 0]
+            self.render()
             if self.number == 0:
                 self.screen.mode = 'loading'
                 self.screen.mixer.clicked_sound()
@@ -423,8 +427,7 @@ class ButtonForgame:
         Renders the button on the screen.
         """
         self.update()
-
-        pygame.draw.rect(self.screen.screen, (255, 255, 255), self.rect, 0, 4)
+        pygame.draw.rect(self.screen.screen, self.color, self.rect, 0, 4)
         self.screen.screen.blit(self.text, self.textRect)
 
     def update(self):
