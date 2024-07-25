@@ -225,6 +225,9 @@ class Game:
 
         if self.mode == 'default':
             self.camera.update()
+            self.width = self.settings['WIDTH']
+            self.height = self.settings['HEIGHT']
+            self.font = pygame.font.Font(Font, self.height // 20)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -266,7 +269,7 @@ class Game:
                                 object.change_curvature_right = False
                         if type(object) in (
                         gameobjects.GameObject, gameobjects.Mirror, gameobjects.Lens, gameobjects.Flashlight,
-                        gameobjects.Prism, gameobjects.CustomPolygon, gameobjects.ColoredGlass) and object.resizing:
+                        gameobjects.Prism, gameobjects.CustomPolygon, gameobjects.ColoredGlass, gameobjects.BlackHole, gameobjects.Corridor) and object.resizing:
                             if object.resize_on is False:
                                 for idx, rect in enumerate(object.resize_rects):
                                     if rect.collidepoint(self.mousepos):
