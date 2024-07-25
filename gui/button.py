@@ -321,7 +321,7 @@ class ButtonForgame:
 
         elif self.number == 71:
             self.text = self.font.render('Back', True, 'black')
-            self.y = self.screen.height - self.screen.height // 5
+            self.y = self.screen.height - self.screen.height // 6
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         elif self.number == 72:

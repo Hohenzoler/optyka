@@ -96,11 +96,13 @@ class AchievementsScreen:
         black_rect = pygame.Rect(text_rect.x - padding, text_rect.y - 1/20 * padding,
                                  text_rect.width + 2 * padding, text_rect.height + 1/20 * padding)
 
+        bottom_black_rect = pygame.Rect(0, self.height *0.8, self.width, self.height *0.8)
+
 
         midpoint = len(self.achievements) // 2
 
-        y_offset1 = text_rect.height + 1/20 * padding
-        y_offset2 = text_rect.height + 1/20 * padding
+        y_offset1 = text_rect.height + 1/20 * 1/2*padding
+        y_offset2 = text_rect.height + 1/20 * 1/2*padding
 
         y_offset1 -= self.scroll_position  # Adjust starting position based on scroll
         y_offset2 -= self.scroll_position
@@ -112,11 +114,15 @@ class AchievementsScreen:
                 y_offset2 = self.render_achievement(achievement, self.width - (self.width - 100) // 2, y_offset2)
 
         self.back_animation.animate()
+
+        pygame.draw.rect(self.game.screen, (0, 0, 0), bottom_black_rect, 0, 0)
+
         for object in self.objects:
             object.render()
 
         # Draw the black rectangle behind the text
         pygame.draw.rect(self.game.screen, (0, 0, 0), black_rect, 0, 0)
+
 
         self.game.screen.blit(text, text_rect)
 
