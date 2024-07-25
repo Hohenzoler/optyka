@@ -152,6 +152,8 @@ class Game:
         time_difference = current_time - self.last_scroll_time
         self.last_scroll_time = current_time
         if round(time_difference, 2) != 0:
+            if self.selected_object == None:
+                return
             if eventos.y > 0:
                 if time_difference > 1:
                     self.r = 1
