@@ -46,16 +46,14 @@ def new_game(save, preset):
         logging.error(e, exc_info=True)
         raise
 
-if __name__ == "__main__":
+def main():
     while True:
         try:
             startscreen = ss.StartScreen(version)
             new_game(startscreen.save_to_load, startscreen.preset)
         except Exception as e:
             print(e)
-            # raise
-            # logging.error(e, exc_info=True)
-            # tkinter.messagebox.showerror("Error", "An error occurred. Please check the logs for more information.")
-            # raise
             break
-#
+
+if __name__ == "__main__":
+    cProfile.run('main()')
