@@ -43,6 +43,7 @@ class Game:
         self.width = self.settings['WIDTH']  # Game width
         self.height = self.settings['HEIGHT']  # Game height
         self.font = pygame.font.Font(Font, self.height // 20)  # Font for displaying FPS
+
         self.objects = []  # List of game objects
         pygame.init()  # Initialize pygame
         # Set up the game display based on settings
@@ -108,6 +109,7 @@ class Game:
         self.readyToCheck = False
         self.hotbarRect = None
 
+        self.smol_font = pygame.font.Font(Font, 20)
 
         print(self.objects)
 
@@ -118,8 +120,7 @@ class Game:
         :param position: A tuple (x, y) representing where to render the text.
         :param color: The color of the text.
         """
-        font = pygame.font.Font(None, 24)  # You can adjust the font and size
-        text_surface = font.render(text, True, color)
+        text_surface = self.smol_font.render(text, True, color)
         self.screen.blit(text_surface, position)
 
     def create_cursor_particles(self):
