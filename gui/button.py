@@ -48,13 +48,13 @@ class Button:
             button_width = self.screenwidth / 20
             button_height = self.screenwidth / 20
         else:
-            button_width = self.screenheight / 20
-            button_height = self.screenheight / 20
+            button_width = self.screenheight / 15
+            button_height = self.screenheight / 15
 
 
         if self.number < 0:
             if self.position == 'bottom':
-                x = self.screenwidth - self.gap * (-self.number - 1) - button_width - self.gap/4
+                x = self.screenwidth - self.gap * (-self.number - 1) - button_width - self.gap/8
                 y = (self.screenheight - self.y) + (
                         (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
             elif self.position == 'left':
@@ -65,11 +65,11 @@ class Button:
                         (self.screenwidth - (self.screenwidth - self.screenwidth // 15) - button_width) // 2)
                 y = self.screenheight - self.gap * (-self.number - 1) - button_height - self.gap/4
             elif self.position == 'top':
-                x = self.screenwidth - self.gap * (-self.number - 1) - button_width - self.gap/4
+                x = self.screenwidth - self.gap * (-self.number - 1) - button_width - self.gap/8
                 y = (self.y - button_height) // 2
         else:
             if self.position == 'bottom':
-                x = self.gap * self.number + self.gap/4
+                x = self.gap * self.number + self.gap/8
                 y = (self.screenheight - self.y) + (
                         (self.screenheight - (self.screenheight - self.y) - button_height) // 2)
             elif self.position == 'left':
@@ -80,7 +80,7 @@ class Button:
                         (self.screenwidth - (self.screenwidth - self.screenwidth // 15) - button_width) // 2)
                 y = self.gap * self.number + self.gap/4
             elif self.position == 'top':
-                x = self.gap * self.number + self.gap/4
+                x = self.gap * self.number + self.gap/8
                 y = (self.y - button_height) // 2
 
         self.rect = pygame.Rect(x, y, button_width, button_height)
