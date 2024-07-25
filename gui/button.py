@@ -379,8 +379,7 @@ class ButtonForgame:
             pos (tuple): The position of the mouse.
         """
         if self.rect.collidepoint(pos[0], pos[1]):
-            self.color = [0, 200, 0]
-            self.render()
+            self.color = "hovered"
             if self.number == 0:
                 self.screen.mode = 'loading'
                 self.screen.mixer.clicked_sound()
@@ -427,6 +426,14 @@ class ButtonForgame:
         Renders the button on the screen.
         """
         self.update()
+        mouse_pos = pygame.mouse.get_pos()
+        if self.color != "hovered":
+            if self.rect.collidepoint(mouse_pos):
+                self.color = [250, 250, 250]
+            else:
+                self.color = [200, 200, 200]
+        else:
+            self.color = [0, 250, 0]
         pygame.draw.rect(self.screen.screen, self.color, self.rect, 0, 4)
         self.screen.screen.blit(self.text, self.textRect)
 
