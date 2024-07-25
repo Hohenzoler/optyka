@@ -99,8 +99,8 @@ class AchievementsScreen:
 
         midpoint = len(self.achievements) // 2
 
-        y_offset1 = 100
-        y_offset2 = 100
+        y_offset1 = text_rect.height + 1/20 * padding
+        y_offset2 = text_rect.height + 1/20 * padding
 
         y_offset1 -= self.scroll_position  # Adjust starting position based on scroll
         y_offset2 -= self.scroll_position
