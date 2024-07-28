@@ -123,6 +123,42 @@ class Light:
         elif self.r == math.pi:
             self.r = math.pi + 0.00001
 
+    def do_lines_intersect(self, p1, p2, p3, p4):
+        def ccw(A, B, C):
+            return (C[1] - A[1]) * (B[0] - A[0]) > (B[1] - A[1]) * (C[0] - A[0])
+
+        if ccw(p1, p3, p4) != ccw(p2, p3, p4) and ccw(p1, p2, p3) != ccw(p1, p2, p4):
+            # Calculate intersection point
+            denom = (p1[0] - p2[0]) * (p3[1] - p4[1]) - (p1[1] - p2[1]) * (p3[0] - p4[0])
+            if denom == 0:
+                return False, None
+            x = ((p1[0] * p2[1] - p1[1] * p2[0]) * (p3[0] - p4[0]) - (p1[0] - p2[0]) * (
+                        p3[0] * p4[1] - p3[1] * p4[0])) / denom
+            y = ((p1[0] * p2[1] - p1[1] * p2[0]) * (p3[1] - p4[1]) - (p1[1] - p2[1]) * (
+                        p3[0] * p4[1] - p3[1] * p4[0])) / denom
+            print(x, y)
+            return True, (x, y)
+        return False, None
+
+    def check_collision_with_other_lights(self, other_lights):
+        for other_light in other_lights:
+            if type(other_light) == Light and self != other_light:
+                for i in range(len(self.points) - 1):
+                    for j in range(len(other_light.points) - 1):
+                        intersect, point = self.do_lines_intersect(self.points[i], self.points[i + 1], other_light.points[j], other_light.points[j + 1])
+                        if intersect:
+                            self.points.insert(-1, point)
+                            other_light.points.insert(-1, point)
+
+                            red_color = (255, 0, 0)
+                            self.colors.insert(-1, red_color)
+                            other_light.colors.insert(-1, red_color)
+
+                            self.RGB = RGB_Class(255, 0, 0)
+                            other_light.RGB = RGB_Class(255, 0, 0)
+
+                            print(point)
+                            break
     def trace_path2(self):
         if self.RGB.a > 0:
             self.current_starting_point = self.starting_point
@@ -185,8 +221,11 @@ class Light:
                 elif self.current_object_type == 'blackhole':
                     self.black_hole_stuff()
 
+                self.check_collision_with_other_lights(self.game.objects)
+
                 if self.index >= 1000:
                     self.mini_run = False
+
 
     def check_object(self, object):
         # self.linear_function.draw(self.game)
