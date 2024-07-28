@@ -150,12 +150,17 @@ class Light:
                             self.points.insert(-1, point)
                             other_light.points.insert(-1, point)
 
-                            red_color = (255, 0, 0)
-                            self.colors.insert(-1, red_color)
-                            other_light.colors.insert(-1, red_color)
+                            selfcolor = self.RGB.rgb
+                            othercolor = other_light.RGB.rgb
 
-                            self.RGB = RGB_Class(255, 0, 0)
-                            other_light.RGB = RGB_Class(255, 0, 0)
+                            color = ((selfcolor[0] + othercolor[0]) // 2, (selfcolor[1] + othercolor[1]) // 2, (selfcolor[2] + othercolor[2]) // 2)
+
+
+                            print(color)
+
+                            self.colors.insert(-1, color)
+                            other_light.colors.insert(-1, color)
+
 
                             print(point)
                             break
