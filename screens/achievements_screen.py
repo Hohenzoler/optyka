@@ -32,6 +32,8 @@ class AchievementsScreen:
         self.load_achievements()
         self.particle_system = particles.UnityParticleSystem()
 
+        self.particle_system = particles.UnityParticleSystem()
+
         back = button.ButtonForgame(71, self)
         self.back_animation = ButtonAnimation(back, back.rect.x*6+(back.width//2), back.rect.y)
 
@@ -156,4 +158,19 @@ class AchievementsScreen:
 
         pygame.draw.rect(self.game.screen, color, textRect.inflate(10, 10), 0, 5)
         self.game.screen.blit(text_surface, text_surface_rect)
+
+        self.particle_system.add_particle(
+            x=random.randint(int(x_offset), int(x_offset) + int(rect_width)),
+            y=random.randint(int(y_offset), int(y_offset) + int(rect_height)),
+            vx=random.uniform(-1.5, 1.5),
+            vy=random.uniform(-1, 1),
+            lifespan=200,
+            size=random.randint(1, 5),
+            red=color[0],
+            green=color[1],
+            blue=color[2],
+            alpha=200,
+            shape='square'
+        )
+
         return y_offset + rect_height + 20
