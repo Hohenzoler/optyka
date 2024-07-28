@@ -1502,6 +1502,13 @@ class Lens(GameObject):
                 self.curvature_radius2 += self.curvature_resize_step
 
     def adjust(self, x, y, d_angle):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_DELETE]:
+            self.game.objects.remove(self)
+            self.game.selected_object = None
+            self.game.mixer.destroy_sound()
+            return
+
         # Adjust the object's position and angle
         self.angle += d_angle
         self.x = x - sum(pt[0] for pt in self.points) / len(self.points)
