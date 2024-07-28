@@ -142,27 +142,28 @@ class Light:
 
     def check_collision_with_other_lights(self, other_lights):
         for other_light in other_lights:
-            if type(other_light) == Light and self != other_light:
+            if isinstance(other_light, Light) and self != other_light:
                 for i in range(len(self.points) - 1):
                     for j in range(len(other_light.points) - 1):
-                        intersect, point = self.do_lines_intersect(self.points[i], self.points[i + 1], other_light.points[j], other_light.points[j + 1])
-                        if intersect:
-                            self.points.insert(-1, point)
-                            other_light.points.insert(-1, point)
+                        intersect, point = self.do_lines_intersect(self.points[i], self.points[i + 1],
+                                                                   other_light.points[j], other_light.points[j + 1])
+                        if intersect and self.prism_light == False and other_light.prism_light == False:
+                            # Insert the intersection point and color at the correct position
+                            self.points.insert(i + 1, point)
+                            other_light.points.insert(j + 1, point)
 
                             selfcolor = self.RGB.rgb
                             othercolor = other_light.RGB.rgb
 
-                            color = ((selfcolor[0] + othercolor[0]) // 2, (selfcolor[1] + othercolor[1]) // 2, (selfcolor[2] + othercolor[2]) // 2)
+                            color = (
+                                (selfcolor[0] + othercolor[0]) // 2,
+                                (selfcolor[1] + othercolor[1]) // 2,
+                                (selfcolor[2] + othercolor[2]) // 2
+                            )
 
+                            self.colors.insert(i + 1, color)
+                            other_light.colors.insert(j + 1, color)
 
-                            print(color)
-
-                            self.colors.insert(-1, color)
-                            other_light.colors.insert(-1, color)
-
-
-                            print(point)
                             break
     def trace_path2(self):
         if self.RGB.a > 0:
