@@ -165,7 +165,7 @@ class AchievementsScreen:
             vx=random.uniform(-1.5, 1.5),
             vy=random.uniform(-1, 1),
             lifespan=200,
-            size=random.randint(1, 5),
+            size=self.rarity_values[rarity]//1.5+2.5,
             red=color[0],
             green=color[1],
             blue=color[2],
