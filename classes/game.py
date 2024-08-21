@@ -111,6 +111,10 @@ class Game:
 
         self.smol_font = pygame.font.Font(Font, 20)
 
+        self.save_dialog = saveTK.Save(self)
+        self.response_received = False
+
+
         print(self.objects)
 
     def render_text(self, text, position, color=(255, 255, 255)):
@@ -236,7 +240,10 @@ class Game:
                     pygame.quit()
                     quit()
 
-            if self.mode == 'default':
+            if self.mode == 'save':
+                self.save_dialog.handle_event(event)
+
+            elif self.mode == 'default':
                 # if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 #     for object in self.objects:
                 #         if type(object) == gameobjects.Lens:
@@ -508,6 +515,10 @@ class Game:
             self.executed_command = 'default'
         elif self.mode == 'music':
             self.music()
+
+        if self.mode == 'save':
+            self.save_dialog.render()
+
         # print(self.mode)
 
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position
@@ -702,19 +713,17 @@ class Game:
             self.generate_save()
             print(len(self.objects))
             if len(self.objects) > 2:
-
-                if self.save_title != None:
+                if self.save_title is not None:
                     prev_save_data = settingsSetup.load_settings(f'saves/{self.save_title}.json')
                     if len(prev_save_data) > 1:
                         if prev_save_data[1:] != self.save_obj[1:]:
                             pygame.mouse.set_visible(True)
-                            a = saveTK.Save(self)
+                            self.mode = 'save'  # Show Save dialog
                     else:
                         pygame.mouse.set_visible(True)
-                        a = saveTK.Save(self)
+                        self.mode = 'save'  # Show Save dialog
                 else:
-                    pygame.mouse.set_visible(True)
-                    a = saveTK.Save(self)
+                    self.mode = 'save'  # Show Save dialog
 
             elif len(self.objects) == 2 and self.save_title != None:
                 prev_save_data = settingsSetup.load_settings(f'saves/{self.save_title}.json')
@@ -726,7 +735,7 @@ class Game:
             else:
                 pygame.mouse.set_visible(True)
                 a = saveTK.Save(self)
-        if self.cancel == False:
+        if not self.cancel and self.response_received:
             self.run = False
         self.cancel = False
 

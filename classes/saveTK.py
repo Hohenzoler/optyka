@@ -1,100 +1,66 @@
-import tkinter as tk
-from tkinter import *
-from ttkbootstrap import ttk
-from ttkbootstrap import Style
+import pygame
 import os
-import tkinter.messagebox as messagebox
 
 
 class Save:
-    """
-    A class to represent the save functionality of a game.
-
-    ...
-
-    Attributes
-    ----------
-    root : Tk
-        a toplevel widget of Tk which represents the main window of an application
-    game : obj
-        the game object that is being saved
-    style : Style
-        the style object for the tkinter window
-    entry : Entry
-        the entry widget used to get the save title from the user
-
-    Methods
-    -------
-    dont_save():
-        Destroys the tkinter window and sets the game's save attribute to False.
-    save():
-        Gets the save title from the entry widget, replaces spaces with underscores,
-        sets the game's save attribute to True and the game's save_title attribute to the save title,
-        and then destroys the tkinter window.
-    """
-
     def __init__(self, game):
-        """
-        Constructs all the necessary attributes for the save object.
-
-        Parameters
-        ----------
-            game : obj
-                the game object that is being saved
-        """
-
-        self.root = tk.Tk()
         self.game = game
+        self.input_box = pygame.Rect(100, 100, 140, 32)
+        self.color_inactive = pygame.Color('lightskyblue3')
+        self.color_active = pygame.Color('dodgerblue2')
+        self.color = self.color_inactive
+        self.active = False
+        self.text = ''
+        self.font = pygame.font.Font(None, 32)
+        self.save_button = pygame.Rect(100, 150, 100, 32)
+        self.dont_save_button = pygame.Rect(210, 150, 100, 32)
+        self.cancel_button = pygame.Rect(320, 150, 100, 32)
 
-        self.root.grid_columnconfigure(0, weight=1)
-        self.root.grid_columnconfigure(1, weight=1)
-        self.root.grid_columnconfigure(2, weight=1)
+    def render(self):
+        txt_surface = self.font.render(self.text, True, self.color)
+        width = max(200, txt_surface.get_width() + 10)
+        self.input_box.w = width
+        self.game.screen.blit(txt_surface, (self.input_box.x + 5, self.input_box.y + 5))
+        pygame.draw.rect(self.game.screen, self.color, self.input_box, 2)
 
-        self.style = Style(theme='solar')
-        self.style.master = self.root
+        pygame.draw.rect(self.game.screen, (0, 255, 0), self.save_button)
+        pygame.draw.rect(self.game.screen, (255, 0, 0), self.dont_save_button)
+        pygame.draw.rect(self.game.screen, (255, 255, 0), self.cancel_button)
 
-        self.root.title("Save Game")
-        self.root.resizable(False, False)
+        save_text = self.font.render('Save', True, (0, 0, 0))
+        dont_save_text = self.font.render("Don't Save", True, (0, 0, 0))
+        cancel_text = self.font.render('Cancel', True, (0, 0, 0))
 
-        title_label = tk.Label(self.root, text="Save game:")
-        title_label.grid(row=0, column=0, pady=15, columnspan=3)
+        self.game.screen.blit(save_text, (self.save_button.x + 10, self.save_button.y + 5))
+        self.game.screen.blit(dont_save_text, (self.dont_save_button.x + 10, self.dont_save_button.y + 5))
+        self.game.screen.blit(cancel_text, (self.cancel_button.x + 10, self.cancel_button.y + 5))
 
-        self.entry = ttk.Entry(self.root, justify='center')
-        self.entry.grid(row=1, column=0, columnspan=3)
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.input_box.collidepoint(event.pos):
+                self.active = not self.active
+            else:
+                self.active = False
+            self.color = self.color_active if self.active else self.color_inactive
 
-        if self.game.save_title != None:
-            self.entry.insert(0, self.game.save_title)
+            if self.save_button.collidepoint(event.pos):
+                self.save()
+            elif self.dont_save_button.collidepoint(event.pos):
+                self.dont_save()
+            elif self.cancel_button.collidepoint(event.pos):
+                self.cancel()
 
-        save_button = tk.Button(self.root, text="Save", command=self.save)
-        save_button.grid(row=2, column=0, sticky='e', padx=1, pady=15)
-
-        dont_save_button = tk.Button(self.root, text="Don't Save", command=self.dont_save)
-        dont_save_button.grid(row=2, column=1, sticky='n', padx=1, pady=15)
-
-        cancel_save_button = tk.Button(self.root, text="Cancel", command=self.cancel)
-        cancel_save_button.grid(row=2, column=2, sticky='w', padx=1, pady=15)
-
-        self.root.geometry(f'250x150')
-
-        self.root.mainloop()
-
-    def dont_save(self):
-        """
-        Destroys the tkinter window and sets the game's save attribute to False.
-        """
-
-        self.root.destroy()
-        self.root.quit()
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_RETURN:
+                    self.save()
+                elif event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
 
     def save(self):
-        """
-        Gets the save title from the entry widget, replaces spaces with underscores,
-        sets the game's save attribute to True and the game's save_title attribute to the save title,
-        and then destroys the tkinter window.
-        """
-
-        save_title = self.entry.get().strip()
-
+        save_title = self.text.strip()
         if save_title != '':
             save_title = save_title.replace(' ', "_")
             self.old_save_title = self.game.save_title
@@ -104,13 +70,14 @@ class Save:
             self.saves_files = [file[:-5] for file in os.listdir(self.dir) if file.endswith('.json')]
 
             if self.game.save_title in self.saves_files and self.game.save_title != self.old_save_title:
-                messagebox.showerror("Error", "You can not save your game with the same name as another save file.")
+                print("Error: You cannot save your game with the same name as another save file.")
             else:
                 self.game.save_to_file()
-                self.root.destroy()
-                self.root.quit()
+                self.game.response_received = True  # Set response received flag
+
+    def dont_save(self):
+        self.game.response_received = True  # Set response received flag
 
     def cancel(self):
         self.game.cancel = True
-        self.root.destroy()
-        self.root.quit()
+        self.game.response_received = True  # Set response received flag
